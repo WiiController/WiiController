@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[WJoyDeviceImpl(Methods) deviceExists:]:WJoyDeviceImpl.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "input[1]">
+            </PersistentString>
+            <PersistentString
+               value = "output[1]">
+            </PersistentString>
+            <PersistentString
+               value = "input[0]">
+            </PersistentString>
+            <PersistentString
+               value = "output[0]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
