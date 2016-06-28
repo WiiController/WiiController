@@ -107,14 +107,12 @@
 
 - (BOOL)setDeviceProductString:(NSString*)string
 {
-	// TODO: Justin: Remove this since it isn't supported by foo-hid. Instead, we need to destroy the old device and create a new one with the updated info.
 	_deviceProductString = string;
 	return YES;
 }
 
 - (BOOL)setDeviceSerialNumberString:(NSString*)string
 {
-	// TODO: Justin: Remove this since it isn't supported by foo-hid. Instead, we need to destroy the old device and create a new one with the updated info.
 	_deviceSerialNumberString = string;
 	return YES;
 }

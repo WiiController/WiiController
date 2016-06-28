@@ -151,6 +151,34 @@ static NSUInteger maxConnectedDevices = 0;
                 stick:(WiimoteUProControllerStickType)stick
       positionChanged:(NSPoint)position
 {
+	// Calibrate the analog sticks on the fly
+	// Thanks to Kametrixom for the fix ( https://github.com/Kametrixom/wjoy-1/commit/686c49a5de411ba77f459ba1325b17ba1b44c343 )
+	switch (stick) {
+		case WiimoteUProControllerStickTypeLeft:
+			minL.x = MIN(minL.x, position.x);
+			minL.y = MIN(minL.y, position.y);
+			
+			maxL.x = MAX(maxL.x, position.x);
+			maxL.y = MAX(maxL.y, position.y);
+			
+			position.x = (position.x - minL.x) / (maxL.x - minL.x) * 2 - 1;
+			position.y = (position.y - minL.y) / (maxL.y - minL.y) * 2 - 1;
+			break;
+		case WiimoteUProControllerStickTypeRight:
+			minR.x = MIN(minR.x, position.x);
+			minR.y = MIN(minR.y, position.y);
+			
+			maxR.x = MAX(maxR.x, position.x);
+			maxR.y = MAX(maxR.y, position.y);
+			
+			position.x = (position.x - minR.x) / (maxR.x - minR.x) * 2 - 1;
+			position.y = (position.y - minR.y) / (maxR.y - minR.y) * 2 - 1;
+			break;
+	}
+	
+	NSLog(@"\nMinLx: %i\tMinLy: %i\tMaxLx: %i\tMaxLy: %i", minL.x, minL.y, maxL.x, maxL.y);
+	NSLog(@"\nMinRx: %i\tMinRy: %i\tMaxRx: %i\tMaxRy: %i", minR.x, minR.y, maxR.x, maxR.y);
+	
 	[m_HIDState setPointer:stick position:position];
 }
 
