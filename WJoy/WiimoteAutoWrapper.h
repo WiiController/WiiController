@@ -19,6 +19,8 @@
         VHIDDevice      *m_HIDState;
 		NSPoint			 m_ShiftsState;
         WJoyDevice      *m_WJoy;
+		// For calibration of the analog sticks
+		NSPoint minL, maxL, minR, maxR;
 }
 
 // 0 = infinite, default = infinite, if currently connected too many, disconnect last connected
