@@ -16,10 +16,10 @@ This project is a fork of the original (now unsupported) project and uses foohid
 ## Quick Start
 
 1. Download and install the latest release of foohid: https://github.com/unbit/foohid/releases/latest
-2. Download the install latest release of WJoy-foohid: https://github.com/JustinBis/wjoy-foohid/releases/latest 
+2. Download and run the latest release of WJoy-foohid: https://github.com/JustinBis/wjoy-foohid/releases/latest
 3. Ensure that bluetooth is enabled and then click the wiimote icon on the menu bar
 4. Click "start discovery" and then hit the red sync button on your Wii Remote or other accessory
-5. Once connected, your controller is ready to be used. Enjoy!
+5. Once connected, your controller is ready to be used in any games that support native gamepads. Enjoy!
 
 
 ## Why foohid?
