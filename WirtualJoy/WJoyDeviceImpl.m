@@ -9,7 +9,7 @@
 #import "WJoyDeviceImpl.h"
 #import "WJoyTool.h"
 
-#define WJoyDeviceDriverID @"com_alxn1_driver_WirtualJoy"
+#define WJoyDeviceDriverID @"it_unbit_foohid"
 
 @interface WJoyDeviceImpl (PrivatePart)
 
@@ -75,14 +75,15 @@
     return (IOConnectCallMethod(
                             m_Connection,
                             selector,
-                            NULL,
-                            0,
-                            [data bytes],
-                            [data length],
-                            NULL,
-                            NULL,
-                            NULL,
-                            NULL) == KERN_SUCCESS);
+                            NULL,			// inputValues
+                            0,				// inputCount
+                            [data bytes],	// inputStruct
+                            [data length],	// inputStructSize
+                            NULL,	// outputValues
+                            NULL,	// outputCount
+                            NULL,	// outputStruct
+                            NULL	// outputStructSize
+								) == KERN_SUCCESS);
 }
 
 - (BOOL)call:(WJoyDeviceMethodSelector)selector string:(NSString*)string
@@ -99,12 +100,16 @@
 
 - (BOOL)setDeviceProductString:(NSString*)string
 {
-    return [self call:WJoyDeviceMethodSelectorSetDeviceProductString string:string];
+	// TODO: Justin: Remove this since it isn't supported by foo-hid. Instead, we need to destroy the old device and create a new one with the updated info.
+    //return [self call:WJoyDeviceMethodSelectorSetDeviceProductString string:string];
+	return YES;
 }
 
 - (BOOL)setDeviceSerialNumberString:(NSString*)string
 {
-    return [self call:WJoyDeviceMethodSelectorSetDeviceSerialNumberString string:string];
+	// TODO: Justin: Remove this since it isn't supported by foo-hid. Instead, we need to destroy the old device and create a new one with the updated info.
+    //return [self call:WJoyDeviceMethodSelectorSetDeviceSerialNumberString string:string];
+	return YES;
 }
 
 - (BOOL)setDeviceVendorID:(uint32_t)vendorID productID:(uint32_t)productID
@@ -120,7 +125,32 @@
 
 - (BOOL)enable:(NSData*)HIDDescriptor
 {
-    return [self call:WJoyDeviceMethodSelectorEnable data:HIDDescriptor];
+	// foohid requires the descriptor to be embedded with other info when sending to the IOUserClient create method
+	
+	// Copied from the foohid virtual mouse example
+	uint32_t input_count = 8;
+	uint64_t input[input_count];
+	input[0] = (uint64_t) strdup("Justins Device 007");  // device name
+	input[1] = strlen((char *)input[0]);  // name length
+	input[2] = (uint64_t) [HIDDescriptor bytes];  // report descriptor
+	input[3] = [HIDDescriptor length];  // report descriptor len
+	input[4] = (uint64_t) strdup("SN 123456");  // serial number
+	input[5] = strlen((char *)input[4]);  // serial number len
+	input[6] = (uint64_t) 2;  // vendor ID
+	input[7] = (uint64_t) 3;  // device ID
+	
+	// Transform this into an NSData object
+	// TODO: Make call accept raw data as well, or reformat the data creation above to use NSData
+	
+	//NSData* data = [NSData dataWithBytes:(void *)input length:input_count*sizeof(uint64_t)];
+	
+    //return [self call:WJoyDeviceMethodSelectorEnable data:data];
+	kern_return_t ret = IOConnectCallScalarMethod(m_Connection, WJoyDeviceMethodSelectorEnable, input, input_count, NULL, 0);
+	if(ret != KERN_SUCCESS) // Note: KERN_SUCCESS == kIOReturnSuccess
+	{
+		NSLog(@"Unable to create HID device. May be fine if created previously.");
+	}
+	return ret == KERN_SUCCESS;
 }
 
 - (BOOL)disable
@@ -130,7 +160,20 @@
 
 - (BOOL)updateState:(NSData*)HIDState
 {
-    return [self call:WJoyDeviceMethodSelectorUpdateState data:HIDState];
+    //return [self call:WJoyDeviceMethodSelectorUpdateState data:HIDState];
+	uint32_t send_count = 4;
+	uint64_t send[send_count];
+	send[0] = (uint64_t) strdup("Justins Device 007");  // device name
+	send[1] = strlen((char *)send[0]);  // name length
+	send[2] = (uint64_t) [HIDState bytes];  // mouse struct
+	send[3] = [HIDState length];  // mouse struct len
+	
+	kern_return_t ret = IOConnectCallScalarMethod(m_Connection, WJoyDeviceMethodSelectorUpdateState, send, send_count, NULL, 0);
+	if (ret != KERN_SUCCESS) {
+		printf("Unable to send message to HID device.\n");
+	}
+	
+	return ret == KERN_SUCCESS;
 }
 
 @end
@@ -201,7 +244,9 @@ static void onApplicationExit(void)
 {
     if([self isDriverLoaded])
         return YES;
-
+	
+	
+	// TODO: Show a popup asking the user to install foohid when the driver isn't found automatically
     return [WJoyTool loadDriver];
 }
 

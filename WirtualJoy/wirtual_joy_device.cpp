@@ -10,7 +10,7 @@
 #include "wirtual_joy_device.h"
 #include "wirtual_joy_debug.h"
 
-#include <IOKit/usb/IOUSBHIDDriver.h>
+#include <IOKit/hid/IOHIDUsageTables.h>
 
 #define super IOHIDDevice
 
@@ -85,8 +85,10 @@ bool WirtualJoyDevice::init(
     if(!parseHidDescriptor(hidDescriptorData, hidDescriptorDataSize))
         return false;
 
-    if(m_Capabilities.inputReportByteLength > kMaxHIDReportSize)
-        return false;
+// NOTE: Apple Removed #def kMaxHIDReportSize in OS X 10.10.3 so we aren't going to check size
+// TODO: figure out if there still exists some max HID Report Size that we should check
+//    if(m_Capabilities.inputReportByteLength > kMaxHIDReportSize)
+//        return false;
 
     if(m_Capabilities.usagePage == kHIDPage_GenericDesktop)
     {
