@@ -22,7 +22,7 @@ This project is a fork of the original (now unsupported) project and uses foohid
 5. Once connected, your controller is ready to be used in any games that support native gamepads. Enjoy!
 
 
-## Wii U Pro Controller Analog Stick Callibration
+## Wii U Pro Controller Analog Stick Calibration
 
 WJoy will now automatically calibrate the Wii U Pro Controller analog sticks on the fly so that they reach 100% of the analog stick range rather than being stuck around 60-70% range. To calibrate the sticks, simply move them in a few full circles so that WJoy can detect the range of motion for each stick.
 
