@@ -22,6 +22,12 @@ This project is a fork of the original (now unsupported) project and uses foohid
 5. Once connected, your controller is ready to be used in any games that support native gamepads. Enjoy!
 
 
+## Wii U Pro Controller Analog Stick Callibration
+
+WJoy will now automatically calibrate the Wii U Pro Controller analog sticks on the fly so that they reach 100% of the analog stick range rather than being stuck around 60-70% range. To calibrate the sticks, simply move them in a few full circles so that WJoy can detect the range of motion for each stick.
+
+Thanks to [Kametrixom](https://github.com/Kametrixom) for this fix.
+
 ## Why foohid?
 
 In OS X El Capitan (version 10.11), Apple added [System Integrity Protection (AKA "rootless" mode)](http://apple.stackexchange.com/questions/193368/what-is-the-rootless-feature-in-el-capitan-really) as a security feature. Among other things, this feature prevents the operating system from running unsigned kernel extensions (kexts). The original WJoy project included an unsigned kext to provide a virtual HID for each connected wiimote and thus the original project no longer works on modern versions of OS X.
