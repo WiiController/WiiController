@@ -8,9 +8,9 @@ The following controllers are supported
 	- Nunchuck
 	- Classic Controller
 - Wii U Pro Controller
-- TODO: List the rest
+- Every other contoller supported by the original WJoy project
 
-This project is a fork of the original (now unsupported) project and uses foohid as the driver.
+This project is a fork of the original (now unsupported) Wjoy project. WJoy-foohid uses foohid as the input driver rather than using the original (now unsupported) WJoy driver.
 
 
 ## Quick Start
@@ -30,6 +30,6 @@ Thanks to [Kametrixom](https://github.com/Kametrixom) for this fix.
 
 ## Why foohid?
 
-In OS X El Capitan (version 10.11), Apple added [System Integrity Protection (AKA "rootless" mode)](http://apple.stackexchange.com/questions/193368/what-is-the-rootless-feature-in-el-capitan-really) as a security feature. Among other things, this feature prevents the operating system from running unsigned kernel extensions (kexts). The original WJoy project included an unsigned kext to provide a virtual HID for each connected wiimote and thus the original project no longer works on modern versions of OS X.
+In OS X El Capitan (version 10.11), Apple added [System Integrity Protection (AKA "rootless" mode)](http://apple.stackexchange.com/questions/193368/) as a security feature. Among other things, this feature prevents the operating system from running unsigned kernel extensions (kexts). The original WJoy project included an unsigned kext to provide a virtual HID for each connected wiimote and thus the original project no longer works on modern versions of OS X.
 
 Thankfully, you can still run kexts signed by Apple or by approved developers. That's where foohid comes in. foohid is a signed kext that allows programs to create virtual HID devices on demand -- exactly what we need. With foohid installed, we can use WJoy without having to disable important security features on the operating system.
