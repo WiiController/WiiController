@@ -10,7 +10,7 @@ You may read more here: http://www.imore.com/el-capitan-system-integrity-protect
 
 ##### Installation Instructions
 
- 1. Download WJoy here: https://www.dropbox.com/s/oowoqvnx091bcjx/WJoy%20Package.zip?dl=1
+ 1. **Download WJoy here**: https://www.dropbox.com/s/oowoqvnx091bcjx/WJoy%20Package.zip?dl=1
  2. Move the `wjoy.kext` file to `/Library/Extensions`
  3. Move the `WJoy.app` to `/Applications`
  4. Turn on Bluetooth.
