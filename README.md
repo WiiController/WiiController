@@ -12,6 +12,11 @@ You may read more here: http://www.imore.com/el-capitan-system-integrity-protect
 
  1. **Download WJoy here**: https://www.dropbox.com/s/oowoqvnx091bcjx/WJoy%20Package.zip?dl=1
  2. Move the `wjoy.kext` file to `/Library/Extensions`
+ 3. In terminal, execute:
+    ```sh
+    sudo chmod -R +x /Library/Extensions/wjoy.kext
+    sudo kextload wjoy.kext
+    ```
  3. Move the `WJoy.app` to `/Applications`
  4. Turn on Bluetooth.
  5. Start the WJoy application.
