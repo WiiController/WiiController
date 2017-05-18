@@ -1,6 +1,4 @@
-# wjoy
-
-WJoy fixed for macOS Sierra.
+# WJoy
 
 You must have SIP disabled for this application to work. Please disable it by booting your Mac into recovery mode, opening the Terminal and running:
 
@@ -39,6 +37,3 @@ Not working:
  - Broforce
  - Monaco
  - Superhot
- 
- 
-

@@ -73,6 +73,8 @@
 
 - (NSPoint)normalizeStick:(WiimoteUProControllerStickType)stick position:(NSPoint)position
 {
+	// TODO: Implement normalization (if needed)
+	// it seems like the WiiUPro sticks range between -0.6 and 0.6 with the current adjustments being applied in the handleReport method
     return position;
 }
 

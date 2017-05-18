@@ -19,6 +19,14 @@ typedef enum
     WJoyDeviceMethodSelectorSetDeviceVendorAndProductID = 5
 } WJoyDeviceMethodSelector;
 
+typedef enum
+{
+	FOOHID_CREATE	= 0,
+	FOOHID_DESTROY	= 1,
+	FOOHID_SEND		= 2,
+	FOOHID_LIST		= 3
+} FOOHIDMethodSelector;
+
 @interface WJoyDeviceImpl : NSObject
 {
     @private
