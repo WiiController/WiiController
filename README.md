@@ -25,7 +25,6 @@ In my experience, Unity games for Mac do not support the Wii U Pro Controller, s
 Working:
 
  - Binding of Isaac
- - Gang Beasts
  - DolphinEmu
  - Antichamber
  - Hotline Miami
@@ -34,6 +33,7 @@ Working:
 Not working:
 
  - Ultimate Chicken Horse
+ - Gang Beasts
  - Broforce
  - Monaco
  - Superhot
