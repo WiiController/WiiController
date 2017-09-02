@@ -143,14 +143,23 @@
 	// foohid requires the descriptor to be embedded with other info when sending to the IOUserClient create method
 	uint32_t input_count = 8;
 	uint64_t input[input_count];
-	input[0] = [_deviceProductString UTF8String];
-	input[1] = strlen((char *)input[0]);							// name length
-	input[2] = (uint64_t) [HIDDescriptor bytes];					// report descriptor
-	input[3] = [HIDDescriptor length];								// report descriptor len
-	input[4] = (uint64_t) [_deviceSerialNumberString UTF8String];	// serial number
-	input[5] = strlen((char *)input[4]);							// serial number len
-	input[6] = (uint64_t) _deviceVendorID;							// vendor ID
-	input[7] = (uint64_t) _deviceProductID;							// device ID
+	
+	// The request will fail if either pointer points to a static string, so copy the strings into local buffers
+	int productStringLength = [_deviceProductString lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+	char productString[productStringLength + 1];
+	strcpy(productString, [_deviceProductString UTF8String]);
+	int serialStringLength = [_deviceSerialNumberString lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+	char serialString[serialStringLength + 1];
+	strcpy(serialString, [_deviceSerialNumberString UTF8String]);
+	
+	input[0] = productString;
+	input[1] = productStringLength;              // name length
+	input[2] = (uint64_t) [HIDDescriptor bytes]; // report descriptor
+	input[3] = [HIDDescriptor length];           // report descriptor len
+	input[4] = serialString;                     // serial number
+	input[5] = serialStringLength;               // serial number len
+	input[6] = (uint64_t) _deviceVendorID;       // vendor ID
+	input[7] = (uint64_t) _deviceProductID;      // device ID
 	
 	kern_return_t ret = IOConnectCallScalarMethod(m_Connection, FOOHID_CREATE, input, input_count, NULL, 0);
 	if(ret != KERN_SUCCESS)
