@@ -157,12 +157,12 @@
         if([Wiimote isDiscovering])
         {
             [m_DiscoveryMenuItem setEnabled:NO];
-            [m_DiscoveryMenuItem setTitle:@"Discovering..."];
+            [m_DiscoveryMenuItem setTitle:@"Discovering: Press red pairing button"];
         }
         else
         {
             [m_DiscoveryMenuItem setEnabled:YES];
-            [m_DiscoveryMenuItem setTitle:@"Begin Discovery"];
+            [m_DiscoveryMenuItem setTitle:@"Turn on Discovery"];
         }
     }
     else
@@ -190,8 +190,9 @@
 
         NSMenuItem      *item         = [[NSMenuItem alloc]
                                             initWithTitle:[NSString stringWithFormat:
-                                                                @"%li) Wiimote (%@) (%@)",
-                                                                    i,
+                                                                @"%@ #%li (%@ Battery)",
+                                                    [device modelName],
+                                                                    i+1,
                                                                     batteryLevel,
                                                                     [device addressString]]
                                                    action:nil
@@ -208,14 +209,14 @@
         [item release];
     }
 
-    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@"One-Button-Click-Connection" action:@selector(toggleOneButtonClickConnection) keyEquivalent:@""];
+    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@"Automatically connect when device powers on" action:@selector(toggleOneButtonClickConnection) keyEquivalent:@""];
     [item setTarget:self];
     [item setState:([Wiimote isUseOneButtonClickConnection])?(NSOnState):(NSOffState)];
     [m_Menu addItem:[NSMenuItem separatorItem]];
     [m_Menu addItem:item];
     [item release];
 
-    item = [[NSMenuItem alloc] initWithTitle:@"Autostart" action:@selector(toggleAutostart) keyEquivalent:@""];
+    item = [[NSMenuItem alloc] initWithTitle:@"Start with macOS" action:@selector(toggleAutostart) keyEquivalent:@""];
     [item setTarget:self];
 
     NSUInteger state = ([[LoginItemsList userItemsList]
@@ -227,15 +228,6 @@
     [item setState:state];
     [m_Menu addItem:item];
     [item release];
-
-    item = [[NSMenuItem alloc] initWithTitle:@"About" action:@selector(orderFrontStandardAboutPanel:) keyEquivalent:@""];
-    [item setTarget:[NSApplication sharedApplication]];
-    [m_Menu addItem:[NSMenuItem separatorItem]];
-    [m_Menu addItem:item];
-    [item release];
-
-    [m_Menu addItem:[NSMenuItem separatorItem]];
-    [m_Menu addItem:m_CheckUpdateMenuItem];
 
     item = [[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(terminate:) keyEquivalent:@""];
     [item setTarget:[NSApplication sharedApplication]];

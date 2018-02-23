@@ -235,11 +235,6 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0920;
-				TargetAttributes = {
-					8DC2EF4F0486A6940098B216 = {
-						ProvisioningStyle = Manual;
-					};
-				};
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "UpdateChecker" */;
 			compatibilityVersion = "Xcode 3.1";
@@ -364,9 +359,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K4T4R33YU4;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -378,6 +374,7 @@
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alxn1.${PRODUCT_NAME:rfc1034Identifier}";
 				PRODUCT_NAME = UpdateChecker;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -386,9 +383,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K4T4R33YU4;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -397,6 +395,7 @@
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alxn1.${PRODUCT_NAME:rfc1034Identifier}";
 				PRODUCT_NAME = UpdateChecker;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
