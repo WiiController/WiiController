@@ -24,6 +24,8 @@
 		0A4696F915B595F1003AB8FD /* test.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4696F815B595F1003AB8FD /* test.m */; };
 		0A46971615B5970A003AB8FD /* WirtualJoy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A46960715B593A2003AB8FD /* WirtualJoy.framework */; };
 		3AAB09211E2C24330032909A /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1CB32615B022BD0012FCC7 /* IOKit.framework */; };
+		ED22509FAE6ECBFCF2270050 /* STPrivilegedTask.h in Headers */ = {isa = PBXBuildFile; fileRef = ED2254E72EC36EC17E2D341A /* STPrivilegedTask.h */; };
+		ED2255043083DB9B8CAEA17D /* STPrivilegedTask.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2258E16C66CE05147C7C4F /* STPrivilegedTask.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +96,8 @@
 		32D94FCF0562CBF700B6AF17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32D94FD00562CBF700B6AF17 /* wjoy.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wjoy.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DA8362C06AD9B9200E5AC22 /* Kernel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kernel.framework; path = /System/Library/Frameworks/Kernel.framework; sourceTree = "<absolute>"; };
+		ED2254E72EC36EC17E2D341A /* STPrivilegedTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPrivilegedTask.h; sourceTree = "<group>"; };
+		ED2258E16C66CE05147C7C4F /* STPrivilegedTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPrivilegedTask.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +212,8 @@
 				0A46959D15B58D5A003AB8FD /* WJoyTool.h */,
 				0A46959E15B58D5A003AB8FD /* WJoyTool.m */,
 				0A46928615B578CB003AB8FD /* WJoyToolMain.m */,
+				ED2258E16C66CE05147C7C4F /* STPrivilegedTask.m */,
+				ED2254E72EC36EC17E2D341A /* STPrivilegedTask.h */,
 			);
 			name = tool;
 			sourceTree = "<group>";
@@ -240,6 +246,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A46961415B593D4003AB8FD /* WJoyDevice.h in Headers */,
+				ED22509FAE6ECBFCF2270050 /* STPrivilegedTask.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,6 +415,7 @@
 				0A46962115B593E7003AB8FD /* WJoyTool.m in Sources */,
 				0A46962215B593E7003AB8FD /* WJoyDeviceImpl.m in Sources */,
 				0A46962315B593E7003AB8FD /* WJoyDevice.m in Sources */,
+				ED2255043083DB9B8CAEA17D /* STPrivilegedTask.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

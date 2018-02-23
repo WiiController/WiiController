@@ -66,7 +66,11 @@ static int loadDriver(const char *path) {
     CFStringRef bundleId_ = (__bridge CFStringRef) WJoyBundleId;
     OSReturn result = KextManagerLoadKextWithIdentifier(bundleId_, NULL);
 
-    return result == kOSReturnSuccess;
+    if (result == kOSReturnSuccess) {
+        return EXIT_SUCCESS;
+    }
+
+    return EXIT_FAILURE;
 }
 
 static int unloadDriver(const char *path) {
