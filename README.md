@@ -1,5 +1,7 @@
 # WJoy
 
+Connects your Nintendo bluetooth controllers to your macOS desktop and laptop.
+
 **For macOS 10.13 High Sierra, 10.12 Sierra and 10.11 El Capitan**
 
 You must have SIP disabled for this application to work. Please disable it by booting your Mac into recovery mode, opening the Terminal and running:
