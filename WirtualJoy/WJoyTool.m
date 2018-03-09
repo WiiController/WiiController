@@ -9,6 +9,7 @@
 #import "WJoyTool.h"
 #import "WJoyToolInterface.h"
 #import "WJoyAdminToolRight.h"
+#import "STPrivilegedTask.h"
 
 #define WJoyDeviceDriverName @"wjoy.kext"
 
@@ -97,11 +98,15 @@
 
 + (BOOL)doCommand:(NSString*)command argument:(NSString*)argument
 {
-    NSTask *task = [[NSTask alloc] init];
+    STPrivilegedTask *task = [[STPrivilegedTask alloc] init];
 
     [task setLaunchPath:[self toolPath]];
     [task setArguments:[NSArray arrayWithObjects:command, argument, nil]];
-    [task launch];
+    OSStatus err = [task launch];
+    if (err != errAuthorizationSuccess) {
+        return NO;
+    }
+
     [task waitUntilExit];
 
     BOOL result = ([task terminationStatus] == EXIT_SUCCESS);

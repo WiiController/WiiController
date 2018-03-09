@@ -98,11 +98,6 @@
 
     [UserNotificationCenter setDelegate:self];
 
-    [UserNotificationCenter
-        deliver:[UserNotification
-                    userNotificationWithTitle:@"WJoy started"
-                                         text:@"We started :)"]];
-
     return self;
 }
 
@@ -116,24 +111,24 @@
 {
     [UserNotificationCenter
         deliver:[UserNotification
-                    userNotificationWithTitle:@"Begin Discovery"
-                                         text:@"Begin discovery for new Wiimote :)"]];
+                    userNotificationWithTitle:@"Discovery Mode On"
+                                         text:@"Press the red pairing button on your Nintendo device, or click the WJoy icon and enable ."]];
 }
 
 - (void)onDiscoveryEnd
 {
     [UserNotificationCenter
         deliver:[UserNotification
-                    userNotificationWithTitle:@"End Discovery"
-                                         text:@"Discovery for new Wiimote finished :)"]];
+                    userNotificationWithTitle:@"Discovery Mode Off"
+                                         text:@"Click the WJoy icon to re-enable discovery."]];
 }
 
 - (void)onDeviceConnected
 {
     [UserNotificationCenter
         deliver:[UserNotification
-                    userNotificationWithTitle:@"Wiimote connected"
-                                         text:@"New Wiimote connected :)"]];
+                    userNotificationWithTitle:@"Connected"
+                                         text:@"A device connected."]];
 }
 
 - (void)onDeviceBatteryStateChanged:(NSNotification*)notification
@@ -150,49 +145,21 @@
 
     [UserNotificationCenter
         deliver:[UserNotification
-                    userNotificationWithTitle:@"Wiimote battery is low"
-                                         text:@"Some Wiimote battery is low!!!"]];
+                    userNotificationWithTitle:@"Battery is Low"
+                                         text:@"Check the remaining battery of your devices."]];
 }
 
 - (void)onDeviceDisconnected
 {
     [UserNotificationCenter
         deliver:[UserNotification
-                    userNotificationWithTitle:@"Wiimote disconnected"
-                                         text:@"One of connected Wiimotes disconnected :("]];
+                    userNotificationWithTitle:@"Disconnected"
+                                         text:@"A device disconnected."]];
 }
 
 - (void)onCheckNewVersionFinished:(NSNotification*)notification
 {
-    NSError     *err            = [[notification userInfo] objectForKey:UAppUpdateCheckerErrorKey];
-    NSNumber    *hasNewVersion  = [[notification userInfo] objectForKey:UAppUpdateCheckerHasNewVersionKey];
-    NSURL       *url            = [[notification userInfo] objectForKey:UAppUpdateCheckerDownloadURLKey];
-
-    if(err != nil)
-    {
-        [UserNotificationCenter
-            deliver:[UserNotification
-                        userNotificationWithTitle:@"Error"
-                                             text:@"Can't check for update"]];
-
-        return;
-    }
-
-    if([hasNewVersion boolValue])
-    {
-        UserNotification *notification = [UserNotification
-                                                userNotificationWithTitle:@"New version available!"
-                                                                     text:@"New version available!"
-                                                                 userInfo:[NSDictionary dictionaryWithObject:[url absoluteString] forKey:@"URL"]];
-
-        [UserNotificationCenter deliver:notification];
-        return;
-    }
-
-    [UserNotificationCenter
-            deliver:[UserNotification
-                        userNotificationWithTitle:@"No new version available"
-                                             text:@"No new version available :("]];
+    return;
 }
 
 @end

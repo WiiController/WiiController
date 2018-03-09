@@ -8,8 +8,9 @@
 
 #import "WJoyDeviceImpl.h"
 #import "WJoyTool.h"
+#import <IOKit/kext/KextManager.h>
 
-#define WJoyDeviceDriverID @"it_unbit_foohid"
+#define WJoyDeviceDriverID @"com_alxn1_driver_WirtualJoy"
 
 @interface WJoyDeviceImpl (PrivatePart)
 
@@ -72,19 +73,17 @@
 
 - (BOOL)call:(WJoyDeviceMethodSelector)selector data:(NSData*)data
 {
-	// TODO: Remove any dependencies on this method, as we no longer need it
     return (IOConnectCallMethod(
-                            m_Connection,
-                            selector,
-                            NULL,			// inputValues
-                            0,				// inputCount
-                            [data bytes],	// inputStruct
-                            [data length],	// inputStructSize
-                            NULL,	// outputValues
-                            NULL,	// outputCount
-                            NULL,	// outputStruct
-                            NULL	// outputStructSize
-								) == KERN_SUCCESS);
+            m_Connection,
+            selector,
+            NULL,
+            0,
+            [data bytes],
+            [data length],
+            NULL,
+            NULL,
+            NULL,
+            NULL) == KERN_SUCCESS);
 }
 
 - (BOOL)call:(WJoyDeviceMethodSelector)selector string:(NSString*)string
@@ -99,22 +98,14 @@
 
 @implementation WJoyDeviceImpl (Methods)
 
-	NSString *_deviceProductString = @"WJoy Controller";
-	NSString *_deviceSerialNumberString = @"SN WJoy";
-	uint32 _deviceVendorID = 0;
-	uint32 _deviceProductID = 0;
-
-
 - (BOOL)setDeviceProductString:(NSString*)string
 {
-	_deviceProductString = string;
-	return YES;
+    return [self call:WJoyDeviceMethodSelectorSetDeviceProductString string:string];
 }
 
 - (BOOL)setDeviceSerialNumberString:(NSString*)string
 {
-	_deviceSerialNumberString = string;
-	return YES;
+    return [self call:WJoyDeviceMethodSelectorSetDeviceSerialNumberString string:string];
 }
 
 - (BOOL)setDeviceVendorID:(uint32_t)vendorID productID:(uint32_t)productID
@@ -123,139 +114,24 @@
 
     memcpy(data, &vendorID, sizeof(uint32_t));
     memcpy(data + sizeof(uint32_t), &productID, sizeof(uint32_t));
-	
-	_deviceVendorID = vendorID;
-	_deviceProductID = productID;
-	
-	// TODO: Handle this instance with foohid since we no longer user WJoy's driver
+
     return [self call:WJoyDeviceMethodSelectorSetDeviceVendorAndProductID
                  data:[NSData dataWithBytes:data length:sizeof(data)]];
 }
 
 - (BOOL)enable:(NSData*)HIDDescriptor
 {
-	// If the device already exists, we can use it right away (and foohid will error if we try to create it again)
-	if([self deviceExists: _deviceProductString])
-	{
-		return YES;
-	}
-	
-	// foohid requires the descriptor to be embedded with other info when sending to the IOUserClient create method
-	uint32_t input_count = 8;
-	uint64_t input[input_count];
-	
-	// The request will fail if either pointer points to a static string, so copy the strings into local buffers
-	int productStringLength = [_deviceProductString lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-	char productString[productStringLength + 1];
-	strcpy(productString, [_deviceProductString UTF8String]);
-	int serialStringLength = [_deviceSerialNumberString lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-	char serialString[serialStringLength + 1];
-	strcpy(serialString, [_deviceSerialNumberString UTF8String]);
-	
-	input[0] = productString;
-	input[1] = productStringLength;              // name length
-	input[2] = (uint64_t) [HIDDescriptor bytes]; // report descriptor
-	input[3] = [HIDDescriptor length];           // report descriptor len
-	input[4] = serialString;                     // serial number
-	input[5] = serialStringLength;               // serial number len
-	input[6] = (uint64_t) _deviceVendorID;       // vendor ID
-	input[7] = (uint64_t) _deviceProductID;      // device ID
-	
-	kern_return_t ret = IOConnectCallScalarMethod(m_Connection, FOOHID_CREATE, input, input_count, NULL, 0);
-	if(ret != KERN_SUCCESS)
-	{
-		NSLog(@"Unable to create HID device. This may be okay if the device has already been created.");
-	}
-	return ret == KERN_SUCCESS;
+    return [self call:WJoyDeviceMethodSelectorEnable data:HIDDescriptor];
 }
 
 - (BOOL)disable
 {
-	// Remove the device from foohid
-	uint32_t input_count = 2;
-	uint64_t input[input_count];
-	input[0] = (uint64_t) [_deviceProductString UTF8String];	// name pointer
-	input[1] = strlen((char *)input[0]);						// name length
-	
-	kern_return_t ret = IOConnectCallScalarMethod(m_Connection, FOOHID_DESTROY, input, input_count, NULL, 0);
-	if (ret != KERN_SUCCESS) {
-		NSLog(@"Unable to remove HID device.\n");
-	}
-	
-    return ret == KERN_SUCCESS;
+    return [self call:WJoyDeviceMethodSelectorDisable];
 }
 
 - (BOOL)updateState:(NSData*)HIDState
 {
-	uint32_t send_count = 4;
-	uint64_t send[send_count];
-	send[0] = [_deviceProductString UTF8String];	// device name
-	send[1] = strlen((char *)send[0]);				// name length
-	send[2] = (uint64_t) [HIDState bytes];			// report struct
-	send[3] = [HIDState length];					// report struct len
-	
-	kern_return_t ret = IOConnectCallScalarMethod(m_Connection, FOOHID_SEND, send, send_count, NULL, 0);
-	if (ret != KERN_SUCCESS) {
-		NSLog(@"Unable to send message to HID device.\n");
-	}
-	
-	return ret == KERN_SUCCESS;
-}
-
-- (BOOL)deviceExists:(NSString*)deviceName
-{
-	const int inital_buffer_size = 512;
-	NSMutableData *buffer = [NSMutableData dataWithCapacity:inital_buffer_size];
-	[buffer setLength:inital_buffer_size];
-	
-	uint32_t input_count = 2;
-	uint64_t input[input_count];
-	input[0] = (uint64_t) [buffer mutableBytes]; // buffer pointer
-	input[1] = [buffer length]; // buffer length
-	
-	uint32_t output_count = 2;
-	uint64_t output[output_count];
-	output[0] = 0;
-	output[1] = 0;
-	
-	kern_return_t ret = IOConnectCallScalarMethod(m_Connection, FOOHID_LIST, input, input_count, output, &output_count);
-	if(ret == kIOReturnNoMemory)
-	{
-		NSLog(@"No memory error while listing existing devices.");
-		return NO;
-	}
-	
-	if(output[0] > 0)
-	{
-		// We need more bytes in our buffer
-		[buffer setLength:output[0]];
-		input[0] = (uint64_t) [buffer mutableBytes]; // buffer pointer
-		input[1] = [buffer length]; // buffer length
-		ret = IOConnectCallScalarMethod(m_Connection, FOOHID_LIST, input, input_count, output, &output_count);
-		if(ret == kIOReturnNoMemory)
-		{
-			NSLog(@"No memory error while listing existing devices.");
-			return NO;
-		}
-	}
-	
-	// Loop through each name and check if this device is already listed
-	const char *returnedDeviceNamePointer = [buffer bytes];
-	int numberOfItemsReturned = output[1];
-	for(int i = 0; i < numberOfItemsReturned; i++)
-	{
-		if(strcmp([deviceName UTF8String], returnedDeviceNamePointer) == 0)
-		{
-			// deviceName is the same as the current listed device name, so it exists
-			return YES;
-		}
-		// Advance the pointer until we hit the next name
-		while(*returnedDeviceNamePointer != '\0') returnedDeviceNamePointer++;
-		returnedDeviceNamePointer++;
-	}
-	
-	// No listed names matched, so this device does not already exist
-	return NO;
+    return [self call:WJoyDeviceMethodSelectorUpdateState data:HIDState];
 }
 
 @end
@@ -286,13 +162,13 @@ static void onApplicationExit(void)
     io_iterator_t 	iterator;
 
     if(IOServiceGetMatchingServices(
-                                 kIOMasterPortDefault,
-                                 IOServiceMatching([WJoyDeviceDriverID UTF8String]),
-                                &iterator) != KERN_SUCCESS)
+            kIOMasterPortDefault,
+            IOServiceMatching([WJoyDeviceDriverID UTF8String]),
+            &iterator) != KERN_SUCCESS)
     {
         return result;
     }
-    
+
     result = IOIteratorNext(iterator);
     IOObjectRelease(iterator);
     return result;
@@ -313,22 +189,18 @@ static void onApplicationExit(void)
     return result;
 }
 
-+ (BOOL)isDriverLoaded
-{
++ (BOOL)isDriverLoaded {
     io_service_t service = [WJoyDeviceImpl findService];
-    BOOL         result  = (service != IO_OBJECT_NULL);
+    BOOL result = (service != IO_OBJECT_NULL);
 
     IOObjectRelease(service);
     return result;
 }
 
-+ (BOOL)loadDriver
-{
-    if([self isDriverLoaded])
++ (BOOL)loadDriver {
+    if ([self isDriverLoaded])
         return YES;
-	
-	
-	// TODO: Show a popup asking the user to install foohid when the driver isn't found automatically
+
     return [WJoyTool loadDriver];
 }
 

@@ -11,7 +11,6 @@
 		0A23BFDE15BD4593009CB4C4 /* closebutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A23BFB715BD4593009CB4C4 /* closebutton.png */; };
 		0A23BFE015BD4593009CB4C4 /* AnimatedWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A23BFB915BD4593009CB4C4 /* AnimatedWindow.m */; };
 		0A23BFE415BD4593009CB4C4 /* AppleUserNotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A23BFBD15BD4593009CB4C4 /* AppleUserNotificationCenter.m */; };
-		0A23BFE615BD4593009CB4C4 /* GrowlUserNotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A23BFBF15BD4593009CB4C4 /* GrowlUserNotificationCenter.m */; };
 		0A23BFE815BD4593009CB4C4 /* LeftBottomNotificationLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A23BFC115BD4593009CB4C4 /* LeftBottomNotificationLayoutManager.m */; };
 		0A23BFEA15BD4593009CB4C4 /* LeftTopNotificationLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A23BFC315BD4593009CB4C4 /* LeftTopNotificationLayoutManager.m */; };
 		0A23BFEC15BD4593009CB4C4 /* NotificationLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A23BFC515BD4593009CB4C4 /* NotificationLayoutManager.m */; };
@@ -28,11 +27,9 @@
 		0A23BFFD15BD4593009CB4C4 /* UserNotificationCenterScreenCornerView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A23BFD615BD4593009CB4C4 /* UserNotificationCenterScreenCornerView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A23BFFE15BD4593009CB4C4 /* UserNotificationCenterScreenCornerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A23BFD715BD4593009CB4C4 /* UserNotificationCenterScreenCornerView.m */; };
 		0A23C00315BD4593009CB4C4 /* screen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A23BFDC15BD4593009CB4C4 /* screen.jpg */; };
-		0A23C03315BD46E0009CB4C4 /* Growl.framework in Copy Growl */ = {isa = PBXBuildFile; fileRef = 0A23C01115BD464C009CB4C4 /* Growl.framework */; };
-		0A23C03515BD46F4009CB4C4 /* Growl.framework in Copy 10.5 Growl */ = {isa = PBXBuildFile; fileRef = 0A23C00E15BD4641009CB4C4 /* Growl.framework */; };
 		0A23C1B215BD6533009CB4C4 /* UserNotification.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* UserNotification.framework */; };
 		0A23C1BA15BD6541009CB4C4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
-		0A23C1C015BD6552009CB4C4 /* UserNotification.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* UserNotification.framework */; };
+		0A23C1C015BD6552009CB4C4 /* UserNotification.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* UserNotification.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		0A23C1D115BD6588009CB4C4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A23C1CD15BD6588009CB4C4 /* main.m */; };
 		0A23C1D215BD6588009CB4C4 /* MainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A23C1CF15BD6588009CB4C4 /* MainController.m */; };
 		0A23C1D315BD6588009CB4C4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A23C1D015BD6588009CB4C4 /* MainMenu.xib */; };
@@ -50,28 +47,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		0A23C04715BD46F9009CB4C4 /* Copy Growl */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				0A23C03315BD46E0009CB4C4 /* Growl.framework in Copy Growl */,
-			);
-			name = "Copy Growl";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0A23C04815BD46F9009CB4C4 /* Copy 10.5 Growl */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = 10.5;
-			dstSubfolderSpec = 10;
-			files = (
-				0A23C03515BD46F4009CB4C4 /* Growl.framework in Copy 10.5 Growl */,
-			);
-			name = "Copy 10.5 Growl";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		0A23C1CC15BD655C009CB4C4 /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -94,8 +69,6 @@
 		0A23BFB915BD4593009CB4C4 /* AnimatedWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedWindow.m; sourceTree = "<group>"; };
 		0A23BFBC15BD4593009CB4C4 /* AppleUserNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppleUserNotificationCenter.h; sourceTree = "<group>"; };
 		0A23BFBD15BD4593009CB4C4 /* AppleUserNotificationCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppleUserNotificationCenter.m; sourceTree = "<group>"; };
-		0A23BFBE15BD4593009CB4C4 /* GrowlUserNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowlUserNotificationCenter.h; sourceTree = "<group>"; };
-		0A23BFBF15BD4593009CB4C4 /* GrowlUserNotificationCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowlUserNotificationCenter.m; sourceTree = "<group>"; };
 		0A23BFC015BD4593009CB4C4 /* LeftBottomNotificationLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftBottomNotificationLayoutManager.h; sourceTree = "<group>"; };
 		0A23BFC115BD4593009CB4C4 /* LeftBottomNotificationLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftBottomNotificationLayoutManager.m; sourceTree = "<group>"; };
 		0A23BFC215BD4593009CB4C4 /* LeftTopNotificationLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftTopNotificationLayoutManager.h; sourceTree = "<group>"; };
@@ -121,8 +94,6 @@
 		0A23BFD615BD4593009CB4C4 /* UserNotificationCenterScreenCornerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserNotificationCenterScreenCornerView.h; sourceTree = "<group>"; };
 		0A23BFD715BD4593009CB4C4 /* UserNotificationCenterScreenCornerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserNotificationCenterScreenCornerView.m; sourceTree = "<group>"; };
 		0A23BFDC15BD4593009CB4C4 /* screen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = screen.jpg; sourceTree = "<group>"; };
-		0A23C00E15BD4641009CB4C4 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = 10.5/Growl.framework; sourceTree = "<group>"; };
-		0A23C01115BD464C009CB4C4 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
 		0A23C07C15BD4BD0009CB4C4 /* UserNotificationCenterProtected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserNotificationCenterProtected.h; sourceTree = "<group>"; };
 		0A23C17A15BD64EE009CB4C4 /* Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A23C17C15BD64EE009CB4C4 /* Test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Test-Info.plist"; sourceTree = "<group>"; };
@@ -205,24 +176,6 @@
 			name = Classes;
 			sourceTree = "<group>";
 		};
-		0A23C01915BD4654009CB4C4 /* growl */ = {
-			isa = PBXGroup;
-			children = (
-				0A23C04E15BD476C009CB4C4 /* framework */,
-				0A23BFBE15BD4593009CB4C4 /* GrowlUserNotificationCenter.h */,
-				0A23BFBF15BD4593009CB4C4 /* GrowlUserNotificationCenter.m */,
-			);
-			name = growl;
-			sourceTree = "<group>";
-		};
-		0A23C01E15BD465E009CB4C4 /* 10.5 */ = {
-			isa = PBXGroup;
-			children = (
-				0A23C00E15BD4641009CB4C4 /* Growl.framework */,
-			);
-			name = 10.5;
-			sourceTree = "<group>";
-		};
 		0A23C04915BD4723009CB4C4 /* framework */ = {
 			isa = PBXGroup;
 			children = (
@@ -243,7 +196,6 @@
 			children = (
 				0A23C07C15BD4BD0009CB4C4 /* UserNotificationCenterProtected.h */,
 				0A23C04C15BD474E009CB4C4 /* apple */,
-				0A23C01915BD4654009CB4C4 /* growl */,
 				0A23C04F15BD4776009CB4C4 /* own */,
 			);
 			name = internal;
@@ -256,15 +208,6 @@
 				0A23BFBD15BD4593009CB4C4 /* AppleUserNotificationCenter.m */,
 			);
 			name = apple;
-			sourceTree = "<group>";
-		};
-		0A23C04E15BD476C009CB4C4 /* framework */ = {
-			isa = PBXGroup;
-			children = (
-				0A23C01E15BD465E009CB4C4 /* 10.5 */,
-				0A23C01115BD464C009CB4C4 /* Growl.framework */,
-			);
-			name = framework;
 			sourceTree = "<group>";
 		};
 		0A23C04F15BD4776009CB4C4 /* own */ = {
@@ -399,8 +342,6 @@
 				8DC2EF520486A6940098B216 /* Resources */,
 				8DC2EF540486A6940098B216 /* Sources */,
 				8DC2EF560486A6940098B216 /* Frameworks */,
-				0A23C04715BD46F9009CB4C4 /* Copy Growl */,
-				0A23C04815BD46F9009CB4C4 /* Copy 10.5 Growl */,
 			);
 			buildRules = (
 			);
@@ -418,7 +359,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0920;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "UserNotification" */;
 			compatibilityVersion = "Xcode 3.1";
@@ -478,7 +419,6 @@
 			files = (
 				0A23BFE015BD4593009CB4C4 /* AnimatedWindow.m in Sources */,
 				0A23BFE415BD4593009CB4C4 /* AppleUserNotificationCenter.m in Sources */,
-				0A23BFE615BD4593009CB4C4 /* GrowlUserNotificationCenter.m in Sources */,
 				0A23BFE815BD4593009CB4C4 /* LeftBottomNotificationLayoutManager.m in Sources */,
 				0A23BFEA15BD4593009CB4C4 /* LeftTopNotificationLayoutManager.m in Sources */,
 				0A23BFEC15BD4593009CB4C4 /* NotificationLayoutManager.m in Sources */,
@@ -525,6 +465,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Test;
 			};
 			name = Debug;
@@ -548,6 +489,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Test;
 				ZERO_LINK = NO;
 			};
@@ -557,12 +499,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = K4T4R33YU4;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					"$(PROJECT_DIR)",
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -571,7 +517,11 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				OTHER_CODE_SIGN_FLAGS = "--deep";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alxn1.${PRODUCT_NAME:rfc1034Identifier}";
 				PRODUCT_NAME = UserNotification;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -580,18 +530,26 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = K4T4R33YU4;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					"$(PROJECT_DIR)",
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				OTHER_CODE_SIGN_FLAGS = "--deep";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alxn1.${PRODUCT_NAME:rfc1034Identifier}";
 				PRODUCT_NAME = UserNotification;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
@@ -599,12 +557,34 @@
 		1DEB91B208733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx;
@@ -614,11 +594,32 @@
 		1DEB91B308733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PREBINDING = NO;
 				SDKROOT = macosx;
 			};

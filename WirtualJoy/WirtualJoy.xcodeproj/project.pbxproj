@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,9 +20,12 @@
 		0A46962315B593E7003AB8FD /* WJoyDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4691E815B56A1A003AB8FD /* WJoyDevice.m */; };
 		0A46966815B593F6003AB8FD /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1CB32615B022BD0012FCC7 /* IOKit.framework */; };
 		0A46966915B593F6003AB8FD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A46925815B571F7003AB8FD /* Security.framework */; };
-		0A4696EC15B59587003AB8FD /* WirtualJoy.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0A46960715B593A2003AB8FD /* WirtualJoy.framework */; };
+		0A4696EC15B59587003AB8FD /* WirtualJoy.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0A46960715B593A2003AB8FD /* WirtualJoy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		0A4696F915B595F1003AB8FD /* test.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4696F815B595F1003AB8FD /* test.m */; };
 		0A46971615B5970A003AB8FD /* WirtualJoy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A46960715B593A2003AB8FD /* WirtualJoy.framework */; };
+		3AAB09211E2C24330032909A /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1CB32615B022BD0012FCC7 /* IOKit.framework */; };
+		ED22509FAE6ECBFCF2270050 /* STPrivilegedTask.h in Headers */ = {isa = PBXBuildFile; fileRef = ED2254E72EC36EC17E2D341A /* STPrivilegedTask.h */; };
+		ED2255043083DB9B8CAEA17D /* STPrivilegedTask.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2258E16C66CE05147C7C4F /* STPrivilegedTask.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +96,8 @@
 		32D94FCF0562CBF700B6AF17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32D94FD00562CBF700B6AF17 /* wjoy.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wjoy.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DA8362C06AD9B9200E5AC22 /* Kernel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kernel.framework; path = /System/Library/Frameworks/Kernel.framework; sourceTree = "<absolute>"; };
+		ED2254E72EC36EC17E2D341A /* STPrivilegedTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPrivilegedTask.h; sourceTree = "<group>"; };
+		ED2258E16C66CE05147C7C4F /* STPrivilegedTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPrivilegedTask.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AAB09211E2C24330032909A /* IOKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,6 +212,8 @@
 				0A46959D15B58D5A003AB8FD /* WJoyTool.h */,
 				0A46959E15B58D5A003AB8FD /* WJoyTool.m */,
 				0A46928615B578CB003AB8FD /* WJoyToolMain.m */,
+				ED2258E16C66CE05147C7C4F /* STPrivilegedTask.m */,
+				ED2254E72EC36EC17E2D341A /* STPrivilegedTask.h */,
 			);
 			name = tool;
 			sourceTree = "<group>";
@@ -238,6 +246,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A46961415B593D4003AB8FD /* WJoyDevice.h in Headers */,
+				ED22509FAE6ECBFCF2270050 /* STPrivilegedTask.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,9 +333,15 @@
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0920;
+				TargetAttributes = {
+					32D94FC30562CBF700B6AF17 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = 1DEB91DD08733DB10010E9CD /* Build configuration list for PBXProject "WirtualJoy" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -400,6 +415,7 @@
 				0A46962115B593E7003AB8FD /* WJoyTool.m in Sources */,
 				0A46962215B593E7003AB8FD /* WJoyDeviceImpl.m in Sources */,
 				0A46962315B593E7003AB8FD /* WJoyDevice.m in Sources */,
+				ED2255043083DB9B8CAEA17D /* STPrivilegedTask.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,6 +475,8 @@
 					Foundation,
 					"-framework",
 					AppKit,
+					"-framework",
+					IOKit,
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = WJoyTool;
@@ -481,6 +499,8 @@
 					Foundation,
 					"-framework",
 					AppKit,
+					"-framework",
+					IOKit,
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = WJoyTool;
@@ -511,6 +531,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alxn1.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = WirtualJoy;
 			};
 			name = Debug;
@@ -537,6 +558,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alxn1.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = WirtualJoy;
 				ZERO_LINK = NO;
 			};
@@ -562,6 +584,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alxn1.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Test;
 			};
 			name = Debug;
@@ -585,6 +608,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alxn1.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Test;
 				ZERO_LINK = NO;
 			};
@@ -594,19 +618,24 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1.0.0d1;
+				CURRENT_PROJECT_VERSION = 2.0.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = K4T4R33YU4;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_KERNEL_DEVELOPMENT = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(SYSTEM_LIBRARY_DIR)/Extensions";
-				MODULE_NAME = "com.JustinBis.driver.wjoy-foohid";
-				MODULE_VERSION = 1.0.0d1;
+				INSTALL_PATH = /Library/Extensions;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MODULE_NAME = com.alxn1.driver.wjoy;
+				MODULE_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alxn1.driver.${PRODUCT_NAME:rfc1034Identifier}";
 				PRODUCT_NAME = wjoy;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = kext;
 			};
 			name = Debug;
@@ -615,16 +644,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
-				CURRENT_PROJECT_VERSION = 1.0.0d1;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2.0.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_KERNEL_DEVELOPMENT = NO;
+				DEVELOPMENT_TEAM = K4T4R33YU4;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(SYSTEM_LIBRARY_DIR)/Extensions";
-				MODULE_NAME = "com.JustinBis.driver.wjoy-foohid";
-				MODULE_VERSION = 1.0.0d1;
+				INSTALL_PATH = /Library/Extensions;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MODULE_NAME = com.alxn1.driver.wjoy;
+				MODULE_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alxn1.driver.${PRODUCT_NAME:rfc1034Identifier}";
 				PRODUCT_NAME = wjoy;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = kext;
 			};
 			name = Release;
@@ -632,12 +665,34 @@
 		1DEB91DE08733DB10010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DDEBUG";
 				PREBINDING = NO;
@@ -648,11 +703,32 @@
 		1DEB91DF08733DB10010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PREBINDING = NO;
 				SDKROOT = macosx;
 			};
