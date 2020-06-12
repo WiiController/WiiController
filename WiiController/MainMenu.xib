@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication"/>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="373" customClass="NSFontManager"/>
         <menu title="Main Menu" systemMenu="main" id="29">
             <items>
-                <menuItem title="WJoy" id="56">
+                <menuItem title="WiiController" id="56">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="WJoy" systemMenu="apple" id="57">
+                    <menu key="submenu" title="WiiController" systemMenu="apple" id="57">
                         <items>
-                            <menuItem title="About WJoy" id="58">
+                            <menuItem title="About WiiController" id="58">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="orderFrontStandardAboutPanel:" target="-2" id="142"/>
@@ -29,7 +28,7 @@
                                 <menu key="submenu" title="Services" systemMenu="services" id="130"/>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="144"/>
-                            <menuItem title="Hide WJoy" keyEquivalent="h" id="134">
+                            <menuItem title="Hide WiiController" keyEquivalent="h" id="134">
                                 <connections>
                                     <action selector="hide:" target="-1" id="369"/>
                                 </connections>
@@ -47,7 +46,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="149"/>
-                            <menuItem title="Quit WJoy" keyEquivalent="q" id="136">
+                            <menuItem title="Quit WiiController" keyEquivalent="q" id="136">
                                 <connections>
                                     <action selector="terminate:" target="-2" id="448"/>
                                 </connections>
@@ -635,7 +634,7 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Help" systemMenu="help" id="106">
                         <items>
-                            <menuItem title="WJoy Help" keyEquivalent="?" id="111">
+                            <menuItem title="WiiController Help" keyEquivalent="?" id="111">
                                 <connections>
                                     <action selector="showHelp:" target="-1" id="360"/>
                                 </connections>

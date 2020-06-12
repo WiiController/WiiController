@@ -20,7 +20,7 @@
       location = "group:LocalizationUtils/LocalizationUtils.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:WJoy/WJoy.xcodeproj">
+      location = "group:/Users/ian/Documents/GitHub/wjoy/WiiController/WiiController.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:examples/WATest/WATest.xcodeproj">

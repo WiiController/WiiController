@@ -1,7 +1,7 @@
 #!/usr/bin/osascript
 
 tell application "Finder"
-	tell disk "WJoy"
+	tell disk "WiiController"
 		open
 		tell container window
 			set current view to icon view
@@ -17,8 +17,8 @@ tell application "Finder"
 			set text size to 12
 		end tell
 		set background picture of opts to file ".images:background.png"
-		set extension hidden of item "WJoy.app" to true
-		set position of item "WJoy.app" to {56 + 64, 231 + 64}
+		set extension hidden of item "WiiController.app" to true
+		set position of item "WiiController.app" to {56 + 64, 231 + 64}
 		set position of item "Applications" to {310 + 64, 231 + 64}
 		close
 		open

@@ -270,8 +270,8 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		8D1107310486CEB800E47090 /* WJoy-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "WJoy-Info.plist"; sourceTree = "<group>"; };
-		8D1107320486CEB800E47090 /* WJoy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WJoy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107310486CEB800E47090 /* WiiController-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "WiiController-Info.plist"; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* WiiController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WiiController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -403,7 +403,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* WJoy.app */,
+				8D1107320486CEB800E47090 /* WiiController.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -441,7 +441,7 @@
 				0A2206A015C2AE51004D168E /* app.icns */,
 				0A10283615C2BE36006715D7 /* warning.icns */,
 				0A2206A115C2AE51004D168E /* wiimote.png */,
-				8D1107310486CEB800E47090 /* WJoy-Info.plist */,
+				8D1107310486CEB800E47090 /* WiiController-Info.plist */,
 				0A2206AD15C2AE84004D168E /* MainMenu.xib */,
 			);
 			name = Resources;
@@ -459,9 +459,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D1107260486CEB800E47090 /* WJoy */ = {
+		8D1107260486CEB800E47090 /* WiiController */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "WJoy" */;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "WiiController" */;
 			buildPhases = (
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
@@ -477,10 +477,10 @@
 				0A2206FA15C2AF33004D168E /* PBXTargetDependency */,
 				0A95C85D18CE0AD000C66818 /* PBXTargetDependency */,
 			);
-			name = WJoy;
+			name = WiiController;
 			productInstallPath = "$(HOME)/Applications";
 			productName = WJoy;
-			productReference = 8D1107320486CEB800E47090 /* WJoy.app */;
+			productReference = 8D1107320486CEB800E47090 /* WiiController.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -496,7 +496,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "WJoy" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "WiiController" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = en;
 			hasScannedForEncodings = 1;
@@ -537,7 +537,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				8D1107260486CEB800E47090 /* WJoy */,
+				8D1107260486CEB800E47090 /* WiiController */,
 				0A161401172979E300F0D5B2 /* Build DMG */,
 			);
 		};
@@ -692,7 +692,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n\nDMG_PATH=\"/Volumes/WJoy\"\n\nhdiutil create _tmp.dmg -megabytes 200 -ov -volname \"WJoy\" -fs HFS+\nhdiutil attach _tmp.dmg\n\ncp -Rf \"$CONFIGURATION_BUILD_DIR/WJoy.app\" \"$DMG_PATH\"\nmkdir \"$DMG_PATH/.images\"\ncp \"$SOURCE_ROOT/dmg_background.png\" \"$DMG_PATH/.images/background.png\"\nln -s \"/Applications\" \"$DMG_PATH/Applications\"\n\n\"$SOURCE_ROOT/fix_dmg.applescript\"\n\nSetFile -a C \"$DMG_PATH\"\ncp \"$SOURCE_ROOT/app.icns\" \"$DMG_PATH/.VolumeIcon.icns\"\n\nif [ -e \"$SOURCE_ROOT\"/wjoy.dmg ]\nthen\nrm \"$SOURCE_ROOT\"/wjoy.dmg\nfi\n\nhdiutil detach \"$DMG_PATH\"\nhdiutil convert _tmp.dmg -ov -format UDZO -imagekey zlib-level=9 -o \"wjoy.dmg\"\nrm _tmp.dmg\n\n\"$BUILT_PRODUCTS_DIR\"/dmgeula -lang_plist_path \"$SOURCE_ROOT\"/dmg_license_info.plist -licenses_dir \"$SOURCE_ROOT\" -dmg_path \"$SOURCE_ROOT\"/wjoy.dmg\n\nexit 0\n";
+			shellScript = "#!/bin/sh\n\nDMG_PATH=\"/Volumes/WiiController\"\n\nhdiutil create _tmp.dmg -megabytes 200 -ov -volname \"WiiController\" -fs HFS+\nhdiutil attach _tmp.dmg\n\ncp -Rf \"$CONFIGURATION_BUILD_DIR/WiiController.app\" \"$DMG_PATH\"\nmkdir \"$DMG_PATH/.images\"\ncp \"$SOURCE_ROOT/dmg_background.png\" \"$DMG_PATH/.images/background.png\"\nln -s \"/Applications\" \"$DMG_PATH/Applications\"\n\n\"$SOURCE_ROOT/fix_dmg.applescript\"\n\nSetFile -a C \"$DMG_PATH\"\ncp \"$SOURCE_ROOT/app.icns\" \"$DMG_PATH/.VolumeIcon.icns\"\n\nif [ -e \"$SOURCE_ROOT\"/WiiController.dmg ]\nthen\nrm \"$SOURCE_ROOT\"/WiiController.dmg\nfi\n\nhdiutil detach \"$DMG_PATH\"\nhdiutil convert _tmp.dmg -ov -format UDZO -imagekey zlib-level=9 -o \"WiiController.dmg\"\nrm _tmp.dmg\n\n\"$BUILT_PRODUCTS_DIR\"/dmgeula -lang_plist_path \"$SOURCE_ROOT\"/dmg_license_info.plist -licenses_dir \"$SOURCE_ROOT\" -dmg_path \"$SOURCE_ROOT\"/WiiController.dmg\n\nexit 0\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -721,7 +721,7 @@
 		};
 		0A16140817297A1100F0D5B2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8D1107260486CEB800E47090 /* WJoy */;
+			target = 8D1107260486CEB800E47090 /* WiiController */;
 			targetProxy = 0A16140717297A1100F0D5B2 /* PBXContainerItemProxy */;
 		};
 		0A2206F415C2AF2A004D168E /* PBXTargetDependency */ = {
@@ -792,13 +792,13 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = ../;
-				INFOPLIST_FILE = "WJoy-Info.plist";
+				INFOPLIST_FILE = "WiiController-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MARKETING_VERSION = 0.10.0;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hiddenswitch.WJoy;
-				PRODUCT_NAME = WJoy;
+				PRODUCT_NAME = WiiController;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "WJoy-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -822,13 +822,13 @@
 				);
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = ../;
-				INFOPLIST_FILE = "WJoy-Info.plist";
+				INFOPLIST_FILE = "WiiController-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MARKETING_VERSION = 0.10.0;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hiddenswitch.WJoy;
-				PRODUCT_NAME = WJoy;
+				PRODUCT_NAME = WiiController;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "WJoy-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -920,7 +920,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "WJoy" */ = {
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "WiiController" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4B08A954540054247B /* Debug */,
@@ -929,7 +929,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "WJoy" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "WiiController" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
