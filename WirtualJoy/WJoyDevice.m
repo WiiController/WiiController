@@ -48,8 +48,8 @@ NSString *WJoyDeviceSerialNumberStringKey   = @"WJoyDeviceSerialNumberStringKey"
     if(self == nil)
         return nil;
 
-    uint32_t     vendorID           = [[properties objectForKey:WJoyDeviceVendorIDKey] unsignedIntegerValue];
-    uint32_t     productID          = [[properties objectForKey:WJoyDeviceProductIDKey] unsignedIntegerValue];
+    uint32_t     vendorID           = [[properties objectForKey:WJoyDeviceVendorIDKey] unsignedIntValue];
+    uint32_t     productID          = [[properties objectForKey:WJoyDeviceProductIDKey] unsignedIntValue];
     NSString    *productString      = [properties objectForKey:WJoyDeviceProductStringKey];
     NSString    *serialNumberString = [properties objectForKey:WJoyDeviceSerialNumberStringKey];
 

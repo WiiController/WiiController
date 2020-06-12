@@ -8,7 +8,7 @@
 
 #import "UserNotificationCenterScreenCornerView.h"
 
-@interface UserNotificationCenterScreenCornerView (PrivatePart)
+@interface UserNotificationCenterScreenCornerView ()
 
 - (NSBezierPath*)pathForCornerPoint;
 - (NSBezierPath*)pathForTriangle:(UserNotificationCenterScreenCorner)corner;
@@ -35,7 +35,7 @@
     if(self == nil)
         return nil;
 
-    m_ScreenCorner              = UserNotificationCenterScreenCornerRightTop;
+    m_ScreenCorner              = UserNotificationCenterScreenCornerRightBottom;
     m_IsEnabled                 = YES;
     m_UnderMouseScreenCorner    = -1;
     m_DraggedMouseScreenCorner  = -1;
@@ -52,7 +52,7 @@
     if(self == nil)
         return nil;
 
-    m_ScreenCorner              = UserNotificationCenterScreenCornerRightTop;
+    m_ScreenCorner              = UserNotificationCenterScreenCornerRightBottom;
     m_IsEnabled                 = YES;
     m_UnderMouseScreenCorner    = -1;
     m_DraggedMouseScreenCorner  = -1;
@@ -85,7 +85,7 @@
     [m_BGImage
         drawInRect:rect
           fromRect:NSZeroRect
-         operation:NSCompositeSourceOver
+         operation:NSCompositingOperationSourceOver
           fraction:1.0f];
 
     [[NSColor blackColor] setStroke];
@@ -239,10 +239,6 @@
 {
     m_Action = sel;
 }
-
-@end
-
-@implementation UserNotificationCenterScreenCornerView (PrivatePart)
 
 - (NSBezierPath*)pathForCornerPoint
 {
