@@ -13,7 +13,6 @@
 typedef enum
 {
     NotificationSystemTypeApple     = 1,
-    NotificationSystemTypeGrowl     = 2,
     NotificationSystemTypeInternal  = 3,
     NotificationSystemTypeBest      = 4
 } NotificationSystemType;
@@ -30,7 +29,6 @@ typedef enum
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [growlAvailableCheckTimer invalidate];
     [super dealloc];
 }
 
@@ -43,13 +41,6 @@ typedef enum
                                      object:nil];
 
     [self updateSystemsState:self];
-
-    growlAvailableCheckTimer =
-            [NSTimer scheduledTimerWithTimeInterval:1.0
-                                             target:self
-                                           selector:@selector(updateSystemsState:)
-                                           userInfo:nil
-                                            repeats:YES];
 
     [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
     [window makeKeyAndOrderFront:self];
@@ -92,12 +83,6 @@ typedef enum
     if(![notificationSystemMatrix isEnabled])
         return;
 
-    BOOL isAvailable = [[UserNotificationCenter withName:@"growl"] isAvailable];
-
-    [[notificationSystemMatrix cellWithTag:NotificationSystemTypeGrowl] setEnabled:isAvailable];
-    if(!isAvailable && [notificationSystemMatrix selectedTag] == NotificationSystemTypeGrowl)
-        [notificationSystemMatrix selectCellWithTag:NotificationSystemTypeBest];
-
     if([UserNotificationCenter withName:@"apple"] == nil)
         [[notificationSystemMatrix cellWithTag:NotificationSystemTypeApple] setEnabled:NO];
 }
@@ -115,10 +100,6 @@ typedef enum
     {
         case NotificationSystemTypeApple:
             center = [UserNotificationCenter withName:@"apple"];
-            break;
-
-        case NotificationSystemTypeGrowl:
-            center = [UserNotificationCenter withName:@"growl"];
             break;
 
         case NotificationSystemTypeInternal:

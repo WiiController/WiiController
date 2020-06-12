@@ -22,8 +22,6 @@
         IBOutlet NSButton                               *soundEnabledCheck;
         IBOutlet UserNotificationCenterScreenCornerView *cornerView;
         IBOutlet NSSlider                               *durationSlider;
-
-        NSTimer                                         *growlAvailableCheckTimer;
 }
 
 - (IBAction)showNotification:(id)sender;
