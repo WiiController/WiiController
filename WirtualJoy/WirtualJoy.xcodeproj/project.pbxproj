@@ -23,7 +23,7 @@
 		0A4696EC15B59587003AB8FD /* WirtualJoy.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0A46960715B593A2003AB8FD /* WirtualJoy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		0A4696F915B595F1003AB8FD /* test.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4696F815B595F1003AB8FD /* test.m */; };
 		0A46971615B5970A003AB8FD /* WirtualJoy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A46960715B593A2003AB8FD /* WirtualJoy.framework */; };
-		3AAB09211E2C24330032909A /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1CB32615B022BD0012FCC7 /* IOKit.framework */; };
+		3CAB09612493641B003D86AB /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1CB32615B022BD0012FCC7 /* IOKit.framework */; };
 		ED22509FAE6ECBFCF2270050 /* STPrivilegedTask.h in Headers */ = {isa = PBXBuildFile; fileRef = ED2254E72EC36EC17E2D341A /* STPrivilegedTask.h */; };
 		ED2255043083DB9B8CAEA17D /* STPrivilegedTask.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2258E16C66CE05147C7C4F /* STPrivilegedTask.m */; };
 /* End PBXBuildFile section */
@@ -129,7 +129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3AAB09211E2C24330032909A /* IOKit.framework in Frameworks */,
+				3CAB09612493641B003D86AB /* IOKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
