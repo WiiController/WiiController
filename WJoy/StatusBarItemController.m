@@ -9,13 +9,10 @@
 #import <Wiimote/Wiimote.h>
 
 #import "StatusBarItemController.h"
-#import "LoginItemsList.h"
 
 @interface StatusBarItemController (PrivatePart)
 
 - (id)initInternal;
-
-- (void)toggleAutostart;
 
 @end
 
@@ -69,17 +66,6 @@
 - (void)dealloc
 {
     [[NSStatusBar systemStatusBar] removeStatusItem:m_Item];
-}
-
-- (void)toggleAutostart
-{
-    NSString    *appPath    = [[NSBundle mainBundle] bundlePath];
-    BOOL         isExists   = [[LoginItemsList userItemsList] isItemWithPathExists:appPath];
-
-    if(isExists)
-        [[LoginItemsList userItemsList] removeItemWithPath:appPath];
-    else
-        [[LoginItemsList userItemsList] addItemWithPath:appPath];
 }
 
 - (void)toggleOneButtonClickConnection
@@ -163,18 +149,6 @@
     [item setTarget:self];
     [item setState:([Wiimote isUseOneButtonClickConnection])?(NSOnState):(NSOffState)];
     [m_Menu addItem:[NSMenuItem separatorItem]];
-    [m_Menu addItem:item];
-
-    item = [[NSMenuItem alloc] initWithTitle:@"Start with macOS" action:@selector(toggleAutostart) keyEquivalent:@""];
-    [item setTarget:self];
-
-    NSUInteger state = ([[LoginItemsList userItemsList]
-                            isItemWithPathExists:
-                                [[NSBundle mainBundle] bundlePath]])?
-                        (NSOnState):
-                        (NSOffState);
-
-    [item setState:state];
     [m_Menu addItem:item];
 
     item = [[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(terminate:) keyEquivalent:@""];
