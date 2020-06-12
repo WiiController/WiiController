@@ -55,17 +55,6 @@
     return self;
 }
 
-- (id)initWithCoder:(NSCoder*)decoder
-{
-    self = [super initWithCoder:decoder];
-    if(self == nil)
-        return nil;
-
-    m_IsAnimationEnabled = NO;
-
-    return self;
-}
-
 - (void)dealloc
 {
     [m_CurrentAnimation stopAnimation];
