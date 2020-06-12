@@ -1,14 +1,14 @@
 //
-//  HIDDevice+Private.h
+//  W_HIDDevice+Private.h
 //  HID
 //
 //  Created by alxn1 on 24.06.13.
 //  Copyright 2013 alxn1. All rights reserved.
 //
 
-#import "HIDDevice.h"
+#import "W_HIDDevice.h"
 
-@interface HIDDevice (Private)
+@interface W_HIDDevice (Private)
 
 - (id)initWithOwner:(HIDManager*)manager
           deviceRef:(IOHIDDeviceRef)handle

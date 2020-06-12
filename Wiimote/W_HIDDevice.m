@@ -1,29 +1,29 @@
 //
-//  HIDDevice.m
+//  W_HIDDevice.m
 //  HID
 //
 //  Created by alxn1 on 24.06.13.
 //  Copyright 2013 alxn1. All rights reserved.
 //
 
-#import "HIDDevice.h"
+#import "W_HIDDevice.h"
 
 #import "HIDManager+Private.h"
-#import "HIDDevice+Private.h"
+#import "W_HIDDevice+Private.h"
 
 @implementation NSObject (HIDDeviceDelegate)
 
-- (void)HIDDevice:(HIDDevice*)device reportDataReceived:(const uint8_t*)bytes length:(NSUInteger)length
+- (void)HIDDevice:(W_HIDDevice*)device reportDataReceived:(const uint8_t*)bytes length:(NSUInteger)length
 {
 }
 
-- (void)HIDDeviceDisconnected:(HIDDevice*)device
+- (void)HIDDeviceDisconnected:(W_HIDDevice*)device
 {
 }
 
 @end
 
-@implementation HIDDevice
+@implementation W_HIDDevice
 
 - (void)dealloc
 {
@@ -142,7 +142,7 @@
 - (BOOL)isEqual:(id)object
 {
     if([object isKindOfClass:[self class]])
-        return (m_Handle == ((HIDDevice*)object)->m_Handle);
+        return (m_Handle == ((W_HIDDevice*)object)->m_Handle);
 
     if(CFGetTypeID((__bridge CFTypeRef)(object)) == IOHIDDeviceGetTypeID())
         return (m_Handle == (__bridge IOHIDDeviceRef)object);
@@ -152,7 +152,7 @@
 
 @end
 
-@implementation HIDDevice (Properties)
+@implementation W_HIDDevice (Properties)
 
 - (NSString*)name
 {

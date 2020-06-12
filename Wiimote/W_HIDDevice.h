@@ -1,5 +1,5 @@
 //
-//  HIDDevice.h
+//  W_HIDDevice.h
 //  HID
 //
 //  Created by alxn1 on 24.06.13.
@@ -10,17 +10,17 @@
 
 #import <IOKit/hid/IOHIDLib.h>
 
-@class HIDDevice;
+@class W_HIDDevice;
 @class HIDManager;
 
 @interface NSObject (HIDDeviceDelegate)
 
-- (void)HIDDevice:(HIDDevice*)device reportDataReceived:(const uint8_t*)bytes length:(NSUInteger)length;
-- (void)HIDDeviceDisconnected:(HIDDevice*)device;
+- (void)HIDDevice:(W_HIDDevice*)device reportDataReceived:(const uint8_t*)bytes length:(NSUInteger)length;
+- (void)HIDDeviceDisconnected:(W_HIDDevice*)device;
 
 @end
 
-@interface HIDDevice : NSObject
+@interface W_HIDDevice : NSObject
 {
     @private
         HIDManager      *m_Owner;
@@ -54,7 +54,7 @@
 
 @end
 
-@interface HIDDevice (Properties)
+@interface W_HIDDevice (Properties)
 
 - (NSString*)name;
 - (NSString*)address;

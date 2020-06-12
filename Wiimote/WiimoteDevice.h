@@ -9,7 +9,7 @@
 #import "WiimoteProtocol.h"
 #import "WiimoteDeviceReport.h"
 
-@class HIDDevice;
+@class W_HIDDevice;
 @class IOBluetoothDevice;
 
 @class WiimoteDevice;
@@ -40,7 +40,7 @@
 		id							 m_Delegate;
 }
 
-- (id)initWithHIDDevice:(HIDDevice*)device;
+- (id)initWithHIDDevice:(W_HIDDevice*)device;
 - (id)initWithBluetoothDevice:(IOBluetoothDevice*)device;
 
 - (BOOL)isConnected;

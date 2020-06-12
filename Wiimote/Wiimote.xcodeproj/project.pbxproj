@@ -17,9 +17,9 @@
 		0A35C79717787A2700E43A07 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A35C64417787A1000E43A07 /* Foundation.framework */; };
 		0A35C79817787A2700E43A07 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A35C64617787A1000E43A07 /* IOKit.framework */; };
 		0A35C79C17787A4200E43A07 /* HID.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0A35C63C177879EE00E43A07 /* HID.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		0A35C7AA17787A9400E43A07 /* HIDDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A35C7A417787A9400E43A07 /* HIDDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0A35C7AB17787A9400E43A07 /* HIDDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A35C7A517787A9400E43A07 /* HIDDevice.m */; };
-		0A35C7AD17787A9400E43A07 /* HIDDevice+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A35C7A717787A9400E43A07 /* HIDDevice+Private.m */; };
+		0A35C7AA17787A9400E43A07 /* W_HIDDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A35C7A417787A9400E43A07 /* W_HIDDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0A35C7AB17787A9400E43A07 /* W_HIDDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A35C7A517787A9400E43A07 /* W_HIDDevice.m */; };
+		0A35C7AD17787A9400E43A07 /* W_HIDDevice+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A35C7A717787A9400E43A07 /* W_HIDDevice+Private.m */; };
 		0A35C7AE17787A9400E43A07 /* HIDManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A35C7A817787A9400E43A07 /* HIDManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A35C7AF17787A9400E43A07 /* HIDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A35C7A917787A9400E43A07 /* HIDManager.m */; };
 		0A362EDD1623EE1F00B14E58 /* test.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A362EDC1623EE1F00B14E58 /* test.xib */; };
@@ -112,9 +112,9 @@
 		0A6901C515C90EB8000D988D /* WiimoteUnknownExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6901C315C90EB8000D988D /* WiimoteUnknownExtension.m */; };
 		0A6E74331600DA060054BD4A /* WiimoteMotionPlusDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E74311600DA060054BD4A /* WiimoteMotionPlusDetector.m */; };
 		0A6E74511600E1580054BD4A /* WiimoteProtocolMotionPlus.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A6E74501600E1580054BD4A /* WiimoteProtocolMotionPlus.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0A7D7ECC18E180C900E46316 /* HIDDevice+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A35C7A717787A9400E43A07 /* HIDDevice+Private.m */; };
+		0A7D7ECC18E180C900E46316 /* W_HIDDevice+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A35C7A717787A9400E43A07 /* W_HIDDevice+Private.m */; };
 		0A7D7ECD18E180C900E46316 /* HIDManager+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87DCBF1780BAC000BB1BD8 /* HIDManager+Private.m */; };
-		0A7D7ECE18E180C900E46316 /* HIDDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A35C7A517787A9400E43A07 /* HIDDevice.m */; };
+		0A7D7ECE18E180C900E46316 /* W_HIDDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A35C7A517787A9400E43A07 /* W_HIDDevice.m */; };
 		0A7D7ECF18E180C900E46316 /* HIDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A35C7A917787A9400E43A07 /* HIDManager.m */; };
 		0A7D7ED018E180C900E46316 /* WiimoteDeviceReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A48908D15C7FA4500207478 /* WiimoteDeviceReport.m */; };
 		0A7D7ED118E180C900E46316 /* WiimoteEventDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A48909115C7FA4500207478 /* WiimoteEventDispatcher.m */; };
@@ -310,10 +310,10 @@
 		0A35C63D177879EE00E43A07 /* HID-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HID-Info.plist"; sourceTree = "<group>"; };
 		0A35C64417787A1000E43A07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0A35C64617787A1000E43A07 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		0A35C7A417787A9400E43A07 /* HIDDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HIDDevice.h; sourceTree = "<group>"; };
-		0A35C7A517787A9400E43A07 /* HIDDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HIDDevice.m; sourceTree = "<group>"; };
-		0A35C7A617787A9400E43A07 /* HIDDevice+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HIDDevice+Private.h"; sourceTree = "<group>"; };
-		0A35C7A717787A9400E43A07 /* HIDDevice+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HIDDevice+Private.m"; sourceTree = "<group>"; };
+		0A35C7A417787A9400E43A07 /* W_HIDDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = W_HIDDevice.h; sourceTree = "<group>"; };
+		0A35C7A517787A9400E43A07 /* W_HIDDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = W_HIDDevice.m; sourceTree = "<group>"; };
+		0A35C7A617787A9400E43A07 /* W_HIDDevice+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "W_HIDDevice+Private.h"; sourceTree = "<group>"; };
+		0A35C7A717787A9400E43A07 /* W_HIDDevice+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "W_HIDDevice+Private.m"; sourceTree = "<group>"; };
 		0A35C7A817787A9400E43A07 /* HIDManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HIDManager.h; sourceTree = "<group>"; };
 		0A35C7A917787A9400E43A07 /* HIDManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HIDManager.m; sourceTree = "<group>"; };
 		0A362EDC1623EE1F00B14E58 /* test.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = test.xib; sourceTree = "<group>"; };
@@ -627,8 +627,8 @@
 			isa = PBXGroup;
 			children = (
 				0A35C7B017787AA000E43A07 /* internal */,
-				0A35C7A417787A9400E43A07 /* HIDDevice.h */,
-				0A35C7A517787A9400E43A07 /* HIDDevice.m */,
+				0A35C7A417787A9400E43A07 /* W_HIDDevice.h */,
+				0A35C7A517787A9400E43A07 /* W_HIDDevice.m */,
 				0A35C7A817787A9400E43A07 /* HIDManager.h */,
 				0A35C7A917787A9400E43A07 /* HIDManager.m */,
 				0A35C63D177879EE00E43A07 /* HID-Info.plist */,
@@ -639,8 +639,8 @@
 		0A35C7B017787AA000E43A07 /* internal */ = {
 			isa = PBXGroup;
 			children = (
-				0A35C7A617787A9400E43A07 /* HIDDevice+Private.h */,
-				0A35C7A717787A9400E43A07 /* HIDDevice+Private.m */,
+				0A35C7A617787A9400E43A07 /* W_HIDDevice+Private.h */,
+				0A35C7A717787A9400E43A07 /* W_HIDDevice+Private.m */,
 				0A87DCBE1780BAC000BB1BD8 /* HIDManager+Private.h */,
 				0A87DCBF1780BAC000BB1BD8 /* HIDManager+Private.m */,
 			);
@@ -1135,7 +1135,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A35C7AA17787A9400E43A07 /* HIDDevice.h in Headers */,
+				0A35C7AA17787A9400E43A07 /* W_HIDDevice.h in Headers */,
 				0A35C7AE17787A9400E43A07 /* HIDManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1389,8 +1389,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A35C7AB17787A9400E43A07 /* HIDDevice.m in Sources */,
-				0A35C7AD17787A9400E43A07 /* HIDDevice+Private.m in Sources */,
+				0A35C7AB17787A9400E43A07 /* W_HIDDevice.m in Sources */,
+				0A35C7AD17787A9400E43A07 /* W_HIDDevice+Private.m in Sources */,
 				0A35C7AF17787A9400E43A07 /* HIDManager.m in Sources */,
 				0A87DCC21780BB0200BB1BD8 /* HIDManager+Private.m in Sources */,
 			);
@@ -1400,9 +1400,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A7D7ECC18E180C900E46316 /* HIDDevice+Private.m in Sources */,
+				0A7D7ECC18E180C900E46316 /* W_HIDDevice+Private.m in Sources */,
 				0A7D7ECD18E180C900E46316 /* HIDManager+Private.m in Sources */,
-				0A7D7ECE18E180C900E46316 /* HIDDevice.m in Sources */,
+				0A7D7ECE18E180C900E46316 /* W_HIDDevice.m in Sources */,
 				0AF0E74418E183D300CB6662 /* WiimoteLog.m in Sources */,
 				0A7D7ECF18E180C900E46316 /* HIDManager.m in Sources */,
 				0A7D7ED018E180C900E46316 /* WiimoteDeviceReport.m in Sources */,

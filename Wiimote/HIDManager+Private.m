@@ -10,7 +10,7 @@
 
 @implementation HIDManager (Private)
 
-- (void)HIDDeviceDisconnected:(HIDDevice*)device
+- (void)HIDDeviceDisconnected:(W_HIDDevice*)device
 {
 	[m_ConnectedDevices removeObject:device];
 

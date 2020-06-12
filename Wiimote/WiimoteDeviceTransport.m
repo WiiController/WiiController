@@ -10,17 +10,17 @@
 
 #import <IOBluetooth/IOBluetooth.h>
 
-#import <HID/HIDDevice.h>
+#import <HID/W_HIDDevice.h>
 
 #import "WiimoteProtocol.h"
 
 @interface WiimoteHIDDeviceTransport : WiimoteDeviceTransport
 {
     @private
-        HIDDevice *m_Device;
+        W_HIDDevice *m_Device;
 }
 
-- (id)initWithHIDDevice:(HIDDevice*)device;
+- (id)initWithHIDDevice:(W_HIDDevice*)device;
 
 @end
 
@@ -40,7 +40,7 @@
 
 @implementation WiimoteHIDDeviceTransport
 
-- (id)initWithHIDDevice:(HIDDevice*)device
+- (id)initWithHIDDevice:(W_HIDDevice*)device
 {
     self = [super init];
 
@@ -122,12 +122,12 @@
     return [m_Device postBytes:bytes length:length];
 }
 
-- (void)HIDDevice:(HIDDevice*)device reportDataReceived:(const uint8_t*)bytes length:(NSUInteger)length
+- (void)HIDDevice:(W_HIDDevice*)device reportDataReceived:(const uint8_t*)bytes length:(NSUInteger)length
 {
     [[self delegate] wiimoteDeviceTransport:self reportDataReceived:bytes length:length];
 }
 
-- (void)HIDDeviceDisconnected:(HIDDevice*)device
+- (void)HIDDeviceDisconnected:(W_HIDDevice*)device
 {
     [[self delegate] wiimoteDeviceTransportDisconnected:self];
 }
@@ -280,7 +280,7 @@
 
 @implementation WiimoteDeviceTransport
 
-+ (WiimoteDeviceTransport*)withHIDDevice:(HIDDevice*)device
++ (WiimoteDeviceTransport*)withHIDDevice:(W_HIDDevice*)device
 {
     return [[WiimoteHIDDeviceTransport alloc] initWithHIDDevice:device];
 }

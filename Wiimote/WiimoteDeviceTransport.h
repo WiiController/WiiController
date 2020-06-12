@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class WiimoteDeviceTransport;
-@class HIDDevice;
+@class W_HIDDevice;
 @class IOBluetoothDevice;
 
 @interface NSObject (WiimoteDeviceTransportDelegate)
@@ -28,7 +28,7 @@
         id m_Delegate;
 }
 
-+ (WiimoteDeviceTransport*)withHIDDevice:(HIDDevice*)device;
++ (WiimoteDeviceTransport*)withHIDDevice:(W_HIDDevice*)device;
 + (WiimoteDeviceTransport*)withBluetoothDevice:(IOBluetoothDevice*)device;
 
 - (NSString*)name;

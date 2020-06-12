@@ -76,7 +76,7 @@
     return self;
 }
 
-- (id)initWithHIDDevice:(HIDDevice*)device
+- (id)initWithHIDDevice:(W_HIDDevice*)device
 {
     return [self initWithWiimoteDevice:
                         [[WiimoteDevice alloc]
@@ -95,7 +95,7 @@
     [m_Device disconnect];
 }
 
-+ (void)connectToHIDDevice:(HIDDevice*)device
++ (void)connectToHIDDevice:(W_HIDDevice*)device
 {
     (void)[[Wiimote alloc] initWithHIDDevice:device];
 }

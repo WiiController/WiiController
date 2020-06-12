@@ -1,12 +1,12 @@
 //
-//  HIDDevice+Private.m
+//  W_HIDDevice+Private.m
 //  HID
 //
 //  Created by alxn1 on 24.06.13.
 //  Copyright 2013 alxn1. All rights reserved.
 //
 
-#import "HIDDevice+Private.h"
+#import "W_HIDDevice+Private.h"
 
 static void HIDDeviceReportCallback(
                                 void            *context, 
@@ -19,7 +19,7 @@ static void HIDDeviceReportCallback(
 {
     if(reportLength > 0)
     {
-        [(__bridge HIDDevice*)context
+        [(__bridge W_HIDDevice*)context
                     handleReport:report
                           length:reportLength];
     }
@@ -30,10 +30,10 @@ static void HIDDeviceDisconnectCallback(
 								IOReturn		 result, 
 								void			*sender)
 {
-    [(__bridge HIDDevice*)context disconnected];
+    [(__bridge W_HIDDevice*)context disconnected];
 }
 
-@implementation HIDDevice (Private)
+@implementation W_HIDDevice (Private)
 
 - (id)propertyForKey:(NSString*)key
 {

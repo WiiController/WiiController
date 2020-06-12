@@ -8,7 +8,7 @@
 
 #import "HIDManager.h"
 
-#import "HIDDevice+Private.h"
+#import "W_HIDDevice+Private.h"
 
 NSString *HIDManagerDeviceConnectedNotification     = @"HIDManagerDeviceConnectedNotification";
 NSString *HIDManagerDeviceDisconnectedNotification  = @"HIDManagerDeviceDisconnectedNotification";
@@ -18,7 +18,7 @@ NSString *HIDManagerDeviceKey                       = @"HIDManagerDeviceKey";
 @interface HIDManager (PrivatePart)
 
 - (void)rawDeviceConnected:(IOHIDDeviceRef)device;
-- (void)deviceConnected:(HIDDevice*)device;
+- (void)deviceConnected:(W_HIDDevice*)device;
 
 @end
 
@@ -107,7 +107,7 @@ static void HIDManagerDeviceConnected(
     if([m_ConnectedDevices containsObject:(__bridge id)device])
         return;
 
-    HIDDevice *d = [[HIDDevice alloc]
+    W_HIDDevice *d = [[W_HIDDevice alloc]
                             initWithOwner:self
                                 deviceRef:device
                                   options:kIOHIDOptionsTypeNone];
@@ -115,7 +115,7 @@ static void HIDManagerDeviceConnected(
     [self deviceConnected:d];
 }
 
-- (void)deviceConnected:(HIDDevice*)device
+- (void)deviceConnected:(W_HIDDevice*)device
 {
     [m_ConnectedDevices addObject:device];
 

@@ -182,7 +182,7 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
     if(![self isUseOneButtonClickConnection])
         return;
 
-	HIDDevice	*device		= [[notification userInfo] objectForKey:HIDManagerDeviceKey];
+	W_HIDDevice	*device		= [[notification userInfo] objectForKey:HIDManagerDeviceKey];
 	NSString	*deviceName	= [device name];
 
     W_DEBUG_F(@"hid device connected: %@", deviceName);
@@ -276,7 +276,7 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
     }
 }
 
-- (BOOL)isHIDDeviceAlreadyConnected:(HIDDevice*)device wiimotes:(NSArray*)wiimotes
+- (BOOL)isHIDDeviceAlreadyConnected:(W_HIDDevice*)device wiimotes:(NSArray*)wiimotes
 {
     NSUInteger count = [wiimotes count];
 
@@ -292,7 +292,7 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
 - (void)connectToPairedDevices
 {
     NSEnumerator	*en         = [[[HIDManager manager] connectedDevices] objectEnumerator];
-    HIDDevice		*device     = [en nextObject];
+    W_HIDDevice		*device     = [en nextObject];
     NSArray         *wiimotes   = [Wiimote connectedDevices];
 
     while(device != nil)

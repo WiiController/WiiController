@@ -46,7 +46,7 @@
 	return self;
 }
 
-- (id)initWithHIDDevice:(HIDDevice*)device
+- (id)initWithHIDDevice:(W_HIDDevice*)device
 {
 	return [self initWithTransport:[WiimoteDeviceTransport withHIDDevice:device]];
 }
