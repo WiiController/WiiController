@@ -1,28 +1,53 @@
-# WJoy
+# WiiController
+## Connect your Nintendo Wii and Wii U controllers to your macOS machine
 
-Connects your Nintendo bluetooth controllers to your macOS desktop and laptop.
+WiiController is a device driver and helper application that allows you to use the following Nintendo Bluetooth controllers as virtual gamepads on macOS:
 
-**For macOS 10.13 High Sierra, 10.12 Sierra and 10.11 El Capitan**
+- Wii Remote
+- Wii Remote Plus
+- Wii U Pro Controller
+- Wii Balance Board
+- Supported accessories:
+  - Nunchuck
+  - Classic Controller (original or Pro)
+  - Wii Motion Plus (for original Wii Remote) (untested, may not work)
+  - UDraw Tablet (untested, may not work)
 
-You must have SIP enabled except for kernel extensions for this application to work. Please disable and re-enable it by booting your Mac into recovery mode, opening the Terminal and running:
+This repository builds on the work of [JustinBis/wjoy-foohid](https://github.com/JustinBis/wjoy-foohid), which in turn updated the [original wjoy driver](https://github.com/alxn1/wjoy) by [alxn1](https://github.com/alxn1).
 
-```sh
+## Install
+
+**Please use appropriate caution:** You are about to install a kernel-level device driver. I am not aware of anything wrong with the code, and it has never caused me any noticable problems or kernel panics, but installation is entirely _at your own risk_. If you encounter problems, I will try to help you to the best of my ability, but this software comes with **absolutely no warranty**.
+
+The driver and app _should_ work on macOS 10.11 or later. As of now, this fork has only been tested on 10.15.5, but I have not touched the driver code at all, so that part should at least be OK.
+
+### Disable SIP kext protections
+
+You must have the kernel extensions protection of [System Integrity Protection (SIP)](http://www.imore.com/el-capitan-system-integrity-protection-helps-keep-malware-away) disabled for the driver to load. To disable SIP, boot into [recovery mode](https://support.apple.com/en-ca/HT201314), select Terminal from Utilities in the menu bar, and run the following:
+
+```
 csrutil disable
+```
+
+This second command is optional, but will re-harden (re-enable) other parts of system security that WiiController does not care about. This is ultimately your choice.
+
+```
 csrutil enable --without kext
 ```
 
-You may read more here: http://www.imore.com/el-capitan-system-integrity-protection-helps-keep-malware-away
+### Installation steps _after you have disabled SIP kext protections_
 
-##### Installation Instructions
-
- 1. **Download WJoy here**: http://go.hiddenswitch.com/wjoy
+ 1. **Download WiiController**: https://github.com/WiiController/WiiController/releases
  2. Turn on Bluetooth.
- 3. Start the WJoy application.
- 4. In the system tray, click the WJoy icon and click Begin Discovery.
- 5. Turn on the Wiimote or Wii U Pro Controller by pressing any key on it.
- 6. Press the sync button (red flat button on the controller) while in discovery mode.
- 7. Once connected, configure the Wii U Pro controller as a Steam controller in Steam Big Picture Mode. Read more here: https://www.howtogeek.com/234427/how-to-remap-buttons-on-your-steam-controller/
- 
+ 3. Start the WiiController application.
+ 4. Pairing should begin automatically, but will expire after 10 seconds. To re-enable it if 10 seconds have passed, click the Wii Remote icon in the menu bar and select Pair Device.
+ 5. Press the small red "sync" button on your Nintendo device. To pair multiple devices, select Pair Device again for each.
+ 6. (Optional) Once connected, configure your controller as a Steam controller in Steam Big Picture Mode. Read more here: https://www.howtogeek.com/234427/how-to-remap-buttons-on-your-steam-controller/
+
+### Notes on Wii U Pro Controller and Steam games
+
+(These notes are from [JustinBis/wjoy-foohid](https://github.com/JustinBis/wjoy-foohid). I have not confirmed any of this myself, but I presume it is correct.)
+
 In my experience, Unity games for Mac do not support the Wii U Pro Controller, since they tend to use the XInput package. There is no application that emulates an Xbox controller for Mac.
 
 Working:
