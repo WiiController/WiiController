@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>KEXT</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>IOKitPersonalities</key>
 	<dict>
 		<key>wjoy</key>
@@ -42,6 +42,8 @@
 			<string>com_alxn1_driver_WirtualJoyUserClient</string>
 		</dict>
 	</dict>
+	<key>OSBundleAllowUserLoad</key>
+	<true/>
 	<key>OSBundleLibraries</key>
 	<dict>
 		<key>com.apple.iokit.IOHIDFamily</key>
@@ -53,7 +55,5 @@
 		<key>com.apple.kpi.mach</key>
 		<string>8.0</string>
 	</dict>
-	<key>OSBundleAllowUserLoad</key>
-	<true/>
 </dict>
 </plist>
