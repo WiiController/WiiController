@@ -25,7 +25,11 @@
 
 + (void)start
 {
-    (void)[[WiimoteLEDsController alloc] initInternal];
+    static WiimoteLEDsController *singleton;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        singleton = [[WiimoteLEDsController alloc] initInternal];
+    });
 }
 
 @end

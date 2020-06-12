@@ -26,7 +26,11 @@
 
 + (void)start
 {
-    (void)[[NotificationCenter alloc] initInternal];
+    static NotificationCenter *singleton;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        singleton = [[NotificationCenter alloc] initInternal];
+    });
 }
 
 - (BOOL)userNotificationCenter:(UserNotificationCenter*)center

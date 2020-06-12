@@ -20,7 +20,11 @@
 
 + (void)start
 {
-    (void)[[StatusBarItemController alloc] initInternal];
+    static StatusBarItemController *singleton;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        singleton = [[StatusBarItemController alloc] initInternal];
+    });
 }
 
 @end
@@ -55,7 +59,6 @@
     [m_Item setImage:icon];
     [m_Item setMenu:m_Menu];
     [m_Item setHighlightMode:YES];
-
 
     [Wiimote setUseOneButtonClickConnection:
                 [[NSUserDefaults standardUserDefaults] boolForKey:@"OneButtonClickConnection"]];
