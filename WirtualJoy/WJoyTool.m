@@ -73,7 +73,10 @@
     };
 
     FILE *toolOutput = NULL;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     if(AuthorizationExecuteWithPrivileges(
+#pragma clang diagnostic pop
                                      [rights authRef],
                                      [[self toolPath] UTF8String],
                                      kAuthorizationFlagDefaults,
