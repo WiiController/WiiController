@@ -129,6 +129,16 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
     return m_ModelName;
 }
 
+- (NSString *)marketingName
+{
+    return @{
+        WiimoteDeviceName: @"Wii Remote",
+        WiimoteDeviceNameTR: @"Wii Remote Plus",
+        WiimoteDeviceNameUPro: @"Wii U Pro Controller",
+        WiimoteDeviceNameBalanceBoard: @"Wii Balance Board"
+    }[m_ModelName] ?: m_ModelName;
+}
+
 - (void)playConnectEffect
 {
     [self setVibrationEnabled:YES];
@@ -164,6 +174,14 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
 - (CGFloat)batteryLevel
 {
     return [m_BatteryPart batteryLevel];
+}
+
+- (NSString*)batteryLevelDescription
+{
+    __auto_type batteryLevel = [self batteryLevel];
+    return batteryLevel >= 0.0 ?
+        [NSString stringWithFormat:@"%.0lf%%", batteryLevel]
+        : @"–";
 }
 
 - (BOOL)isBatteryLevelLow

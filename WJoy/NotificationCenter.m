@@ -10,19 +10,9 @@
 
 #import "NotificationCenter.h"
 
-@interface NotificationCenter (PrivatePart)
-
-- (id)initInternal;
-
-- (void)onDiscoveryBegin;
-- (void)onDiscoveryEnd;
-- (void)onDeviceConnected;
-- (void)onDeviceBatteryStateChanged:(NSNotification*)notification;
-- (void)onDeviceDisconnected;
-
-@end
-
-@implementation NotificationCenter
+@implementation NotificationCenter {
+    BOOL _discoveredDevice;
+}
 
 + (void)start
 {
@@ -47,10 +37,6 @@
         [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url]];
 }
 
-@end
-
-@implementation NotificationCenter (PrivatePart)
-
 - (id)initInternal
 {
     self = [super init];
@@ -71,7 +57,7 @@
 
     [[NSNotificationCenter defaultCenter]
                             addObserver:self
-                               selector:@selector(onDeviceConnected)
+                               selector:@selector(onDeviceConnected:)
                                    name:WiimoteConnectedNotification
                                  object:nil];
 
@@ -83,7 +69,7 @@
 
     [[NSNotificationCenter defaultCenter]
                             addObserver:self
-                               selector:@selector(onDeviceDisconnected)
+                               selector:@selector(onDeviceDisconnected:)
                                    name:WiimoteDisconnectedNotification
                                  object:nil];
 
@@ -101,24 +87,33 @@
 {
     [UserNotificationCenter
         deliver:[UserNotification
-                    userNotificationWithTitle:@"Discovery Mode On"
-                                         text:@"Press the red pairing button on your Nintendo device, or click the WJoy icon and enable ."]];
+                    userNotificationWithTitle:@"Pairing Enabled"
+                                         text:[NSString stringWithFormat:@"Press the red pairing button on your Nintendo device. Expires in %d seconds.", WIIMOTE_INQUIRY_TIME_IN_SECONDS]]];
 }
 
 - (void)onDiscoveryEnd
 {
+    // Don't overwrite "connected" notification
+    if (_discoveredDevice)
+    {
+        _discoveredDevice = NO;
+        return;
+    }
+
     [UserNotificationCenter
         deliver:[UserNotification
-                    userNotificationWithTitle:@"Discovery Mode Off"
-                                         text:@"Click the WJoy icon to re-enable discovery."]];
+                    userNotificationWithTitle:@"Pairing Disabled"
+                                         text:@"Select Pair Device from the WJoy menu to re-enable pairing."]];
 }
 
-- (void)onDeviceConnected
+- (void)onDeviceConnected:(NSNotification *)notification
 {
+    _discoveredDevice = YES;
+    Wiimote *device = [notification object];
     [UserNotificationCenter
         deliver:[UserNotification
-                    userNotificationWithTitle:@"Connected"
-                                         text:@"A device connected."]];
+                    userNotificationWithTitle:@"Device Connected"
+                                         text:[NSString stringWithFormat:@"Connected to %@ / %@", [device marketingName], [device addressString]]]];
 }
 
 - (void)onDeviceBatteryStateChanged:(NSNotification*)notification
@@ -135,21 +130,17 @@
 
     [UserNotificationCenter
         deliver:[UserNotification
-                    userNotificationWithTitle:@"Battery is Low"
-                                         text:@"Check the remaining battery of your devices."]];
+                    userNotificationWithTitle:@"Low Battery"
+                                         text:[NSString stringWithFormat: @"%@ has %@ battery remaining.", [device marketingName], [device batteryLevelDescription]]]];
 }
 
-- (void)onDeviceDisconnected
+- (void)onDeviceDisconnected:(NSNotification *)notification
 {
+    Wiimote *device = [notification object];
     [UserNotificationCenter
         deliver:[UserNotification
-                    userNotificationWithTitle:@"Disconnected"
-                                         text:@"A device disconnected."]];
-}
-
-- (void)onCheckNewVersionFinished:(NSNotification*)notification
-{
-    return;
+                    userNotificationWithTitle:@"Device Disconnected"
+                                         text:[NSString stringWithFormat: @"%@ disconnected.", [device marketingName]]]];
 }
 
 @end

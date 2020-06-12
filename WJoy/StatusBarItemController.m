@@ -10,12 +10,6 @@
 
 #import "StatusBarItemController.h"
 
-@interface StatusBarItemController (PrivatePart)
-
-- (id)initInternal;
-
-@end
-
 @implementation StatusBarItemController
 
 + (void)start
@@ -26,10 +20,6 @@
         singleton = [[StatusBarItemController alloc] initInternal];
     });
 }
-
-@end
-
-@implementation StatusBarItemController (PrivatePart)
 
 - (id)initInternal
 {
@@ -42,7 +32,7 @@
                                     statusItemWithLength:NSSquareStatusItemLength];
 
     m_DiscoveryMenuItem = [[NSMenuItem alloc]
-                                    initWithTitle:@"Begin Dicovery"
+                                    initWithTitle:@"Pair Device"
                                            action:@selector(beginDiscovery)
                                     keyEquivalent:@""];
 
@@ -97,12 +87,14 @@
         if([Wiimote isDiscovering])
         {
             [m_DiscoveryMenuItem setEnabled:NO];
-            [m_DiscoveryMenuItem setTitle:@"Discovering: Press red pairing button"];
+            [m_DiscoveryMenuItem setTitle:@"Discovering: Press red pairing button on Nintendo device"];
         }
         else
         {
+            NSImage *icon = [NSImage imageNamed:NSImageNameBluetoothTemplate];
+            [m_DiscoveryMenuItem setImage:icon];
             [m_DiscoveryMenuItem setEnabled:YES];
-            [m_DiscoveryMenuItem setTitle:@"Turn on Discovery"];
+            [m_DiscoveryMenuItem setTitle:@"Pair Device"];
         }
     }
     else
@@ -128,15 +120,14 @@
         if([device batteryLevel] >= 0.0)
             batteryLevel = [NSString stringWithFormat:@"%.0lf%%", [device batteryLevel]];
 
-        NSMenuItem      *item         = [[NSMenuItem alloc]
-                                            initWithTitle:[NSString stringWithFormat:
-                                                                @"%@ #%li (%@ Battery) / %@",
-                                                    [device modelName],
-                                                                    i+1,
-                                                                    batteryLevel,
-                                                                    [device addressString]]
-                                                   action:nil
-                                            keyEquivalent:@""];
+        NSMenuItem *item = [[NSMenuItem alloc]
+            initWithTitle:[NSString stringWithFormat:@"%@ #%li (%@ Battery) / %@",
+                [device marketingName],
+                i+1,
+                [device batteryLevelDescription],
+                [device addressString]]
+            action:nil
+            keyEquivalent:@""];
 
         if([device isBatteryLevelLow])
         {
@@ -148,13 +139,13 @@
         [m_Menu addItem:item];
     }
 
-    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@"Automatically connect when device powers on" action:@selector(toggleOneButtonClickConnection) keyEquivalent:@""];
+    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@"Auto-connect to Paired Devices (Experimental)" action:@selector(toggleOneButtonClickConnection) keyEquivalent:@""];
     [item setTarget:self];
     [item setState:([Wiimote isUseOneButtonClickConnection])?(NSOnState):(NSOffState)];
     [m_Menu addItem:[NSMenuItem separatorItem]];
     [m_Menu addItem:item];
 
-    item = [[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(terminate:) keyEquivalent:@""];
+    item = [[NSMenuItem alloc] initWithTitle:@"Quit WJoy" action:@selector(terminate:) keyEquivalent:@"q"];
     [item setTarget:[NSApplication sharedApplication]];
     [m_Menu addItem:[NSMenuItem separatorItem]];
     [m_Menu addItem:item];

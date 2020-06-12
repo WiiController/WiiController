@@ -11,6 +11,8 @@
 #import <Wiimote/WiimoteAccelerometer.h>
 #import <Wiimote/WiimoteWatchdog.h>
 
+#define WIIMOTE_INQUIRY_TIME_IN_SECONDS 10
+
 FOUNDATION_EXPORT NSString *WiimoteBeginDiscoveryNotification;
 FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 
@@ -67,6 +69,7 @@ FOUNDATION_EXPORT NSString *WiimoteUseOneButtonClickConnectionKey;
 - (NSData*)address;
 - (NSString*)addressString;
 - (NSString*)modelName;
+- (NSString*)marketingName;
 
 - (void)playConnectEffect;
 
@@ -81,6 +84,7 @@ FOUNDATION_EXPORT NSString *WiimoteUseOneButtonClickConnectionKey;
 
 // 0.0 - 100.0 %, or -1 if undefined
 - (CGFloat)batteryLevel;
+- (NSString*)batteryLevelDescription;
 - (BOOL)isBatteryLevelLow;
 
 - (BOOL)isIREnabled;

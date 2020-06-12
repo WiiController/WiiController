@@ -20,8 +20,6 @@
 
 #import <objc/message.h>
 
-#define WIIMOTE_INQUIRY_TIME_IN_SECONDS 10
-
 NSString *WiimoteDeviceName             = @"Nintendo RVL-CNT-01";
 NSString *WiimoteDeviceNameTR           = @"Nintendo RVL-CNT-01-TR";
 NSString *WiimoteDeviceNameUPro         = @"Nintendo RVL-CNT-01-UC";
