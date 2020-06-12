@@ -39,18 +39,11 @@
     return result;
 }
 
-- (id)init
-{
-    [[super init] release];
-    return nil;
-}
-
 - (void)dealloc
 {
     if(m_List != NULL)
         CFRelease(m_List);
 
-    [super dealloc];
 }
 
 - (LoginItemsListDomain)domain
@@ -61,13 +54,13 @@
 - (NSArray*)allPaths
 {
     UInt32           seed   = 0;
-    NSArray         *items  = [(NSArray*)LSSharedFileListCopySnapshot(m_List, &seed) autorelease];
+    NSArray         *items  = (NSArray*)CFBridgingRelease(LSSharedFileListCopySnapshot(m_List, &seed));
     NSMutableArray  *result = [NSMutableArray arrayWithCapacity:[items count]];
 
     unsigned countItems = [items count];
     for(unsigned i = 0; i < countItems; i++)
     {
-        LSSharedFileListItemRef item = (LSSharedFileListItemRef)[items objectAtIndex:i];
+        LSSharedFileListItemRef item = (__bridge LSSharedFileListItemRef)[items objectAtIndex:i];
         [result addObject:[self itemPath:item]];
     }
 
@@ -109,9 +102,9 @@
                 LSSharedFileListInsertItemURL(
                                             m_List,
                                             kLSSharedFileListItemLast,
-                                            (CFStringRef)displayName,
+                                            (__bridge CFStringRef)displayName,
                                             icon,
-                                            (CFURLRef)url,
+                                            (__bridge CFURLRef)url,
                                             NULL,
                                             NULL);
 
@@ -156,7 +149,6 @@
 
     if(m_List == NULL)
     {
-        [self release];
         return nil;
     }
 
@@ -179,7 +171,7 @@
     if(url == NULL)
         return nil;
 
-    NSString *result = [[[(NSURL*)url path] retain] autorelease];
+    NSString *result = [CFBridgingRelease(url) path];
     CFRelease(url);
 
     return result;
@@ -191,12 +183,12 @@
         return NULL;
 
     UInt32       seed   = 0;
-    NSArray     *items  = [(NSArray*)LSSharedFileListCopySnapshot(m_List, &seed) autorelease];
+    NSArray     *items  = (NSArray*)CFBridgingRelease(LSSharedFileListCopySnapshot(m_List, &seed));
 
-    unsigned countItems = [items count];
-    for(unsigned i = 0; i < countItems; i++)
+    NSUInteger countItems = [items count];
+    for(NSUInteger i = 0; i < countItems; i++)
     {
-        LSSharedFileListItemRef item = (LSSharedFileListItemRef)[items objectAtIndex:i];
+        LSSharedFileListItemRef item = (__bridge LSSharedFileListItemRef)[items objectAtIndex:i];
         if([[self itemPath:item] isEqualToString:path])
             return item;
     }

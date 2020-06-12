@@ -22,7 +22,6 @@
 - (id)initWithTitle:(NSString*)title text:(NSString*)text userInfo:(NSDictionary*)userInfo;
 - (id)initWithDictionary:(NSDictionary*)dictionary;
 - (id)initWithCoder:(NSCoder*)decoder;
-- (void)dealloc;
 
 - (NSString*)title;
 - (NSString*)text;

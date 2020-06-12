@@ -91,12 +91,6 @@
     return (HIDDescriptorMaxPointersBase + HIDDescriptorMaxPointersBase2);
 }
 
-- (id)init
-{
-    [[super init] release];
-    return nil;
-}
-
 - (id)initWithPointerCount:(NSUInteger)pointerCount isRelative:(BOOL)isRelative
 {
     self = [super init];
@@ -106,7 +100,6 @@
     if(pointerCount == 0 ||
        pointerCount > [VHIDPointerCollection maxPointerCount])
     {
-        [self release];
         return nil;
     }
 
@@ -114,9 +107,9 @@
 
     m_PointerCount  = pointerCount;
     m_IsRelative    = isRelative;
-    m_Descriptor    = [[VHIDPointerCollection descriptorWithPointerCount:pointerCount
+    m_Descriptor    = [VHIDPointerCollection descriptorWithPointerCount:pointerCount
                                                               isRelative:isRelative
-                                                               stateSize:&stateSize] retain];
+                                                               stateSize:&stateSize];
 
     m_State         = [[NSMutableData alloc] initWithLength:stateSize];
 
@@ -125,12 +118,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [m_Descriptor release];
-    [m_State release];
-    [super dealloc];
-}
 
 - (BOOL)isRelative
 {
@@ -172,12 +159,12 @@
 
 - (NSData*)descriptor
 {
-    return [[m_Descriptor retain] autorelease];
+    return m_Descriptor;
 }
 
 - (NSData*)state
 {
-    return [[m_State retain] autorelease];
+    return m_State;
 }
 
 @end

@@ -23,7 +23,7 @@
 #define WiimoteIRMaxX              1023.0
 #define WiimoteIRMaxY              767.0
 
-typedef enum
+typedef enum : NSInteger
 {
     WiimoteLEDFlagOne           =  1,
     WiimoteLEDFlagTwo           =  2,
@@ -31,7 +31,7 @@ typedef enum
     WiimoteLEDFlagFour          =  8
 } WiimoteLEDFlag;
 
-typedef enum
+typedef enum : NSInteger
 {
     WiimoteButtonTypeLeft       =  0,
     WiimoteButtonTypeRight      =  1,

@@ -11,12 +11,6 @@
 
 @implementation WiimoteEventDispatcher (Private)
 
-- (id)init
-{
-    [[super init] release];
-    return nil;
-}
-
 - (id)initWithOwner:(Wiimote*)owner
 {
     self = [super init];

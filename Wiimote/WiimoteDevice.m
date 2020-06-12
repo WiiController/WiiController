@@ -22,12 +22,6 @@
 
 @implementation WiimoteDevice
 
-- (id)init
-{
-	[[super init] release];
-	return nil;
-}
-
 - (id)initWithTransport:(WiimoteDeviceTransport*)transport
 {
     self = [super init];
@@ -36,11 +30,10 @@
 
 	if(transport == nil)
 	{
-		[self release];
 		return nil;
 	}
 
-	m_Transport				= [transport retain];
+	m_Transport				= transport;
     m_Report                = [[WiimoteDeviceReport alloc] initWithDevice:self];
     m_ReadMemQueue			= [[WiimoteDeviceReadMemQueue alloc] initWithDevice:self];
 	m_IsConnected			= NO;
@@ -66,10 +59,6 @@
 - (void)dealloc
 {
 	[self disconnect];
-    [m_Report release];
-    [m_ReadMemQueue release];
-	[m_Transport release];
-	[super dealloc];
 }
 
 - (BOOL)isConnected

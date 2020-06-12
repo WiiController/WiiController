@@ -12,7 +12,7 @@
 #define WiimoteClassicControllerStickCount             2
 #define WiimoteClassicControllerAnalogShiftCount       2
 
-typedef enum
+typedef enum : NSInteger
 {
     WiimoteClassicControllerButtonTypeA             =  0,
     WiimoteClassicControllerButtonTypeB             =  1,
@@ -31,13 +31,13 @@ typedef enum
     WiimoteClassicControllerButtonTypeZR            = 14
 } WiimoteClassicControllerButtonType;
 
-typedef enum
+typedef enum : NSInteger
 {
     WiimoteClassicControllerStickTypeLeft           =  0,
     WiimoteClassicControllerStickTypeRight          =  1
 } WiimoteClassicControllerStickType;
 
-typedef enum
+typedef enum : NSInteger
 {
     WiimoteClassicControllerAnalogShiftTypeLeft     =  0,
     WiimoteClassicControllerAnalogShiftTypeRight    =  1

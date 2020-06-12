@@ -8,12 +8,8 @@
 
 #import "WiimoteExtensionHelper.h"
 
-@implementation WiimoteExtensionHelper
-
-- (id)init
-{
-    [[super init] release];
-    return nil;
+@implementation WiimoteExtensionHelper {
+    id _retainedSelf;
 }
 
 - (id)initWithWiimote:(Wiimote*)wiimote
@@ -34,7 +30,7 @@
     m_ExtensionClasses  = [extensionClasses mutableCopy];
     m_CurrentClass      = nil;
     m_Extension         = nil;
-    m_SubExtension      = [extension retain];
+    m_SubExtension      = extension;
 
     m_IsInitialized     = NO;
     m_IsStarted         = NO;
@@ -46,13 +42,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [m_ExtensionClasses release];
-    [m_SubExtension release];
-    [m_Extension release];
-    [super dealloc];
-}
 
 - (void)initializeExtensionPort
 {
@@ -71,12 +60,12 @@
 
 - (void)beginProbe
 {
-    [self retain];
+    _retainedSelf = self;
 }
 
 - (void)endProbe
 {
-    [self autorelease];
+    _retainedSelf = nil;
 }
 
 - (void)probeFinished:(WiimoteExtension*)extension
@@ -144,7 +133,7 @@
 
 - (WiimoteExtension*)subExtension
 {
-	return [[m_SubExtension retain] autorelease];
+	return m_SubExtension;
 }
 
 - (void)start

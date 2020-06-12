@@ -12,12 +12,11 @@
 
 + (void)load
 {
-    NSAutoreleasePool           *pool   = [[NSAutoreleasePool alloc] init];
-    OwnUserNotificationCenter   *center = [[OwnUserNotificationCenter alloc] init];
+    @autoreleasepool {
+        OwnUserNotificationCenter   *center = [[OwnUserNotificationCenter alloc] init];
 
-    [UserNotificationCenter registerImpl:center];
-    [center release];
-    [pool release];
+        [UserNotificationCenter registerImpl:center];
+    }
 }
 
 - (id)init

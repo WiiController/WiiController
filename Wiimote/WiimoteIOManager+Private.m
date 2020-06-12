@@ -10,12 +10,6 @@
 
 @implementation WiimoteIOManager (Private)
 
-- (id)init
-{
-    [[super init] release];
-    return nil;
-}
-
 - (id)initWithOwner:(Wiimote*)owner device:(WiimoteDevice*)device
 {
     self = [super init];

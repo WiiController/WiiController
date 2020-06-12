@@ -26,13 +26,7 @@
     result->m_Data          = data;
     result->m_DataLength    = length;
 
-    return [result autorelease];
-}
-
-- (id)init
-{
-	[[super init] release];
-	return nil;
+    return result;
 }
 
 - (id)initWithDevice:(WiimoteDevice*)device

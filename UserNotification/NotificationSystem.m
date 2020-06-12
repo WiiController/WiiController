@@ -35,9 +35,8 @@
     if(self == nil)
         return nil;
 
-    m_LayoutManager     = [[NotificationLayoutManager managerWithScreenCorner:
-                                        UserNotificationCenterScreenCornerRightTop]
-                                retain];
+    m_LayoutManager     = [NotificationLayoutManager managerWithScreenCorner:
+                                        UserNotificationCenterScreenCornerRightTop];
 
     m_NotificationQueue     = [[NSMutableArray alloc] init];
     m_ActiveNotifications   = [[NSMutableArray alloc] init];
@@ -56,10 +55,6 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-    [m_NotificationQueue release];
-    [m_ActiveNotifications release];
-    [m_LayoutManager release];
-    [super dealloc];
 }
 
 - (NSTimeInterval)notificationTimeout
@@ -82,8 +77,7 @@
     if([self screenCorner] == corner)
         return;
 
-    [m_LayoutManager release];
-    m_LayoutManager = [[NotificationLayoutManager managerWithScreenCorner:corner] retain];
+    m_LayoutManager = [NotificationLayoutManager managerWithScreenCorner:corner];
 
     NSUInteger countOpenedWindows = [m_ActiveNotifications count];
     for(NSUInteger i = 0; i < countOpenedWindows; i++)
@@ -91,7 +85,6 @@
         NotificationWindow *w = [m_ActiveNotifications objectAtIndex:i];
         [w setReleasedWhenClosed:YES];
         [w setDelegate:nil];
-        [w retain];
         [w close];
     }
 

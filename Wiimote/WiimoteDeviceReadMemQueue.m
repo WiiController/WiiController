@@ -25,12 +25,6 @@
 
 @implementation WiimoteDeviceReadMemQueue
 
-- (id)init
-{
-	[[super init] release];
-	return nil;
-}
-
 - (id)initWithDevice:(WiimoteDevice*)device
 {
 	self = [super init];
@@ -44,12 +38,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[m_ReadMemHandlersQueue release];
-    [m_CurrentMemHandler release];
-	[super dealloc];
-}
 
 - (BOOL)readMemory:(NSRange)memoryRange
 			target:(id)target
@@ -62,10 +50,10 @@
         return YES;
 
 	WiimoteDeviceReadMemHandler *handler =
-			[[[WiimoteDeviceReadMemHandler alloc]
+			[[WiimoteDeviceReadMemHandler alloc]
 									initWithMemoryRange:memoryRange
 												 target:target
-												 action:action] autorelease];
+												 action:action];
 
 	if(m_CurrentMemHandler == nil)
 		return [self runHandler:handler];
@@ -113,7 +101,6 @@
 	if(m_CurrentMemHandler != 0)
     {
         [m_CurrentMemHandler disconnected];
-        [m_CurrentMemHandler release];
         m_CurrentMemHandler = nil;
     }
 
@@ -139,7 +126,7 @@
 		return nil;
 
 	WiimoteDeviceReadMemHandler *result =
-			[[[m_ReadMemHandlersQueue objectAtIndex:0] retain] autorelease];
+			[m_ReadMemHandlersQueue objectAtIndex:0];
 
 	[m_ReadMemHandlersQueue removeObjectAtIndex:0];
 	return result;
@@ -165,7 +152,7 @@
 						data:(const uint8_t*)&params
                       length:sizeof(params)])
     {
-        m_CurrentMemHandler = [handler retain];
+        m_CurrentMemHandler = handler;
         return YES;
     }
 
@@ -176,7 +163,6 @@
 
 - (void)runNextHandler
 {
-	[m_CurrentMemHandler release];
 	m_CurrentMemHandler = nil;
 
 	while(![self isQueueEmpty])

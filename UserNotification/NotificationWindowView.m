@@ -8,6 +8,8 @@
 
 #import "NotificationWindowView.h"
 
+#import <objc/message.h>
+
 #define NotificationWindowViewWidth      300.0f
 #define NotificationWindowViewMaxHeight  600.0f
 
@@ -101,15 +103,11 @@
 {
     [self removeTrackingRect];
 
-    [m_Icon release];
-    [m_Title release];
-    [m_Text release];
-    [super dealloc];
 }
 
 - (NSImage*)icon
 {
-    return [[m_Icon retain] autorelease];
+    return m_Icon;
 }
 
 - (void)setIcon:(NSImage*)img
@@ -117,17 +115,15 @@
     if(m_Icon == img)
         return;
 
-    [m_Icon release];
-    m_Icon = [img retain];
+    m_Icon = img;
 
-	[m_Icon setScalesWhenResized:YES];
     [m_Icon setSize:NSMakeSize(32.0f, 32.0f)];
     [self setNeedsDisplay:YES];
 }
 
 - (NSString*)title
 {
-    return [[m_Title retain] autorelease];
+    return m_Title;
 }
 
 - (void)setTitle:(NSString*)str
@@ -135,15 +131,14 @@
     if(m_Title == str)
         return;
 
-    [m_Title release];
-    m_Title = [str retain];
+    m_Title = str;
 
     [self setNeedsDisplay:YES];
 }
 
 - (NSString*)text
 {
-    return [[m_Text retain] autorelease];
+    return m_Text;
 }
 
 - (void)setText:(NSString*)str
@@ -151,8 +146,7 @@
     if(m_Text == str)
         return;
 
-    [m_Text release];
-    m_Text = [str retain];
+    m_Text = str;
 
     [self setNeedsDisplay:YES];
 }
@@ -240,7 +234,8 @@
     {
         if(m_Target != nil && m_Action != nil && !m_IsAlreadyClicked)
         {
-            [m_Target performSelector:m_Action withObject:self];
+            ((void(*)(id self, SEL _cmd, NotificationWindowView *sender))objc_msgSend)
+                (m_Target, m_Action, self);
             m_IsAlreadyClicked = YES;
         }
     }
@@ -302,7 +297,7 @@
     {
         [m_Icon drawInRect:[self iconRect:rect]
                   fromRect:NSZeroRect
-                 operation:NSCompositeSourceOver
+                 operation:NSCompositingOperationSourceOver
                   fraction:1.0f];
     }
 
@@ -489,15 +484,15 @@
 
     [image drawInRect:[self closeButtonRect:rect]
              fromRect:NSZeroRect
-            operation:NSCompositeSourceOver
+            operation:NSCompositingOperationSourceOver
              fraction:1.0f];
 }
 
 + (NSDictionary*)titleTextAttributes
 {
-    NSMutableParagraphStyle *style = [[[NSMutableParagraphStyle alloc] init] autorelease];
+    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
 
-    [style setAlignment:NSLeftTextAlignment];
+    [style setAlignment:NSTextAlignmentLeft];
     [style setLineBreakMode:NSLineBreakByTruncatingTail];
 
     return [NSDictionary dictionaryWithObjectsAndKeys:
@@ -509,9 +504,9 @@
 
 + (NSDictionary*)textAttributes
 {
-    NSMutableParagraphStyle *style = [[[NSMutableParagraphStyle alloc] init] autorelease];
+    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
 
-    [style setAlignment:NSLeftTextAlignment];
+    [style setAlignment:NSTextAlignmentLeft];
     [style setLineBreakMode:NSLineBreakByWordWrapping];
 
     return [NSDictionary dictionaryWithObjectsAndKeys:

@@ -74,17 +74,12 @@
     if(self == nil)
         return nil;
 
-    m_Handler   = [[OCDefaultLogHandler defaultLogHandler] retain];
+    m_Handler   = [OCDefaultLogHandler defaultLogHandler];
     m_Level     = OCLogLevelError;
 
     return self;
 }
 
-- (void)dealloc
-{
-    [m_Handler release];
-    [super dealloc];
-}
 
 - (OCLogLevel)level
 {
@@ -98,13 +93,12 @@
 
 - (NSObject< OCLogHandler >*)handler
 {
-    return [[m_Handler retain] autorelease];
+    return m_Handler;
 }
 
 - (void)setHandler:(NSObject< OCLogHandler >*)handler
 {
-    [m_Handler autorelease];
-    m_Handler = [handler retain];
+    m_Handler = handler;
 }
 
 - (void)level:(OCLogLevel)level

@@ -32,21 +32,21 @@
                         selector:@selector(wiimoteUDrawPenButtonReleasedNotification:)];
 }
 
-- (void)WiimoteUDrawPenPressedNotification:(NSNotification*)notification
+- (void)wiimoteUDrawPenPressedNotification:(NSNotification*)notification
 {
     [self postEventForWiimoteExtension:[notification object]
                                   path:@"Pen"
                                  value:WIIMOTE_EVENT_VALUE_PRESS];
 }
 
-- (void)WiimoteUDrawPenReleasedNotification:(NSNotification*)notification
+- (void)wiimoteUDrawPenReleasedNotification:(NSNotification*)notification
 {
     [self postEventForWiimoteExtension:[notification object]
                                   path:@"Pen"
                                  value:WIIMOTE_EVENT_VALUE_RELEASE];
 }
 
-- (void)WiimoteUDrawPenPositionChangedNotification:(NSNotification*)notification
+- (void)wiimoteUDrawPenPositionChangedNotification:(NSNotification*)notification
 {
     NSPoint position = [[[notification userInfo] objectForKey:WiimoteUDrawPenPositionKey] pointValue];
     CGFloat pressure = [[[notification userInfo] objectForKey:WiimoteUDrawPenPressureKey] doubleValue];

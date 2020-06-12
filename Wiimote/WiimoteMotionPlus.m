@@ -77,16 +77,10 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [m_SubExtension release];
-    [m_IOManager release];
-    [super dealloc];
-}
 
 - (void)calibrate:(WiimoteIOManager*)ioManager
 {
-    m_IOManager = [ioManager retain];
+    m_IOManager = ioManager;
 }
 
 - (void)handleReport:(const uint8_t*)extensionData length:(NSUInteger)length
@@ -163,8 +157,7 @@
     if(m_SubExtension == extension)
         return;
 
-    [m_SubExtension release];
-    m_SubExtension = [extension retain];
+    m_SubExtension = extension;
 
 	if(extension != nil && !m_IsSubExtensionDisconnected)
 	{
@@ -194,7 +187,7 @@
 	if(m_IsSubExtensionDisconnected)
 		return nil;
 
-    return [[m_SubExtension retain] autorelease];
+    return m_SubExtension;
 }
 
 - (void)disconnectSubExtension

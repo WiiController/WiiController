@@ -26,7 +26,7 @@
 
 + (void)start
 {
-    [[NotificationCenter alloc] initInternal];
+    (void)[[NotificationCenter alloc] initInternal];
 }
 
 - (BOOL)userNotificationCenter:(UserNotificationCenter*)center
@@ -46,12 +46,6 @@
 @end
 
 @implementation NotificationCenter (PrivatePart)
-
-- (id)init
-{
-    [[super init] release];
-    return nil;
-}
 
 - (id)initInternal
 {
@@ -97,7 +91,6 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super dealloc];
 }
 
 - (void)onDiscoveryBegin

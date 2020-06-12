@@ -11,7 +11,7 @@
 #define WiimoteUProControllerButtonCount			   14
 #define WiimoteUProControllerStickCount					2
 
-typedef enum
+typedef enum : NSInteger
 {
 	WiimoteUProControllerButtonTypeUp				=  0,
     WiimoteUProControllerButtonTypeDown				=  1,
@@ -29,7 +29,7 @@ typedef enum
 	WiimoteUProControllerButtonTypeStickR			= 13
 } WiimoteUProControllerButtonType;
 
-typedef enum
+typedef enum : NSInteger
 {
     WiimoteUProControllerStickTypeLeft				=  0,
     WiimoteUProControllerStickTypeRight				=  1

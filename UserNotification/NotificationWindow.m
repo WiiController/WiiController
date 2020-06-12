@@ -8,6 +8,8 @@
 
 #import "NotificationWindow.h"
 
+#import <objc/message.h>
+
 @interface NSWindow (Additions)
 
 - (void)setMovable:(BOOL)flag;
@@ -31,15 +33,15 @@
 
 + (NotificationWindow*)newWindowWithNotification:(UserNotification*)notification frame:(NSRect)frame
 {
-    return [[[NotificationWindow alloc]
+    return [[NotificationWindow alloc]
                         initWithNotification:notification
-                                       frame:frame] autorelease];
+                                       frame:frame];
 }
 
 - (id)initWithNotification:(UserNotification*)notification frame:(NSRect)frame
 {
     self = [super initWithContentRect:frame
-                            styleMask:NSBorderlessWindowMask
+                            styleMask:NSWindowStyleMaskBorderless
                               backing:NSBackingStoreBuffered
                                 defer:NO];
 
@@ -74,9 +76,8 @@
     [contentView setAction:@selector(contentViewClicked:)];
 
     [self setContentView:contentView];
-    [contentView release];
 
-    m_Notification          = [notification retain];
+    m_Notification          = notification;
     m_IsMouseEntered        = NO;
     m_IsCloseOnMouseExited  = NO;
 
@@ -86,8 +87,6 @@
 - (void)dealloc
 {
     [m_AutocloseTimer invalidate];
-    [m_Notification release];
-    [super dealloc];
 }
 
 - (id)target
@@ -125,7 +124,7 @@
 
 - (UserNotification*)notification
 {
-    return [[m_Notification retain] autorelease];
+    return m_Notification;
 }
 
 - (BOOL)canBecomeKeyWindow
@@ -150,7 +149,11 @@
 - (void)contentViewClicked:(id)sender
 {
     if(m_Target != nil && m_Action != nil)
-        [m_Target performSelector:m_Action withObject:self];
+    {
+        ((void(*)(id self, SEL _cmd, NotificationWindow *sender))objc_msgSend)
+            (m_Target, m_Action, self);
+        
+    }
 }
 
 - (void)notificationWindowViewMouseEntered:(NotificationWindowView*)view

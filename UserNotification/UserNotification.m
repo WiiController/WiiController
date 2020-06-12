@@ -18,18 +18,12 @@
 
 + (UserNotification*)userNotificationWithTitle:(NSString*)title text:(NSString*)text
 {
-    return [[[UserNotification alloc] initWithTitle:title text:text userInfo:nil] autorelease];
+    return [[UserNotification alloc] initWithTitle:title text:text userInfo:nil];
 }
 
 + (UserNotification*)userNotificationWithTitle:(NSString*)title text:(NSString*)text userInfo:(NSDictionary*)userInfo
 {
-    return [[[UserNotification alloc] initWithTitle:title text:text userInfo:userInfo] autorelease];
-}
-
-- (id)init
-{
-    [[super init] release];
-    return nil;
+    return [[UserNotification alloc] initWithTitle:title text:text userInfo:userInfo];
 }
 
 - (id)initWithTitle:(NSString*)title text:(NSString*)text userInfo:(NSDictionary*)userInfo
@@ -53,9 +47,9 @@
     if(self == nil)
         return nil;
 
-    m_Title     = [[dictionary objectForKey:@"title"] retain];
-    m_Text      = [[dictionary objectForKey:@"text"] retain];
-    m_UserInfo  = [[dictionary objectForKey:@"userInfo"] retain];
+    m_Title     = [dictionary objectForKey:@"title"];
+    m_Text      = [dictionary objectForKey:@"text"];
+    m_UserInfo  = [dictionary objectForKey:@"userInfo"];
 
     [self checkFields];
 
@@ -70,15 +64,15 @@
 
     if([decoder allowsKeyedCoding])
     {
-        m_Title     = [[decoder decodeObjectForKey:@"title"] retain];
-        m_Text      = [[decoder decodeObjectForKey:@"text"] retain];
-        m_UserInfo  = [[decoder decodeObjectForKey:@"userInfo"] retain];
+        m_Title     = [decoder decodeObjectForKey:@"title"];
+        m_Text      = [decoder decodeObjectForKey:@"text"];
+        m_UserInfo  = [decoder decodeObjectForKey:@"userInfo"];
     }
     else
     {
-        m_Title     = [[decoder decodeObject] retain];
-        m_Text      = [[decoder decodeObject] retain];
-        m_UserInfo  = [[decoder decodeObject] retain];
+        m_Title     = [decoder decodeObject];
+        m_Text      = [decoder decodeObject];
+        m_UserInfo  = [decoder decodeObject];
     }
 
     [self checkFields];
@@ -86,27 +80,20 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [m_Title release];
-    [m_Text release];
-    [m_UserInfo release];
-    [super dealloc];
-}
 
 - (NSString*)title
 {
-    return [[m_Title retain] autorelease];
+    return m_Title;
 }
 
 - (NSString*)text
 {
-    return [[m_Text retain] autorelease];
+    return m_Text;
 }
 
 - (NSDictionary*)userInfo
 {
-    return [[m_UserInfo retain] autorelease];
+    return m_UserInfo;
 }
 
 - (void)encodeWithCoder:(NSCoder*)coder

@@ -8,6 +8,8 @@
 
 #import "UserNotificationCenterScreenCornerView.h"
 
+#import <objc/message.h>
+
 @interface UserNotificationCenterScreenCornerView ()
 
 - (NSBezierPath*)pathForCornerPoint;
@@ -66,8 +68,6 @@
 - (void)dealloc
 {
     [self removeTrackingRects];
-    [m_BGImage release];
-    [super dealloc];
 }
 
 - (void)drawRect:(NSRect)rect
@@ -158,7 +158,10 @@
     {
         [self setScreenCorner:(UserNotificationCenterScreenCorner)m_ClickedMouseScreenCorner];
         if(m_Target != nil && m_Action != nil)
-            [m_Target performSelector:m_Action withObject:self];
+        {
+            ((void(*)(id self, SEL _cmd, UserNotificationCenterScreenCornerView *sender))objc_msgSend)
+                (m_Target, m_Action, self);
+        }
 
         m_ClickedMouseScreenCorner = -1;
         [self setNeedsDisplay:YES];

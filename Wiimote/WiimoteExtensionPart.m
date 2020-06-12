@@ -54,13 +54,13 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 
 + (void)sortExtensionClassesByMerit
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    @autoreleasepool {
 
-    [[WiimoteExtensionPart registredExtensionClasses]
-                                        sortUsingFunction:sortExtensionClassesByMeritFn
-                                                  context:NULL];
+        [[WiimoteExtensionPart registredExtensionClasses]
+                                            sortUsingFunction:sortExtensionClassesByMeritFn
+                                                      context:NULL];
 
-    [pool release];
+    }
 }
 
 + (void)registerExtensionClass:(Class)cls
@@ -94,8 +94,6 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 - (void)dealloc
 {
     [self extensionDisconnected];
-    [m_MotionPlusDetector release];
-    [super dealloc];
 }
 
 - (WiimoteExtension*)connectedExtension
@@ -103,7 +101,7 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
     if(!m_IsExtensionConnected)
         return nil;
 
-    return [[m_Extension retain] autorelease];
+    return m_Extension;
 }
 
 - (void)detectMotionPlus
@@ -266,7 +264,7 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 
 - (void)extensionConnected
 {
-    WiimoteExtension *extension = [[m_Extension retain] autorelease];
+    WiimoteExtension *extension = m_Extension;
     [self extensionDisconnected];
 
     m_ProbeHelper = [[WiimoteExtensionHelper alloc]
@@ -285,8 +283,7 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 {
 	WiimoteExtension *subExtension = [m_ProbeHelper subExtension];
 
-    m_Extension = [extension retain];
-    [m_ProbeHelper release];
+    m_Extension = extension;
 	m_ProbeHelper = nil;
 
 	if(m_Extension != nil)
@@ -303,8 +300,6 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 
     [m_ProbeHelper cancel];
     [m_MotionPlusDetector cancel];
-    [m_ProbeHelper release];
-    [m_Extension autorelease];
 
     m_ProbeHelper   = nil;
     m_Extension     = nil;

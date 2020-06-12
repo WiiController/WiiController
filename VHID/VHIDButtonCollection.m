@@ -57,12 +57,6 @@ static const unsigned char buttonMasks[] =
     return 255;
 }
 
-- (id)init
-{
-    [[super init] release];
-    return nil;
-}
-
 - (id)initWithButtonCount:(NSUInteger)buttonCount
 {
     self = [super init];
@@ -72,15 +66,14 @@ static const unsigned char buttonMasks[] =
     if(buttonCount == 0 ||
        buttonCount > [VHIDButtonCollection maxButtonCount])
     {
-        [self release];
         return nil;
     }
 
     NSUInteger stateSize = 0;
 
     m_ButtonCount   = buttonCount;
-    m_Descriptor    = [[VHIDButtonCollection descriptorWithButtonCount:buttonCount
-                                                             stateSize:&stateSize] retain];
+    m_Descriptor    = [VHIDButtonCollection descriptorWithButtonCount:buttonCount
+                                                             stateSize:&stateSize];
 
     m_State         = [[NSMutableData alloc] initWithLength:stateSize];
 
@@ -89,12 +82,6 @@ static const unsigned char buttonMasks[] =
     return self;
 }
 
-- (void)dealloc
-{
-    [m_Descriptor release];
-    [m_State release];
-    [super dealloc];
-}
 
 - (NSUInteger)buttonCount
 {
@@ -135,12 +122,12 @@ static const unsigned char buttonMasks[] =
 
 - (NSData*)descriptor
 {
-    return [[m_Descriptor retain] autorelease];
+    return m_Descriptor;
 }
 
 - (NSData*)state
 {
-    return [[m_State retain] autorelease];
+    return m_State;
 }
 
 @end

@@ -30,15 +30,9 @@ static void HIDManagerDeviceConnected(
                                     void            *sender,
                                     IOHIDDeviceRef   device)
 {
-    HIDManager *manager = (HIDManager*)context;
+    HIDManager *manager = (__bridge HIDManager*)context;
 
     [manager rawDeviceConnected:device];
-}
-
-- (id)init
-{
-    [[super init] release];
-    return nil;
 }
 
 - (id)initInternal
@@ -53,12 +47,11 @@ static void HIDManagerDeviceConnected(
 
     if(m_Handle == nil)
     {
-        [self release];
         return nil;
     }
 
     IOHIDManagerSetDeviceMatching(m_Handle, (CFDictionaryRef)[NSDictionary dictionary]);
-    IOHIDManagerRegisterDeviceMatchingCallback(m_Handle, HIDManagerDeviceConnected, self);
+    IOHIDManagerRegisterDeviceMatchingCallback(m_Handle, HIDManagerDeviceConnected, (__bridge void * _Nullable)(self));
     IOHIDManagerScheduleWithRunLoop(
                                 m_Handle,
                                 [[NSRunLoop currentRunLoop] getCFRunLoop],
@@ -66,7 +59,6 @@ static void HIDManagerDeviceConnected(
 
     if(IOHIDManagerOpen(m_Handle, kIOHIDOptionsTypeNone) != kIOReturnSuccess)
     {
-        [self release];
         return nil;
     }
 
@@ -89,8 +81,6 @@ static void HIDManagerDeviceConnected(
     while([m_ConnectedDevices count] != 0)
         [[m_ConnectedDevices anyObject] invalidate];
 
-    [m_ConnectedDevices release];
-    [super dealloc];
 }
 
 + (HIDManager*)manager
@@ -105,7 +95,7 @@ static void HIDManagerDeviceConnected(
 
 - (NSSet*)connectedDevices
 {
-    return [[m_ConnectedDevices retain] autorelease];
+    return m_ConnectedDevices;
 }
 
 @end
@@ -114,7 +104,7 @@ static void HIDManagerDeviceConnected(
 
 - (void)rawDeviceConnected:(IOHIDDeviceRef)device
 {
-    if([m_ConnectedDevices containsObject:(id)device])
+    if([m_ConnectedDevices containsObject:(__bridge id)device])
         return;
 
     HIDDevice *d = [[HIDDevice alloc]
@@ -123,7 +113,6 @@ static void HIDManagerDeviceConnected(
                                   options:kIOHIDOptionsTypeNone];
 
     [self deviceConnected:d];
-    [d release];
 }
 
 - (void)deviceConnected:(HIDDevice*)device

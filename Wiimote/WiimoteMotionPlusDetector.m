@@ -10,6 +10,8 @@
 
 #import "WiimoteLog.h"
 
+#import <objc/message.h>
+
 #define WiimoteDeviceMotionPlusDetectTriesCount      4
 #define WiimoteDeviceMotionPlusLastTryDelay          8.0
 
@@ -76,12 +78,6 @@
     usleep(50000);
 }
 
-- (id)init
-{
-    [[super init] release];
-    return nil;
-}
-
 - (id)initWithIOManager:(WiimoteIOManager*)ioManager
                  target:(id)target
                  action:(SEL)action
@@ -90,7 +86,7 @@
     if(self == nil)
         return nil;
 
-    m_IOManager     = [ioManager retain];
+    m_IOManager     = ioManager;
     m_Target        = target;
     m_Action        = action;
     m_IsRun         = NO;
@@ -102,8 +98,6 @@
 - (void)dealloc
 {
     [self cancel];
-    [m_IOManager release];
-    [super dealloc];
 }
 
 - (BOOL)isRun
@@ -161,14 +155,11 @@
                      target:self
                      action:@selector(signatureReaded:)];
 
-    [self retain];
 }
 
 - (void)signatureReaded:(NSData*)data
 {
     W_DEBUG_F(@"Possible wiimote ID: %@", data);
-
-    [self autorelease];
 
     if(m_CancelCount > 0)
     {
@@ -217,8 +208,8 @@
 - (void)detectionFinished:(BOOL)detected
 {
     m_IsRun = NO;
-    [m_Target performSelector:m_Action
-                   withObject:[NSNumber numberWithBool:detected]];
+    ((void(*)(id self, SEL _cmd, NSNumber *detected))objc_msgSend)
+        (m_Target, m_Action, @(detected));
 }
 
 @end

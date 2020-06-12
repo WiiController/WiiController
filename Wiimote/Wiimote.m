@@ -126,7 +126,7 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
 
 - (NSString*)modelName
 {
-    return [[m_ModelName retain] autorelease];
+    return m_ModelName;
 }
 
 - (void)playConnectEffect
@@ -228,7 +228,7 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
 
 - (NSDictionary*)userInfo
 {
-    return [[m_UserInfo retain] autorelease];
+    return m_UserInfo;
 }
 
 - (void)setUserInfo:(NSDictionary*)userInfo
@@ -236,8 +236,7 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
     if(m_UserInfo == userInfo)
         return;
 
-    [m_UserInfo release];
-    m_UserInfo = [userInfo retain];
+    m_UserInfo = userInfo;
 }
 
 - (id)delegate

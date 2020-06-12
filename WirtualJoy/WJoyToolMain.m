@@ -112,27 +112,27 @@ static WorkMode parseCommandLine(int argC, char *argV[]) {
 }
 
 int main(int argC, char *argV[]) {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    WorkMode mode = parseCommandLine(argC, argV);
-    int result = EXIT_FAILURE;
+    @autoreleasepool {
+        WorkMode mode = parseCommandLine(argC, argV);
+        int result = EXIT_FAILURE;
 
-    switch (mode) {
-        case WorkModeRepairRights:
-            result = repairRights(argV[0]);
-            break;
+        switch (mode) {
+            case WorkModeRepairRights:
+                result = repairRights(argV[0]);
+                break;
 
-        case WorkModeLoadDriver:
-            result = loadDriver(argV[2]);
-            break;
+            case WorkModeLoadDriver:
+                result = loadDriver(argV[2]);
+                break;
 
-        case WorkModeUnloadDriver:
-            result = unloadDriver(argV[2]);
-            break;
+            case WorkModeUnloadDriver:
+                result = unloadDriver(argV[2]);
+                break;
 
-        default:
-            break;
+            default:
+                break;
+        }
+
+        return result;
     }
-
-    [pool release];
-    return result;
 }

@@ -30,11 +30,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [m_LastNotifyTime release];
-    [super dealloc];
-}
 
 - (void)notify
 {
@@ -44,8 +39,7 @@
     {
         UpdateSystemActivity(UsrActivity);
 
-        [m_LastNotifyTime release];
-        m_LastNotifyTime = [now retain];
+        m_LastNotifyTime = now;
     }
 }
 

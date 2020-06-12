@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A1CB29D15B00E7A0012FCC7 /* wirtual_joy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1CB29B15B00E7A0012FCC7 /* wirtual_joy.cpp */; };
-		0A1CB2C315B015BA0012FCC7 /* wirtual_joy_user_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1CB2C115B015BA0012FCC7 /* wirtual_joy_user_client.cpp */; };
-		0A1CB50615B03FA10012FCC7 /* wirtual_joy_device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1CB50415B03FA10012FCC7 /* wirtual_joy_device.cpp */; };
+		0A1CB29D15B00E7A0012FCC7 /* wirtual_joy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1CB29B15B00E7A0012FCC7 /* wirtual_joy.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0A1CB2C315B015BA0012FCC7 /* wirtual_joy_user_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1CB2C115B015BA0012FCC7 /* wirtual_joy_user_client.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0A1CB50615B03FA10012FCC7 /* wirtual_joy_device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1CB50415B03FA10012FCC7 /* wirtual_joy_device.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0A46959415B58CEE003AB8FD /* WJoyToolMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A46928615B578CB003AB8FD /* WJoyToolMain.m */; };
 		0A46961415B593D4003AB8FD /* WJoyDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A4691E715B56A1A003AB8FD /* WJoyDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A46961B15B593DB003AB8FD /* wjoy.kext in Resources */ = {isa = PBXBuildFile; fileRef = 32D94FD00562CBF700B6AF17 /* wjoy.kext */; };
@@ -451,6 +451,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -476,6 +477,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -501,6 +503,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -529,6 +532,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -607,6 +611,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
@@ -632,6 +637,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2.0.0;

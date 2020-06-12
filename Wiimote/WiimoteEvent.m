@@ -13,11 +13,10 @@
                              path:(NSString*)path
                             value:(CGFloat)value
 {
-    return [[[WiimoteEvent alloc]
+    return [[WiimoteEvent alloc]
                         initWithWiimote:wiimote
                                    path:path
-                                  value:value]
-                    autorelease];
+                                  value:value];
 }
 
 - (id)initWithWiimote:(Wiimote*)wiimote
@@ -28,30 +27,23 @@
     if(self == nil)
         return nil;
 
-    m_Wiimote           = [wiimote retain];
+    m_Wiimote           = wiimote;
     m_Path              = [path copy];
-    m_PathComponents    = [[m_Path componentsSeparatedByString:@"."] retain];
+    m_PathComponents    = [m_Path componentsSeparatedByString:@"."];
     m_Value             = value;
 
     return self;
 }
 
-- (void)dealloc
-{
-    [m_Wiimote release];
-    [m_Path release];
-    [m_PathComponents release];
-    [super dealloc];
-}
 
 - (Wiimote*)wiimote
 {
-    return [[m_Wiimote retain] autorelease];
+    return m_Wiimote;
 }
 
 - (NSString*)path
 {
-    return [[m_Path retain] autorelease];
+    return m_Path;
 }
 
 - (NSString*)firstPathComponent
@@ -66,7 +58,7 @@
 
 - (NSArray*)pathComponents
 {
-    return [[m_PathComponents retain] autorelease];
+    return m_PathComponents;
 }
 
 - (CGFloat)value

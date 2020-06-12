@@ -25,7 +25,7 @@
 
 + (void)start
 {
-    [[WiimoteLEDsController alloc] initInternal];
+    (void)[[WiimoteLEDsController alloc] initInternal];
 }
 
 @end
@@ -45,12 +45,6 @@
         [device setHighlightedLEDMask:(1 << counter)];
         counter++;
     }
-}
-
-- (id)init
-{
-    [[super init] release];
-    return nil;
 }
 
 - (id)initInternal
@@ -77,7 +71,6 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super dealloc];
 }
 
 - (void)onDeviceConnected:(NSNotification*)notification

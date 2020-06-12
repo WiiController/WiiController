@@ -69,14 +69,11 @@
 - (void)dealloc
 {
     [m_CurrentAnimation stopAnimation];
-    [m_CurrentAnimation release];
-    [super dealloc];
 }
 
 - (void)makeKeyAndOrderFromWithoutAnimation:(id)sender
 {
     [m_CurrentAnimation stopAnimation];
-    [m_CurrentAnimation release];
     m_CurrentAnimation = nil;
 
     [super makeKeyAndOrderFront:sender];
@@ -153,7 +150,6 @@
     else
     {
         [m_CurrentAnimation stopAnimation];
-        [m_CurrentAnimation release];
         m_CurrentAnimation = nil;
 
         [self setAlphaValue:1.0f];
@@ -162,7 +158,6 @@
 
 - (void)animationDidEnd:(NSAnimation*)animation
 {
-    [m_CurrentAnimation release];
     m_CurrentAnimation = nil;
     [super close];
 }
@@ -174,7 +169,6 @@
 - (void)fadeIn
 {
     [m_CurrentAnimation stopAnimation];
-    [m_CurrentAnimation release];
 
     m_CurrentAnimation = [[NSViewAnimation alloc] initWithViewAnimations:
                             [NSArray arrayWithObject:
@@ -192,7 +186,6 @@
 - (void)fadeOut
 {
     [m_CurrentAnimation stopAnimation];
-    [m_CurrentAnimation release];
 
     m_CurrentAnimation = [[NSViewAnimation alloc] initWithViewAnimations:
                             [NSArray arrayWithObject:

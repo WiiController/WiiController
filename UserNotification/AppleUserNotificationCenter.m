@@ -59,16 +59,15 @@
 
 + (void)load
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    @autoreleasepool {
 
-    if([AppleUserNotificationCenter isAvailable])
-    {
-        AppleUserNotificationCenter *center = [[AppleUserNotificationCenter alloc] init];
-        [UserNotificationCenter registerImpl:center];
-        [center release];
+        if([AppleUserNotificationCenter isAvailable])
+        {
+            AppleUserNotificationCenter *center = [[AppleUserNotificationCenter alloc] init];
+            [UserNotificationCenter registerImpl:center];
+        }
+
     }
-
-    [pool release];
 }
 
 - (id)init
@@ -95,7 +94,6 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super dealloc];
 }
 
 - (BOOL)isAvailable
@@ -123,7 +121,7 @@
     }
 
     id<NSUserNotificationCenterFutureProtocol>  center  = (id)[m_NotificationCenterClass defaultUserNotificationCenter];
-    id<NSUserNotificationFutureProtocol>        n       = [[[m_NotificationClass alloc] init] autorelease];
+    id<NSUserNotificationFutureProtocol>        n       = [[m_NotificationClass alloc] init];
 
     [n setInformativeText:[notification text]];
     [n setTitle:[notification title]];
@@ -157,7 +155,6 @@
                                     [(id<NSUserNotificationFutureProtocol>)notification userInfo]];
 
     [UserNotificationCenter notificationClicked:n center:self];
-    [n release];
 
     [(id<NSUserNotificationCenterFutureProtocol>)center
         removeDeliveredNotification:(id<NSUserNotificationFutureProtocol>)notification];

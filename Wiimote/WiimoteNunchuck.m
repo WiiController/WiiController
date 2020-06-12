@@ -78,8 +78,6 @@
 - (void)dealloc
 {
     [m_Accelerometer setDelegate:nil];
-    [m_Accelerometer release];
-    [super dealloc];
 }
 
 - (NSString*)name
@@ -99,7 +97,7 @@
 
 - (WiimoteAccelerometer*)accelerometer
 {
-    return [[m_Accelerometer retain] autorelease];
+    return m_Accelerometer;
 }
 
 - (NSPoint)normalizeStickPosition:(NSPoint)position

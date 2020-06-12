@@ -592,7 +592,7 @@
 				0A48911015C7FB3B00207478 /* base */,
 				0A48911D15C7FCC200207478 /* plugin interface */,
 				0A48911A15C7FC9100207478 /* internal */,
-				0A48911E15C7FCDD00207478 /* standart extensions */,
+				0A48911E15C7FCDD00207478 /* standard extensions */,
 				0A4AE2EA15D117EA00408710 /* WiimoteIRPoint.h */,
 				0A4AE2EB15D117EA00408710 /* WiimoteIRPoint.m */,
 				0A5C520515CF9E9600940D89 /* WiimoteAccelerometer.h */,
@@ -675,7 +675,7 @@
 			name = device;
 			sourceTree = "<group>";
 		};
-		0A48911315C7FB5300207478 /* standart parts */ = {
+		0A48911315C7FB5300207478 /* standard parts */ = {
 			isa = PBXGroup;
 			children = (
 				0A4AE21C15D105AE00408710 /* IR */,
@@ -686,7 +686,7 @@
 				0A66C80F15CBE89200096DDA /* accelerometer */,
 				0A48911915C7FC7100207478 /* extension port */,
 			);
-			name = "standart parts";
+			name = "standard parts";
 			sourceTree = "<group>";
 		};
 		0A48911515C7FC1500207478 /* vibration */ = {
@@ -788,7 +788,7 @@
 			name = "plugin interface";
 			sourceTree = "<group>";
 		};
-		0A48911E15C7FCDD00207478 /* standart extensions */ = {
+		0A48911E15C7FCDD00207478 /* standard extensions */ = {
 			isa = PBXGroup;
 			children = (
 				0A48911F15C7FCF800207478 /* nunchuck */,
@@ -799,7 +799,7 @@
 				0A8A2D8B1602254B00940B66 /* motion plus */,
 				0A6901C115C90E9C000D988D /* unknown */,
 			);
-			name = "standart extensions";
+			name = "standard extensions";
 			sourceTree = "<group>";
 		};
 		0A48911F15C7FCF800207478 /* nunchuck */ = {
@@ -984,7 +984,7 @@
 		0A66C89E15CC0E1900096DDA /* wiimote parts */ = {
 			isa = PBXGroup;
 			children = (
-				0A48911315C7FB5300207478 /* standart parts */,
+				0A48911315C7FB5300207478 /* standard parts */,
 				0A4890BC15C7FA4500207478 /* WiimotePartSet.h */,
 				0A4890BD15C7FA4500207478 /* WiimotePartSet.m */,
 			);
@@ -1640,6 +1640,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
@@ -1672,6 +1673,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
@@ -1834,6 +1836,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1855,6 +1858,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;

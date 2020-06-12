@@ -12,13 +12,7 @@
 
 + (WiimoteIRPoint*)pointWithOwner:(Wiimote*)owner index:(NSUInteger)index
 {
-    return [[[WiimoteIRPoint alloc] initWithOwner:owner index:index] autorelease];
-}
-
-- (id)init
-{
-    [[super init] release];
-    return nil;
+    return [[WiimoteIRPoint alloc] initWithOwner:owner index:index];
 }
 
 - (id)initWithOwner:(Wiimote*)owner index:(NSUInteger)index

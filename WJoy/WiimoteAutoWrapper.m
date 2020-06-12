@@ -73,7 +73,6 @@ static NSUInteger maxConnectedDevices = 0;
 
 - (void)wiimoteDisconnected:(Wiimote*)wiimote
 {
-    [self release];
 }
 
 - (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck buttonPressed:(WiimoteNunchuckButtonType)button
@@ -176,8 +175,8 @@ static NSUInteger maxConnectedDevices = 0;
 			break;
 	}
 	
-	NSLog(@"\nMinLx: %i\tMinLy: %i\tMaxLx: %i\tMaxLy: %i", minL.x, minL.y, maxL.x, maxL.y);
-	NSLog(@"\nMinRx: %i\tMinRy: %i\tMaxRx: %i\tMaxRy: %i", minR.x, minR.y, maxR.x, maxR.y);
+    NSLog(@"\nMinLx: %f\tMinLy: %f\tMaxLx: %f\tMaxLy: %f", minL.x, minL.y, maxL.x, maxL.y);
+    NSLog(@"\nMinRx: %f\tMinRy: %f\tMaxRx: %f\tMaxRy: %f", minR.x, minR.y, maxR.x, maxR.y);
 	
 	[m_HIDState setPointer:stick position:position];
 }
@@ -215,14 +214,8 @@ static NSUInteger maxConnectedDevices = 0;
 
 + (void)newWiimoteDeviceNotification:(NSNotification*)notification
 {
-    [[WiimoteAutoWrapper alloc]
+    (void)[[WiimoteAutoWrapper alloc]
         initWithWiimote:(Wiimote*)[notification object]];
-}
-
-- (id)init
-{
-    [[super init] release];
-    return nil;
 }
 
 - (id)initWithWiimote:(Wiimote*)device
@@ -234,7 +227,6 @@ static NSUInteger maxConnectedDevices = 0;
     if([[Wiimote connectedDevices] count] > [WiimoteAutoWrapper maxConnectedDevices])
     {
         [device disconnect];
-        [self release];
         return nil;
     }
 
@@ -252,7 +244,6 @@ static NSUInteger maxConnectedDevices = 0;
        m_WJoy       == nil)
     {
         [device disconnect];
-        [self release];
         return nil;
     }
 
@@ -272,9 +263,6 @@ static NSUInteger maxConnectedDevices = 0;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-    [m_HIDState release];
-    [m_WJoy release];
-    [super dealloc];
 }
 
 @end

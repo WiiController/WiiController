@@ -46,12 +46,6 @@
     [WiimoteExtension probeFinished:NO target:target action:action];
 }
 
-- (id)init
-{
-	[[super init] release];
-	return nil;
-}
-
 - (id)initWithOwner:(Wiimote*)owner
     eventDispatcher:(WiimoteEventDispatcher*)dispatcher
 {
@@ -88,8 +82,6 @@
 
 - (void)ioManagerCalibrationDataReaded:(NSData*)data
 {
-    [self autorelease];
-
     if(data != nil)
     {
         [self handleCalibrationData:(const uint8_t*)[data bytes]
@@ -100,7 +92,6 @@
 - (BOOL)beginReadCalibrationData:(WiimoteIOManager*)ioManager
                      memoryRange:(NSRange)memoryRange
 {
-    [self retain];
 
     if(![ioManager readMemory:memoryRange
                        target:self
@@ -108,7 +99,6 @@
     {
         W_ERROR(@"[WiimoteIOManager readMemory: target: action:] failed");
 
-        [self release];
         return NO;
     }
 

@@ -25,20 +25,11 @@
 
 @implementation HIDDevice
 
-- (id)init
-{
-    [[self init] release];
-    return nil;
-}
-
 - (void)dealloc
 {
     if(m_Handle != NULL)
         CFRelease(m_Handle);
 
-    [m_Properties release];
-    [m_ReportBuffer release];
-    [super dealloc];
 }
 
 - (HIDManager*)owner
@@ -122,7 +113,7 @@
 
 - (NSDictionary*)properties
 {
-    return [[m_Properties retain] autorelease];
+    return m_Properties;
 }
 
 - (id)delegate
@@ -153,8 +144,8 @@
     if([object isKindOfClass:[self class]])
         return (m_Handle == ((HIDDevice*)object)->m_Handle);
 
-    if(CFGetTypeID(object) == IOHIDDeviceGetTypeID())
-        return (m_Handle == (IOHIDDeviceRef)object);
+    if(CFGetTypeID((__bridge CFTypeRef)(object)) == IOHIDDeviceGetTypeID())
+        return (m_Handle == (__bridge IOHIDDeviceRef)object);
 
     return NO;
 }

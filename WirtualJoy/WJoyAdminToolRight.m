@@ -24,7 +24,6 @@
 - (void)dealloc
 {
     [self discard];
-    [super dealloc];
 }
 
 - (BOOL)isObtained

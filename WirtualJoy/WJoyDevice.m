@@ -22,12 +22,6 @@ NSString *WJoyDeviceSerialNumberStringKey   = @"WJoyDeviceSerialNumberStringKey"
     return [WJoyDeviceImpl prepare];
 }
 
-- (id)init
-{
-    [[super init] release];
-    return nil;
-}
-
 - (id)initWithHIDDescriptor:(NSData*)HIDDescriptor
 {
     return [self initWithHIDDescriptor:HIDDescriptor properties:nil];
@@ -56,7 +50,6 @@ NSString *WJoyDeviceSerialNumberStringKey   = @"WJoyDeviceSerialNumberStringKey"
     m_Impl = [[WJoyDeviceImpl alloc] init];
     if(m_Impl == nil)
     {
-        [self release];
         return nil;
     }
 
@@ -71,7 +64,6 @@ NSString *WJoyDeviceSerialNumberStringKey   = @"WJoyDeviceSerialNumberStringKey"
 
     if(![m_Impl enable:HIDDescriptor])
     {
-        [self release];
         return nil;
     }
 
@@ -79,16 +71,10 @@ NSString *WJoyDeviceSerialNumberStringKey   = @"WJoyDeviceSerialNumberStringKey"
     return self;
 }
 
-- (void)dealloc
-{
-    [m_Properties release];
-    [m_Impl release];
-    [super dealloc];
-}
 
 - (NSDictionary*)properties
 {
-    return [[m_Properties retain] autorelease];
+    return m_Properties;
 }
 
 - (BOOL)updateHIDState:(NSData*)HIDState

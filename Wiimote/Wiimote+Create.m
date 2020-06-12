@@ -45,25 +45,18 @@
 	[m_VibrationPart setDevice:m_Device];
 }
 
-- (id)init
-{
-    [[super init] release];
-    return nil;
-}
-
 - (id)initWithWiimoteDevice:(WiimoteDevice*)device
 {
     self = [super init];
     if(self == nil)
         return nil;
 
-    m_Device    = [device retain];
+    m_Device    = device;
     m_PartSet   = [[WiimotePartSet alloc] initWithOwner:self device:m_Device];
     m_ModelName = [[device name] copy];
 
     if(m_Device == nil || ![m_Device connect])
     {
-        [self release];
         return nil;
     }
 
@@ -86,37 +79,30 @@
 - (id)initWithHIDDevice:(HIDDevice*)device
 {
     return [self initWithWiimoteDevice:
-                        [[[WiimoteDevice alloc]
-                                    initWithHIDDevice:device]
-                            autorelease]];
+                        [[WiimoteDevice alloc]
+                                    initWithHIDDevice:device]];
 }
 
 - (id)initWithBluetoothDevice:(IOBluetoothDevice*)device
 {
     return [self initWithWiimoteDevice:
-                        [[[WiimoteDevice alloc]
-                                    initWithBluetoothDevice:device]
-                            autorelease]];
+                        [[WiimoteDevice alloc]
+                                    initWithBluetoothDevice:device]];
 }
 
 - (void)dealloc
 {
     [m_Device disconnect];
-    [m_PartSet release];
-    [m_Device release];
-    [m_ModelName release];
-    [m_UserInfo release];
-    [super dealloc];
 }
 
 + (void)connectToHIDDevice:(HIDDevice*)device
 {
-    [[[Wiimote alloc] initWithHIDDevice:device] autorelease];
+    (void)[[Wiimote alloc] initWithHIDDevice:device];
 }
 
 + (void)connectToBluetoothDevice:(IOBluetoothDevice*)device
 {
-    [[[Wiimote alloc] initWithBluetoothDevice:device] autorelease];
+    (void)[[Wiimote alloc] initWithBluetoothDevice:device];
 }
 
 - (id)lowLevelDevice
@@ -135,8 +121,6 @@
 
 - (void)wiimoteDeviceDisconnected:(WiimoteDevice*)device
 {
-	[[self retain] autorelease];
-
 	[m_PartSet disconnected];
     [Wiimote wiimoteDisconnected:self];
 	[[m_PartSet eventDispatcher] postDisconnectNotification];

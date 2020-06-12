@@ -11,7 +11,7 @@
 #define WiimoteNunchuckButtonCount    2
 #define WiimoteNunchuckStickCount     1
 
-typedef enum
+typedef enum : NSInteger
 {
 	WiimoteNunchuckButtonTypeC      = 0,
 	WiimoteNunchuckButtonTypeZ      = 1

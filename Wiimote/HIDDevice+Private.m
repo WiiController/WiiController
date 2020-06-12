@@ -19,7 +19,7 @@ static void HIDDeviceReportCallback(
 {
     if(reportLength > 0)
     {
-        [(HIDDevice*)context
+        [(__bridge HIDDevice*)context
                     handleReport:report
                           length:reportLength];
     }
@@ -30,7 +30,7 @@ static void HIDDeviceDisconnectCallback(
 								IOReturn		 result, 
 								void			*sender)
 {
-    [(HIDDevice*)context disconnected];
+    [(__bridge HIDDevice*)context disconnected];
 }
 
 @implementation HIDDevice (Private)
@@ -71,7 +71,7 @@ static void HIDDeviceDisconnectCallback(
 
     while(*current != NULL)
     {
-        NSString    *key   = (NSString*)*current;
+        NSString    *key   = (__bridge NSString*)*current;
         id           value = [self propertyForKey:key];
 
         if(value != nil)
@@ -106,7 +106,6 @@ static void HIDDeviceDisconnectCallback(
 
     if(handle == NULL)
     {
-        [self release];
         return nil;
     }
 
@@ -115,7 +114,7 @@ static void HIDDeviceDisconnectCallback(
     m_IsDisconnected    = NO;
     m_Handle            = handle;
     m_Options           = options;
-    m_Properties        = [[self makePropertiesDictionary] retain];
+    m_Properties        = [self makePropertiesDictionary];
     m_ReportBuffer      = [[NSMutableData alloc] initWithLength:[self maxInputReportSize]];
     m_Delegate          = nil;
 
@@ -138,12 +137,12 @@ static void HIDDeviceDisconnectCallback(
                                 [m_ReportBuffer mutableBytes], 
                                 [m_ReportBuffer length],
                                 HIDDeviceReportCallback, 
-                                self);
+                                (__bridge void * _Nullable)(self));
 
     IOHIDDeviceRegisterRemovalCallback( 
                                 m_Handle, 
                                 HIDDeviceDisconnectCallback, 
-                                self);
+                                (__bridge void * _Nullable)(self));
 
 	return (IOHIDDeviceOpen(m_Handle, m_Options) == kIOReturnSuccess);
 }

@@ -18,6 +18,8 @@
 
 #import <dlfcn.h>
 
+#import <objc/message.h>
+
 #define WIIMOTE_INQUIRY_TIME_IN_SECONDS 10
 
 NSString *WiimoteDeviceName             = @"Nintendo RVL-CNT-01";
@@ -108,17 +110,10 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
     return [[self supportedModelNames] containsObject:name];
 }
 
-- (id)init
-{
-    [[super init] release];
-    return nil;
-}
-
 - (void)dealloc
 {
     [self stop];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super dealloc];
 }
 
 - (BOOL)isStarted
@@ -134,7 +129,7 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
     if(![WiimoteInquiry isBluetoothEnabled])
         return NO;
 
-	m_Inquiry = [[IOBluetoothDeviceInquiry inquiryWithDelegate:self] retain];
+	m_Inquiry = [IOBluetoothDeviceInquiry inquiryWithDelegate:self];
 
     [m_Inquiry setUpdateNewDeviceNames:YES];
 	[m_Inquiry setInquiryLength:WIIMOTE_INQUIRY_TIME_IN_SECONDS];
@@ -161,7 +156,6 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
 
     [m_Inquiry stop];
 	[m_Inquiry setDelegate:nil];
-	[m_Inquiry release];
 	m_Inquiry = nil;
 
     return YES;
@@ -246,11 +240,11 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
     {
         IOBluetoothDevice *device = [devices objectAtIndex:i];
 
-        W_DEBUG_F(@"bluetooth device connected: %@", [device getName]);
-        if([WiimoteInquiry isModelSupported:[device getName]])
+        W_DEBUG_F(@"bluetooth device connected: %@", [device name]);
+        if([WiimoteInquiry isModelSupported:[device name]])
 		{
             W_DEBUG(@"connecting...");
-            [self postIgnoreHintToSystem:[device getDeviceRef]];
+            [self postIgnoreHintToSystem:(__bridge IOBluetoothDeviceRef)(device)];
             [Wiimote connectToBluetoothDevice:device];
 		}
         else
@@ -266,8 +260,8 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
     {
         IOBluetoothDevice *device = [devices objectAtIndex:i];
 
-        W_DEBUG_F(@"bluetooth device connected: %@", [device getName]);
-        if([WiimoteInquiry isModelSupported:[device getName]])
+        W_DEBUG_F(@"bluetooth device connected: %@", [device name]);
+        if([WiimoteInquiry isModelSupported:[device name]])
 		{
 			if(![device isPaired])
             {
@@ -328,7 +322,7 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
 - (void)deviceInquiryDeviceFound:(IOBluetoothDeviceInquiry*)sender
 						  device:(IOBluetoothDevice*)device
 {
-	if([WiimoteInquiry isModelSupported:[device getName]])
+	if([WiimoteInquiry isModelSupported:[device name]])
 		[m_Inquiry stop];
 }
 
@@ -354,7 +348,8 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
     if(m_Target != nil &&
        m_Action != nil)
     {
-        [m_Target performSelector:m_Action withObject:self];
+        ((void(*)(id self, SEL _cmd))objc_msgSend)
+            (m_Target, m_Action);
     }
 
     m_Target = nil;

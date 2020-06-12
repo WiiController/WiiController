@@ -8,11 +8,13 @@
 
 #import "WiimoteExtension.h"
 
+#import "Wiimote.h"
+
 @implementation WiimoteExtension
 
 - (Wiimote*)owner
 {
-	return [[m_Owner retain] autorelease];
+	return m_Owner;
 }
 
 - (NSString*)name

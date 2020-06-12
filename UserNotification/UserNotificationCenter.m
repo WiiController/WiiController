@@ -120,7 +120,7 @@ static NSSound                              *uncSound           = nil;
 
 + (NSString*)soundName
 {
-    return [[uncSoundName retain] autorelease];
+    return uncSoundName;
 }
 
 + (void)setSoundName:(NSString*)name
@@ -128,11 +128,9 @@ static NSSound                              *uncSound           = nil;
     if(uncSoundName == name)
         return;
 
-    [uncSoundName release];
-    [uncSound release];
 
     uncSoundName    = [name copy];
-    uncSound        = [[NSSound soundNamed:name] retain];
+    uncSound        = [NSSound soundNamed:name];
 }
 
 + (void)deliver:(UserNotification*)notification

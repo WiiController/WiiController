@@ -11,12 +11,6 @@
 
 @implementation WiimoteDeviceReadMemHandler
 
-- (id)init
-{
-	[[super init] release];
-	return nil;
-}
-
 - (id)initWithMemoryRange:(NSRange)memoryRange
 				   target:(id)target
 				   action:(SEL)action
@@ -32,17 +26,10 @@
 
 	if(memoryRange.length == 0)
 	{
-		[self release];
 		return nil;
 	}
 
 	return self;
-}
-
-- (void)dealloc
-{
-	[m_ReadedData release];
-	[super dealloc];
 }
 
 - (void)dataReadFinished
@@ -81,7 +68,6 @@
 
 - (void)disconnected
 {
-    [m_ReadedData release];
     m_ReadedData = nil;
     [self dataReadFinished];
 }

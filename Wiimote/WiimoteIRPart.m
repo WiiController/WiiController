@@ -56,11 +56,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [m_Points release];
-    [super dealloc];
-}
 
 - (BOOL)isEnabled
 {

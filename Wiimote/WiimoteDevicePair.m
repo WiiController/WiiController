@@ -85,7 +85,6 @@
 	if([pair start] != kIOReturnSuccess)
     {
         W_ERROR(@"[IOBluetoothDevicePair start] failed");
-		[self release];
     }
 }
 
@@ -104,7 +103,7 @@
                                                                     addressAsString];
     }
     else
-		address = [device getAddressString];
+		address = [device addressString];
 
 	components = [address componentsSeparatedByString:@"-"];
 	if([components count] != 6)
@@ -114,7 +113,6 @@
 	{
 		NSScanner *scanner = [[NSScanner alloc] initWithString:[components objectAtIndex:i]];
 		[scanner scanHexInt:&value];
-		[scanner release];
 		bytes[5 - i] = (uint8_t)value;
 	}
 
@@ -144,7 +142,6 @@
         W_ERROR_F(@"failed with error: %i", error);
 	}
 
-	[self release];
 }
 
 @end

@@ -49,21 +49,15 @@
 
     if(device == nil)
     {
-        [self release];
         return nil;
     }
 
-    m_Device = [device retain];
+    m_Device = device;
     [m_Device setDelegate:self];
 
     return self;
 }
 
-- (void)dealloc
-{
-    [m_Device release];
-    [super dealloc];
-}
 
 - (NSString*)name
 {
@@ -85,7 +79,6 @@
 	{
 		NSScanner *scanner = [[NSScanner alloc] initWithString:[components objectAtIndex:i]];
 		[scanner scanHexInt:&value];
-		[scanner release];
 		bytes[i] = (uint8_t)value;
 	}
 
@@ -99,7 +92,7 @@
 
 - (id)lowLevelDevice
 {
-    return [[m_Device retain] autorelease];
+    return m_Device;
 }
 
 - (BOOL)isOpen
@@ -119,7 +112,7 @@
         BluetoothDeviceAddress address = { 0 };
 
         [[self address] getBytes:address.data length:sizeof(address.data)];
-        [[IOBluetoothDevice withAddress:&address] closeConnection];
+        [[IOBluetoothDevice deviceWithAddress:&address] closeConnection];
         [m_Device invalidate];
     }
 }
@@ -152,11 +145,10 @@
 
     if(device == nil)
     {
-        [self release];
         return nil;
     }
 
-    m_Device            = [device retain];
+    m_Device            = device;
 	m_DataChannel       = nil;
 	m_ControlChannel    = nil;
     m_IsOpen            = NO;
@@ -167,10 +159,6 @@
 - (void)dealloc
 {
     [self close];
-    [m_ControlChannel release];
-    [m_DataChannel release];
-    [m_Device release];
-    [super dealloc];
 }
 
 - (IOBluetoothL2CAPChannel*)openChannel:(BluetoothL2CAPPSM)channelID
@@ -189,7 +177,7 @@
 
 - (NSString*)name
 {
-    return [m_Device getName];
+    return [m_Device name];
 }
 
 - (NSData*)address
@@ -204,12 +192,12 @@
 
 - (NSString*)addressString
 {
-    return [m_Device getAddressString];
+    return [m_Device addressString];
 }
 
 - (id)lowLevelDevice
 {
-    return [[m_Device retain] autorelease];
+    return m_Device;
 }
 
 - (BOOL)isOpen
@@ -223,8 +211,8 @@
 		return YES;
 
 	m_IsOpen            = YES;
-	m_ControlChannel	= [[self openChannel:kBluetoothL2CAPPSMHIDControl] retain];
-	m_DataChannel		= [[self openChannel:kBluetoothL2CAPPSMHIDInterrupt] retain];
+	m_ControlChannel	= [self openChannel:kBluetoothL2CAPPSMHIDControl];
+	m_DataChannel		= [self openChannel:kBluetoothL2CAPPSMHIDInterrupt];
 
 	if(m_ControlChannel == nil || m_DataChannel    == nil)
     {
@@ -294,12 +282,12 @@
 
 + (WiimoteDeviceTransport*)withHIDDevice:(HIDDevice*)device
 {
-    return [[[WiimoteHIDDeviceTransport alloc] initWithHIDDevice:device] autorelease];
+    return [[WiimoteHIDDeviceTransport alloc] initWithHIDDevice:device];
 }
 
 + (WiimoteDeviceTransport*)withBluetoothDevice:(IOBluetoothDevice*)device
 {
-    return [[[WiimoteBluetoothDeviceTransport alloc] initWithBluetoothDevice:device] autorelease];
+    return [[WiimoteBluetoothDeviceTransport alloc] initWithBluetoothDevice:device];
 }
 
 - (NSString*)name

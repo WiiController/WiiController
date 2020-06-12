@@ -37,13 +37,12 @@
     if(self == nil)
         return nil;
 
-    m_Signatures = [signatures retain];
+    m_Signatures = signatures;
 
     if(m_Signatures			== nil ||
       [m_Signatures count]  == 0)
     {
         [self probeFinished:NO];
-        [self release];
         return nil;
     }
 
@@ -55,24 +54,17 @@
     {
         W_ERROR(@"[WiimoteIOManager readMemory: target: action:] failed");
         [self probeFinished:NO];
-        [self release];
         return nil;
     } 
 
     return self;
 }
 
-- (void)dealloc
-{
-    [m_Signatures release];
-    [super dealloc];
-}
 
 - (void)ioManagerDataReaded:(NSData*)data
 {
     if(data == nil)
     {
-        [self release];
         return;
     }
 
@@ -80,7 +72,6 @@
     {
         W_ERROR(@"readed data chunk too small");
         [self probeFinished:NO];
-        [self release];
         return;
     }
 
@@ -98,7 +89,6 @@
 
     W_DEBUG_F(@"probe finished (%@): %@", data, ((isOk)?(@"Ok"):(@"Not Ok")));
     [self probeFinished:isOk];
-    [self release];
 }
 
 @end
@@ -110,7 +100,7 @@
               target:(id)target
               action:(SEL)action
 {
-	[[WiimoteExtensionRoutineProbeHandler alloc]
+	(void)[[WiimoteExtensionRoutineProbeHandler alloc]
 										initWithIOManager:manager
                                                signatures:[NSArray arrayWithObject:signature]
 												   target:target
@@ -122,17 +112,11 @@
               target:(id)target
               action:(SEL)action
 {
-	[[WiimoteExtensionRoutineProbeHandler alloc]
+	(void)[[WiimoteExtensionRoutineProbeHandler alloc]
 										initWithIOManager:manager
                                                signatures:signatures
 												   target:target
 												   action:action];
-}
-
-- (id)init
-{
-    [[super init] release];
-    return nil;
 }
 
 - (id)initWithIOManager:(WiimoteIOManager*)manager

@@ -44,13 +44,11 @@
 - (void)dealloc
 {
     [m_Accelerometer setDelegate:nil];
-    [m_Accelerometer release];
-    [super dealloc];
 }
 
 - (WiimoteAccelerometer*)accelerometer
 {
-    return [[m_Accelerometer retain] autorelease];
+    return m_Accelerometer;
 }
 
 - (NSSet*)allowedReportTypeSet
@@ -133,13 +131,10 @@
         return;
     }
 
-    [self retain];
 }
 
 - (void)handleCalibrationData:(NSData*)data
 {
-    [self autorelease];
-
     if([data length] < sizeof(WiimoteDeviceAccelerometerCalibrationData))
         return;
 

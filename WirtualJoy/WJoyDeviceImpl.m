@@ -44,14 +44,12 @@
 
     if(![WJoyDeviceImpl prepare])
     {
-        [self release];
         return nil;
     }
 
     m_Connection = [WJoyDeviceImpl createNewConnection];
     if(m_Connection == IO_OBJECT_NULL)
     {
-        [self release];
         return nil;
     }
 
@@ -63,7 +61,6 @@
     if(m_Connection != IO_OBJECT_NULL)
         IOServiceClose(m_Connection);
 
-    [super dealloc];
 }
 
 - (BOOL)call:(WJoyDeviceMethodSelector)selector
@@ -140,9 +137,9 @@
 
 static void onApplicationExit(void)
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    [WJoyDeviceImpl unloadDriver];
-    [pool release];
+    @autoreleasepool {
+        [WJoyDeviceImpl unloadDriver];
+    }
 }
 
 + (void)registerAtExitCallback

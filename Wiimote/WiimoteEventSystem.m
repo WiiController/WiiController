@@ -67,8 +67,6 @@ NSString *WiimoteEventKey                   = @"WiimoteEventKey";
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-    [m_Observers release];
-    [super dealloc];
 }
 
 - (void)addObserver:(id)observer

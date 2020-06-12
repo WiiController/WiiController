@@ -27,12 +27,6 @@
         [[WiimotePartSet registredPartClasses] addObject:cls];
 }
 
-- (id)init
-{
-    [[super init] release];
-    return nil;
-}
-
 - (id)initWithOwner:(Wiimote*)owner device:(WiimoteDevice*)device
 {
     self = [super init];
@@ -58,20 +52,11 @@
 
         [m_PartDictionary setObject:part forKey:(id)partClass];
         [m_PartArray addObject:part];
-        [part release];
     }
 
     return self;
 }
 
-- (void)dealloc
-{
-    [m_IOManager release];
-    [m_EventDispatcher release];
-    [m_PartDictionary release];
-    [m_PartArray release];
-    [super dealloc];
-}
 
 - (Wiimote*)owner
 {

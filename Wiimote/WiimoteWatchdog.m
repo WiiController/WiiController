@@ -36,17 +36,10 @@ NSString *WiimoteWatchdogPingNotification            = @"WiimoteWatchdogPingNoti
     return result;
 }
 
-- (id)init
-{
-    [[super init] release];
-    return nil;
-}
-
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [m_Timer invalidate];
-    [super dealloc];
 }
 
 - (BOOL)isEnabled
@@ -134,7 +127,7 @@ NSString *WiimoteWatchdogPingNotification            = @"WiimoteWatchdogPingNoti
 
 - (void)applicationWillTerminateNotification:(NSNotification*)notification
 {
-    NSArray     *connectedDevices   = [[[Wiimote connectedDevices] copy] autorelease];
+    NSArray     *connectedDevices   = [[Wiimote connectedDevices] copy];
     NSUInteger   countDevices       = [connectedDevices count];
 
     for(NSUInteger i = 0; i < countDevices; i++)

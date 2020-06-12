@@ -12,8 +12,6 @@
 
 - (void)HIDDeviceDisconnected:(HIDDevice*)device
 {
-	[[device retain] autorelease];
-
 	[m_ConnectedDevices removeObject:device];
 
     [[NSNotificationCenter defaultCenter]

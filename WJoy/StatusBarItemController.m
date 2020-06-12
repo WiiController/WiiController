@@ -23,18 +23,12 @@
 
 + (void)start
 {
-    [[StatusBarItemController alloc] initInternal];
+    (void)[[StatusBarItemController alloc] initInternal];
 }
 
 @end
 
 @implementation StatusBarItemController (PrivatePart)
-
-- (id)init
-{
-    [[super init] release];
-    return nil;
-}
 
 - (id)initInternal
 {
@@ -43,8 +37,8 @@
         return nil;
 
     m_Menu              = [[NSMenu alloc] initWithTitle:@"WJoyStatusBarMenu"];
-    m_Item              = [[[NSStatusBar systemStatusBar]
-                                    statusItemWithLength:NSSquareStatusItemLength] retain];
+    m_Item              = [[NSStatusBar systemStatusBar]
+                                    statusItemWithLength:NSSquareStatusItemLength];
 
     m_DiscoveryMenuItem = [[NSMenuItem alloc]
                                     initWithTitle:@"Begin Dicovery"
@@ -56,18 +50,15 @@
     [m_Menu addItem:m_DiscoveryMenuItem];
     [m_Menu setAutoenablesItems:NO];
     [m_Menu setDelegate:(id)self];
-    [m_DiscoveryMenuItem release];
 
     NSImage *icon = [[[NSApplication sharedApplication] applicationIconImage] copy];
 
-    [icon setScalesWhenResized:YES];
     [icon setSize:NSMakeSize(20.0f, 20.0f)];
 
     [m_Item setImage:icon];
     [m_Item setMenu:m_Menu];
     [m_Item setHighlightMode:YES];
 
-    [icon release];
 
     [Wiimote setUseOneButtonClickConnection:
                 [[NSUserDefaults standardUserDefaults] boolForKey:@"OneButtonClickConnection"]];
@@ -78,9 +69,6 @@
 - (void)dealloc
 {
     [[NSStatusBar systemStatusBar] removeStatusItem:m_Item];
-    [m_Item release];
-    [m_Menu release];
-    [super dealloc];
 }
 
 - (void)toggleAutostart
@@ -153,7 +141,7 @@
 
         NSMenuItem      *item         = [[NSMenuItem alloc]
                                             initWithTitle:[NSString stringWithFormat:
-                                                                @"%@ #%li (%@ Battery)",
+                                                                @"%@ #%li (%@ Battery) / %@",
                                                     [device modelName],
                                                                     i+1,
                                                                     batteryLevel,
@@ -169,7 +157,6 @@
         }
 
         [m_Menu addItem:item];
-        [item release];
     }
 
     NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@"Automatically connect when device powers on" action:@selector(toggleOneButtonClickConnection) keyEquivalent:@""];
@@ -177,7 +164,6 @@
     [item setState:([Wiimote isUseOneButtonClickConnection])?(NSOnState):(NSOffState)];
     [m_Menu addItem:[NSMenuItem separatorItem]];
     [m_Menu addItem:item];
-    [item release];
 
     item = [[NSMenuItem alloc] initWithTitle:@"Start with macOS" action:@selector(toggleAutostart) keyEquivalent:@""];
     [item setTarget:self];
@@ -190,13 +176,11 @@
 
     [item setState:state];
     [m_Menu addItem:item];
-    [item release];
 
     item = [[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(terminate:) keyEquivalent:@""];
     [item setTarget:[NSApplication sharedApplication]];
     [m_Menu addItem:[NSMenuItem separatorItem]];
     [m_Menu addItem:item];
-    [item release];
 }
 
 @end

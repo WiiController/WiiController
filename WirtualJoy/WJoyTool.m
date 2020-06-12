@@ -61,7 +61,7 @@
 
 + (BOOL)repairToolRights
 {
-    WJoyAdminToolRight *rights = [[[WJoyAdminToolRight alloc] init] autorelease];
+    WJoyAdminToolRight *rights = [[WJoyAdminToolRight alloc] init];
 
     if(![rights obtain])
         return NO;
@@ -111,7 +111,6 @@
 
     BOOL result = ([task terminationStatus] == EXIT_SUCCESS);
 
-    [task release];
     return result;
 }
 
@@ -124,12 +123,6 @@
         return NO;
 
     return [self doCommand:command argument:[self driverPath]];
-}
-
-- (id)init
-{
-    [[super init] release];
-    return nil;
 }
 
 @end
