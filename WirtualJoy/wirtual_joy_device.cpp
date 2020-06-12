@@ -10,7 +10,10 @@
 #include "wirtual_joy_device.h"
 #include "wirtual_joy_debug.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #include <IOKit/usb/IOUSBHostHIDDevice.h>
+#pragma clang diagnostic pop
 
 #define super IOHIDDevice
 #define kMaxHIDReportSize 256
