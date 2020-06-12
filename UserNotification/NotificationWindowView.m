@@ -308,7 +308,7 @@
         NSRect           textRect   = [self titleRect:rect attributes:attributes];
 
         [m_Title drawWithRect:textRect
-                      options:NSStringDrawingDisableScreenFontSubstitution
+                      options:0
                    attributes:attributes];
 
         titleHeight = textRect.size.height;
@@ -319,8 +319,7 @@
         NSDictionary *attributes = [NotificationWindowView textAttributes];
 
         [m_Text drawWithRect:[self textRect:rect titleHeight:titleHeight attributes:attributes]
-                     options:NSStringDrawingUsesLineFragmentOrigin |
-                                NSStringDrawingDisableScreenFontSubstitution
+                     options:NSStringDrawingUsesLineFragmentOrigin
                 attributes:attributes];
     }
 
@@ -463,8 +462,7 @@
 
     NSRect result =
            [m_Text boundingRectWithSize:maxRect.size
-                                options:NSStringDrawingUsesLineFragmentOrigin |   
-                                            NSStringDrawingDisableScreenFontSubstitution
+                                options:NSStringDrawingUsesLineFragmentOrigin
                              attributes:attributes];
 
     if(result.size.height > maxRect.size.height)
@@ -533,8 +531,7 @@
            [text boundingRectWithSize:NSMakeSize(
                                             NotificationWindowViewWidth - 10.0f - 32.0f - 10.0f - 20.0f,
                                             NotificationWindowViewMaxHeight)
-                              options:NSStringDrawingUsesLineFragmentOrigin |   
-                                            NSStringDrawingDisableScreenFontSubstitution
+                              options:NSStringDrawingUsesLineFragmentOrigin
                            attributes:[NotificationWindowView textAttributes]];
 
     if(result.size.height > NotificationWindowViewMaxHeight)
