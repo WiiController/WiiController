@@ -8,7 +8,11 @@
 
 #import "UserActivityNotifier.h"
 
-@implementation UserActivityNotifier
+#import <IOKit/pwr_mgt/IOPMLib.h>
+
+@implementation UserActivityNotifier {
+    IOPMAssertionID _pmAssertionID;
+}
 
 + (UserActivityNotifier*)sharedNotifier
 {
@@ -37,7 +41,7 @@
 
     if([now timeIntervalSinceDate:m_LastNotifyTime] >= 5.0)
     {
-        UpdateSystemActivity(UsrActivity);
+        IOPMAssertionDeclareUserActivity(kIOPMAssertionTypePreventUserIdleDisplaySleep, kIOPMUserActiveLocal, &_pmAssertionID);
 
         m_LastNotifyTime = now;
     }
