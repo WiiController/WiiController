@@ -7,7 +7,6 @@
 //
 
 #import <Wiimote/Wiimote.h>
-#import <UpdateChecker/UAppUpdateChecker.h>
 
 #import "NotificationCenter.h"
 
@@ -89,12 +88,6 @@
                                selector:@selector(onDeviceDisconnected)
                                    name:WiimoteDisconnectedNotification
                                  object:nil];
-
-    [[NSNotificationCenter defaultCenter]
-                                addObserver:self
-                                   selector:@selector(onCheckNewVersionFinished:)
-                                       name:UAppUpdateCheckerDidFinishNotification
-                                     object:nil];
 
     [UserNotificationCenter setDelegate:self];
 
