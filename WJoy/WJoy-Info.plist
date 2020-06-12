@@ -30,7 +30,5 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-	<key>UALatesVersionPlistURL</key>
-	<string>http://wjoy.googlecode.com/svn/trunk/WJoy/WJoyLatestVersion.plist</string>
 </dict>
 </plist>
