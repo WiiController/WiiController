@@ -797,10 +797,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MARKETING_VERSION = 0.10.0;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
-				PRODUCT_BUNDLE_IDENTIFIER = com.hiddenswitch.WJoy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justcheesy.WiiController;
 				PRODUCT_NAME = WiiController;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "WJoy-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -827,10 +826,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MARKETING_VERSION = 0.10.0;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
-				PRODUCT_BUNDLE_IDENTIFIER = com.hiddenswitch.WJoy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justcheesy.WiiController;
 				PRODUCT_NAME = WiiController;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "WJoy-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

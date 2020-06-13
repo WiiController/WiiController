@@ -27,7 +27,7 @@
     if(self == nil)
         return nil;
 
-    m_Menu              = [[NSMenu alloc] initWithTitle:@"WJoyStatusBarMenu"];
+    m_Menu              = [[NSMenu alloc] initWithTitle:@"WiiController"];
     m_Item              = [[NSStatusBar systemStatusBar]
                                     statusItemWithLength:NSSquareStatusItemLength];
 
@@ -145,7 +145,7 @@
     [m_Menu addItem:[NSMenuItem separatorItem]];
     [m_Menu addItem:item];
 
-    item = [[NSMenuItem alloc] initWithTitle:@"Quit WJoy" action:@selector(terminate:) keyEquivalent:@"q"];
+    item = [[NSMenuItem alloc] initWithTitle:@"Quit WiiController" action:@selector(terminate:) keyEquivalent:@"q"];
     [item setTarget:[NSApplication sharedApplication]];
     [m_Menu addItem:[NSMenuItem separatorItem]];
     [m_Menu addItem:item];
