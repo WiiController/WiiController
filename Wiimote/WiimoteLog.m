@@ -13,6 +13,9 @@
 #endif
 
 @implementation WiimoteLog
+{
+    WiimoteLogLevel m_Level;
+}
 
 + (NSString*)levelAsString:(WiimoteLogLevel)level
 {

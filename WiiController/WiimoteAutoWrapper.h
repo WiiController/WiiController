@@ -10,18 +10,7 @@
 #import <WirtualJoy/WJoyDevice.h>
 #import <VHID/VHIDDevice.h>
 
-@interface WiimoteAutoWrapper : NSObject<
-                                    VHIDDeviceDelegate>
-                                    
-{
-    @private
-        Wiimote         *m_Device;
-        VHIDDevice      *m_HIDState;
-		NSPoint			 m_ShiftsState;
-        WJoyDevice      *m_WJoy;
-		// For calibration of the analog sticks
-		NSPoint minL, maxL, minR, maxR;
-}
+@interface WiimoteAutoWrapper : NSObject<VHIDDeviceDelegate>
 
 // 0 = infinite, default = infinite, if currently connected too many, disconnect last connected
 + (NSUInteger)maxConnectedDevices;

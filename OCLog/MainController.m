@@ -9,6 +9,11 @@
 #import "MainController.h"
 
 @implementation MainController
+{
+    IBOutlet NSTextView     *m_Log;
+    IBOutlet NSPopUpButton  *m_UserLogLevel;
+    IBOutlet NSTextField    *m_UserInput;
+}
 
 - (void)awakeFromNib
 {

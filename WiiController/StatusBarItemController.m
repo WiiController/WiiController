@@ -11,6 +11,11 @@
 #import "StatusBarItemController.h"
 
 @implementation StatusBarItemController
+{
+    NSMenu          *m_Menu;
+    NSStatusItem    *m_Item;
+    NSMenuItem      *m_DiscoveryMenuItem;
+}
 
 + (void)start
 {

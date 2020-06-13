@@ -34,6 +34,10 @@
 @end
 
 @implementation OCLog
+{
+    OCLogLevel                   m_Level;
+    NSObject< OCLogHandler >    *m_Handler;
+}
 
 + (NSString*)levelAsString:(OCLogLevel)level
 {

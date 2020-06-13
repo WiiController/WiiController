@@ -22,6 +22,14 @@
 @end
 
 @implementation WiimoteAutoWrapper
+{
+    Wiimote         *m_Device;
+    VHIDDevice      *m_HIDState;
+    NSPoint             m_ShiftsState;
+    WJoyDevice      *m_WJoy;
+    // For calibration of the analog sticks
+    NSPoint minL, maxL, minR, maxR;
+}
 
 static NSUInteger maxConnectedDevices = 0;
 

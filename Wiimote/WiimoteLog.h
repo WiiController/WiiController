@@ -41,10 +41,6 @@ typedef enum WiimoteLogLevel {
             while(NO)
 
 @interface WiimoteLog : NSObject
-{
-    @private
-        WiimoteLogLevel m_Level;
-}
 
 + (NSString*)levelAsString:(WiimoteLogLevel)level;
 
