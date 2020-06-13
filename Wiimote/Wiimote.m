@@ -49,9 +49,7 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
     if([Wiimote isUseOneButtonClickConnection] == useOneButtonClickConnection)
         return;
 
-    NSDictionary *userInfo = [NSDictionary
-                                    dictionaryWithObject:[NSNumber numberWithBool:useOneButtonClickConnection]
-                                                  forKey:WiimoteUseOneButtonClickConnectionKey];
+    NSDictionary *userInfo = @{WiimoteUseOneButtonClickConnectionKey: @(useOneButtonClickConnection)};
 
     [[WiimoteInquiry sharedInquiry] setUseOneButtonClickConnection:useOneButtonClickConnection];
 
