@@ -39,7 +39,6 @@
 		0A4890D815C7FA4500207478 /* WiimoteDeviceReadMemHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A48908B15C7FA4500207478 /* WiimoteDeviceReadMemHandler.m */; };
 		0A4890D915C7FA4500207478 /* WiimoteDeviceReport.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A48908C15C7FA4500207478 /* WiimoteDeviceReport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A4890DA15C7FA4500207478 /* WiimoteDeviceReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A48908D15C7FA4500207478 /* WiimoteDeviceReport.m */; };
-		0A4890DC15C7FA4500207478 /* WiimoteDeviceReport+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A48908F15C7FA4500207478 /* WiimoteDeviceReport+Private.m */; };
 		0A4890DD15C7FA4500207478 /* WiimoteEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A48909015C7FA4500207478 /* WiimoteEventDispatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A4890DE15C7FA4500207478 /* WiimoteEventDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A48909115C7FA4500207478 /* WiimoteEventDispatcher.m */; };
 		0A4890E015C7FA4500207478 /* WiimoteEventDispatcher+Battery.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A48909315C7FA4500207478 /* WiimoteEventDispatcher+Battery.m */; };
@@ -116,7 +115,6 @@
 		0A7D7ED018E180C900E46316 /* WiimoteDeviceReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A48908D15C7FA4500207478 /* WiimoteDeviceReport.m */; };
 		0A7D7ED118E180C900E46316 /* WiimoteEventDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A48909115C7FA4500207478 /* WiimoteEventDispatcher.m */; };
 		0A7D7ED218E180C900E46316 /* WiimoteIOManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4890B115C7FA4500207478 /* WiimoteIOManager.m */; };
-		0A7D7ED318E180C900E46316 /* WiimoteDeviceReport+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A48908F15C7FA4500207478 /* WiimoteDeviceReport+Private.m */; };
 		0A7D7ED418E180C900E46316 /* WiimoteEventDispatcher+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A48909F15C7FA4500207478 /* WiimoteEventDispatcher+Private.m */; };
 		0A7D7ED518E180C900E46316 /* WiimoteIOManager+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4890B315C7FA4500207478 /* WiimoteIOManager+Private.m */; };
 		0A7D7ED618E180C900E46316 /* WiimotePart.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4890BB15C7FA4500207478 /* WiimotePart.m */; };
@@ -212,7 +210,6 @@
 		0AF0E74118E183D300CB6662 /* WiimoteLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AF0E73F18E183D300CB6662 /* WiimoteLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0AF0E74318E183D300CB6662 /* WiimoteLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF0E74018E183D300CB6662 /* WiimoteLog.m */; };
 		0AF0E74418E183D300CB6662 /* WiimoteLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF0E74018E183D300CB6662 /* WiimoteLog.m */; };
-		3C95647C2495570000EAFA05 /* W_HIDDevice+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C95647B2495570000EAFA05 /* W_HIDDevice+Private.h */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -338,8 +335,6 @@
 		0A48908B15C7FA4500207478 /* WiimoteDeviceReadMemHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteDeviceReadMemHandler.m; sourceTree = "<group>"; };
 		0A48908C15C7FA4500207478 /* WiimoteDeviceReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteDeviceReport.h; sourceTree = "<group>"; };
 		0A48908D15C7FA4500207478 /* WiimoteDeviceReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteDeviceReport.m; sourceTree = "<group>"; };
-		0A48908E15C7FA4500207478 /* WiimoteDeviceReport+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WiimoteDeviceReport+Private.h"; sourceTree = "<group>"; };
-		0A48908F15C7FA4500207478 /* WiimoteDeviceReport+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WiimoteDeviceReport+Private.m"; sourceTree = "<group>"; };
 		0A48909015C7FA4500207478 /* WiimoteEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteEventDispatcher.h; sourceTree = "<group>"; };
 		0A48909115C7FA4500207478 /* WiimoteEventDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteEventDispatcher.m; sourceTree = "<group>"; };
 		0A48909215C7FA4500207478 /* WiimoteEventDispatcher+Battery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WiimoteEventDispatcher+Battery.h"; sourceTree = "<group>"; };
@@ -480,6 +475,7 @@
 		0AF0E74018E183D300CB6662 /* WiimoteLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteLog.m; sourceTree = "<group>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		3C95647B2495570000EAFA05 /* W_HIDDevice+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "W_HIDDevice+Private.h"; sourceTree = "<group>"; };
+		3C95647D249564FC00EAFA05 /* WiimoteDeviceReport+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WiimoteDeviceReport+Private.h"; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* Wiimote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Wiimote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -637,6 +633,7 @@
 				0AF0E73F18E183D300CB6662 /* WiimoteLog.h */,
 				0AF0E74018E183D300CB6662 /* WiimoteLog.m */,
 				0A48908C15C7FA4500207478 /* WiimoteDeviceReport.h */,
+				3C95647D249564FC00EAFA05 /* WiimoteDeviceReport+Private.h */,
 				0A48908D15C7FA4500207478 /* WiimoteDeviceReport.m */,
 				0A48909015C7FA4500207478 /* WiimoteEventDispatcher.h */,
 				0A48909115C7FA4500207478 /* WiimoteEventDispatcher.m */,
@@ -977,8 +974,6 @@
 		0A66C8A015CC0E2900096DDA /* internal */ = {
 			isa = PBXGroup;
 			children = (
-				0A48908E15C7FA4500207478 /* WiimoteDeviceReport+Private.h */,
-				0A48908F15C7FA4500207478 /* WiimoteDeviceReport+Private.m */,
 				0A48909E15C7FA4500207478 /* WiimoteEventDispatcher+Private.h */,
 				0A48909F15C7FA4500207478 /* WiimoteEventDispatcher+Private.m */,
 				0A4890B215C7FA4500207478 /* WiimoteIOManager+Private.h */,
@@ -1120,7 +1115,6 @@
 			files = (
 				0A35C7AA17787A9400E43A07 /* W_HIDDevice.h in Headers */,
 				0A35C7AE17787A9400E43A07 /* HIDManager.h in Headers */,
-				3C95647C2495570000EAFA05 /* W_HIDDevice+Private.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1389,7 +1383,6 @@
 				0A7D7ED018E180C900E46316 /* WiimoteDeviceReport.m in Sources */,
 				0A7D7ED118E180C900E46316 /* WiimoteEventDispatcher.m in Sources */,
 				0A7D7ED218E180C900E46316 /* WiimoteIOManager.m in Sources */,
-				0A7D7ED318E180C900E46316 /* WiimoteDeviceReport+Private.m in Sources */,
 				0A7D7ED418E180C900E46316 /* WiimoteEventDispatcher+Private.m in Sources */,
 				0A7D7ED518E180C900E46316 /* WiimoteIOManager+Private.m in Sources */,
 				0A7D7ED618E180C900E46316 /* WiimotePart.m in Sources */,
@@ -1479,7 +1472,6 @@
 				0A4890DA15C7FA4500207478 /* WiimoteDeviceReport.m in Sources */,
 				0AB4B6D019E975AC000C6D8B /* WiimoteUDraw.m in Sources */,
 				0AB4B6DC19E97648000C6D8B /* WiimoteUDrawDelegate.m in Sources */,
-				0A4890DC15C7FA4500207478 /* WiimoteDeviceReport+Private.m in Sources */,
 				0A4890DE15C7FA4500207478 /* WiimoteEventDispatcher.m in Sources */,
 				0A4AE3C515D1215000408710 /* WiimoteEventDispatcher+IR.m in Sources */,
 				0A4890E015C7FA4500207478 /* WiimoteEventDispatcher+Battery.m in Sources */,

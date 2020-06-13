@@ -12,20 +12,12 @@
 @class Wiimote;
 
 @interface WiimoteDeviceReport : NSObject
-{
-	@private
-		NSUInteger		 m_Type;
-		WiimoteDevice	*m_Device;
-		Wiimote			*m_Wiimote;
-        const uint8_t   *m_Data;
-        NSUInteger       m_DataLength;
-}
 
-- (NSUInteger)type; // WiimoteDeviceReportType
+@property(nonatomic,readonly) NSUInteger type; // WiimoteDeviceReportType
 
-- (const uint8_t*)data;
-- (NSUInteger)length;
+@property(nonatomic,readonly) uint8_t const* data;
+@property(nonatomic,readonly) NSUInteger length;
 
-- (Wiimote*)wiimote;
+@property(nonatomic,readonly) Wiimote *wiimote;
 
 @end

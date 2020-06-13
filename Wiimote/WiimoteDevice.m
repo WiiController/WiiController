@@ -7,11 +7,11 @@
 //
 
 #import "WiimoteDevice.h"
-#import "WiimoteDeviceReport+Private.h"
 #import "WiimoteDeviceReadMemQueue.h"
 #import "WiimoteDeviceTransport.h"
 
 #import "WiimoteLog.h"
+#import "WiimoteDeviceReport+Private.h"
 
 @interface WiimoteDevice (PrivatePart)
 

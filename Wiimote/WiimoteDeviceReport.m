@@ -11,25 +11,52 @@
 #import "Wiimote.h"
 
 @implementation WiimoteDeviceReport
-
-- (NSUInteger)type
 {
-	return m_Type;
+    WiimoteDevice    *_device;
 }
 
-- (const uint8_t*)data
++ (WiimoteDeviceReport*)deviceReportWithType:(NSUInteger)type
+                                        data:(const uint8_t*)data
+                                      length:(NSUInteger)length
+                                      device:(WiimoteDevice*)device
 {
-    return m_Data;
+    WiimoteDeviceReport *result = [[WiimoteDeviceReport alloc] initWithDevice:device];
+
+    if(result == nil)
+        return nil;
+
+    result->_type          = type;
+    result->_data          = data;
+    result->_length    = length;
+
+    return result;
 }
 
-- (NSUInteger)length
+- (id)initWithDevice:(WiimoteDevice*)device
 {
-    return m_DataLength;
+    self = [super init];
+    if(self == nil)
+        return nil;
+
+    _device        = device;
+    _data          = NULL;
+    _length    = 0;
+    _type          = 0;
+
+    return self;
 }
 
-- (Wiimote*)wiimote
+- (BOOL)updateFromReportData:(const uint8_t*)data length:(NSUInteger)length
 {
-	return m_Wiimote;
+    if(data == NULL || length < 1)
+        return NO;
+
+    _type          = data[0];
+    _data          = data   + 1;
+    _length    = length - 1;
+
+    return YES;
 }
 
 @end
+

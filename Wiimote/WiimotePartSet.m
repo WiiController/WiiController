@@ -7,6 +7,7 @@
 //
 
 #import "WiimotePartSet.h"
+
 #import "WiimoteDeviceReport+Private.h"
 
 @implementation WiimotePartSet
