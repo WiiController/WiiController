@@ -6,19 +6,10 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "WiimoteEventDispatcher.h"
+#import "WiimoteEventDispatcher+Private.h"
+#import "WiimoteDelegate.h"
 
 @implementation WiimoteEventDispatcher
-
-- (Wiimote*)owner
-{
-    return m_Owner;
-}
-
-- (BOOL)isStateNotificationsEnabled
-{
-    return m_IsStateNotificationsEnabled;
-}
 
 - (void)postNotification:(NSString*)notification
 {
@@ -60,9 +51,37 @@
                                             userInfo:params];
 }
 
-- (id)delegate
+- (id)initWithOwner:(Wiimote*)owner
 {
-    return m_Delegate;
+    self = [super init];
+    if(self == nil)
+        return nil;
+
+    _owner                         = owner;
+    _stateNotificationsEnabled   = YES;
+
+    return self;
+}
+
+- (void)postConnectedNotification
+{
+    [self postNotification:WiimoteConnectedNotification];
+}
+
+- (void)postDisconnectNotification
+{
+    [[self delegate] wiimoteDisconnected:[self owner]];
+    [self postNotification:WiimoteDisconnectedNotification];
+}
+
+- (void)setStateNotificationsEnabled:(BOOL)flag
+{
+    _stateNotificationsEnabled = flag;
+}
+
+- (void)setDelegate:(id)delegate
+{
+    _delegate = delegate;
 }
 
 @end

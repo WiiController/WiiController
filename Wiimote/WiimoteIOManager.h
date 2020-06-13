@@ -12,11 +12,6 @@
 @class WiimoteDevice;
 
 @interface WiimoteIOManager : NSObject
-{
-    @private
-        Wiimote         *m_Owner;
-        WiimoteDevice   *m_Device;
-}
 
 - (BOOL)postCommand:(WiimoteDeviceCommandType)command
 			   data:(const uint8_t*)data
@@ -30,6 +25,6 @@
 			target:(id)target
 			action:(SEL)action;
 
-- (Wiimote*)owner;
+@property(nonatomic,readonly) Wiimote *owner;
 
 @end

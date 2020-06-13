@@ -10,12 +10,12 @@
 
 @interface WiimoteEventDispatcher (Private)
 
-- (id)initWithOwner:(Wiimote*)owner;
+- (instancetype)initWithOwner:(Wiimote*)owner;
 
 - (void)postConnectedNotification;
 - (void)postDisconnectNotification;
 
-- (void)setStateNotificationsEnabled:(BOOL)flag;
-- (void)setDelegate:(id)delegate;
+@property(nonatomic,getter=isStateNotificationsEnabled) BOOL stateNotificationsEnabled;
+@property(nonatomic) id delegate;
 
 @end

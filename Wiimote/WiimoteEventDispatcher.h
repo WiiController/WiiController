@@ -11,17 +11,10 @@
 @class Wiimote;
 
 @interface WiimoteEventDispatcher : NSObject
-{
-    @private
-        Wiimote *m_Owner;
-        BOOL     m_IsStateNotificationsEnabled;
 
-        id       m_Delegate;
-}
+@property(nonatomic,readonly) Wiimote *owner;
 
-- (Wiimote*)owner;
-
-- (BOOL)isStateNotificationsEnabled;
+@property(nonatomic,readonly,getter=isStateNotificationsEnabled) BOOL stateNotificationsEnabled;
 
 - (void)postNotification:(NSString*)notification;
 - (void)postNotification:(NSString*)notification sender:(id)sender;
@@ -30,6 +23,6 @@
 - (void)postNotification:(NSString*)notification params:(NSDictionary*)params;
 - (void)postNotification:(NSString*)notification params:(NSDictionary*)params sender:(id)sender;
 
-- (id)delegate;
+@property(nonatomic,readonly) id delegate;
 
 @end

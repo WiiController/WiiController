@@ -10,7 +10,7 @@
 
 @interface WiimoteDeviceReport (Private)
 
-- (id)initWithDevice:(WiimoteDevice*)device;
+- (instancetype)initWithDevice:(WiimoteDevice*)device;
 
 - (BOOL)updateFromReportData:(const uint8_t*)data length:(NSUInteger)length;
 
