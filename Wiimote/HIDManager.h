@@ -13,12 +13,7 @@ FOUNDATION_EXPORT NSString *HIDManagerDeviceDisconnectedNotification;
 
 FOUNDATION_EXPORT NSString *HIDManagerDeviceKey;
 
-@interface HIDManager : NSObject
-{
-    @private
-        IOHIDManagerRef  m_Handle;
-        NSMutableSet    *m_ConnectedDevices;
-}
+@interface HIDManager : NSObject <W_HIDDeviceDelegate>
 
 + (HIDManager*)manager;
 

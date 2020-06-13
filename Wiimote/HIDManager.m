@@ -15,14 +15,11 @@ NSString *HIDManagerDeviceDisconnectedNotification  = @"HIDManagerDeviceDisconne
 
 NSString *HIDManagerDeviceKey                       = @"HIDManagerDeviceKey";
 
-@interface HIDManager (PrivatePart)
-
-- (void)rawDeviceConnected:(IOHIDDeviceRef)device;
-- (void)deviceConnected:(W_HIDDevice*)device;
-
-@end
-
 @implementation HIDManager
+{
+    IOHIDManagerRef  m_Handle;
+    NSMutableSet    *m_ConnectedDevices;
+}
 
 static void HIDManagerDeviceConnected(
                                     void            *context,
@@ -98,9 +95,17 @@ static void HIDManagerDeviceConnected(
     return m_ConnectedDevices;
 }
 
-@end
+- (void)HIDDeviceDisconnected:(W_HIDDevice*)device
+{
+    [m_ConnectedDevices removeObject:device];
 
-@implementation HIDManager (PrivatePart)
+    [[NSNotificationCenter defaultCenter]
+                            postNotificationName:HIDManagerDeviceDisconnectedNotification
+                                          object:self
+                                        userInfo:[NSDictionary
+                                                        dictionaryWithObject:device
+                                                                      forKey:HIDManagerDeviceKey]];
+}
 
 - (void)rawDeviceConnected:(IOHIDDeviceRef)device
 {

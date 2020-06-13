@@ -13,28 +13,15 @@
 @class W_HIDDevice;
 @class HIDManager;
 
-@interface NSObject (HIDDeviceDelegate)
+@protocol W_HIDDeviceDelegate <NSObject>
 
+@optional
 - (void)HIDDevice:(W_HIDDevice*)device reportDataReceived:(const uint8_t*)bytes length:(NSUInteger)length;
 - (void)HIDDeviceDisconnected:(W_HIDDevice*)device;
 
 @end
 
 @interface W_HIDDevice : NSObject
-{
-    @private
-        HIDManager      *m_Owner;
-
-        BOOL             m_IsValid;
-        BOOL             m_IsDisconnected;
-        IOHIDDeviceRef   m_Handle;
-        IOOptionBits     m_Options;
-        NSDictionary    *m_Properties;
-
-        NSMutableData   *m_ReportBuffer;
-
-        id               m_Delegate;
-}
 
 - (HIDManager*)owner;
 
@@ -51,10 +38,6 @@
 
 - (id)delegate;
 - (void)setDelegate:(id)delegate;
-
-@end
-
-@interface W_HIDDevice (Properties)
 
 - (NSString*)name;
 - (NSString*)address;
