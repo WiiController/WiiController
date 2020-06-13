@@ -14,7 +14,7 @@
 
 #import "WiimoteProtocol.h"
 
-@interface WiimoteHIDDeviceTransport : WiimoteDeviceTransport
+@interface WiimoteHIDDeviceTransport : WiimoteDeviceTransport <W_HIDDeviceDelegate>
 {
     @private
         W_HIDDevice *m_Device;

@@ -23,23 +23,22 @@
 
 @interface W_HIDDevice : NSObject
 
-- (HIDManager*)owner;
+@property(nonatomic,readonly) HIDManager *owner;
 
-- (BOOL)isValid;
+@property(nonatomic,readonly) BOOL isValid;
 - (void)invalidate;
 
 // only kIOHIDOptionsTypeNone or kIOHIDOptionsTypeSeizeDevice
-- (IOOptionBits)options;
+@property(nonatomic,readonly) IOOptionBits options;
 - (BOOL)setOptions:(IOOptionBits)options;
 
-- (NSDictionary*)properties;
+@property(nonatomic,readonly) NSDictionary *properties;
 
 - (BOOL)postBytes:(const uint8_t*)bytes length:(NSUInteger)length;
 
-- (id)delegate;
-- (void)setDelegate:(id)delegate;
+@property(nonatomic) id <W_HIDDeviceDelegate> delegate;
 
-- (NSString*)name;
-- (NSString*)address;
+@property(nonatomic,readonly) NSString *name;
+@property(nonatomic,readonly) NSString *address;
 
 @end

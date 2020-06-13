@@ -26,53 +26,31 @@
 
 @implementation W_HIDDevice
 {
-    HIDManager      *m_Owner;
+    BOOL _isDisconnected;
+    IOHIDDeviceRef   _handle;
 
-    BOOL             m_IsValid;
-    BOOL             m_IsDisconnected;
-    IOHIDDeviceRef   m_Handle;
-    IOOptionBits     m_Options;
-    NSDictionary    *m_Properties;
-
-    NSMutableData   *m_ReportBuffer;
-
-    id               m_Delegate;
+    NSMutableData   *_reportBuffer;
 }
 
 - (void)dealloc
 {
-    if(m_Handle != NULL)
-        CFRelease(m_Handle);
+    if(_handle != NULL)
+        CFRelease(_handle);
 
-}
-
-- (HIDManager*)owner
-{
-    return m_Owner;
-}
-
-- (BOOL)isValid
-{
-    return m_IsValid;
 }
 
 - (void)invalidate
 {
     if([self isValid])
     {
-        m_IsValid   = NO;
-        m_Options   = kIOHIDOptionsTypeNone;
+        _isValid   = NO;
+        _options   = kIOHIDOptionsTypeNone;
 
         [self closeDevice];
 
-        [m_Delegate HIDDeviceDisconnected:self];
+        [_delegate HIDDeviceDisconnected:self];
 		[[HIDManager manager] HIDDeviceDisconnected:self];
     }
-}
-
-- (IOOptionBits)options
-{
-    return m_Options;
 }
 
 - (BOOL)setOptions:(IOOptionBits)options
@@ -80,18 +58,18 @@
     if(![self isValid])
         return NO;
 
-    if(m_Options == options)
+    if(_options == options)
         return YES;
 
 	[self closeDevice];
 
-	IOOptionBits oldOptions = m_Options;
+	IOOptionBits oldOptions = _options;
 
-	m_Options = options;
+	_options = options;
 
     if(![self openDevice])
     {
-		m_Options = oldOptions;
+		_options = oldOptions;
 
         if(![self openDevice])
             [self invalidate];
@@ -99,7 +77,7 @@
         return NO;
     }
 
-    m_Options = options;
+    _options = options;
     return YES;
 }
 
@@ -112,7 +90,7 @@
         if(length > 0)
         {
             result = (IOHIDDeviceSetReport(
-                                        m_Handle,
+                                        _handle,
                                         kIOHIDReportTypeOutput,
                                         0,
                                         bytes,
@@ -125,21 +103,6 @@
     return result;
 }
 
-- (NSDictionary*)properties
-{
-    return m_Properties;
-}
-
-- (id)delegate
-{
-    return m_Delegate;
-}
-
-- (void)setDelegate:(id)delegate
-{
-    m_Delegate = delegate;
-}
-
 - (NSString*)description
 {
     return [NSString stringWithFormat:
@@ -150,21 +113,19 @@
 
 - (NSUInteger)hash
 {
-	return ((NSUInteger)m_Handle);
+	return ((NSUInteger)_handle);
 }
 
 - (BOOL)isEqual:(id)object
 {
     if([object isKindOfClass:[self class]])
-        return (m_Handle == ((W_HIDDevice*)object)->m_Handle);
+        return (_handle == ((W_HIDDevice*)object)->_handle);
 
     if(CFGetTypeID((__bridge CFTypeRef)(object)) == IOHIDDeviceGetTypeID())
-        return (m_Handle == (__bridge IOHIDDeviceRef)object);
+        return (_handle == (__bridge IOHIDDeviceRef)object);
 
     return NO;
 }
-
-// MARK: Properties
 
 - (NSString*)name
 {
@@ -192,16 +153,16 @@
         return nil;
     }
 
-    m_Owner             = manager;
-    m_IsValid           = YES;
-    m_IsDisconnected    = NO;
-    m_Handle            = handle;
-    m_Options           = options;
-    m_Properties        = [self makePropertiesDictionary];
-    m_ReportBuffer      = [[NSMutableData alloc] initWithLength:[self maxInputReportSize]];
-    m_Delegate          = nil;
+    _owner             = manager;
+    _isValid           = YES;
+    _isDisconnected    = NO;
+    _handle            = handle;
+    _options           = options;
+    _properties        = [self makePropertiesDictionary];
+    _reportBuffer      = [[NSMutableData alloc] initWithLength:[self maxInputReportSize]];
+    _delegate          = nil;
 
-    CFRetain(m_Handle);
+    CFRetain(_handle);
 
     [self openDevice];
 
@@ -253,7 +214,7 @@
 
 - (id)propertyForKey:(NSString*)key
 {
-    return ((id)IOHIDDeviceGetProperty(m_Handle, (CFStringRef)key));
+    return ((id)IOHIDDeviceGetProperty(_handle, (CFStringRef)key));
 }
 
 - (NSUInteger)maxInputReportSize
@@ -298,33 +259,33 @@ static void HIDDeviceDisconnectCallback(
 - (BOOL)openDevice
 {
     IOHIDDeviceScheduleWithRunLoop(
-                                m_Handle,
+                                _handle,
                                 [[NSRunLoop currentRunLoop] getCFRunLoop],
                                 (CFStringRef)NSRunLoopCommonModes);
 
     IOHIDDeviceRegisterInputReportCallback(
-                                m_Handle,
-                                [m_ReportBuffer mutableBytes],
-                                [m_ReportBuffer length],
+                                _handle,
+                                [_reportBuffer mutableBytes],
+                                [_reportBuffer length],
                                 HIDDeviceReportCallback,
                                 (__bridge void * _Nullable)(self));
 
     IOHIDDeviceRegisterRemovalCallback(
-                                m_Handle,
+                                _handle,
                                 HIDDeviceDisconnectCallback,
                                 (__bridge void * _Nullable)(self));
 
-    return (IOHIDDeviceOpen(m_Handle, m_Options) == kIOReturnSuccess);
+    return (IOHIDDeviceOpen(_handle, _options) == kIOReturnSuccess);
 }
 
 - (void)closeDevice
 {
-    if(!m_IsDisconnected)
+    if(!_isDisconnected)
     {
-        IOHIDDeviceClose(m_Handle, 0);
+        IOHIDDeviceClose(_handle, 0);
 
         IOHIDDeviceUnscheduleFromRunLoop(
-                                    m_Handle,
+                                    _handle,
                                     [[NSRunLoop currentRunLoop] getCFRunLoop],
                                     (CFStringRef)NSRunLoopCommonModes);
     }
@@ -340,7 +301,7 @@ static void HIDDeviceDisconnectCallback(
 
 - (void)disconnected
 {
-    m_IsDisconnected = YES;
+    _isDisconnected = YES;
     [self invalidate];
 }
 

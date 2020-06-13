@@ -17,6 +17,6 @@ FOUNDATION_EXPORT NSString *HIDManagerDeviceKey;
 
 + (HIDManager*)manager;
 
-- (NSSet*)connectedDevices;
+@property(nonatomic,copy,readonly) NSSet *connectedDevices;
 
 @end
