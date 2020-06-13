@@ -12,36 +12,6 @@
 
 #import "WiimoteLog.h"
 
-@protocol IOBluetoothDevicePair_Methods
-
-- (IOReturn)start;
-
-- (IOBluetoothDevice*)device;
-
-- (void)replyPINCode:(ByteCount)PINCodeSize PINCode:(BluetoothPINCode*)PINCode;
-
-- (void)setDelegate:(id)object;
-
-@end
-
-@protocol IOBluetoothDevicePair_ClassMethods
-
-- (id<IOBluetoothDevicePair_Methods>)pairWithDevice:(IOBluetoothDevice*)device;
-
-@end
-
-@protocol IOBluetoothHostController_Methods
-
-- (NSString*)addressAsString;
-
-@end
-
-@protocol IOBluetoothHostController_ClassMethods
-
-- (id<IOBluetoothHostController_Methods>)defaultController;
-
-@end
-
 @interface WiimoteDevicePair (PrivatePart)
 
 - (void)runWithDevice:(IOBluetoothDevice*)device;
@@ -75,11 +45,7 @@
 
 - (void)runWithDevice:(IOBluetoothDevice*)device
 {
-	id<IOBluetoothDevicePair_ClassMethods>	factory = (id<IOBluetoothDevicePair_ClassMethods>)
-															NSClassFromString(@"IOBluetoothDevicePair");
-
-	id<IOBluetoothDevicePair_Methods>		pair	= [factory pairWithDevice:device];
-
+	__auto_type pair = [IOBluetoothDevicePair pairWithDevice:device];
 	[pair setDelegate:self];
 
 	if([pair start] != kIOReturnSuccess)
@@ -97,10 +63,7 @@
 
 	if(m_IsFirstAttempt)
     {
-        address = [[(id<IOBluetoothHostController_ClassMethods>)
-                        NSClassFromString(@"IOBluetoothHostController")
-                                                            defaultController]
-                                                                    addressAsString];
+        address = [[IOBluetoothHostController defaultController] addressAsString];
     }
     else
 		address = [device addressString];
@@ -119,7 +82,7 @@
 	return [NSData dataWithBytes:bytes length:sizeof(bytes)];
 }
 
-- (void)devicePairingPINCodeRequest:(id<IOBluetoothDevicePair_Methods>)sender
+- (void)devicePairingPINCodeRequest:(IOBluetoothDevicePair *)sender
 {
 	BluetoothPINCode	 PIN	= { 0 };
 	NSData				*data	= [self makePINCodeForDevice:[sender device]];
@@ -128,7 +91,7 @@
 	[sender replyPINCode:[data length] PINCode:&PIN];
 }
 
-- (void)devicePairingFinished:(id<IOBluetoothDevicePair_Methods>)sender error:(IOReturn)error
+- (void)devicePairingFinished:(IOBluetoothDevicePair *)sender error:(IOReturn)error
 {
 	if(error != kIOReturnSuccess)
 	{
