@@ -100,6 +100,15 @@
     _isEnabled = NO;
 }
 
+- (id)delegate
+{
+    return _delegate;
+}
+- (void)setDelegate:(id)delegate
+{
+    _delegate = delegate;
+}
+
 @end
 
 @implementation WiimoteAccelerometer (PrivatePart)
