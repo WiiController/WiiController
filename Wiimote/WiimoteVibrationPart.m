@@ -12,6 +12,9 @@
 #import "WiimoteDevice.h"
 
 @implementation WiimoteVibrationPart
+{
+    WiimoteDevice *_device;
+}
 
 + (void)load
 {

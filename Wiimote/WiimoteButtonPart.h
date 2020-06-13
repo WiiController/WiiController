@@ -10,10 +10,6 @@
 #import "WiimoteDelegate.h"
 
 @interface WiimoteButtonPart : WiimotePart
-{
-    @private
-        BOOL _buttonState[WiimoteButtonCount];
-}
 
 - (BOOL)isButtonPressed:(WiimoteButtonType)button;
 

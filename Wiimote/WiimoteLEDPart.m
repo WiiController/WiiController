@@ -12,6 +12,9 @@
 #import "WiimoteDevice.h"
 
 @implementation WiimoteLEDPart
+{
+    WiimoteDevice *_device;
+}
 
 + (void)load
 {

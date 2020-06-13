@@ -9,24 +9,6 @@
 #import "WiimoteExtension+PlugIn.h"
 
 @interface WiimoteExtensionHelper : NSObject
-{
-    @private
-        Wiimote                 *_wiimote;
-        WiimoteEventDispatcher  *_eventDispatcher;
-        WiimoteIOManager        *_iOManager;
-
-        NSMutableArray          *_extensionClasses;
-        Class                    _currentClass;
-        WiimoteExtension        *_extension;
-        WiimoteExtension        *_subExtension;
-
-        BOOL                     _isInitialized;
-        BOOL                     _isStarted;
-        BOOL                     _isCanceled;
-
-        id                       _target;
-        SEL                      _action;
-}
 
 - (id)initWithWiimote:(Wiimote*)wiimote
       eventDispatcher:(WiimoteEventDispatcher*)dispatcher
@@ -36,7 +18,7 @@
                target:(id)target
                action:(SEL)action;
 
-- (WiimoteExtension*)subExtension;
+@property(nonatomic,readonly) WiimoteExtension *subExtension;
 
 - (void)start;
 - (void)cancel;

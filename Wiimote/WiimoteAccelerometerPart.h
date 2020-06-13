@@ -11,12 +11,7 @@
 @class WiimoteAccelerometer;
 
 @interface WiimoteAccelerometerPart : WiimotePart
-{
-    @private
-        BOOL                     _isCalibrationDataReaded;
-        WiimoteAccelerometer    *_accelerometer;
-}
 
-- (WiimoteAccelerometer*)accelerometer;
+@property(nonatomic,readonly) WiimoteAccelerometer *accelerometer;
 
 @end

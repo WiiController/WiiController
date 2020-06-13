@@ -11,13 +11,8 @@
 @class WiimoteDevice;
 
 @interface WiimoteLEDPart : WiimotePart
-{
-    @private
-        WiimoteDevice *_device;
-}
 
-- (NSUInteger)highlightedLEDMask;
-- (void)setHighlightedLEDMask:(NSUInteger)mask;
+@property(nonatomic) NSUInteger highlightedLEDMask;
 
 - (void)setDevice:(WiimoteDevice*)device;
 

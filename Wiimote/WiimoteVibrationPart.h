@@ -11,13 +11,8 @@
 @class WiimoteDevice;
 
 @interface WiimoteVibrationPart : WiimotePart
-{
-    @private
-        WiimoteDevice *_device;
-}
 
-- (BOOL)isVibrationEnabled;
-- (void)setVibrationEnabled:(BOOL)enabled;
+@property(nonatomic,getter=isVibrationEnabled) BOOL vibrationEnabled;
 
 - (void)setDevice:(WiimoteDevice*)device;
 

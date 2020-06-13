@@ -12,21 +12,15 @@
 #import "WiimoteEventDispatcher+IR.h"
 #import "Wiimote+PlugIn.h"
 
-@interface WiimoteIRPart (PrivatePart)
-
-- (WiimoteDeviceIRMode)irModeFromReportType:(WiimoteDeviceReportType)reportType;
-
-- (void)enableHardware:(WiimoteDeviceIRMode)irMode;
-- (void)disableHardware;
-
-- (void)setPoint:(NSUInteger)index position:(NSPoint)newPosition;
-- (void)setPointOutOfView:(NSUInteger)index;
-
-- (void)handleIRData:(const uint8_t*)data length:(NSUInteger)length;
-
-@end
-
 @implementation WiimoteIRPart
+{
+        BOOL         _isHardwareEnabled;
+        NSInteger    _iRReportMode;
+        NSInteger    _reportType;
+        NSInteger    _reportCounter;
+
+        NSArray     *_points;
+}
 
 + (void)load
 {
@@ -41,7 +35,7 @@
     if(self == nil)
         return nil;
 
-    _isEnabled         = NO;
+    _enabled         = NO;
     _isHardwareEnabled = NO;
     _iRReportMode      = -1;
     _reportType        = -1;
@@ -56,24 +50,18 @@
     return self;
 }
 
-
-- (BOOL)isEnabled
-{
-    return _isEnabled;
-}
-
 - (void)setEnabled:(BOOL)enabled
 {
     if(![[self owner] isConnected])
         return;
 
-    if(_isEnabled == enabled)
+    if(_enabled == enabled)
         return;
 
     if(!enabled)
         [self disableHardware];
 
-    _isEnabled     = enabled;
+    _enabled     = enabled;
     _iRReportMode  = -1;
     _reportType    = -1;
 
@@ -152,7 +140,7 @@
 
 - (void)disconnected
 {
-    _isEnabled         = NO;
+    _enabled         = NO;
     _isHardwareEnabled = NO;
     _reportType        = -1;
     _iRReportMode      = -1;
@@ -167,10 +155,6 @@
         [point setOutOfView:YES];
     }
 }
-
-@end
-
-@implementation WiimoteIRPart (PrivatePart)
 
 - (WiimoteDeviceIRMode)irModeFromReportType:(WiimoteDeviceReportType)reportType
 {

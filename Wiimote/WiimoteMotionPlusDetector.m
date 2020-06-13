@@ -15,16 +15,19 @@
 #define WiimoteDeviceMotionPlusDetectTriesCount      4
 #define WiimoteDeviceMotionPlusLastTryDelay          8.0
 
-@interface WiimoteMotionPlusDetector (PrivatePart)
-
-- (void)initializeMotionPlus;
-- (void)beginReadSignature;
-- (void)signatureReaded:(NSData*)data;
-- (void)detectionFinished:(BOOL)detected;
-
-@end
-
 @implementation WiimoteMotionPlusDetector
+{
+    @private
+        WiimoteIOManager *_iOManager;
+
+        id                _target;
+        SEL               _action;
+
+        NSUInteger        _cancelCount;
+        NSUInteger        _readTryCount;
+
+        NSTimer          *_lastTryTimer;
+}
 
 + (NSArray*)motionPlusSignatures
 { 
@@ -78,9 +81,9 @@
     usleep(50000);
 }
 
-- (id)initWithIOManager:(WiimoteIOManager*)ioManager
-                 target:(id)target
-                 action:(SEL)action
+- (instancetype)initWithIOManager:(WiimoteIOManager*)ioManager
+                           target:(id)target
+                           action:(SEL)action
 {
     self = [super init];
     if(self == nil)
@@ -98,11 +101,6 @@
 - (void)dealloc
 {
     [self cancel];
-}
-
-- (BOOL)isRun
-{
-    return _isRun;
 }
 
 - (void)run
@@ -130,10 +128,6 @@
 
     _isRun = NO;
 }
-
-@end
-
-@implementation WiimoteMotionPlusDetector (PrivatePart)
 
 - (void)initializeMotionPlus
 {

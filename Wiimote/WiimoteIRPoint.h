@@ -11,17 +11,10 @@
 @class Wiimote;
 
 @interface WiimoteIRPoint : NSObject
-{
-    @private
-        Wiimote     *_owner;
-        NSPoint      _position;
-        BOOL         _isOutOfView;
-        NSUInteger   _index;
-}
 
-- (NSUInteger)index;
-- (BOOL)isOutOfView;
-- (NSPoint)position;
-- (Wiimote*)owner;
+@property(nonatomic,readonly) NSUInteger index;
+@property(nonatomic,readonly,getter=isOutOfView) BOOL outOfView;
+@property(nonatomic,readonly) NSPoint position;
+@property(nonatomic,readonly) Wiimote *owner;
 
 @end

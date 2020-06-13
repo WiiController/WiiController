@@ -10,15 +10,10 @@
 #import "WiimoteEventDispatcher+Accelerometer.h"
 #import "Wiimote+PlugIn.h"
 
-@interface WiimoteAccelerometerPart (PrivatePart)
-
-- (void)beginReadCalibrationData;
-- (void)handleCalibrationData:(NSData*)data;
-- (void)checkCalibrationData;
-
-@end
-
 @implementation WiimoteAccelerometerPart
+{
+    BOOL _isCalibrationDataRead;
+}
 
 + (void)load
 {
@@ -33,8 +28,8 @@
     if(self == nil)
         return nil;
 
-    _isCalibrationDataReaded   = NO;
-    _accelerometer             = [[WiimoteAccelerometer alloc] init];
+    _isCalibrationDataRead   = NO;
+    _accelerometer           = [[WiimoteAccelerometer alloc] init];
 
     [_accelerometer setDelegate:self];
 
@@ -44,11 +39,6 @@
 - (void)dealloc
 {
     [_accelerometer setDelegate:nil];
-}
-
-- (WiimoteAccelerometer*)accelerometer
-{
-    return _accelerometer;
 }
 
 - (NSSet*)allowedReportTypeSet
@@ -79,7 +69,7 @@
 
 - (void)handleReport:(WiimoteDeviceReport*)report
 {
-    if(![_accelerometer isEnabled] || !_isCalibrationDataReaded)
+    if(![_accelerometer isEnabled] || !_isCalibrationDataRead)
         return;
 
     if([report length] < sizeof(WiimoteDeviceButtonAndAccelerometerStateReport))
@@ -114,10 +104,6 @@
     [_accelerometer reset];
 }
 
-@end
-
-@implementation WiimoteAccelerometerPart (PrivatePart)
-
 - (void)beginReadCalibrationData
 {
     NSRange memRange = NSMakeRange(
@@ -144,7 +130,7 @@
     [_accelerometer setCalibrationData:calibrationData];
 	[self checkCalibrationData];
 
-    _isCalibrationDataReaded = YES;
+    _isCalibrationDataRead = YES;
 }
 
 - (void)checkCalibrationData

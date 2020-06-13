@@ -14,7 +14,7 @@
 
 - (id)initWithOwner:(Wiimote*)owner index:(NSUInteger)index;
 
-- (void)setPosition:(NSPoint)position;
-- (void)setOutOfView:(BOOL)outOfView;
+@property(nonatomic) NSPoint position;
+@property(nonatomic,getter=isOutOfView) BOOL outOfView;
 
 @end

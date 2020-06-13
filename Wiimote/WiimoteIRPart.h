@@ -11,19 +11,8 @@
 @class WiimoteIRPoint;
 
 @interface WiimoteIRPart : WiimotePart
-{
-    @private
-        BOOL         _isEnabled;
-        BOOL         _isHardwareEnabled;
-        NSInteger    _iRReportMode;
-        NSInteger    _reportType;
-        NSInteger    _reportCounter;
 
-        NSArray     *_points;
-}
-
-- (BOOL)isEnabled;
-- (void)setEnabled:(BOOL)enabled;
+@property(nonatomic,getter=isEnabled) BOOL enabled;
 
 - (WiimoteIRPoint*)point:(NSUInteger)index;
 

@@ -6,19 +6,15 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "WiimoteProtocol.h"
 #import "WiimoteButtonPart.h"
 #import "WiimoteEventDispatcher+Button.h"
-
-@interface WiimoteButtonPart (PrivatePart)
-
-- (void)setButton:(WiimoteButtonType)button pressed:(BOOL)pressed;
-
-- (void)reset;
-
-@end
+#import "WiimoteProtocol.h"
 
 @implementation WiimoteButtonPart
+{
+    @private
+        BOOL _buttonState[WiimoteButtonCount];
+}
 
 + (void)load
 {
@@ -69,10 +65,6 @@
 {
     [self reset];
 }
-
-@end
-
-@implementation WiimoteButtonPart (PrivatePart)
 
 - (void)setButton:(WiimoteButtonType)button pressed:(BOOL)pressed
 {

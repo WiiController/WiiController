@@ -9,13 +9,8 @@
 #import "WiimotePart.h"
 
 @interface WiimoteBatteryPart : WiimotePart
-{
-    @private
-        CGFloat _level;
-        BOOL    _isLow;
-}
 
-- (CGFloat)batteryLevel;
-- (BOOL)isBatteryLevelLow;
+@property(nonatomic,readonly) CGFloat batteryLevel;
+@property(nonatomic,readonly,getter=isBatteryLevelLow) BOOL batteryLevelLow;
 
 @end

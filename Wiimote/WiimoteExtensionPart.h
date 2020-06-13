@@ -13,17 +13,10 @@
 @class WiimoteMotionPlusDetector;
 
 @interface WiimoteExtensionPart : WiimotePart
-{
-    @private
-        BOOL                         _isExtensionConnected;
-        WiimoteExtensionHelper      *_probeHelper;
-        WiimoteMotionPlusDetector   *_motionPlusDetector;
-        WiimoteExtension            *_extension;
-}
 
 + (void)registerExtensionClass:(Class)cls;
 
-- (WiimoteExtension*)connectedExtension;
+@property(nonatomic,readonly) WiimoteExtension *connectedExtension;
 
 - (void)detectMotionPlus;
 - (void)reconnectExtension;

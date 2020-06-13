@@ -6,28 +6,27 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "WiimoteIRPoint.h"
+#import "WiimoteIRPoint+Private.h"
 
 @implementation WiimoteIRPoint
 
-- (NSUInteger)index
++ (WiimoteIRPoint*)pointWithOwner:(Wiimote*)owner index:(NSUInteger)index
 {
-    return _index;
+    return [[WiimoteIRPoint alloc] initWithOwner:owner index:index];
 }
 
-- (BOOL)isOutOfView
+- (id)initWithOwner:(Wiimote*)owner index:(NSUInteger)index
 {
-    return _isOutOfView;
-}
+    self = [super init];
+    if(self == nil)
+        return nil;
 
-- (NSPoint)position
-{
-    return _position;
-}
+    _owner         = owner;
+    _position      = NSZeroPoint;
+    _outOfView   = YES;
+    _index         = index;
 
-- (Wiimote*)owner
-{
-    return _owner;
+    return self;
 }
 
 @end

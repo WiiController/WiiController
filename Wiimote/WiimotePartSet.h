@@ -12,25 +12,14 @@
 #import "WiimoteEventDispatcher+Private.h"
 
 @interface WiimotePartSet : NSObject
-{
-    @private
-        Wiimote                 *_owner;
-        WiimoteDevice           *_device;
-
-        WiimoteIOManager        *_iOManager;
-        WiimoteEventDispatcher  *_eventDispatcher;
-
-        NSMutableDictionary     *_partDictionary;
-        NSMutableArray          *_partArray;
-}
 
 + (void)registerPartClass:(Class)cls;
 
 - (id)initWithOwner:(Wiimote*)owner device:(WiimoteDevice*)device;
 
-- (Wiimote*)owner;
-- (WiimoteDevice*)device;
-- (WiimoteEventDispatcher*)eventDispatcher;
+@property(nonatomic,readonly) Wiimote *owner;
+@property(nonatomic,readonly) WiimoteDevice *device;
+@property(nonatomic,readonly) WiimoteEventDispatcher *eventDispatcher;
 
 - (WiimotePart*)partWithClass:(Class)cls;
 

@@ -8,7 +8,23 @@
 
 #import "WiimoteExtensionHelper.h"
 
-@implementation WiimoteExtensionHelper {
+@implementation WiimoteExtensionHelper
+{
+    Wiimote                 *_wiimote;
+    WiimoteEventDispatcher  *_eventDispatcher;
+    WiimoteIOManager        *_iOManager;
+
+    NSMutableArray          *_extensionClasses;
+    Class                    _currentClass;
+    WiimoteExtension        *_extension;
+
+    BOOL                     _isInitialized;
+    BOOL                     _isStarted;
+    BOOL                     _isCanceled;
+
+    id                       _target;
+    SEL                      _action;
+    
     id _retainedSelf;
 }
 
@@ -129,11 +145,6 @@
 
     [_extension calibrate:_iOManager];
 	[self probeFinished:_extension];
-}
-
-- (WiimoteExtension*)subExtension
-{
-	return _subExtension;
 }
 
 - (void)start

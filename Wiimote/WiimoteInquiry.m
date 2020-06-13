@@ -28,26 +28,15 @@ NSString *WiimoteDeviceNameBalanceBoard = @"Nintendo RVL-WBC-01";
 extern Boolean IOBluetoothLocalDeviceAvailable(void);
 extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *state);
 
-@interface WiimoteInquiry (PrivatePart)
-
-- (id)initInternal;
-
-- (void)connectToPairedDevices;
-
-@end
-
-@interface WiimoteInquiry (IOBluetoothDeviceInquiryDelegate)
-
-- (void)deviceInquiryDeviceFound:(IOBluetoothDeviceInquiry*)sender
-						  device:(IOBluetoothDevice*)device;
-
-- (void)deviceInquiryComplete:(IOBluetoothDeviceInquiry*)sender 
-						error:(IOReturn)error
-					  aborted:(BOOL)aborted;
-
+@interface WiimoteInquiry () <IOBluetoothDeviceInquiryDelegate>
 @end
 
 @implementation WiimoteInquiry
+{
+    IOBluetoothDeviceInquiry *_inquiry;
+    id                        _target;
+    SEL                       _action;
+}
 
 + (void)load
 {
@@ -159,19 +148,14 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
     return YES;
 }
 
-- (BOOL)isUseOneButtonClickConnection
-{
-    return _isUseOneButtonClickConnection;
-}
-
 - (void)setUseOneButtonClickConnection:(BOOL)useOneButtonClickConnection
 {
-    if(_isUseOneButtonClickConnection == useOneButtonClickConnection)
+    if(_useOneButtonClickConnection == useOneButtonClickConnection)
         return;
 
-    _isUseOneButtonClickConnection = useOneButtonClickConnection;
+    _useOneButtonClickConnection = useOneButtonClickConnection;
 
-    if(_isUseOneButtonClickConnection)
+    if(_useOneButtonClickConnection)
         [self connectToPairedDevices];
 }
 
@@ -193,10 +177,6 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
         W_DEBUG(@"not supported");
 }
 
-@end
-
-@implementation WiimoteInquiry (PrivatePart)
-
 - (id)initInternal
 {
     self = [super init];
@@ -204,7 +184,7 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
         return nil;
 
     _inquiry                       = nil;
-    _isUseOneButtonClickConnection = NO;
+    _useOneButtonClickConnection = NO;
 
 	[[NSNotificationCenter defaultCenter]
 								addObserver:self
@@ -313,9 +293,7 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
     }
 }
 
-@end
-
-@implementation WiimoteInquiry (IOBluetoothDeviceInquiryDelegate)
+// MARK: IOBluetoothInquiryDelegate
 
 - (void)deviceInquiryDeviceFound:(IOBluetoothDeviceInquiry*)sender
 						  device:(IOBluetoothDevice*)device

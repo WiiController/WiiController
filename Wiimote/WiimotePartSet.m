@@ -11,6 +11,12 @@
 #import "WiimoteDeviceReport+Private.h"
 
 @implementation WiimotePartSet
+{
+    WiimoteIOManager        *_ioManager;
+
+    NSMutableDictionary     *_partDictionary;
+    NSMutableArray          *_partArray;
+}
 
 + (NSMutableArray*)registredPartClasses
 {
@@ -39,7 +45,7 @@
 
     _owner             = owner;
     _device            = device;
-    _iOManager         = [[WiimoteIOManager alloc] initWithOwner:owner device:device];
+    _ioManager         = [[WiimoteIOManager alloc] initWithOwner:owner device:device];
     _eventDispatcher   = [[WiimoteEventDispatcher alloc] initWithOwner:owner];
     _partDictionary    = [[NSMutableDictionary alloc] initWithCapacity:countPartClasses];
     _partArray         = [[NSMutableArray alloc] initWithCapacity:countPartClasses];
@@ -49,29 +55,13 @@
         Class        partClass  = [partClasses objectAtIndex:i];
         WiimotePart *part       = [[partClass alloc] initWithOwner:owner
                                                    eventDispatcher:_eventDispatcher
-                                                         ioManager:_iOManager];
+                                                         ioManager:_ioManager];
 
         [_partDictionary setObject:part forKey:(id)partClass];
         [_partArray addObject:part];
     }
 
     return self;
-}
-
-
-- (Wiimote*)owner
-{
-    return _owner;
-}
-
-- (WiimoteDevice*)device
-{
-    return _device;
-}
-
-- (WiimoteEventDispatcher*)eventDispatcher
-{
-    return _eventDispatcher;
 }
 
 - (WiimotePart*)partWithClass:(Class)cls

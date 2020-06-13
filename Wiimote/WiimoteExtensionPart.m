@@ -12,19 +12,13 @@
 #import "WiimoteExtensionHelper.h"
 #import "Wiimote+PlugIn.h"
 
-@interface WiimoteExtensionPart (PrivatePart)
-
-- (const uint8_t*)extractExtensionReportPart:(WiimoteDeviceReport*)report length:(NSUInteger*)length;
-- (void)processExtensionReport:(WiimoteDeviceReport*)report;
-
-- (void)extensionConnected;
-- (void)extensionDisconnected;
-
-- (void)motionPlusDetectFinish:(NSNumber*)detected;
-
-@end
-
 @implementation WiimoteExtensionPart
+{
+    BOOL                         _isExtensionConnected;
+    WiimoteExtensionHelper      *_probeHelper;
+    WiimoteMotionPlusDetector   *_motionPlusDetector;
+    WiimoteExtension            *_extension;
+}
 
 static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *context)
 {
@@ -197,10 +191,6 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 {
     [self extensionDisconnected];
 }
-
-@end
-
-@implementation WiimoteExtensionPart (PrivatePart)
 
 - (const uint8_t*)extractExtensionReportPart:(WiimoteDeviceReport*)report length:(NSUInteger*)length;
 {
