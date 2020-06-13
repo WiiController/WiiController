@@ -44,7 +44,11 @@ csrutil enable --without kext
  5. Press the small red "sync" button on your Nintendo device. To pair multiple devices, select Pair Device again for each.
  6. (Optional) Once connected, configure your controller as a Steam controller in Steam Big Picture Mode. Read more here: https://www.howtogeek.com/234427/how-to-remap-buttons-on-your-steam-controller/
 
-### Notes on Wii U Pro Controller and Steam games
+## I need help!
+
+Please check the [wiki](https://github.com/WiiController/WiiController/wiki).
+
+## Notes on Wii U Pro Controller and Steam games
 
 (These notes are from [JustinBis/wjoy-foohid](https://github.com/JustinBis/wjoy-foohid). I have not confirmed any of this myself, but I presume it is correct.)
 
