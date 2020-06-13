@@ -124,7 +124,7 @@
 	BluetoothPINCode	 PIN	= { 0 };
 	NSData				*data	= [self makePINCodeForDevice:[sender device]];
 
-	[data getBytes:PIN.data];
+	[data getBytes:PIN.data length:sizeof PIN];
 	[sender replyPINCode:[data length] PINCode:&PIN];
 }
 
