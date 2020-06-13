@@ -13,10 +13,10 @@
 + (NSMutableArray*)mutableConnectedWiimotes
 {
     static NSMutableArray *result = nil;
-
-    if(result == nil)
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
         result = [[NSMutableArray alloc] init];
-
+    });
     return result;
 }
 

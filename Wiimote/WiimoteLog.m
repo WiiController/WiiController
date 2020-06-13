@@ -39,10 +39,10 @@
 + (WiimoteLog*)sharedLog
 {
     static WiimoteLog *result = nil;
-
-    if(result == nil)
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
         result = [[WiimoteLog alloc] init];
-
+    });
     return result;
 }
 

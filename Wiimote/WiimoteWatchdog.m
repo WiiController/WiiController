@@ -29,10 +29,10 @@ NSString *WiimoteWatchdogPingNotification            = @"WiimoteWatchdogPingNoti
 + (WiimoteWatchdog*)sharedWatchdog
 {
     static WiimoteWatchdog *result = nil;
-
-    if(result == nil)
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
         result = [[WiimoteWatchdog alloc] initInternal];
-
+    });
     return result;
 }
 

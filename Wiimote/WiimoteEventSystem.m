@@ -44,10 +44,10 @@ NSString *WiimoteEventKey                   = @"WiimoteEventKey";
 + (WiimoteEventSystem*)defaultEventSystem
 {
     static WiimoteEventSystem *result = nil;
-
-    if(result == nil)
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
         result = [[WiimoteEventSystem alloc] init];
-
+    });
     return result;
 }
 

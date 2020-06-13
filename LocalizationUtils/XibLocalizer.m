@@ -28,10 +28,10 @@ NSString *XibLocalizerLocalizableXibsKey = @"LocalizedXibs";
 + (XibLocalizer*)sharedInstance
 {
     static XibLocalizer *result = nil;
-
-    if(result == nil)
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
         result = [[XibLocalizer alloc] init];
-
+    });
     return result;
 }
 

@@ -13,10 +13,10 @@
 + (DMGEULAPathPreprocessor*)sharedInstance
 {
     static DMGEULAPathPreprocessor *result = nil;
-
-    if(result == nil)
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
         result = [[DMGEULAPathPreprocessor alloc] init];
-
+    });
     return result;
 }
 

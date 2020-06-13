@@ -13,10 +13,10 @@
 + (OCDefaultLogHandler*)defaultLogHandler
 {
     static OCDefaultLogHandler *result = nil;
-
-    if(result == nil)
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
         result = [[OCDefaultLogHandler alloc] init];
-
+    });
     return result;
 }
 
@@ -60,10 +60,10 @@
 + (OCLog*)sharedLog
 {
     static OCLog *result = nil;
-
-    if(result == nil)
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
         result = [[OCLog alloc] init];
-
+    });
     return result;
 }
 

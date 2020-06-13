@@ -75,20 +75,20 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
 + (WiimoteInquiry*)sharedInquiry
 {
     static WiimoteInquiry *result = nil;
-
-    if(result == nil)
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
         result = [[WiimoteInquiry alloc] initInternal];
-
+    });
     return result;
 }
 
 + (NSMutableArray*)mutableSupportedModelNames
 {
     static NSMutableArray *result = nil;
-
-    if(result == nil)
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
         result = [[NSMutableArray alloc] init];
-
+    });
     return result;
 }
 

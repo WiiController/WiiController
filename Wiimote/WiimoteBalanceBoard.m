@@ -25,10 +25,10 @@
 {
     static const uint8_t  signature[]   = { 0x00, 0x00, 0xA4, 0x20, 0x04, 0x02 };
     static NSData        *result        = nil;
-
-    if(result == nil)
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
         result = [[NSData alloc] initWithBytes:signature length:sizeof(signature)];
-
+    });
     return result;
 }
 

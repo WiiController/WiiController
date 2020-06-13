@@ -17,10 +17,10 @@
 + (UserActivityNotifier*)sharedNotifier
 {
     static UserActivityNotifier *result = nil;
-
-    if(result == nil)
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
         result = [[UserActivityNotifier alloc] init];
-
+    });
     return result;
 }
 

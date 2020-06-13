@@ -22,10 +22,10 @@
 + (NotificationSystem*)sharedInstance
 {
     static NotificationSystem *result = nil;
-
-    if(result == nil)
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
         result = [[NotificationSystem alloc] init];
-
+    });
     return result;
 }
 

@@ -86,10 +86,10 @@ static void HIDManagerDeviceConnected(
 + (HIDManager*)manager
 {
     static HIDManager *result = nil;
-
-    if(result == nil)
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
         result = [[HIDManager alloc] initInternal];
-
+    });
     return result;
 }
 

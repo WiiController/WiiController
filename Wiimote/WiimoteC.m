@@ -32,10 +32,10 @@ NSString *WiimoteIDKey = @"WiimoteIDKey";
 + (WiimoteThread*)thread
 {
     static WiimoteThread *result = nil;
-
-    if(result == nil)
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
         result = [[WiimoteThread alloc] init];
-
+    });
     return result;
 }
 

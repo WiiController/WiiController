@@ -55,10 +55,10 @@
 + (LocalizationPreprocessor*)sharedInstance
 {
     static LocalizationPreprocessor *result = nil;
-
-    if(result == nil)
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
         result = [[LocalizationPreprocessor alloc] init];
-
+    });
     return result;
 }
 
