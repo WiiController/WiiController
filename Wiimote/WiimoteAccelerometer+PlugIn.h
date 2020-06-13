@@ -41,7 +41,6 @@
 
 - (void)reset;
 
-- (id)delegate;
-- (void)setDelegate:(id)delegate;
+@property(nonatomic) id delegate;
 
 @end

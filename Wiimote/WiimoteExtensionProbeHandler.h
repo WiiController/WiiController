@@ -9,11 +9,6 @@
 #import <Wiimote/WiimoteIOManager.h>
 
 @interface WiimoteExtensionProbeHandler : NSObject
-{
-    @private
-        id       m_Target;
-        SEL      m_Action;
-}
 
 + (void)routineProbe:(WiimoteIOManager*)manager
            signature:(NSData*)signature

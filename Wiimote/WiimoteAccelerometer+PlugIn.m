@@ -100,16 +100,6 @@
     m_IsEnabled = NO;
 }
 
-- (id)delegate
-{
-    return m_Delegate;
-}
-
-- (void)setDelegate:(id)delegate
-{
-    m_Delegate = delegate;
-}
-
 @end
 
 @implementation WiimoteAccelerometer (PrivatePart)
@@ -131,7 +121,7 @@
     m_GravityY = y;
     m_GravityZ = z;
 
-    [m_Delegate wiimoteAccelerometer:self gravityChangedX:x y:y z:z];
+    [_delegate wiimoteAccelerometer:self gravityChangedX:x y:y z:z];
 }
 
 - (void)setPitch:(CGFloat)pitch roll:(CGFloat)roll
@@ -148,7 +138,7 @@
     m_Pitch = pitch;
     m_Roll  = roll;
 
-    [m_Delegate wiimoteAccelerometer:self pitchChanged:pitch roll:roll];
+    [_delegate wiimoteAccelerometer:self pitchChanged:pitch roll:roll];
 }
 
 @end

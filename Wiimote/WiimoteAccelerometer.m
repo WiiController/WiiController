@@ -39,7 +39,7 @@
 	[self reset];
     m_IsEnabled = enabled;
 
-    [m_Delegate wiimoteAccelerometer:self enabledStateChanged:enabled];
+    [_delegate wiimoteAccelerometer:self enabledStateChanged:enabled];
 }
 
 - (CGFloat)gravityX

@@ -23,26 +23,11 @@
     if(self == nil)
         return nil;
 
-    m_Owner             = owner;
-    m_EventDispatcher   = dispatcher;
-    m_IOManager         = ioManager;
+    _owner             = owner;
+    _eventDispatcher   = dispatcher;
+    _ioManager         = ioManager;
 
     return self;
-}
-
-- (Wiimote*)owner
-{
-    return m_Owner;
-}
-
-- (WiimoteIOManager*)ioManager
-{
-    return m_IOManager;
-}
-
-- (WiimoteEventDispatcher*)eventDispatcher
-{
-    return m_EventDispatcher;
 }
 
 - (NSSet*)allowedReportTypeSet

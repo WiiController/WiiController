@@ -34,7 +34,7 @@ typedef enum
 - (id)initWithOwner:(Wiimote*)owner
     eventDispatcher:(WiimoteEventDispatcher*)dispatcher;
 
-- (WiimoteEventDispatcher*)eventDispatcher;
+@property(nonatomic,readonly) WiimoteEventDispatcher *eventDispatcher;
 
 - (void)calibrate:(WiimoteIOManager*)ioManager;
 - (void)handleReport:(const uint8_t*)extensionData length:(NSUInteger)length;

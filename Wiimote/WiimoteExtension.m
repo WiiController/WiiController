@@ -12,11 +12,6 @@
 
 @implementation WiimoteExtension
 
-- (Wiimote*)owner
-{
-	return m_Owner;
-}
-
 - (NSString*)name
 {
     return @"Unknown";

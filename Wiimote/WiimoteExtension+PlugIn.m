@@ -53,15 +53,15 @@
     if(self == nil)
         return nil;
 
-    m_Owner             = owner;
-    m_EventDispatcher   = dispatcher;
+    _owner             = owner;
+    _eventDispatcher   = dispatcher;
 
     return self;
 }
 
 - (WiimoteEventDispatcher*)eventDispatcher
 {
-    return m_EventDispatcher;
+    return _eventDispatcher;
 }
 
 - (void)calibrate:(WiimoteIOManager*)ioManager

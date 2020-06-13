@@ -31,7 +31,7 @@
         uint16_t    m_1gY;
         uint16_t    m_1gZ;
 
-        id          m_Delegate;
+        id          _delegate;
 }
 
 - (BOOL)isEnabled;

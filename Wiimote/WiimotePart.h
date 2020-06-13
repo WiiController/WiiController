@@ -11,12 +11,6 @@
 #import <Wiimote/WiimoteIOManager.h>
 
 @interface WiimotePart : NSObject
-{
-    @private
-        Wiimote                 *m_Owner;
-        WiimoteEventDispatcher  *m_EventDispatcher;
-        WiimoteIOManager        *m_IOManager;
-}
 
 + (void)registerPartClass:(Class)cls;
 
@@ -24,11 +18,11 @@
     eventDispatcher:(WiimoteEventDispatcher*)dispatcher
           ioManager:(WiimoteIOManager*)ioManager;
 
-- (Wiimote*)owner;
-- (WiimoteIOManager*)ioManager;
-- (WiimoteEventDispatcher*)eventDispatcher;
+@property(nonatomic,readonly) Wiimote *owner;
+@property(nonatomic,readonly) WiimoteIOManager *ioManager;
+@property(nonatomic,readonly) WiimoteEventDispatcher *eventDispatcher;
 
-- (NSSet*)allowedReportTypeSet;
+@property(nonatomic,readonly) NSSet *allowedReportTypeSet;
 
 - (void)connected;
 - (void)handleReport:(WiimoteDeviceReport*)report;

@@ -94,6 +94,10 @@
 @end
 
 @implementation WiimoteExtensionProbeHandler
+{
+    id       _target;
+    SEL      _action;
+}
 
 + (void)routineProbe:(WiimoteIOManager*)manager
            signature:(NSData*)signature
@@ -127,15 +131,15 @@
     if(self == nil)
         return nil;
 
-    m_Target = target;
-    m_Action = action;
+    _target = target;
+    _action = action;
 
     return self;
 }
 
 - (void)probeFinished:(BOOL)result
 {
-    [WiimoteExtension probeFinished:result target:m_Target action:m_Action];
+    [WiimoteExtension probeFinished:result target:_target action:_action];
 }
 
 @end
