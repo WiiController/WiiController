@@ -20,7 +20,7 @@ FOUNDATION_EXPORT NSString *WiimoteEventKey;
 @interface WiimoteEventSystem : NSObject
 {
     @private
-        NSMutableSet *m_Observers;
+        NSMutableSet *_observers;
 }
 
 + (WiimoteEventSystem*)defaultEventSystem;

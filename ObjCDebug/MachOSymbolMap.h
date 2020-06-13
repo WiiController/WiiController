@@ -16,8 +16,8 @@ typedef enum {
 @interface MachOSymbolMap : NSObject
 {
     @private
-        NSMutableDictionary *m_Map;
-        NSMutableDictionary *m_AddressMap;
+        NSMutableDictionary *_map;
+        NSMutableDictionary *_addressMap;
 }
 
 + (MachOSymbolMap*)loadFromFile:(NSString*)path;

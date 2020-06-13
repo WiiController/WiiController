@@ -20,7 +20,7 @@
 
 - (NSUInteger)highlightedLEDMask
 {
-    uint8_t     hardwareState = [m_Device LEDsState];
+    uint8_t     hardwareState = [_device LEDsState];
     NSUInteger  result        = 0;
 
     if((hardwareState & WiimoteDeviceSetLEDStateCommandFlagLEDOne) != 0)
@@ -57,7 +57,7 @@
     if((mask & WiimoteLEDFlagFour) != 0)
         hardwareState |= WiimoteDeviceSetLEDStateCommandFlagLEDFour;
 
-    if(![m_Device setLEDsState:hardwareState])
+    if(![_device setLEDsState:hardwareState])
         return;
 
     [[self eventDispatcher] postHighlightedLEDMaskChangedNotification:mask];
@@ -65,7 +65,7 @@
 
 - (void)setDevice:(WiimoteDevice*)device
 {
-    m_Device = device;
+    _device = device;
 }
 
 @end

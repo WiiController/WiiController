@@ -16,7 +16,7 @@
     if(self == nil)
         return nil;
 
-    m_AuthRef = NULL;
+    _authRef = NULL;
 
     return self;
 }
@@ -28,7 +28,7 @@
 
 - (BOOL)isObtained
 {
-    return (m_AuthRef != NULL);
+    return (_authRef != NULL);
 }
 
 - (BOOL)obtain
@@ -43,9 +43,9 @@
                          NULL,
                          kAuthorizationEmptyEnvironment,
                          kAuthorizationFlagDefaults,
-                        &m_AuthRef) != noErr)
+                        &_authRef) != noErr)
     {
-        m_AuthRef = NULL;
+        _authRef = NULL;
         return NO;
     }
 
@@ -55,7 +55,7 @@
                                kAuthorizationFlagPreAuthorize;
 
 	if(AuthorizationCopyRights(
-                         m_AuthRef,
+                         _authRef,
                         &rightSet, 
                          kAuthorizationEmptyEnvironment,
                          flags,
@@ -73,13 +73,13 @@
     if(![self isObtained])
         return;
 
-    AuthorizationFree(m_AuthRef, kAuthorizationFlagDestroyRights);
-    m_AuthRef = NULL;
+    AuthorizationFree(_authRef, kAuthorizationFlagDestroyRights);
+    _authRef = NULL;
 }
 
 - (AuthorizationRef)authRef
 {
-    return m_AuthRef;
+    return _authRef;
 }
 
 @end

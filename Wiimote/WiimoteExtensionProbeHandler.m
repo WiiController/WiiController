@@ -14,7 +14,7 @@
 @interface WiimoteExtensionRoutineProbeHandler : WiimoteExtensionProbeHandler
 {
     @private
-        NSArray *m_Signatures;
+        NSArray *_signatures;
 }
 
 - (id)initWithIOManager:(WiimoteIOManager*)manager
@@ -37,10 +37,10 @@
     if(self == nil)
         return nil;
 
-    m_Signatures = signatures;
+    _signatures = signatures;
 
-    if(m_Signatures			== nil ||
-      [m_Signatures count]  == 0)
+    if(_signatures			== nil ||
+      [_signatures count]  == 0)
     {
         [self probeFinished:NO];
         return nil;
@@ -48,7 +48,7 @@
 
     if(![manager readMemory:NSMakeRange(
 								WiimoteDeviceRoutineExtensionProbeAddress,
-								[[m_Signatures objectAtIndex:0] length])
+								[[_signatures objectAtIndex:0] length])
                      target:self
                      action:@selector(ioManagerDataReaded:)])
     {
@@ -68,7 +68,7 @@
         return;
     }
 
-    if([data length] < [[m_Signatures objectAtIndex:0] length])
+    if([data length] < [[_signatures objectAtIndex:0] length])
     {
         W_ERROR(@"readed data chunk too small");
         [self probeFinished:NO];
@@ -76,11 +76,11 @@
     }
 
     BOOL		isOk			= NO;
-	NSUInteger	countSignatures = [m_Signatures count];
+	NSUInteger	countSignatures = [_signatures count];
 
 	for(NSUInteger i = 0; i < countSignatures; i++)
 	{
-		if([[m_Signatures objectAtIndex:i] isEqualToData:data])
+		if([[_signatures objectAtIndex:i] isEqualToData:data])
 		{
             isOk = YES;
 			break;

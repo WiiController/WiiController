@@ -33,19 +33,19 @@ FOUNDATION_EXPORT NSString *WiimoteUseOneButtonClickConnectionKey;
 @interface Wiimote : NSObject
 {
 	@private
-		WiimoteDevice               *m_Device;
-        WiimotePartSet              *m_PartSet;
-        NSString                    *m_ModelName;
+		WiimoteDevice               *_device;
+        WiimotePartSet              *_partSet;
+        NSString                    *_modelName;
 
-        WiimoteIRPart               *m_IRPart;
-        WiimoteLEDPart              *m_LEDPart;
-        WiimoteButtonPart           *m_ButtonPart;
-        WiimoteBatteryPart          *m_BatteryPart;
-        WiimoteVibrationPart        *m_VibrationPart;
-        WiimoteAccelerometerPart    *m_AccelerometerPart;
-        WiimoteExtensionPart        *m_ExtensionPart;
+        WiimoteIRPart               *_iRPart;
+        WiimoteLEDPart              *_lEDPart;
+        WiimoteButtonPart           *_buttonPart;
+        WiimoteBatteryPart          *_batteryPart;
+        WiimoteVibrationPart        *_vibrationPart;
+        WiimoteAccelerometerPart    *_accelerometerPart;
+        WiimoteExtensionPart        *_extensionPart;
 
-		NSDictionary                *m_UserInfo;
+		NSDictionary                *_userInfo;
 }
 
 + (BOOL)isBluetoothEnabled;

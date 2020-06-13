@@ -17,7 +17,7 @@
     // локализован чуть позже, после появления окна.
     // И тут показывать окно нельзя - awakeFromNib вызывается до процесса
     // локализации.
-    [m_Window performSelector:@selector(makeKeyAndOrderFront:)
+    [_window performSelector:@selector(makeKeyAndOrderFront:)
                    withObject:nil
                    afterDelay:0.0];
 }

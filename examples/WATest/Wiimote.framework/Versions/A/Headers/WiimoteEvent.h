@@ -16,10 +16,10 @@
 @interface WiimoteEvent : NSObject
 {
     @private
-        Wiimote     *m_Wiimote;
-        NSString    *m_Path;
-        NSArray     *m_PathComponents;
-        CGFloat      m_Value;
+        Wiimote     *_wiimote;
+        NSString    *_path;
+        NSArray     *_pathComponents;
+        CGFloat      _value;
 }
 
 + (WiimoteEvent*)eventWithWiimote:(Wiimote*)wiimote

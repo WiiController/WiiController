@@ -734,9 +734,9 @@
         </window>
         <customObject id="811" customClass="MainController">
             <connections>
-                <outlet property="m_Log" destination="825" id="832"/>
-                <outlet property="m_UserInput" destination="820" id="830"/>
-                <outlet property="m_UserLogLevel" destination="814" id="831"/>
+                <outlet property="_log" destination="825" id="832"/>
+                <outlet property="_userInput" destination="820" id="830"/>
+                <outlet property="_userLogLevel" destination="814" id="831"/>
             </connections>
         </customObject>
     </objects>

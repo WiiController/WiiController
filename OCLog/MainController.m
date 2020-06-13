@@ -10,9 +10,9 @@
 
 @implementation MainController
 {
-    IBOutlet NSTextView     *m_Log;
-    IBOutlet NSPopUpButton  *m_UserLogLevel;
-    IBOutlet NSTextField    *m_UserInput;
+    IBOutlet NSTextView     *_log;
+    IBOutlet NSPopUpButton  *_userLogLevel;
+    IBOutlet NSTextField    *_userInput;
 }
 
 - (void)awakeFromNib
@@ -23,12 +23,12 @@
 
 - (IBAction)clearLog:(id)sender
 {
-    [m_Log setString:@""];
+    [_log setString:@""];
 }
 
 - (IBAction)log:(id)sender
 {
-    OCL_MESSAGE([m_UserLogLevel selectedTag], @"%@", [m_UserInput stringValue]);
+    OCL_MESSAGE([_userLogLevel selectedTag], @"%@", [_userInput stringValue]);
 }
 
 - (void)  log:(OCLog*)log
@@ -46,7 +46,7 @@
                                         functionName,
                                         message];
 
-    [[m_Log textStorage] appendAttributedString:
+    [[_log textStorage] appendAttributedString:
         [[[NSAttributedString alloc] initWithString:msg] autorelease]];
 }
 

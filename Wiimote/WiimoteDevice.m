@@ -33,15 +33,15 @@
 		return nil;
 	}
 
-	m_Transport				= transport;
-    m_Report                = [[WiimoteDeviceReport alloc] initWithDevice:self];
-    m_ReadMemQueue			= [[WiimoteDeviceReadMemQueue alloc] initWithDevice:self];
-	m_IsConnected			= NO;
-    m_IsVibrationEnabled    = NO;
-    m_LEDsState             = 0;
-	m_Delegate				= nil;
+	_transport				= transport;
+    _report                = [[WiimoteDeviceReport alloc] initWithDevice:self];
+    _readMemQueue			= [[WiimoteDeviceReadMemQueue alloc] initWithDevice:self];
+	_isConnected			= NO;
+    _isVibrationEnabled    = NO;
+    _lEDsState             = 0;
+	_delegate				= nil;
 
-	[m_Transport setDelegate:self];
+	[_transport setDelegate:self];
 
 	return self;
 }
@@ -63,7 +63,7 @@
 
 - (BOOL)isConnected
 {
-	return m_IsConnected;
+	return _isConnected;
 }
 
 - (BOOL)connect
@@ -71,13 +71,13 @@
 	if([self isConnected])
 		return YES;
 
-	m_IsConnected = YES;
+	_isConnected = YES;
 
-	if(![m_Transport open])
+	if(![_transport open])
     {
         W_ERROR(@"can't open device");
 		[self disconnect];
-		m_IsConnected = NO;
+		_isConnected = NO;
         return NO;
     }
 
@@ -89,31 +89,31 @@
 	if(![self isConnected])
 		return;
 
-    m_IsConnected = NO;
-    [m_Transport setDelegate:nil];
-    [m_Transport close];
+    _isConnected = NO;
+    [_transport setDelegate:nil];
+    [_transport close];
 
 	[self handleDisconnect];
 }
 
 - (NSString*)name
 {
-    return [m_Transport name];
+    return [_transport name];
 }
 
 - (NSData*)address
 {
-	return [m_Transport address];
+	return [_transport address];
 }
 
 - (NSString*)addressString
 {
-    return [m_Transport addressString];
+    return [_transport addressString];
 }
 
 - (id)lowLevelDevice
 {
-    return [m_Transport lowLevelDevice];
+    return [_transport lowLevelDevice];
 }
 
 - (BOOL)postCommand:(WiimoteDeviceCommandType)command
@@ -132,12 +132,12 @@
     buffer[0] = command;
     memcpy(buffer + 1, data, length);
 
-    if(m_IsVibrationEnabled)
+    if(_isVibrationEnabled)
         buffer[1] |= WiimoteDeviceCommandFlagVibrationEnabled;
     else
         buffer[1] &= (~WiimoteDeviceCommandFlagVibrationEnabled);
 
-	if(![m_Transport postBytes:buffer length:sizeof(buffer)])
+	if(![_transport postBytes:buffer length:sizeof(buffer)])
     {
         W_ERROR(@"can't post data to device");
         return NO;
@@ -180,7 +180,7 @@
     if(![self isConnected])
 		return NO;
 
-	return [m_ReadMemQueue readMemory:memoryRange
+	return [_readMemQueue readMemory:memoryRange
 							   target:target
 							   action:action];
 }
@@ -209,24 +209,24 @@
 - (BOOL)postVibrationAndLEDStates
 {
     return [self postCommand:WiimoteDeviceCommandTypeSetLEDState
-                        data:&m_LEDsState
-                      length:sizeof(m_LEDsState)];
+                        data:&_lEDsState
+                      length:sizeof(_lEDsState)];
 }
 
 - (BOOL)isVibrationEnabled
 {
-    return m_IsVibrationEnabled;
+    return _isVibrationEnabled;
 }
 
 - (BOOL)setVibrationEnabled:(BOOL)enabled
 {
-    if(m_IsVibrationEnabled == enabled)
+    if(_isVibrationEnabled == enabled)
         return YES;
 
-    m_IsVibrationEnabled = enabled;
+    _isVibrationEnabled = enabled;
     if(![self postVibrationAndLEDStates])
     {
-        m_IsVibrationEnabled = !enabled;
+        _isVibrationEnabled = !enabled;
         return NO;
     }
 
@@ -235,17 +235,17 @@
 
 - (uint8_t)LEDsState
 {
-    return m_LEDsState;
+    return _lEDsState;
 }
 
 - (BOOL)setLEDsState:(uint8_t)state
 {
-    uint8_t oldState = m_LEDsState;
+    uint8_t oldState = _lEDsState;
 
-    m_LEDsState = state;
+    _lEDsState = state;
     if(![self postVibrationAndLEDStates])
     {
-        m_LEDsState = oldState;
+        _lEDsState = oldState;
         return NO;
     }
 
@@ -254,12 +254,12 @@
 
 - (id)delegate
 {
-	return m_Delegate;
+	return _delegate;
 }
 
 - (void)setDelegate:(id)delegate
 {
-	m_Delegate = delegate;
+	_delegate = delegate;
 }
 
 @end
@@ -268,19 +268,19 @@
 
 - (void)handleReport:(WiimoteDeviceReport*)report
 {
-    [m_ReadMemQueue handleReport:report];
-	[m_Delegate wiimoteDevice:self handleReport:report];
+    [_readMemQueue handleReport:report];
+	[_delegate wiimoteDevice:self handleReport:report];
 }
 
 - (void)handleDisconnect
 {
     W_DEBUG(@"device disconnected");
 
-    m_IsVibrationEnabled    = NO;
-    m_LEDsState             = 0;
+    _isVibrationEnabled    = NO;
+    _lEDsState             = 0;
 
-    [m_ReadMemQueue handleDisconnect];
-	[m_Delegate performSelector:@selector(wiimoteDeviceDisconnected:)
+    [_readMemQueue handleDisconnect];
+	[_delegate performSelector:@selector(wiimoteDeviceDisconnected:)
 					 withObject:self
 					 afterDelay:0.5];
 }
@@ -293,14 +293,14 @@
             reportDataReceived:(const uint8_t*)bytes
                         length:(NSUInteger)length
 {
-	if(![m_Report updateFromReportData:(const uint8_t*)bytes
+	if(![_report updateFromReportData:(const uint8_t*)bytes
                                 length:length])
     {
         W_DEBUG(@"invalid report");
         return;
     }
 
-	[self handleReport:m_Report];
+	[self handleReport:_report];
 }
 
 - (void)wiimoteDeviceTransportDisconnected:(WiimoteDeviceTransport*)transport

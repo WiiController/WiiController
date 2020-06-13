@@ -11,8 +11,8 @@
 @interface NSSegmentedControlItem : NSObject
 {
     @private
-        NSSegmentedControl  *m_Owner;
-        NSUInteger           m_Index;
+        NSSegmentedControl  *_owner;
+        NSUInteger           _index;
 }
 
 - (NSString*)title;

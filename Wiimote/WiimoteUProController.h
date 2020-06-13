@@ -12,8 +12,8 @@
 											WiimoteUProControllerProtocol>
 {
 	@private
-		BOOL		m_ButtonState[WiimoteUProControllerButtonCount];
-        NSPoint		m_StickPositions[WiimoteUProControllerStickCount];
+		BOOL		_buttonState[WiimoteUProControllerButtonCount];
+        NSPoint		_stickPositions[WiimoteUProControllerStickCount];
 }
 
 @end

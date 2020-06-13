@@ -27,7 +27,7 @@
 @interface LocalizationPreprocessor : NSObject
 {
     @private
-        NSMutableDictionary *m_Variables;
+        NSMutableDictionary *_variables;
 }
 
 + (LocalizationPreprocessor*)sharedInstance;

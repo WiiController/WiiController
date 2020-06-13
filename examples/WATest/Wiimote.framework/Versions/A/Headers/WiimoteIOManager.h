@@ -14,8 +14,8 @@
 @interface WiimoteIOManager : NSObject
 {
     @private
-        Wiimote         *m_Owner;
-        WiimoteDevice   *m_Device;
+        Wiimote         *_owner;
+        WiimoteDevice   *_device;
 }
 
 - (BOOL)postCommand:(WiimoteDeviceCommandType)command

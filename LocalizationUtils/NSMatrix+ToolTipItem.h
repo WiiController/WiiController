@@ -11,8 +11,8 @@
 @interface NSMatrixToolTipItem : NSObject
 {
     @private
-        NSCell      *m_Cell;
-        NSMatrix    *m_Owner;
+        NSCell      *_cell;
+        NSMatrix    *_owner;
 }
 
 - (NSString*)toolTip;

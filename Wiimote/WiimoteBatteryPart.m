@@ -24,20 +24,20 @@
     if(self == nil)
         return nil;
 
-    m_Level = -1.0;
-    m_IsLow = NO;
+    _level = -1.0;
+    _isLow = NO;
 
     return self;
 }
 
 - (CGFloat)batteryLevel
 {
-    return m_Level;
+    return _level;
 }
 
 - (BOOL)isBatteryLevelLow
 {
-    return m_IsLow;
+    return _isLow;
 }
 
 - (void)handleReport:(WiimoteDeviceReport*)report
@@ -60,20 +60,20 @@
     if(batteryLevel > 100.0f)
         batteryLevel = 100.0f;
 
-    if(batteryLevel         != m_Level ||
-       isBatteryLevelLow    != m_IsLow)
+    if(batteryLevel         != _level ||
+       isBatteryLevelLow    != _isLow)
     {
-        m_Level = batteryLevel;
-        m_IsLow = isBatteryLevelLow;
+        _level = batteryLevel;
+        _isLow = isBatteryLevelLow;
 
-        [[self eventDispatcher] postBatteryLevelUpdateNotification:m_Level isLow:m_IsLow];
+        [[self eventDispatcher] postBatteryLevelUpdateNotification:_level isLow:_isLow];
     }
 }
 
 - (void)disconnected
 {
-    m_Level = -1.0;
-    m_IsLow = NO;
+    _level = -1.0;
+    _isLow = NO;
 }
 
 @end

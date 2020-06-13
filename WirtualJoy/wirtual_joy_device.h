@@ -63,14 +63,14 @@ class WirtualJoyDevice : public IOHIDDevice
     private:
         static const uint32_t locationIdBase = 0xFAFAFAFA;
 
-        OSString                 *m_ProductString;
-        OSString                 *m_SerialNumberString;
-        uint32_t                  m_VendorID;
-        uint32_t                  m_ProductID;
-        HIDCapabilities           m_Capabilities;
-        IOBufferMemoryDescriptor *m_HIDReportDescriptor;
-        IOBufferMemoryDescriptor *m_StateBuffer;
-        uint32_t                  m_LocationID;
+        OSString                 *_productString;
+        OSString                 *_serialNumberString;
+        uint32_t                  _vendorID;
+        uint32_t                  _productID;
+        HIDCapabilities           _capabilities;
+        IOBufferMemoryDescriptor *_hIDReportDescriptor;
+        IOBufferMemoryDescriptor *_stateBuffer;
+        uint32_t                  _locationID;
 
         bool parseHidDescriptor(
                         const void *hidDescriptorData,

@@ -24,20 +24,20 @@
     if(self == nil)
         return nil;
 
-    m_Wiimote           = wiimote;
-    m_EventDispatcher   = dispatcher;
-    m_IOManager         = ioManager;
-    m_ExtensionClasses  = [extensionClasses mutableCopy];
-    m_CurrentClass      = nil;
-    m_Extension         = nil;
-    m_SubExtension      = extension;
+    _wiimote           = wiimote;
+    _eventDispatcher   = dispatcher;
+    _iOManager         = ioManager;
+    _extensionClasses  = [extensionClasses mutableCopy];
+    _currentClass      = nil;
+    _extension         = nil;
+    _subExtension      = extension;
 
-    m_IsInitialized     = NO;
-    m_IsStarted         = NO;
-    m_IsCanceled        = NO;
+    _isInitialized     = NO;
+    _isStarted         = NO;
+    _isCanceled        = NO;
 
-    m_Target            = target;
-    m_Action            = action;
+    _target            = target;
+    _action            = action;
 
     return self;
 }
@@ -48,14 +48,14 @@
     uint8_t data;
 
     data = WiimoteDeviceRoutineExtensionInitValue1;
-    [m_IOManager writeMemory:WiimoteDeviceRoutineExtensionInitAddress1 data:&data length:sizeof(data)];
+    [_iOManager writeMemory:WiimoteDeviceRoutineExtensionInitAddress1 data:&data length:sizeof(data)];
 	usleep(50000);
 
     data = WiimoteDeviceRoutineExtensionInitValue2;
-    [m_IOManager writeMemory:WiimoteDeviceRoutineExtensionInitAddress2 data:&data length:sizeof(data)];
+    [_iOManager writeMemory:WiimoteDeviceRoutineExtensionInitAddress2 data:&data length:sizeof(data)];
 	usleep(50000);
 
-    m_IsInitialized = YES;
+    _isInitialized = YES;
 }
 
 - (void)beginProbe
@@ -70,43 +70,43 @@
 
 - (void)probeFinished:(WiimoteExtension*)extension
 {
-    if(m_Target != nil && m_Action != nil)
-        [m_Target performSelector:m_Action withObject:extension afterDelay:0.0];
+    if(_target != nil && _action != nil)
+        [_target performSelector:_action withObject:extension afterDelay:0.0];
 
     [self endProbe];
 }
 
 - (void)probeNextClass
 {
-    if(m_IsCanceled)
+    if(_isCanceled)
     {
         [self endProbe];
         return;
     }
 
-    if([m_ExtensionClasses count] == 0)
+    if([_extensionClasses count] == 0)
     {
         [self probeFinished:nil];
         return;
     }
 
-    m_CurrentClass = [m_ExtensionClasses objectAtIndex:0];
-    [m_ExtensionClasses removeObjectAtIndex:0];
+    _currentClass = [_extensionClasses objectAtIndex:0];
+    [_extensionClasses removeObjectAtIndex:0];
 
-    if(!m_IsInitialized &&
-       [m_CurrentClass merit] >= WiimoteExtensionMeritClassSystemHigh)
+    if(!_isInitialized &&
+       [_currentClass merit] >= WiimoteExtensionMeritClassSystemHigh)
     {
         [self initializeExtensionPort];
     }
 
-    [m_CurrentClass probe:m_IOManager
+    [_currentClass probe:_iOManager
                    target:self
                    action:@selector(currentClassProbeFinished:)];
 }
 
 - (void)currentClassProbeFinished:(NSNumber*)result
 {
-    if(m_IsCanceled)
+    if(_isCanceled)
     {
         [self endProbe];
         return;
@@ -118,37 +118,37 @@
         return;
     }
 
-    m_Extension = [[m_CurrentClass alloc] initWithOwner:m_Wiimote
-                                        eventDispatcher:m_EventDispatcher];
+    _extension = [[_currentClass alloc] initWithOwner:_wiimote
+                                        eventDispatcher:_eventDispatcher];
 
-    if(m_Extension == nil)
+    if(_extension == nil)
     {
         [self probeNextClass];
         return;
     }
 
-    [m_Extension calibrate:m_IOManager];
-	[self probeFinished:m_Extension];
+    [_extension calibrate:_iOManager];
+	[self probeFinished:_extension];
 }
 
 - (WiimoteExtension*)subExtension
 {
-	return m_SubExtension;
+	return _subExtension;
 }
 
 - (void)start
 {
-    if(m_IsStarted)
+    if(_isStarted)
         return;
 
-    m_IsInitialized = NO;
+    _isInitialized = NO;
 	[self beginProbe];
     [self probeNextClass];
 }
 
 - (void)cancel
 {
-    m_IsCanceled = YES;
+    _isCanceled = YES;
 }
 
 @end

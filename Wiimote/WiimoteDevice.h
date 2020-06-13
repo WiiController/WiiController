@@ -27,17 +27,17 @@
 @interface WiimoteDevice : NSObject
 {
 	@private
-		BOOL						 m_IsConnected;
+		BOOL						 _isConnected;
 
-		WiimoteDeviceTransport      *m_Transport;
+		WiimoteDeviceTransport      *_transport;
 
-        WiimoteDeviceReport			*m_Report;
-		WiimoteDeviceReadMemQueue	*m_ReadMemQueue;
+        WiimoteDeviceReport			*_report;
+		WiimoteDeviceReadMemQueue	*_readMemQueue;
 
-        BOOL						 m_IsVibrationEnabled;
-        uint8_t                      m_LEDsState;
+        BOOL						 _isVibrationEnabled;
+        uint8_t                      _lEDsState;
 
-		id							 m_Delegate;
+		id							 _delegate;
 }
 
 - (id)initWithHIDDevice:(W_HIDDevice*)device;

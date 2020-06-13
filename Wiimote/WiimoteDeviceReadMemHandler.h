@@ -13,10 +13,10 @@
 @interface WiimoteDeviceReadMemHandler : NSObject
 {
 	@private
-		NSRange			 m_MemoryRange;
-		NSMutableData	*m_ReadedData;
-		id				 m_Target;
-		SEL				 m_Action;
+		NSRange			 _memoryRange;
+		NSMutableData	*_readedData;
+		id				 _target;
+		SEL				 _action;
 }
 
 - (id)initWithMemoryRange:(NSRange)memoryRange

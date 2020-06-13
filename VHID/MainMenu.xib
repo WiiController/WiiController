@@ -660,7 +660,7 @@
                         <rect key="frame" x="20" y="20" width="440" height="230"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <connections>
-                            <outlet property="m_Delegate" destination="811" id="814"/>
+                            <outlet property="_delegate" destination="811" id="814"/>
                         </connections>
                     </customView>
                 </subviews>

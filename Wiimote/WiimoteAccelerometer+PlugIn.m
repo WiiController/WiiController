@@ -19,9 +19,9 @@
 
 - (void)setHardwareValueX:(uint16_t)x y:(uint16_t)y z:(uint16_t)z
 {
-    CGFloat newX = (((CGFloat)x) - ((CGFloat)m_ZeroX)) / (((CGFloat)m_1gX) - ((CGFloat)m_ZeroX));
-    CGFloat newY = (((CGFloat)y) - ((CGFloat)m_ZeroY)) / (((CGFloat)m_1gY) - ((CGFloat)m_ZeroY));
-    CGFloat newZ = (((CGFloat)z) - ((CGFloat)m_ZeroZ)) / (((CGFloat)m_1gZ) - ((CGFloat)m_ZeroZ));
+    CGFloat newX = (((CGFloat)x) - ((CGFloat)_zeroX)) / (((CGFloat)m_1gX) - ((CGFloat)_zeroX));
+    CGFloat newY = (((CGFloat)y) - ((CGFloat)_zeroY)) / (((CGFloat)m_1gY) - ((CGFloat)_zeroY));
+    CGFloat newZ = (((CGFloat)z) - ((CGFloat)_zeroZ)) / (((CGFloat)m_1gZ) - ((CGFloat)_zeroZ));
 
     [self setGravityX:newX y:newY z:newZ];
 
@@ -34,13 +34,13 @@
     if(newZ < -1.0) newZ = 1.0; else
     if(newZ >  1.0) newZ = 1.0;
 
-    CGFloat newPitch = m_Pitch;
-    CGFloat newRoll  = m_Roll;
+    CGFloat newPitch = _pitch;
+    CGFloat newRoll  = _roll;
 
-    if(abs(x - m_ZeroX) <= (m_1gX - m_ZeroX))
+    if(abs(x - _zeroX) <= (m_1gX - _zeroX))
         newRoll  = (atan2(newX, newZ) * 180.0) / M_PI;
 
-    if(abs(y - m_ZeroY) <= (m_1gY - m_ZeroY))
+    if(abs(y - _zeroY) <= (m_1gY - _zeroY))
         newPitch = (atan2(newY, newZ) * 180.0) / M_PI;
 
     [self setPitch:newPitch roll:newRoll];
@@ -48,9 +48,9 @@
 
 - (void)setHardwareZeroX:(uint16_t)x y:(uint16_t)y z:(uint16_t)z
 {
-    m_ZeroX = x;
-    m_ZeroY = y;
-    m_ZeroZ = z;
+    _zeroX = x;
+    _zeroY = y;
+    _zeroZ = z;
 }
 
 - (void)setHardware1gX:(uint16_t)x y:(uint16_t)y z:(uint16_t)z
@@ -76,9 +76,9 @@
 
 - (BOOL)isHardwareZeroValuesInvalid
 {
-    return (m_ZeroX == 0 ||
-            m_ZeroY == 0 ||
-            m_ZeroZ == 0);
+    return (_zeroX == 0 ||
+            _zeroY == 0 ||
+            _zeroZ == 0);
 }
 
 - (BOOL)isHardware1gValuesInvalid
@@ -90,14 +90,14 @@
 
 - (void)reset
 {
-    m_GravityX  = 0.0;
-    m_GravityY  = 0.0;
-    m_GravityZ  = 0.0;
+    _gravityX  = 0.0;
+    _gravityY  = 0.0;
+    _gravityZ  = 0.0;
 
-    m_Pitch     = 0.0;
-    m_Roll      = 0.0;
+    _pitch     = 0.0;
+    _roll      = 0.0;
 
-    m_IsEnabled = NO;
+    _isEnabled = NO;
 }
 
 @end
@@ -106,37 +106,37 @@
 
 - (void)setGravityX:(CGFloat)x y:(CGFloat)y z:(CGFloat)z
 {
-    x = (((CGFloat)((long long)(x / m_GravitySmoothQuant))) * m_GravitySmoothQuant);
-    y = (((CGFloat)((long long)(y / m_GravitySmoothQuant))) * m_GravitySmoothQuant);
-    z = (((CGFloat)((long long)(z / m_GravitySmoothQuant))) * m_GravitySmoothQuant);
+    x = (((CGFloat)((long long)(x / _gravitySmoothQuant))) * _gravitySmoothQuant);
+    y = (((CGFloat)((long long)(y / _gravitySmoothQuant))) * _gravitySmoothQuant);
+    z = (((CGFloat)((long long)(z / _gravitySmoothQuant))) * _gravitySmoothQuant);
 
-    if(WiimoteDeviceIsFloatEqualEx(m_GravityX, x, m_GravitySmoothQuant) &&
-       WiimoteDeviceIsFloatEqualEx(m_GravityY, y, m_GravitySmoothQuant) &&
-       WiimoteDeviceIsFloatEqualEx(m_GravityZ, z, m_GravitySmoothQuant))
+    if(WiimoteDeviceIsFloatEqualEx(_gravityX, x, _gravitySmoothQuant) &&
+       WiimoteDeviceIsFloatEqualEx(_gravityY, y, _gravitySmoothQuant) &&
+       WiimoteDeviceIsFloatEqualEx(_gravityZ, z, _gravitySmoothQuant))
     {
         return;
     }
 
-    m_GravityX = x;
-    m_GravityY = y;
-    m_GravityZ = z;
+    _gravityX = x;
+    _gravityY = y;
+    _gravityZ = z;
 
     [_delegate wiimoteAccelerometer:self gravityChangedX:x y:y z:z];
 }
 
 - (void)setPitch:(CGFloat)pitch roll:(CGFloat)roll
 {
-    pitch = (((CGFloat)((long long)(pitch / m_AnglesSmoothQuant))) * m_AnglesSmoothQuant);
-    roll  = (((CGFloat)((long long)(roll  / m_AnglesSmoothQuant))) * m_AnglesSmoothQuant);
+    pitch = (((CGFloat)((long long)(pitch / _anglesSmoothQuant))) * _anglesSmoothQuant);
+    roll  = (((CGFloat)((long long)(roll  / _anglesSmoothQuant))) * _anglesSmoothQuant);
 
-    if(WiimoteDeviceIsFloatEqualEx(m_Pitch, pitch, m_AnglesSmoothQuant) &&
-       WiimoteDeviceIsFloatEqualEx(m_Roll,	roll,  m_AnglesSmoothQuant))
+    if(WiimoteDeviceIsFloatEqualEx(_pitch, pitch, _anglesSmoothQuant) &&
+       WiimoteDeviceIsFloatEqualEx(_roll,	roll,  _anglesSmoothQuant))
     {
         return;
     }
 
-    m_Pitch = pitch;
-    m_Roll  = roll;
+    _pitch = pitch;
+    _roll  = roll;
 
     [_delegate wiimoteAccelerometer:self pitchChanged:pitch roll:roll];
 }

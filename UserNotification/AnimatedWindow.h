@@ -11,8 +11,8 @@
 @interface AnimatedWindow : NSWindow
 {
     @private
-        NSViewAnimation *m_CurrentAnimation;
-        BOOL             m_IsAnimationEnabled;
+        NSViewAnimation *_currentAnimation;
+        BOOL             _isAnimationEnabled;
 }
 
 - (BOOL)isAnimationEnabled;

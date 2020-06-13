@@ -14,7 +14,7 @@
 
 @implementation WiimoteLog
 {
-    WiimoteLogLevel m_Level;
+    WiimoteLogLevel _level;
 }
 
 + (NSString*)levelAsString:(WiimoteLogLevel)level
@@ -56,7 +56,7 @@
     if(self == nil)
         return nil;
 
-    m_Level = WiimoteLogLevelError;
+    _level = WiimoteLogLevelError;
 
     return self;
 }
@@ -110,7 +110,7 @@
 #ifndef WIIMOTE_USE_STDOUT_LOG
     return [self wiimoteLogLevel:[[OCLog sharedLog] level]];
 #else
-    return m_Level;
+    return _level;
 #endif
 }
 
@@ -119,7 +119,7 @@
 #ifndef WIIMOTE_USE_STDOUT_LOG
     [[OCLog sharedLog] setLevel:[self ocLogLevel:level]];
 #else
-    m_Level = level;
+    _level = level;
 #endif
 }
 

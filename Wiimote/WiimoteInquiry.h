@@ -18,11 +18,11 @@ FOUNDATION_EXPORT NSString *WiimoteDeviceNameBalanceBoard;
 @interface WiimoteInquiry : NSObject
 {
     @private
-        BOOL                      m_IsUseOneButtonClickConnection;
+        BOOL                      _isUseOneButtonClickConnection;
 
-        IOBluetoothDeviceInquiry *m_Inquiry;
-        id                        m_Target;
-        SEL                       m_Action;
+        IOBluetoothDeviceInquiry *_inquiry;
+        id                        _target;
+        SEL                       _action;
 }
 
 + (BOOL)isBluetoothEnabled;

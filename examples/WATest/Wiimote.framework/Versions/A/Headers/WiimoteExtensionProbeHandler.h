@@ -11,8 +11,8 @@
 @interface WiimoteExtensionProbeHandler : NSObject
 {
     @private
-        id       m_Target;
-        SEL      m_Action;
+        id       _target;
+        SEL      _action;
 }
 
 + (void)routineProbe:(WiimoteIOManager*)manager

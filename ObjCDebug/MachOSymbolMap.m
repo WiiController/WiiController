@@ -17,7 +17,7 @@
 @interface MachOFileHandle : NSObject
 {
     @private
-        FILE *m_File;
+        FILE *_file;
 }
 
 + (MachOFileHandle*)withFile:(NSString*)path;
@@ -56,9 +56,9 @@
     if(self == nil)
         return nil;
 
-    m_File = fopen([path fileSystemRepresentation], "rb");
+    _file = fopen([path fileSystemRepresentation], "rb");
 
-    if(m_File == NULL)
+    if(_file == NULL)
     {
         [self release];
         return nil;
@@ -183,13 +183,13 @@
 
 - (BOOL)readData:(void*)buffer size:(size_t)size atOffset:(off_t)offset
 {
-    return (fseek(m_File, offset, SEEK_SET) == 0 &&
-            fread(buffer, size, 1, m_File)  == 1);
+    return (fseek(_file, offset, SEEK_SET) == 0 &&
+            fread(buffer, size, 1, _file)  == 1);
 }
 
 - (NSString*)readString:(off_t)offset
 {
-    if(fseek(m_File, offset, SEEK_SET) != 0)
+    if(fseek(_file, offset, SEEK_SET) != 0)
         return nil;
 
     NSMutableString *result = [[NSMutableString alloc] init];
@@ -197,7 +197,7 @@
 
     while(YES)
     {
-        if(fread(&ch, 1, 1, m_File) != 1)
+        if(fread(&ch, 1, 1, _file) != 1)
         {
             [result release];
             result = nil;
@@ -215,10 +215,10 @@
 
 - (void)close
 {
-    if(m_File != NULL)
+    if(_file != NULL)
     {
-        fclose(m_File);
-        m_File = NULL;
+        fclose(_file);
+        _file = NULL;
     }
 }
 
@@ -229,15 +229,15 @@
 - (void)addSymbol32:(NSString*)name info:(const struct nlist*)info
 {
     MachOSymbol *symbol = [MachOSymbol symbolWithName:name info32:info];
-    [m_AddressMap setObject:symbol forKey:[NSNumber numberWithUnsignedLongLong:info->n_value]];
-    [m_Map setObject:symbol forKey:name];
+    [_addressMap setObject:symbol forKey:[NSNumber numberWithUnsignedLongLong:info->n_value]];
+    [_map setObject:symbol forKey:name];
 }
 
 - (void)addSymbol64:(NSString*)name info:(const struct nlist_64*)info
 {
     MachOSymbol *symbol = [MachOSymbol symbolWithName:name info:info];
-    [m_AddressMap setObject:symbol forKey:[NSNumber numberWithUnsignedLongLong:info->n_value]];
-    [m_Map setObject:symbol forKey:name];
+    [_addressMap setObject:symbol forKey:[NSNumber numberWithUnsignedLongLong:info->n_value]];
+    [_map setObject:symbol forKey:name];
 }
 
 - (BOOL)loadX86SymbolsFrom:(MachOFileHandle*)file
@@ -390,32 +390,32 @@
     if(self == nil)
         return nil;
 
-    m_Map           = [[NSMutableDictionary alloc] init];
-    m_AddressMap    = [[NSMutableDictionary alloc] init];
+    _map           = [[NSMutableDictionary alloc] init];
+    _addressMap    = [[NSMutableDictionary alloc] init];
 
     return self;
 }
 
 - (void)dealloc
 {
-    [m_Map release];
-    [m_AddressMap release];
+    [_map release];
+    [_addressMap release];
     [super dealloc];
 }
 
 - (MachOSymbol*)findWithName:(NSString*)name
 {
-    return [m_Map objectForKey:name];
+    return [_map objectForKey:name];
 }
 
 - (MachOSymbol*)findWithAddress:(uint64_t)address
 {
-    return [m_AddressMap objectForKey:[NSNumber numberWithUnsignedLongLong:address]];
+    return [_addressMap objectForKey:[NSNumber numberWithUnsignedLongLong:address]];
 }
 
 - (NSEnumerator*)symbolEnumerator
 {
-    return [m_Map objectEnumerator];
+    return [_map objectEnumerator];
 }
 
 @end

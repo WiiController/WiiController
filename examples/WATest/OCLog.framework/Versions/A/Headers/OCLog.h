@@ -59,8 +59,8 @@ typedef enum {
 @interface OCLog : NSObject< OCLogHandler >
 {
     @private
-        OCLogLevel                   m_Level;
-        NSObject< OCLogHandler >    *m_Handler;
+        OCLogLevel                   _level;
+        NSObject< OCLogHandler >    *_handler;
 }
 
 + (NSString*)levelAsString:(OCLogLevel)level;

@@ -18,8 +18,8 @@ FOUNDATION_EXTERN NSString *WJoyDeviceSerialNumberStringKey; // NSString
 @interface WJoyDevice : NSObject
 {
     @private
-        WJoyDeviceImpl *m_Impl;
-        NSDictionary   *m_Properties;
+        WJoyDeviceImpl *_impl;
+        NSDictionary   *_properties;
 }
 
 + (BOOL)prepare;

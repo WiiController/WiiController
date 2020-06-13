@@ -34,7 +34,7 @@ bool WirtualJoyDevice::parseHidDescriptor(
         return false;
     }
 
-    bool result = (HIDGetCapabilities(preparsedDataRef, &m_Capabilities) == kIOReturnSuccess);
+    bool result = (HIDGetCapabilities(preparsedDataRef, &_capabilities) == kIOReturnSuccess);
     HIDCloseReportDescriptor(preparsedDataRef);
     return result;
 }
@@ -70,12 +70,12 @@ bool WirtualJoyDevice::init(
                 uint32_t         productID,
                 OSDictionary    *dictionary)
 {
-    m_ProductString         = 0;
-    m_SerialNumberString    = 0;
-    m_VendorID              = vendorID;
-    m_ProductID             = productID;
-    m_HIDReportDescriptor   = 0;
-    m_StateBuffer           = 0;
+    _productString         = 0;
+    _serialNumberString    = 0;
+    _vendorID              = vendorID;
+    _productID             = productID;
+    _hIDReportDescriptor   = 0;
+    _stateBuffer           = 0;
 
     if(productString     == 0 ||
        hidDescriptorData == 0)
@@ -91,17 +91,17 @@ bool WirtualJoyDevice::init(
 
 // NOTE: Apple Removed #def kMaxHIDReportSize in OS X 10.10.3 so we aren't going to check size
 // TODO: figure out if there still exists some max HID Report Size that we should check
-//    if(m_Capabilities.inputReportByteLength > kMaxHIDReportSize)
+//    if(_capabilities.inputReportByteLength > kMaxHIDReportSize)
 //        return false;
 
-    if(m_Capabilities.usagePage == kHIDPage_GenericDesktop)
+    if(_capabilities.usagePage == kHIDPage_GenericDesktop)
     {
-       if(m_Capabilities.usage == kHIDUsage_GD_Mouse ||
-          m_Capabilities.usage == kHIDUsage_GD_Keyboard)
+       if(_capabilities.usage == kHIDUsage_GD_Mouse ||
+          _capabilities.usage == kHIDUsage_GD_Keyboard)
         {
             // hack for Apple HID subsystem
             OSString *str = OSString::withCString(
-                                        (m_Capabilities.usage == kHIDUsage_GD_Mouse)?
+                                        (_capabilities.usage == kHIDUsage_GD_Mouse)?
                                             ("Mouse"):
                                             ("Keyboard"));
 
@@ -118,35 +118,35 @@ bool WirtualJoyDevice::init(
         }
     }
 
-    m_HIDReportDescriptor = IOBufferMemoryDescriptor::withBytes(
+    _hIDReportDescriptor = IOBufferMemoryDescriptor::withBytes(
                                                         hidDescriptorData,
                                                         hidDescriptorDataSize,
                                                         kIODirectionInOut);
 
-    if(m_HIDReportDescriptor == 0)
+    if(_hIDReportDescriptor == 0)
         return false;
 
-    m_StateBuffer = IOBufferMemoryDescriptor::withCapacity(
-                                                m_Capabilities.inputReportByteLength,
+    _stateBuffer = IOBufferMemoryDescriptor::withCapacity(
+                                                _capabilities.inputReportByteLength,
                                                 kIODirectionInOut);
 
-    if(m_StateBuffer == 0)
+    if(_stateBuffer == 0)
         return false;
 
-    memset(m_StateBuffer->getBytesNoCopy(), 0, m_StateBuffer->getLength());
+    memset(_stateBuffer->getBytesNoCopy(), 0, _stateBuffer->getLength());
 
     {
         static uint32_t lastId = locationIdBase;
 
         lastId++;
-        m_LocationID = lastId;
+        _locationID = lastId;
     }
 
-    m_ProductString         = productString;
-    m_SerialNumberString    = serialNumberString;
+    _productString         = productString;
+    _serialNumberString    = serialNumberString;
 
-    m_SerialNumberString->retain();
-    m_ProductString->retain();
+    _serialNumberString->retain();
+    _productString->retain();
 
     dmsg("init");
     return true;
@@ -155,8 +155,8 @@ bool WirtualJoyDevice::init(
 IOReturn WirtualJoyDevice::newReportDescriptor(IOMemoryDescriptor **descriptor) const
 {
     IOBufferMemoryDescriptor *result = IOBufferMemoryDescriptor::withBytes(
-                                                                    m_HIDReportDescriptor->getBytesNoCopy(),
-                                                                    m_HIDReportDescriptor->getLength(),
+                                                                    _hIDReportDescriptor->getBytesNoCopy(),
+                                                                    _hIDReportDescriptor->getLength(),
                                                                     kIODirectionInOut);
 
     if(result == 0)
@@ -178,12 +178,12 @@ OSString *WirtualJoyDevice::newManufacturerString() const
 
 OSString *WirtualJoyDevice::newProductString() const
 {
-    return OSString::withString(m_ProductString);
+    return OSString::withString(_productString);
 }
 
 OSString *WirtualJoyDevice::newSerialNumberString() const
 {
-	return OSString::withString(m_SerialNumberString);
+	return OSString::withString(_serialNumberString);
 }
 
 OSNumber *WirtualJoyDevice::newVersionNumber() const
@@ -199,27 +199,27 @@ OSNumber *WirtualJoyDevice::newSerialNumber() const
 
 OSNumber *WirtualJoyDevice::newVendorIDNumber() const
 {
-	return OSNumber::withNumber(m_VendorID, 32);
+	return OSNumber::withNumber(_vendorID, 32);
 }
 
 OSNumber *WirtualJoyDevice::newProductIDNumber() const
 {
-	return OSNumber::withNumber(m_ProductID, 32);
+	return OSNumber::withNumber(_productID, 32);
 }
 
 OSNumber *WirtualJoyDevice::newPrimaryUsageNumber() const
 {
-    return OSNumber::withNumber(m_Capabilities.usage, 32);
+    return OSNumber::withNumber(_capabilities.usage, 32);
 }
 
 OSNumber *WirtualJoyDevice::newPrimaryUsagePageNumber() const
 {
-    return OSNumber::withNumber(m_Capabilities.usagePage, 32);
+    return OSNumber::withNumber(_capabilities.usagePage, 32);
 }
 
 OSNumber *WirtualJoyDevice::newLocationIDNumber() const
 {
-    return OSNumber::withNumber(m_LocationID, 32);
+    return OSNumber::withNumber(_locationID, 32);
 }
 
 OSNumber *WirtualJoyDevice::newVendorIDSourceNumber() const
@@ -236,26 +236,26 @@ OSNumber *WirtualJoyDevice::newCountryCodeNumber() const
 
 bool WirtualJoyDevice::updateState(const void *hidData, size_t hidDataSize)
 {
-    if(m_StateBuffer->getLength() != hidDataSize)
+    if(_stateBuffer->getLength() != hidDataSize)
         return false;
 
-    memcpy(m_StateBuffer->getBytesNoCopy(), hidData, hidDataSize);
-    return (handleReport(m_StateBuffer) == kIOReturnSuccess);
+    memcpy(_stateBuffer->getBytesNoCopy(), hidData, hidDataSize);
+    return (handleReport(_stateBuffer) == kIOReturnSuccess);
 }
 
 void WirtualJoyDevice::free()
 {
-    if(m_ProductString != 0)
-        m_ProductString->release();
+    if(_productString != 0)
+        _productString->release();
 
-    if(m_SerialNumberString != 0)
-        m_SerialNumberString->release();
+    if(_serialNumberString != 0)
+        _serialNumberString->release();
 
-    if(m_HIDReportDescriptor != 0)
-        m_HIDReportDescriptor->release();
+    if(_hIDReportDescriptor != 0)
+        _hIDReportDescriptor->release();
 
-    if(m_StateBuffer != 0)
-        m_StateBuffer->release();
+    if(_stateBuffer != 0)
+        _stateBuffer->release();
 
     dmsg("free");
     super::free();

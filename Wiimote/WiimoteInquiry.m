@@ -116,7 +116,7 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
 
 - (BOOL)isStarted
 {
-    return (m_Inquiry != nil);
+    return (_inquiry != nil);
 }
 
 - (BOOL)startWithTarget:(id)target didEndAction:(SEL)action
@@ -127,23 +127,23 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
     if(![WiimoteInquiry isBluetoothEnabled])
         return NO;
 
-	m_Inquiry = [IOBluetoothDeviceInquiry inquiryWithDelegate:self];
+	_inquiry = [IOBluetoothDeviceInquiry inquiryWithDelegate:self];
 
-    [m_Inquiry setUpdateNewDeviceNames:YES];
-	[m_Inquiry setInquiryLength:WIIMOTE_INQUIRY_TIME_IN_SECONDS];
-	[m_Inquiry setSearchCriteria:kBluetoothServiceClassMajorAny
+    [_inquiry setUpdateNewDeviceNames:YES];
+	[_inquiry setInquiryLength:WIIMOTE_INQUIRY_TIME_IN_SECONDS];
+	[_inquiry setSearchCriteria:kBluetoothServiceClassMajorAny
                 majorDeviceClass:kBluetoothDeviceClassMajorAny
                 minorDeviceClass:kBluetoothDeviceClassMinorAny];
 
-	if([m_Inquiry start] != kIOReturnSuccess)
+	if([_inquiry start] != kIOReturnSuccess)
     {
         W_ERROR(@"[IOBluetoothDeviceInquiry start] failed");
 		[self stop];
 		return NO;
 	}
 
-    m_Target = target;
-    m_Action = action;
+    _target = target;
+    _action = action;
     return YES;
 }
 
@@ -152,26 +152,26 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
     if(![self isStarted])
         return YES;
 
-    [m_Inquiry stop];
-	[m_Inquiry setDelegate:nil];
-	m_Inquiry = nil;
+    [_inquiry stop];
+	[_inquiry setDelegate:nil];
+	_inquiry = nil;
 
     return YES;
 }
 
 - (BOOL)isUseOneButtonClickConnection
 {
-    return m_IsUseOneButtonClickConnection;
+    return _isUseOneButtonClickConnection;
 }
 
 - (void)setUseOneButtonClickConnection:(BOOL)useOneButtonClickConnection
 {
-    if(m_IsUseOneButtonClickConnection == useOneButtonClickConnection)
+    if(_isUseOneButtonClickConnection == useOneButtonClickConnection)
         return;
 
-    m_IsUseOneButtonClickConnection = useOneButtonClickConnection;
+    _isUseOneButtonClickConnection = useOneButtonClickConnection;
 
-    if(m_IsUseOneButtonClickConnection)
+    if(_isUseOneButtonClickConnection)
         [self connectToPairedDevices];
 }
 
@@ -203,8 +203,8 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
     if(self == nil)
         return nil;
 
-    m_Inquiry                       = nil;
-    m_IsUseOneButtonClickConnection = NO;
+    _inquiry                       = nil;
+    _isUseOneButtonClickConnection = NO;
 
 	[[NSNotificationCenter defaultCenter]
 								addObserver:self
@@ -321,37 +321,37 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
 						  device:(IOBluetoothDevice*)device
 {
 	if([WiimoteInquiry isModelSupported:[device name]])
-		[m_Inquiry stop];
+		[_inquiry stop];
 }
 
 - (void)deviceInquiryComplete:(IOBluetoothDeviceInquiry*)sender 
 						error:(IOReturn)error
 					  aborted:(BOOL)aborted
 {
-    [m_Inquiry stop];
-	[m_Inquiry setDelegate:nil];
+    [_inquiry stop];
+	[_inquiry setDelegate:nil];
 
     if(error == kIOReturnSuccess)
     {
         if([self isUseOneButtonClickConnection])
-            [self pairWithDevices:[m_Inquiry foundDevices]];
+            [self pairWithDevices:[_inquiry foundDevices]];
         else
-            [self connectToDevices:[m_Inquiry foundDevices]];
+            [self connectToDevices:[_inquiry foundDevices]];
     }
     else
         W_ERROR(@"inquiry failed");
 
     [self stop];
 
-    if(m_Target != nil &&
-       m_Action != nil)
+    if(_target != nil &&
+       _action != nil)
     {
         ((void(*)(id self, SEL _cmd))objc_msgSend)
-            (m_Target, m_Action);
+            (_target, _action);
     }
 
-    m_Target = nil;
-    m_Action = nil;
+    _target = nil;
+    _action = nil;
 }
 
 @end

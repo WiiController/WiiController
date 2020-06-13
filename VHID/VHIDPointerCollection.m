@@ -105,13 +105,13 @@
 
     NSUInteger stateSize = 0;
 
-    m_PointerCount  = pointerCount;
-    m_IsRelative    = isRelative;
-    m_Descriptor    = [VHIDPointerCollection descriptorWithPointerCount:pointerCount
+    _pointerCount  = pointerCount;
+    _isRelative    = isRelative;
+    _descriptor    = [VHIDPointerCollection descriptorWithPointerCount:pointerCount
                                                               isRelative:isRelative
                                                                stateSize:&stateSize];
 
-    m_State         = [[NSMutableData alloc] initWithLength:stateSize];
+    _state         = [[NSMutableData alloc] initWithLength:stateSize];
 
     [self reset];
 
@@ -121,20 +121,20 @@
 
 - (BOOL)isRelative
 {
-    return m_IsRelative;
+    return _isRelative;
 }
 
 - (NSUInteger)pointerCount
 {
-    return m_PointerCount;
+    return _pointerCount;
 }
 
 - (NSPoint)pointerPosition:(NSUInteger)pointerIndex
 {
-    if(pointerIndex >= m_PointerCount)
+    if(pointerIndex >= _pointerCount)
         return NSZeroPoint;
 
-    char *data = (char*)[m_State mutableBytes] + pointerIndex * HIDStatePointerSize;
+    char *data = (char*)[_state mutableBytes] + pointerIndex * HIDStatePointerSize;
 
     return NSMakePoint(
                  [VHIDPointerCollection clipCoordinateFrom:*data],
@@ -143,10 +143,10 @@
 
 - (void)setPointer:(NSUInteger)pointerIndex position:(NSPoint)position
 {
-    if(pointerIndex >= m_PointerCount)
+    if(pointerIndex >= _pointerCount)
         return;
 
-    char *data = (char*)[m_State mutableBytes] + pointerIndex * HIDStatePointerSize;
+    char *data = (char*)[_state mutableBytes] + pointerIndex * HIDStatePointerSize;
 
     *data       =  [VHIDPointerCollection clipCoordinateTo:position.x];
     *(data + 1) = -[VHIDPointerCollection clipCoordinateTo:position.y];
@@ -154,17 +154,17 @@
 
 - (void)reset
 {
-    memset([m_State mutableBytes], 0, [m_State length]);
+    memset([_state mutableBytes], 0, [_state length]);
 }
 
 - (NSData*)descriptor
 {
-    return m_Descriptor;
+    return _descriptor;
 }
 
 - (NSData*)state
 {
-    return m_State;
+    return _state;
 }
 
 @end

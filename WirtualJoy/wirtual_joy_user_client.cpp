@@ -113,18 +113,18 @@ bool WirtualJoyUserClient::openOwner(WirtualJoy *owner)
     if(!owner->open(this))
         return false;
 
-    m_Owner = owner;
+    _owner = owner;
     return true;
 }
 
 bool WirtualJoyUserClient::closeOwner()
 {
-    if(m_Owner != 0)
+    if(_owner != 0)
     {
-        if(m_Owner->isOpen(this))
-            m_Owner->close(this);
+        if(_owner->isOpen(this))
+            _owner->close(this);
 
-        m_Owner = 0;
+        _owner = 0;
     }
 
     disableDevice();
@@ -140,12 +140,12 @@ bool WirtualJoyUserClient::initWithTask(
     if(!super::initWithTask(owningTask, securityToken, type, properties))
         return false;
 
-    m_Owner                     = 0;
-    m_Device                    = 0;
-    m_DeviceProductString       = OSString::withCString("WJoy Virtual HID Device");
-    m_DeviceSerialNumberString  = OSString::withCString("000000000000");
-    m_DeviceVendorID            = 0;
-    m_DeviceProductID           = 0;
+    _owner                     = 0;
+    _device                    = 0;
+    _deviceProductString       = OSString::withCString("WJoy Virtual HID Device");
+    _deviceSerialNumberString  = OSString::withCString("000000000000");
+    _deviceVendorID            = 0;
+    _deviceProductID           = 0;
 
     dmsg("initWithTask");
     return true;
@@ -153,11 +153,11 @@ bool WirtualJoyUserClient::initWithTask(
 
 void WirtualJoyUserClient::free()
 {
-    if(m_DeviceProductString != 0)
-        m_DeviceProductString->release();
+    if(_deviceProductString != 0)
+        _deviceProductString->release();
 
-    if(m_DeviceSerialNumberString != 0)
-        m_DeviceSerialNumberString->release();
+    if(_deviceSerialNumberString != 0)
+        _deviceSerialNumberString->release();
 
     dmsg("free");
     super::free();
@@ -228,36 +228,36 @@ IOReturn WirtualJoyUserClient::enableDevice(const void *hidDescriptorData, uint3
 {
     dmsgf("enableDevice, param size = %d", hidDescriptorDataSize);
 
-    if(m_Device != 0)
+    if(_device != 0)
     {
         IOReturn result = disableDevice();
         if(result != kIOReturnSuccess)
             return result;
     }
 
-    m_Device = WirtualJoyDevice::withHidDescriptor(
+    _device = WirtualJoyDevice::withHidDescriptor(
                                             hidDescriptorData,
                                             hidDescriptorDataSize,
-                                            m_DeviceProductString,
-                                            m_DeviceSerialNumberString,
-                                            m_DeviceVendorID,
-                                            m_DeviceProductID);
+                                            _deviceProductString,
+                                            _deviceSerialNumberString,
+                                            _deviceVendorID,
+                                            _deviceProductID);
 
-    if(m_Device == 0)
+    if(_device == 0)
         return kIOReturnDeviceError;
 
-    if(!m_Device->attach(this))
+    if(!_device->attach(this))
     {
-        m_Device->release();
-        m_Device = 0;
+        _device->release();
+        _device = 0;
         return kIOReturnDeviceError;
     }
 
-    if(!m_Device->start(this))
+    if(!_device->start(this))
     {
-        m_Device->detach(this);
-        m_Device->release();
-        m_Device = 0;
+        _device->detach(this);
+        _device->release();
+        _device = 0;
         return kIOReturnDeviceError;
     }
 
@@ -268,11 +268,11 @@ IOReturn WirtualJoyUserClient::disableDevice()
 {
     dmsg("disableDevice");
 
-    if(m_Device != 0)
+    if(_device != 0)
     {
-        m_Device->terminate(kIOServiceRequired);
-        m_Device->release();
-        m_Device = 0;
+        _device->terminate(kIOServiceRequired);
+        _device->release();
+        _device = 0;
     }
 
     return kIOReturnSuccess;
@@ -282,10 +282,10 @@ IOReturn WirtualJoyUserClient::updateDeviceState(const void *hidData, uint32_t h
 {
     // dmsgf("updateDeviceState, param size = %d", hidDataSize);
 
-    if(m_Device == 0)
+    if(_device == 0)
         return kIOReturnNoDevice;
 
-    if(!m_Device->updateState(hidData, hidDataSize))
+    if(!_device->updateState(hidData, hidDataSize))
         return kIOReturnDeviceError;
 
     return kIOReturnSuccess;
@@ -295,7 +295,7 @@ IOReturn WirtualJoyUserClient::setDeviceProductString(const void *productString,
 {
     dmsgf("setDeviceProductString, productString size = %d", productStringSize);
 
-    if(m_Device != 0)
+    if(_device != 0)
         return kIOReturnBusy;
 
     if(!checkString(static_cast< const char* >(productString), productStringSize))
@@ -305,10 +305,10 @@ IOReturn WirtualJoyUserClient::setDeviceProductString(const void *productString,
     if(newStr == 0)
         return kIOReturnNoMemory;
 
-    if(m_DeviceProductString != 0)
-        m_DeviceProductString->release();
+    if(_deviceProductString != 0)
+        _deviceProductString->release();
 
-    m_DeviceProductString = newStr;
+    _deviceProductString = newStr;
 
     dmsgf("newProductString = %s", newStr->getCStringNoCopy());
     return kIOReturnSuccess;
@@ -318,7 +318,7 @@ IOReturn WirtualJoyUserClient::setDeviceSerialNumberString(const void *serialNum
 {
     dmsgf("setDeviceSerialNumberString, serialNumberString size = %d", serialNumberStringSize);
 
-    if(m_Device != 0)
+    if(_device != 0)
         return kIOReturnBusy;
 
     if(!checkString(static_cast< const char* >(serialNumberString), serialNumberStringSize))
@@ -328,10 +328,10 @@ IOReturn WirtualJoyUserClient::setDeviceSerialNumberString(const void *serialNum
     if(newStr == 0)
         return kIOReturnNoMemory;
 
-    if(m_DeviceSerialNumberString != 0)
-        m_DeviceSerialNumberString->release();
+    if(_deviceSerialNumberString != 0)
+        _deviceSerialNumberString->release();
 
-    m_DeviceSerialNumberString = newStr;
+    _deviceSerialNumberString = newStr;
 
     dmsgf("newSerialNumberString = %s", newStr->getCStringNoCopy());
     return kIOReturnSuccess;
@@ -341,11 +341,11 @@ IOReturn WirtualJoyUserClient::setDeviceVendorAndProductID(uint32_t vendorID, ui
 {
     dmsgf("setDeviceVendorAndProductID, vendorID = %d, productID = %d", vendorID, productID);
 
-    if(m_Device != 0)
+    if(_device != 0)
         return kIOReturnBusy;
 
-    m_DeviceVendorID    = vendorID;
-    m_DeviceProductID   = productID;
+    _deviceVendorID    = vendorID;
+    _deviceProductID   = productID;
 
     return kIOReturnSuccess;
 }

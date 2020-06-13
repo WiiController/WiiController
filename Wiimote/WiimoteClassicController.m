@@ -63,7 +63,7 @@
     if(self == nil)
         return nil;
 
-    m_IsCalibrationDataReaded = NO;
+    _isCalibrationDataReaded = NO;
 
     [self reset];
     return self;
@@ -76,17 +76,17 @@
 
 - (NSPoint)stickPosition:(WiimoteClassicControllerStickType)stick
 {
-    return m_StickPositions[stick];
+    return _stickPositions[stick];
 }
 
 - (BOOL)isButtonPressed:(WiimoteClassicControllerButtonType)button
 {
-    return m_ButtonState[button];
+    return _buttonState[button];
 }
 
 - (CGFloat)analogShiftPosition:(WiimoteClassicControllerAnalogShiftType)shift
 {
-    return m_AnalogShiftPositions[shift];
+    return _analogShiftPositions[shift];
 }
 
 - (NSPoint)normalizeStick:(WiimoteClassicControllerStickType)stick position:(NSPoint)position
@@ -103,10 +103,10 @@
 {
     newPosition = [self normalizeStick:stick position:newPosition];
 
-    if(WiimoteDeviceIsPointEqual(m_StickPositions[stick], newPosition))
+    if(WiimoteDeviceIsPointEqual(_stickPositions[stick], newPosition))
         return;
 
-    m_StickPositions[stick] = newPosition;
+    _stickPositions[stick] = newPosition;
 
     [[self eventDispatcher]
                 postClassicController:self
@@ -116,10 +116,10 @@
 
 - (void)setButton:(WiimoteClassicControllerButtonType)button pressed:(BOOL)pressed
 {
-    if(m_ButtonState[button] == pressed)
+    if(_buttonState[button] == pressed)
         return;
 
-    m_ButtonState[button] = pressed;
+    _buttonState[button] = pressed;
 
     if(pressed)
     {
@@ -139,10 +139,10 @@
 {
     newPosition = [self normalizeAnalogShift:shift position:newPosition];
 
-    if(WiimoteDeviceIsFloatEqual(m_AnalogShiftPositions[shift], newPosition))
+    if(WiimoteDeviceIsFloatEqual(_analogShiftPositions[shift], newPosition))
         return;
 
-    m_AnalogShiftPositions[shift] = newPosition;
+    _analogShiftPositions[shift] = newPosition;
 
     [[self eventDispatcher]
                 postClassicController:self
@@ -157,27 +157,27 @@
 
 - (void)handleCalibrationData:(const uint8_t*)data length:(NSUInteger)length
 {
-    if(length < sizeof(m_CalibrationData))
+    if(length < sizeof(_calibrationData))
         return;
 
-    memcpy(&m_CalibrationData, data, sizeof(m_CalibrationData));
+    memcpy(&_calibrationData, data, sizeof(_calibrationData));
 
-    m_CalibrationData.leftStick.x.max       /= 4;
-    m_CalibrationData.leftStick.x.min       /= 4;
-    m_CalibrationData.leftStick.x.center    /= 4;
-    m_CalibrationData.leftStick.y.max       /= 4;
-    m_CalibrationData.leftStick.y.min       /= 4;
-    m_CalibrationData.leftStick.y.center    /= 4;
+    _calibrationData.leftStick.x.max       /= 4;
+    _calibrationData.leftStick.x.min       /= 4;
+    _calibrationData.leftStick.x.center    /= 4;
+    _calibrationData.leftStick.y.max       /= 4;
+    _calibrationData.leftStick.y.min       /= 4;
+    _calibrationData.leftStick.y.center    /= 4;
 
-    m_CalibrationData.rightStick.x.max      /= 8;
-    m_CalibrationData.rightStick.x.min      /= 8;
-    m_CalibrationData.rightStick.x.center   /= 8;
-    m_CalibrationData.rightStick.y.max      /= 8;
-    m_CalibrationData.rightStick.y.min      /= 8;
-    m_CalibrationData.rightStick.y.center   /= 8;
+    _calibrationData.rightStick.x.max      /= 8;
+    _calibrationData.rightStick.x.min      /= 8;
+    _calibrationData.rightStick.x.center   /= 8;
+    _calibrationData.rightStick.y.max      /= 8;
+    _calibrationData.rightStick.y.min      /= 8;
+    _calibrationData.rightStick.y.center   /= 8;
 
     [self checkCalibrationData];
-    m_IsCalibrationDataReaded = YES;
+    _isCalibrationDataReaded = YES;
 }
 
 - (void)handleButtonState:(WiimoteDeviceClassicControllerButtonState)state
@@ -210,7 +210,7 @@
 
 - (void)handleAnalogData:(const uint8_t*)analogData
 {
-    if(!m_IsCalibrationDataReaded)
+    if(!_isCalibrationDataReaded)
         return;
 
 	uint8_t leftStickY  = ((analogData[1] >> 0) & 0x3F);
@@ -228,10 +228,10 @@
     NSPoint stickPosition;
     CGFloat analogShiftPosition;
 
-    WiimoteDeviceNormalizeStick(leftStickX, leftStickY, m_CalibrationData.leftStick, stickPosition);
+    WiimoteDeviceNormalizeStick(leftStickX, leftStickY, _calibrationData.leftStick, stickPosition);
     [self setStick:WiimoteClassicControllerStickTypeLeft position:stickPosition];
 
-    WiimoteDeviceNormalizeStick(rightStickX, rightStickY, m_CalibrationData.rightStick, stickPosition);
+    WiimoteDeviceNormalizeStick(rightStickX, rightStickY, _calibrationData.rightStick, stickPosition);
     [self setStick:WiimoteClassicControllerStickTypeRight position:stickPosition];
 
     WiimoteDeviceNormilizeShift(leftShift, 0, 15, 31, analogShiftPosition);
@@ -281,22 +281,22 @@
 
 - (void)checkCalibrationData
 {
-    WiimoteDeviceCheckStickCalibration(m_CalibrationData.leftStick,  0, 31, 63);
-    WiimoteDeviceCheckStickCalibration(m_CalibrationData.rightStick, 0, 15, 31);
+    WiimoteDeviceCheckStickCalibration(_calibrationData.leftStick,  0, 31, 63);
+    WiimoteDeviceCheckStickCalibration(_calibrationData.rightStick, 0, 15, 31);
 }
 
 - (void)reset
 {
     for(NSUInteger i = 0; i < WiimoteClassicControllerButtonCount; i++)
-        m_ButtonState[i] = NO;
+        _buttonState[i] = NO;
 
     for(NSUInteger i = 0; i < WiimoteClassicControllerStickCount; i++)
-        m_StickPositions[i] = NSZeroPoint;
+        _stickPositions[i] = NSZeroPoint;
 
     for(NSUInteger i = 0; i < WiimoteClassicControllerAnalogShiftCount; i++)
-        m_AnalogShiftPositions[i] = 0.0f;
+        _analogShiftPositions[i] = 0.0f;
 
-    memset(&m_CalibrationData, 0, sizeof(m_CalibrationData));
+    memset(&_calibrationData, 0, sizeof(_calibrationData));
     [self checkCalibrationData];
 }
 

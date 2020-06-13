@@ -11,9 +11,9 @@
 @interface VHIDButtonCollection : NSObject
 {
     @private
-        NSUInteger       m_ButtonCount;
-        NSData          *m_Descriptor;
-        NSMutableData   *m_State;
+        NSUInteger       _buttonCount;
+        NSData          *_descriptor;
+        NSMutableData   *_state;
 }
 
 + (NSUInteger)maxButtonCount;

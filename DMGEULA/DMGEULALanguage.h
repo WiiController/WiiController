@@ -21,12 +21,12 @@ FOUNDATION_EXTERN NSString *DMGEULAStringTypePrintError;    // PrintError
 @interface DMGEULALanguage : NSObject
 {
     @private
-        NSUInteger           m_Code;
-        NSString            *m_Name;
-        NSDictionary        *m_LocalizedStrings;
-        CFStringEncoding     m_Encoding;
+        NSUInteger           _code;
+        NSString            *_name;
+        NSDictionary        *_localizedStrings;
+        CFStringEncoding     _encoding;
 
-        NSDictionary        *m_UserData;
+        NSDictionary        *_userData;
 }
 
 + (DMGEULALanguage*)withName:(NSString*)name

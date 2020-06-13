@@ -13,7 +13,7 @@
 @interface WiimoteDevicePair : NSObject
 {
 	@private
-		BOOL m_IsFirstAttempt;
+		BOOL _isFirstAttempt;
 }
 
 + (void)pairWithDevice:(IOBluetoothDevice*)device;

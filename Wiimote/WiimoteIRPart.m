@@ -41,12 +41,12 @@
     if(self == nil)
         return nil;
 
-    m_IsEnabled         = NO;
-    m_IsHardwareEnabled = NO;
-    m_IRReportMode      = -1;
-    m_ReportType        = -1;
-    m_ReportCounter     = 0;
-    m_Points            = [[NSArray alloc] initWithObjects:
+    _isEnabled         = NO;
+    _isHardwareEnabled = NO;
+    _iRReportMode      = -1;
+    _reportType        = -1;
+    _reportCounter     = 0;
+    _points            = [[NSArray alloc] initWithObjects:
                                     [WiimoteIRPoint pointWithOwner:owner index:0],
                                     [WiimoteIRPoint pointWithOwner:owner index:1],
                                     [WiimoteIRPoint pointWithOwner:owner index:2],
@@ -59,7 +59,7 @@
 
 - (BOOL)isEnabled
 {
-    return m_IsEnabled;
+    return _isEnabled;
 }
 
 - (void)setEnabled:(BOOL)enabled
@@ -67,15 +67,15 @@
     if(![[self owner] isConnected])
         return;
 
-    if(m_IsEnabled == enabled)
+    if(_isEnabled == enabled)
         return;
 
     if(!enabled)
         [self disableHardware];
 
-    m_IsEnabled     = enabled;
-    m_IRReportMode  = -1;
-    m_ReportType    = -1;
+    _isEnabled     = enabled;
+    _iRReportMode  = -1;
+    _reportType    = -1;
 
     [[self owner] deviceConfigurationChanged];
     [[self eventDispatcher] postIREnabledStateChangedNotification:enabled];
@@ -83,7 +83,7 @@
 
 - (WiimoteIRPoint*)point:(NSUInteger)index
 {
-    return [m_Points objectAtIndex:index];
+    return [_points objectAtIndex:index];
 }
 
 - (NSSet*)allowedReportTypeSet
@@ -135,11 +135,11 @@
             return;
     }
 
-    if(m_ReportType != reportType)
+    if(_reportType != reportType)
     {
         [self enableHardware:[self irModeFromReportType:reportType]];
-        m_ReportType    = reportType;
-        m_ReportCounter = 0;
+        _reportType    = reportType;
+        _reportCounter = 0;
         return;
     }
 
@@ -152,16 +152,16 @@
 
 - (void)disconnected
 {
-    m_IsEnabled         = NO;
-    m_IsHardwareEnabled = NO;
-    m_ReportType        = -1;
-    m_IRReportMode      = -1;
+    _isEnabled         = NO;
+    _isHardwareEnabled = NO;
+    _reportType        = -1;
+    _iRReportMode      = -1;
 
-    NSUInteger pointCount = [m_Points count];
+    NSUInteger pointCount = [_points count];
 
     for(NSUInteger i = 0; i < pointCount; i++)
     {
-        WiimoteIRPoint *point = [m_Points objectAtIndex:i];
+        WiimoteIRPoint *point = [_points objectAtIndex:i];
 
         [point setPosition:NSZeroPoint];
         [point setOutOfView:YES];
@@ -185,9 +185,9 @@
     static const uint8_t sensitivityBlock1[] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x90, 0x00, 0x41 };
     static const uint8_t sensitivityBlock2[] = { 0x40, 0x00 };
 
-    if(m_IsHardwareEnabled)
+    if(_isHardwareEnabled)
     {
-        if(m_IRReportMode == irMode)
+        if(_iRReportMode == irMode)
             return;
 
         [self disableHardware];
@@ -219,13 +219,13 @@
     [[self ioManager] writeMemory:WiimoteDeviceIRModeAddress data:&data length:sizeof(data)];
     usleep(50000);
 
-    m_IsHardwareEnabled = YES;
-    m_IRReportMode      = irMode;
+    _isHardwareEnabled = YES;
+    _iRReportMode      = irMode;
 }
 
 - (void)disableHardware
 {
-    if(!m_IsHardwareEnabled)
+    if(!_isHardwareEnabled)
         return;
 
     uint8_t data = 0;
@@ -236,14 +236,14 @@
     [[self ioManager] postCommand:WiimoteDeviceCommandTypeSetIREnabledState2 data:&data length:sizeof(data)];
     usleep(50000);
 
-    m_IsHardwareEnabled = NO;
-    m_ReportType        = -1;
-    m_IRReportMode      = -1;
+    _isHardwareEnabled = NO;
+    _reportType        = -1;
+    _iRReportMode      = -1;
 }
 
 - (void)setPoint:(NSUInteger)index position:(NSPoint)newPosition
 {
-    WiimoteIRPoint *point = [m_Points objectAtIndex:index];
+    WiimoteIRPoint *point = [_points objectAtIndex:index];
 
     if(![point isOutOfView] &&
         WiimoteDeviceIsPointEqualEx([point position], newPosition, 1.0))
@@ -259,7 +259,7 @@
 
 - (void)setPointOutOfView:(NSUInteger)index
 {
-    WiimoteIRPoint *point = [m_Points objectAtIndex:index];
+    WiimoteIRPoint *point = [_points objectAtIndex:index];
 
     if([point isOutOfView])
         return;
@@ -307,7 +307,7 @@
 {
     NSUInteger index = 0;
 
-    if((m_ReportCounter % 2) == 1)
+    if((_reportCounter % 2) == 1)
         index += 2;
 
     for(NSUInteger i = 0; i < 2; i++)
@@ -327,7 +327,7 @@
         data  += 9;
     }
 
-    m_ReportCounter++;
+    _reportCounter++;
 }
 
 - (void)handleIRData:(const uint8_t*)data length:(NSUInteger)length

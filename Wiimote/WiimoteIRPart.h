@@ -13,13 +13,13 @@
 @interface WiimoteIRPart : WiimotePart
 {
     @private
-        BOOL         m_IsEnabled;
-        BOOL         m_IsHardwareEnabled;
-        NSInteger    m_IRReportMode;
-        NSInteger    m_ReportType;
-        NSInteger    m_ReportCounter;
+        BOOL         _isEnabled;
+        BOOL         _isHardwareEnabled;
+        NSInteger    _iRReportMode;
+        NSInteger    _reportType;
+        NSInteger    _reportCounter;
 
-        NSArray     *m_Points;
+        NSArray     *_points;
 }
 
 - (BOOL)isEnabled;

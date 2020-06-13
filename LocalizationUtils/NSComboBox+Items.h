@@ -11,8 +11,8 @@
 @interface NSComboBoxItem : NSObject
 {
     @private
-        NSComboBox  *m_Owner;
-        NSUInteger   m_Index;
+        NSComboBox  *_owner;
+        NSUInteger   _index;
 }
 
 - (NSString*)title;

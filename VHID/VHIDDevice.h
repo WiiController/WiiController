@@ -27,13 +27,13 @@ typedef enum
 @interface VHIDDevice : NSObject
 {
     @private
-        VHIDDeviceType           m_Type;
-        VHIDButtonCollection    *m_Buttons;
-        VHIDPointerCollection   *m_Pointers;
-        NSData                  *m_Descriptor;
-        NSMutableData           *m_State;
+        VHIDDeviceType           _type;
+        VHIDButtonCollection    *_buttons;
+        VHIDPointerCollection   *_pointers;
+        NSData                  *_descriptor;
+        NSMutableData           *_state;
 
-        id<VHIDDeviceDelegate>   m_Delegate;
+        id<VHIDDeviceDelegate>   _delegate;
 }
 
 + (NSUInteger)maxButtonCount;

@@ -39,7 +39,7 @@
 
 - (BOOL)isButtonPressed:(WiimoteButtonType)button
 {
-    return m_ButtonState[button];
+    return _buttonState[button];
 }
 
 - (void)handleReport:(WiimoteDeviceReport*)report
@@ -76,10 +76,10 @@
 
 - (void)setButton:(WiimoteButtonType)button pressed:(BOOL)pressed
 {
-    if(m_ButtonState[button] == pressed)
+    if(_buttonState[button] == pressed)
         return;
 
-    m_ButtonState[button] = pressed;
+    _buttonState[button] = pressed;
 
     if(pressed)
         [[self eventDispatcher] postButtonPressedNotification:button];
@@ -90,7 +90,7 @@
 - (void)reset
 {
     for(NSUInteger i = 0; i < WiimoteButtonCount; i++)
-        m_ButtonState[i] = NO;
+        _buttonState[i] = NO;
 }
 
 @end

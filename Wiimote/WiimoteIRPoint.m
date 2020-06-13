@@ -12,22 +12,22 @@
 
 - (NSUInteger)index
 {
-    return m_Index;
+    return _index;
 }
 
 - (BOOL)isOutOfView
 {
-    return m_IsOutOfView;
+    return _isOutOfView;
 }
 
 - (NSPoint)position
 {
-    return m_Position;
+    return _position;
 }
 
 - (Wiimote*)owner
 {
-    return m_Owner;
+    return _owner;
 }
 
 @end

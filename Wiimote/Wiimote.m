@@ -94,37 +94,37 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
 
 - (BOOL)isConnected
 {
-    return [m_Device isConnected];
+    return [_device isConnected];
 }
 
 - (void)disconnect
 {
-    [m_Device disconnect];
+    [_device disconnect];
 }
 
 - (BOOL)isWiiUProController
 {
-	return [m_ModelName isEqualToString:WiimoteDeviceNameUPro];
+	return [_modelName isEqualToString:WiimoteDeviceNameUPro];
 }
 
 - (BOOL)isBalanceBoard
 {
-    return [m_ModelName isEqualToString:WiimoteDeviceNameBalanceBoard];
+    return [_modelName isEqualToString:WiimoteDeviceNameBalanceBoard];
 }
 
 - (NSData*)address
 {
-    return [m_Device address];
+    return [_device address];
 }
 
 - (NSString*)addressString
 {
-    return [m_Device addressString];
+    return [_device addressString];
 }
 
 - (NSString*)modelName
 {
-    return m_ModelName;
+    return _modelName;
 }
 
 - (NSString *)marketingName
@@ -134,7 +134,7 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
         WiimoteDeviceNameTR: @"Wii Remote Plus",
         WiimoteDeviceNameUPro: @"Wii U Pro Controller",
         WiimoteDeviceNameBalanceBoard: @"Wii Balance Board"
-    }[m_ModelName] ?: m_ModelName;
+    }[_modelName] ?: _modelName;
 }
 
 - (void)playConnectEffect
@@ -146,32 +146,32 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
 
 - (NSUInteger)highlightedLEDMask
 {
-    return [m_LEDPart highlightedLEDMask];
+    return [_lEDPart highlightedLEDMask];
 }
 
 - (void)setHighlightedLEDMask:(NSUInteger)mask
 {
-    [m_LEDPart setHighlightedLEDMask:mask];
+    [_lEDPart setHighlightedLEDMask:mask];
 }
 
 - (BOOL)isVibrationEnabled
 {
-    return [m_VibrationPart isVibrationEnabled];
+    return [_vibrationPart isVibrationEnabled];
 }
 
 - (void)setVibrationEnabled:(BOOL)enabled
 {
-    [m_VibrationPart setVibrationEnabled:enabled];
+    [_vibrationPart setVibrationEnabled:enabled];
 }
 
 - (BOOL)isButtonPressed:(WiimoteButtonType)button
 {
-    return [m_ButtonPart isButtonPressed:button];
+    return [_buttonPart isButtonPressed:button];
 }
 
 - (CGFloat)batteryLevel
 {
-    return [m_BatteryPart batteryLevel];
+    return [_batteryPart batteryLevel];
 }
 
 - (NSString*)batteryLevelDescription
@@ -184,85 +184,85 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
 
 - (BOOL)isBatteryLevelLow
 {
-    return [m_BatteryPart isBatteryLevelLow];
+    return [_batteryPart isBatteryLevelLow];
 }
 
 - (BOOL)isIREnabled
 {
-    return [m_IRPart isEnabled];
+    return [_iRPart isEnabled];
 }
 
 - (void)setIREnabled:(BOOL)enabled
 {
-    [m_IRPart setEnabled:enabled];
+    [_iRPart setEnabled:enabled];
 }
 
 - (WiimoteIRPoint*)irPoint:(NSUInteger)index
 {
-    return [m_IRPart point:index];
+    return [_iRPart point:index];
 }
 
 - (WiimoteAccelerometer*)accelerometer
 {
-    return [m_AccelerometerPart accelerometer];
+    return [_accelerometerPart accelerometer];
 }
 
 - (WiimoteExtension*)connectedExtension
 {
-    return [m_ExtensionPart connectedExtension];
+    return [_extensionPart connectedExtension];
 }
 
 - (void)detectMotionPlus
 {
-    [m_ExtensionPart detectMotionPlus];
+    [_extensionPart detectMotionPlus];
 }
 
 - (void)reconnectExtension
 {
-	[m_ExtensionPart reconnectExtension];
+	[_extensionPart reconnectExtension];
 }
 
 - (void)disconnectExtension
 {
-    [m_ExtensionPart disconnectExtension];
+    [_extensionPart disconnectExtension];
 }
 
 - (void)requestUpdateState
 {
-    [m_Device requestStateReport];
+    [_device requestStateReport];
 }
 
 - (BOOL)isStateChangeNotificationsEnabled
 {
-    return [[m_PartSet eventDispatcher] isStateNotificationsEnabled];
+    return [[_partSet eventDispatcher] isStateNotificationsEnabled];
 }
 
 - (void)setStateChangeNotificationsEnabled:(BOOL)enabled
 {
-    [[m_PartSet eventDispatcher] setStateNotificationsEnabled:enabled];
+    [[_partSet eventDispatcher] setStateNotificationsEnabled:enabled];
 }
 
 - (NSDictionary*)userInfo
 {
-    return m_UserInfo;
+    return _userInfo;
 }
 
 - (void)setUserInfo:(NSDictionary*)userInfo
 {
-    if(m_UserInfo == userInfo)
+    if(_userInfo == userInfo)
         return;
 
-    m_UserInfo = userInfo;
+    _userInfo = userInfo;
 }
 
 - (id)delegate
 {
-    return [[m_PartSet eventDispatcher] delegate];
+    return [[_partSet eventDispatcher] delegate];
 }
 
 - (void)setDelegate:(id)delegate
 {
-    [[m_PartSet eventDispatcher] setDelegate:delegate];
+    [[_partSet eventDispatcher] setDelegate:delegate];
 }
 
 @end

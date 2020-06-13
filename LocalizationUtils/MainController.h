@@ -11,7 +11,7 @@
 @interface MainController : NSObject
 {
     @private
-        IBOutlet NSWindow *m_Window;
+        IBOutlet NSWindow *_window;
 }
 
 @end

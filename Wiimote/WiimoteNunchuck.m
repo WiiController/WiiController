@@ -66,10 +66,10 @@
     if(self == nil)
         return nil;
 
-	m_IsCalibrationDataReaded	= NO;
-    m_Accelerometer             = [[WiimoteAccelerometer alloc] init];
+	_isCalibrationDataReaded	= NO;
+    _accelerometer             = [[WiimoteAccelerometer alloc] init];
 
-    [m_Accelerometer setDelegate:self];
+    [_accelerometer setDelegate:self];
 
     [self reset];
     return self;
@@ -77,7 +77,7 @@
 
 - (void)dealloc
 {
-    [m_Accelerometer setDelegate:nil];
+    [_accelerometer setDelegate:nil];
 }
 
 - (NSString*)name
@@ -87,17 +87,17 @@
 
 - (NSPoint)stickPosition
 {
-    return m_StickPosition;
+    return _stickPosition;
 }
 
 - (BOOL)isButtonPressed:(WiimoteNunchuckButtonType)button
 {
-    return m_ButtonState[button];
+    return _buttonState[button];
 }
 
 - (WiimoteAccelerometer*)accelerometer
 {
-    return m_Accelerometer;
+    return _accelerometer;
 }
 
 - (NSPoint)normalizeStickPosition:(NSPoint)position
@@ -109,20 +109,20 @@
 {
     newPosition = [self normalizeStickPosition:newPosition];
 
-    if(WiimoteDeviceIsPointEqual(m_StickPosition, newPosition))
+    if(WiimoteDeviceIsPointEqual(_stickPosition, newPosition))
         return;
 
-	m_StickPosition = newPosition;
+	_stickPosition = newPosition;
 
     [[self eventDispatcher] postNunchuck:self stickPositionChanged:newPosition];
 }
 
 - (void)setButton:(WiimoteNunchuckButtonType)button pressed:(BOOL)pressed
 {
-	if(m_ButtonState[button] == pressed)
+	if(_buttonState[button] == pressed)
 		return;
 
-	m_ButtonState[button] = pressed;
+	_buttonState[button] = pressed;
 
     if(pressed)
         [[self eventDispatcher] postNunchuck:self buttonPressed:button];
@@ -148,11 +148,11 @@
 	const WiimoteDeviceNunchuckCalibrationData *calibrationData =
 			(const WiimoteDeviceNunchuckCalibrationData*)data;
 
-	m_StickCalibrationData = calibrationData->stick;
-    [m_Accelerometer setCalibrationData:&(calibrationData->accelerometer)];
+	_stickCalibrationData = calibrationData->stick;
+    [_accelerometer setCalibrationData:&(calibrationData->accelerometer)];
 	[self checkCalibrationData];
 
-	m_IsCalibrationDataReaded = YES;
+	_isCalibrationDataReaded = YES;
 }
 
 - (void)handleReport:(const uint8_t*)extensionData length:(NSUInteger)length
@@ -163,25 +163,25 @@
     const WiimoteDeviceNunchuckReport *nunchuckReport =
                 (const WiimoteDeviceNunchuckReport*)extensionData;
 
-	if(m_IsCalibrationDataReaded)
+	if(_isCalibrationDataReaded)
 	{
 		NSPoint stickPostion;
 
 		WiimoteDeviceNormalizeStick(
 							nunchuckReport->stickX,
 							nunchuckReport->stickY,
-							m_StickCalibrationData,
+							_stickCalibrationData,
 							stickPostion);
 
 		[self setStickPosition:stickPostion];
 
-        if([m_Accelerometer isEnabled])
+        if([_accelerometer isEnabled])
         {
             uint16_t x = (((uint16_t)nunchuckReport->accelerometerX) << 2) | ((nunchuckReport->acceleromererXYZAndButtonState >> 2) & 0x3);
             uint16_t y = (((uint16_t)nunchuckReport->accelerometerY) << 2) | ((nunchuckReport->acceleromererXYZAndButtonState >> 4) & 0x3);
             uint16_t z = (((uint16_t)nunchuckReport->accelerometerZ) << 2) | ((nunchuckReport->acceleromererXYZAndButtonState >> 6) & 0x3);
 
-            [m_Accelerometer setHardwareValueX:x y:y z:z];
+            [_accelerometer setHardwareValueX:x y:y z:z];
         }
 	}
 
@@ -221,22 +221,22 @@
 
 - (void)checkCalibrationData
 {
-    WiimoteDeviceCheckStickCalibration(m_StickCalibrationData, 0, 127, 255);
+    WiimoteDeviceCheckStickCalibration(_stickCalibrationData, 0, 127, 255);
 
-    if([m_Accelerometer isHardwareZeroValuesInvalid])
-		[m_Accelerometer setHardwareZeroX:500 y:500 z:500];
+    if([_accelerometer isHardwareZeroValuesInvalid])
+		[_accelerometer setHardwareZeroX:500 y:500 z:500];
 
-	if([m_Accelerometer isHardware1gValuesInvalid])
-		[m_Accelerometer setHardware1gX:700 y:700 z:700];
+	if([_accelerometer isHardware1gValuesInvalid])
+		[_accelerometer setHardware1gX:700 y:700 z:700];
 }
 
 - (void)reset
 {
-	m_ButtonState[WiimoteNunchuckButtonTypeC]   = NO;
-	m_ButtonState[WiimoteNunchuckButtonTypeZ]   = NO;
-	m_StickPosition                             = NSZeroPoint;
+	_buttonState[WiimoteNunchuckButtonTypeC]   = NO;
+	_buttonState[WiimoteNunchuckButtonTypeZ]   = NO;
+	_stickPosition                             = NSZeroPoint;
 
-	[m_Accelerometer reset];
+	[_accelerometer reset];
 }
 
 - (void)wiimoteAccelerometer:(WiimoteAccelerometer*)accelerometer

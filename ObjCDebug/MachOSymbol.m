@@ -11,7 +11,7 @@
 
 @implementation MachOSymbol
 
-@synthesize name =  m_Name;
+@synthesize name =  _name;
 
 + (MachOSymbol*)symbolWithName:(NSString*)name info32:(const struct nlist*)info
 {
@@ -38,26 +38,26 @@
     if(self == nil)
         return nil;
 
-    m_Name = [name copy];
-    memcpy(&m_Info, info, sizeof(struct nlist_64));
+    _name = [name copy];
+    memcpy(&_info, info, sizeof(struct nlist_64));
 
     return self;
 }
 
 - (void)dealloc
 {
-    [m_Name release];
+    [_name release];
     [super dealloc];
 }
 
 - (const struct nlist_64*)info
 {
-    return (&m_Info);
+    return (&_info);
 }
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"\"%@\": 0x%llX", m_Name, m_Info.n_value];
+    return [NSString stringWithFormat:@"\"%@\": 0x%llX", _name, _info.n_value];
 }
 
 @end

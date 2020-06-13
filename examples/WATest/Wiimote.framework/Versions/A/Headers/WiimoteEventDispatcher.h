@@ -13,10 +13,10 @@
 @interface WiimoteEventDispatcher : NSObject
 {
     @private
-        Wiimote *m_Owner;
-        BOOL     m_IsStateNotificationsEnabled;
+        Wiimote *_owner;
+        BOOL     _isStateNotificationsEnabled;
 
-        id       m_Delegate;
+        id       _delegate;
 }
 
 - (Wiimote*)owner;

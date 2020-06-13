@@ -17,21 +17,21 @@
     if(self == nil)
         return nil;
 
-    m_Owner = owner;
-    m_Index = index;
+    _owner = owner;
+    _index = index;
 
     return self;
 }
 
 - (NSString*)title
 {
-    return [m_Owner itemObjectValueAtIndex:m_Index];
+    return [_owner itemObjectValueAtIndex:_index];
 }
 
 - (void)setTitle:(NSString*)title
 {
-    [m_Owner removeItemAtIndex:m_Index];
-    [m_Owner insertItemWithObjectValue:title atIndex:m_Index];
+    [_owner removeItemAtIndex:_index];
+    [_owner insertItemWithObjectValue:title atIndex:_index];
 }
 
 @end

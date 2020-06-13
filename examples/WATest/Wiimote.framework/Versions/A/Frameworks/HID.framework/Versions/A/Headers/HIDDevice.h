@@ -23,16 +23,16 @@
 @interface HIDDevice : NSObject
 {
     @private
-        HIDManager      *m_Owner;
+        HIDManager      *_owner;
 
-        BOOL             m_IsValid;
-        IOHIDDeviceRef   m_Handle;
-        IOOptionBits     m_Options;
-        NSDictionary    *m_Properties;
+        BOOL             _isValid;
+        IOHIDDeviceRef   _handle;
+        IOOptionBits     _options;
+        NSDictionary    *_properties;
 
-        NSMutableData   *m_ReportBuffer;
+        NSMutableData   *_reportBuffer;
 
-        id               m_Delegate;
+        id               _delegate;
 }
 
 - (HIDManager*)owner;

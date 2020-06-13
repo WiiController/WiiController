@@ -16,17 +16,17 @@
     if(self == nil)
         return nil;
 
-    m_MouseState    = [[VHIDDevice alloc] initWithType:VHIDDeviceTypeMouse
+    _mouseState    = [[VHIDDevice alloc] initWithType:VHIDDeviceTypeMouse
                                           pointerCount:6
                                            buttonCount:2
                                             isRelative:YES];
 
-    NSLog(@"%@", m_MouseState);
-    m_VirtualMouse  = [[WJoyDevice alloc] initWithHIDDescriptor:[m_MouseState descriptor]
+    NSLog(@"%@", _mouseState);
+    _virtualMouse  = [[WJoyDevice alloc] initWithHIDDescriptor:[_mouseState descriptor]
                                                   productString:@"Virtual Alxn1 Mouse"];
 
-    [m_MouseState setDelegate:self];
-    if(m_VirtualMouse == nil || m_MouseState == nil)
+    [_mouseState setDelegate:self];
+    if(_virtualMouse == nil || _mouseState == nil)
         NSLog(@"error");
 
     return self;
@@ -34,14 +34,14 @@
 
 - (void)dealloc
 {
-    [m_MouseState release];
-    [m_VirtualMouse release];
+    [_mouseState release];
+    [_virtualMouse release];
     [super dealloc];
 }
 
 - (void)VHIDDevice:(VHIDDevice*)device stateChanged:(NSData*)state
 {
-    [m_VirtualMouse updateHIDState:state];
+    [_virtualMouse updateHIDState:state];
 }
 
 - (void)testView:(TestView*)view keyPressed:(TestViewKey)key
@@ -67,7 +67,7 @@
             break;
     }
 
-    [m_MouseState setPointer:0 position:newPosition];
+    [_mouseState setPointer:0 position:newPosition];
 }
 
 @end

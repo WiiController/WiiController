@@ -97,26 +97,26 @@ static int traceFn(
     uint64_t     msgSendsAddress    = getNameAddress + (msgSends.info->n_value - getName.info->n_value);
     uint64_t     logMsgSendAddress  = getNameAddress + (logMsgSend.info->n_value - getName.info->n_value);
 
-    m_LogEnableFn = msgSendsAddress;
-    m_SetLogFnFn  = logMsgSendAddress;
+    _logEnableFn = msgSendsAddress;
+    _setLogFnFn  = logMsgSendAddress;
 
     return self;
 }
 
 - (BOOL)enabled
 {
-    return m_IsEnabled;
+    return _isEnabled;
 }
 
 - (void)setEnabled:(BOOL)flag
 {
-    if(m_IsEnabled == flag)
+    if(_isEnabled == flag)
         return;
 
-    ObjCSetTraceEnabledFn   enabledFn       = FN_FROM_ADDR(m_LogEnableFn, ObjCSetTraceEnabledFn);
-    ObjCSetTraceFnFn        setTraceFnFn    = FN_FROM_ADDR(m_SetLogFnFn, ObjCSetTraceFnFn);
+    ObjCSetTraceEnabledFn   enabledFn       = FN_FROM_ADDR(_logEnableFn, ObjCSetTraceEnabledFn);
+    ObjCSetTraceFnFn        setTraceFnFn    = FN_FROM_ADDR(_setLogFnFn, ObjCSetTraceFnFn);
 
-    m_IsEnabled = flag;
+    _isEnabled = flag;
     enabledFn(flag);
     setTraceFnFn(((flag)?(traceFn):(NULL)));
 }

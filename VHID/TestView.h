@@ -27,7 +27,7 @@ typedef enum
 @interface TestView : NSView
 {
     @private
-        id<TestViewDelegate> m_Delegate;
+        id<TestViewDelegate> _delegate;
 }
 
 - (id<TestViewDelegate>)delegate;

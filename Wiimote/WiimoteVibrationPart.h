@@ -13,7 +13,7 @@
 @interface WiimoteVibrationPart : WiimotePart
 {
     @private
-        WiimoteDevice *m_Device;
+        WiimoteDevice *_device;
 }
 
 - (BOOL)isVibrationEnabled;

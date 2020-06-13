@@ -11,7 +11,7 @@
 @interface DMGEULAPathPreprocessor : NSObject
 {
     @private
-        NSMutableDictionary *m_Variables;
+        NSMutableDictionary *_variables;
 }
 
 + (DMGEULAPathPreprocessor*)sharedInstance;

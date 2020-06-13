@@ -39,12 +39,12 @@ NSString *WiimoteWatchdogPingNotification            = @"WiimoteWatchdogPingNoti
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [m_Timer invalidate];
+    [_timer invalidate];
 }
 
 - (BOOL)isEnabled
 {
-    return (m_Timer != nil);
+    return (_timer != nil);
 }
 
 - (void)setEnabled:(BOOL)enabled
@@ -54,13 +54,13 @@ NSString *WiimoteWatchdogPingNotification            = @"WiimoteWatchdogPingNoti
 
     if(enabled)
     {
-        m_Timer = [NSTimer scheduledTimerWithTimeInterval:2.5
+        _timer = [NSTimer scheduledTimerWithTimeInterval:2.5
                                                    target:self
                                                  selector:@selector(onTimer:)
                                                  userInfo:nil
                                                   repeats:YES];
 
-        [[NSRunLoop currentRunLoop] addTimer:m_Timer forMode:NSRunLoopCommonModes];
+        [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
 
         [[NSNotificationCenter defaultCenter]
                                 addObserver:self
@@ -71,11 +71,11 @@ NSString *WiimoteWatchdogPingNotification            = @"WiimoteWatchdogPingNoti
     else
     {
         [[NSNotificationCenter defaultCenter] removeObserver:self];
-        [m_Timer invalidate];
-        m_Timer = nil;
+        [_timer invalidate];
+        _timer = nil;
     }
 
-    if(m_IsPingNotificationEnabled)
+    if(_isPingNotificationEnabled)
     {
         [[NSNotificationCenter defaultCenter]
                                 postNotificationName:WiimoteWatchdogEnabledChangedNotification
@@ -85,12 +85,12 @@ NSString *WiimoteWatchdogPingNotification            = @"WiimoteWatchdogPingNoti
 
 - (BOOL)isPingNotificationEnabled
 {
-    return m_IsPingNotificationEnabled;
+    return _isPingNotificationEnabled;
 }
 
 - (void)setPingNotificationEnabled:(BOOL)enabled
 {
-    m_IsPingNotificationEnabled = enabled;
+    _isPingNotificationEnabled = enabled;
 }
 
 @end
@@ -103,8 +103,8 @@ NSString *WiimoteWatchdogPingNotification            = @"WiimoteWatchdogPingNoti
     if(self == nil)
         return nil;
 
-    m_Timer                     = nil;
-    m_IsPingNotificationEnabled = YES;
+    _timer                     = nil;
+    _isPingNotificationEnabled = YES;
 
     return self;
 }

@@ -19,10 +19,10 @@
 	if(self == nil)
 		return nil;
 
-	m_MemoryRange	= memoryRange;
-	m_ReadedData	= [[NSMutableData alloc] initWithCapacity:memoryRange.length];
-	m_Target		= target;
-	m_Action		= action;
+	_memoryRange	= memoryRange;
+	_readedData	= [[NSMutableData alloc] initWithCapacity:memoryRange.length];
+	_target		= target;
+	_action		= action;
 
 	if(memoryRange.length == 0)
 	{
@@ -34,41 +34,41 @@
 
 - (void)dataReadFinished
 {
-	if(m_Target != nil &&
-	   m_Action != nil)
+	if(_target != nil &&
+	   _action != nil)
 	{
-		[m_Target performSelector:m_Action
-                       withObject:m_ReadedData
+		[_target performSelector:_action
+                       withObject:_readedData
                        afterDelay:0.0];
 	}
 }
 
 - (NSRange)memoryRange
 {
-    return m_MemoryRange;
+    return _memoryRange;
 }
 
 - (BOOL)isAllDataReaded
 {
-	return ([m_ReadedData length] >= m_MemoryRange.length);
+	return ([_readedData length] >= _memoryRange.length);
 }
 
 - (void)handleData:(const uint8_t*)data length:(NSUInteger)length
 {
-    [m_ReadedData appendBytes:data length:length];
-    if([m_ReadedData length] >= m_MemoryRange.length)
+    [_readedData appendBytes:data length:length];
+    if([_readedData length] >= _memoryRange.length)
 		[self dataReadFinished];
 }
 
 - (void)errorOccured
 {
-    [m_ReadedData setLength:0];
+    [_readedData setLength:0];
     [self dataReadFinished];
 }
 
 - (void)disconnected
 {
-    m_ReadedData = nil;
+    _readedData = nil;
     [self dataReadFinished];
 }
 

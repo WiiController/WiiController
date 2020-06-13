@@ -27,30 +27,30 @@
     if(self == nil)
         return nil;
 
-    m_Variables = [[NSMutableDictionary alloc] init];
+    _variables = [[NSMutableDictionary alloc] init];
 
     return self;
 }
 
 - (void)dealloc
 {
-    [m_Variables release];
+    [_variables release];
     [super dealloc];
 }
 
 - (NSDictionary*)variables
 {
-    return [[m_Variables retain] autorelease];
+    return [[_variables retain] autorelease];
 }
 
 - (void)setVariable:(NSString*)name value:(NSString*)value
 {
-    [m_Variables setObject:value forKey:name];
+    [_variables setObject:value forKey:name];
 }
 
 - (void)removeVariable:(NSString*)name
 {
-    [m_Variables removeObjectForKey:name];
+    [_variables removeObjectForKey:name];
 }
 
 - (NSString*)wrapVariableName:(NSString*)name
@@ -63,7 +63,7 @@
     if(string == nil)
         return nil;
 
-    NSEnumerator    *en     = [m_Variables keyEnumerator];
+    NSEnumerator    *en     = [_variables keyEnumerator];
     NSString        *key    = [en nextObject];
     NSMutableString *result = nil;
 
@@ -83,7 +83,7 @@
         while(key != nil)
         {
             [result replaceOccurrencesOfString:[self wrapVariableName:key]
-                                    withString:[m_Variables objectForKey:key]
+                                    withString:[_variables objectForKey:key]
                                        options:0
                                          range:NSMakeRange(0, [result length])];
 

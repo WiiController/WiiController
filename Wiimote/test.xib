@@ -766,10 +766,10 @@
         </window>
         <customObject id="819" customClass="TestController">
             <connections>
-                <outlet property="m_ConnectedTextField" destination="817" id="821"/>
-                <outlet property="m_DebugCheckBox" destination="OR0-4W-8F0" id="FLL-jk-Ysn"/>
-                <outlet property="m_DiscoveryButton" destination="815" id="822"/>
-                <outlet property="m_Log" destination="814" id="823"/>
+                <outlet property="_connectedTextField" destination="817" id="821"/>
+                <outlet property="_debugCheckBox" destination="OR0-4W-8F0" id="FLL-jk-Ysn"/>
+                <outlet property="_discoveryButton" destination="815" id="822"/>
+                <outlet property="_log" destination="814" id="823"/>
             </connections>
         </customObject>
     </objects>

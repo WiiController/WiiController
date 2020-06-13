@@ -45,7 +45,7 @@
 
 - (void)postEvent:(WiimoteEvent*)event
 {
-    NSEnumerator *en        = [m_Observers objectEnumerator];
+    NSEnumerator *en        = [_observers objectEnumerator];
     id            object    = [en nextObject];
 
     while(object != nil)

@@ -13,14 +13,14 @@
 @interface NotificationWindow : AnimatedWindow<NotificationWindowViewDelegate>
 {
     @private
-        UserNotification    *m_Notification;
-        NSTimer             *m_AutocloseTimer;
+        UserNotification    *_notification;
+        NSTimer             *_autocloseTimer;
 
-        BOOL                 m_IsMouseEntered;
-        BOOL                 m_IsCloseOnMouseExited;
+        BOOL                 _isMouseEntered;
+        BOOL                 _isCloseOnMouseExited;
 
-        id                   m_Target;
-        SEL                  m_Action;
+        id                   _target;
+        SEL                  _action;
 }
 
 + (NSRect)bestRectForNotification:(UserNotification*)notification;

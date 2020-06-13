@@ -27,10 +27,10 @@
     if(self == nil)
         return nil;
 
-    m_Wiimote           = wiimote;
-    m_Path              = [path copy];
-    m_PathComponents    = [m_Path componentsSeparatedByString:@"."];
-    m_Value             = value;
+    _wiimote           = wiimote;
+    _path              = [path copy];
+    _pathComponents    = [_path componentsSeparatedByString:@"."];
+    _value             = value;
 
     return self;
 }
@@ -38,32 +38,32 @@
 
 - (Wiimote*)wiimote
 {
-    return m_Wiimote;
+    return _wiimote;
 }
 
 - (NSString*)path
 {
-    return m_Path;
+    return _path;
 }
 
 - (NSString*)firstPathComponent
 {
-    return [m_PathComponents objectAtIndex:0];
+    return [_pathComponents objectAtIndex:0];
 }
 
 - (NSString*)lastPathComponent
 {
-    return [m_PathComponents lastObject];
+    return [_pathComponents lastObject];
 }
 
 - (NSArray*)pathComponents
 {
-    return m_PathComponents;
+    return _pathComponents;
 }
 
 - (CGFloat)value
 {
-    return m_Value;
+    return _value;
 }
 
 @end

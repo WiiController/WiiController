@@ -67,10 +67,10 @@ NSString *DMGEULAStringTypePrintError   = @"PrintError";
         return nil;
     }
 
-    m_Name              = [name copy];
-    m_Code              = code;
-    m_LocalizedStrings  = [localizedStrings copy];
-    m_Encoding          = encoding;
+    _name              = [name copy];
+    _code              = code;
+    _localizedStrings  = [localizedStrings copy];
+    _encoding          = encoding;
 
     return self;
 }
@@ -89,36 +89,36 @@ NSString *DMGEULAStringTypePrintError   = @"PrintError";
 
 - (void)dealloc
 {
-    [m_UserData release];
-    [m_LocalizedStrings release];
-    [m_Name release];
+    [_userData release];
+    [_localizedStrings release];
+    [_name release];
 
     [super dealloc];
 }
 
 - (NSString*)name
 {
-    return [[m_Name retain] autorelease];
+    return [[_name retain] autorelease];
 }
 
 - (NSUInteger)code
 {
-    return m_Code;
+    return _code;
 }
 
 - (NSDictionary*)localizedStrings
 {
-    return [[m_LocalizedStrings retain] autorelease];
+    return [[_localizedStrings retain] autorelease];
 }
 
 - (CFStringEncoding)encoding
 {
-    return m_Encoding;
+    return _encoding;
 }
 
 - (NSString*)localizedStringWithType:(NSString*)stringType
 {
-    return [m_LocalizedStrings objectForKey:stringType];
+    return [_localizedStrings objectForKey:stringType];
 }
 
 @end
@@ -127,13 +127,13 @@ NSString *DMGEULAStringTypePrintError   = @"PrintError";
 
 - (NSDictionary*)userData
 {
-    return [[m_UserData retain] autorelease];
+    return [[_userData retain] autorelease];
 }
 
 - (void)setUserData:(NSDictionary*)userData
 {
-    [m_UserData autorelease];
-    m_UserData = [userData retain];
+    [_userData autorelease];
+    _userData = [userData retain];
 }
 
 @end

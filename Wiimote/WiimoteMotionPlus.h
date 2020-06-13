@@ -12,13 +12,13 @@
 @interface WiimoteMotionPlus : WiimoteExtension<WiimoteMotionPlusProtocol>
 {
     @private
-        WiimoteIOManager		*m_IOManager;
-        WiimoteExtension		*m_SubExtension;
-		NSUInteger				 m_ReportCounter;
-		NSUInteger				 m_ExtensionReportCounter;
+        WiimoteIOManager		*_iOManager;
+        WiimoteExtension		*_subExtension;
+		NSUInteger				 _reportCounter;
+		NSUInteger				 _extensionReportCounter;
 
-		BOOL					 m_IsSubExtensionDisconnected;
-        WiimoteMotionPlusReport  m_Report;
+		BOOL					 _isSubExtensionDisconnected;
+        WiimoteMotionPlusReport  _report;
 }
 
 @end

@@ -49,10 +49,10 @@
     if(self == nil)
         return nil;
 
-    m_IsPenPressed       = NO;
-    m_PenPosition        = NSZeroPoint;
-    m_PenPressure        = 0.0;
-    m_IsPenButtonPressed = NO;
+    _isPenPressed       = NO;
+    _penPosition        = NSZeroPoint;
+    _penPressure        = 0.0;
+    _isPenButtonPressed = NO;
 
     return self;
 }
@@ -64,16 +64,16 @@
 
 - (BOOL)isPenPressed
 {
-    return m_IsPenPressed;
+    return _isPenPressed;
 }
 
 - (void)setPenPressed:(BOOL)pressed
 {
-    if(m_IsPenPressed != pressed)
+    if(_isPenPressed != pressed)
     {
-        m_IsPenPressed = pressed;
+        _isPenPressed = pressed;
 
-        if(m_IsPenPressed)
+        if(_isPenPressed)
             [[self eventDispatcher] postUDrawPenPressed:self];
         else
             [[self eventDispatcher] postUDrawPenReleased:self];
@@ -82,40 +82,40 @@
 
 - (NSPoint)penPosition
 {
-    return m_PenPosition;
+    return _penPosition;
 }
 
 - (CGFloat)penPressure
 {
-    return m_PenPressure;
+    return _penPressure;
 }
 
 - (void)setPenPosition:(NSPoint)position pressure:(CGFloat)pressure
 {
-    if(!WiimoteDeviceIsPointEqual(m_PenPosition, position) ||
-       !WiimoteDeviceIsFloatEqual(m_PenPressure, pressure))
+    if(!WiimoteDeviceIsPointEqual(_penPosition, position) ||
+       !WiimoteDeviceIsFloatEqual(_penPressure, pressure))
     {
-        m_PenPosition = position;
-        m_PenPressure = pressure;
+        _penPosition = position;
+        _penPressure = pressure;
 
         [[self eventDispatcher]
                             postUDraw:self
-                   penPositionChanged:m_PenPosition
-                             pressure:m_PenPressure];
+                   penPositionChanged:_penPosition
+                             pressure:_penPressure];
     }
 }
 
 - (BOOL)isPenButtonPressed
 {
-    return m_IsPenButtonPressed;
+    return _isPenButtonPressed;
 }
 
 - (void)setPenButtonPressed:(BOOL)pressed
 {
-    if(m_IsPenButtonPressed != pressed)
+    if(_isPenButtonPressed != pressed)
     {
-        m_IsPenButtonPressed = pressed;
-        if(m_IsPenButtonPressed)
+        _isPenButtonPressed = pressed;
+        if(_isPenButtonPressed)
             [[self eventDispatcher] postUDrawPenButtonPressed:self];
         else
             [[self eventDispatcher] postUDrawPenButtonReleased:self];
@@ -158,7 +158,7 @@
         [self setPenPosition:penPosition pressure:penPressure];
     }
     else
-        [self setPenPosition:m_PenPosition pressure:0.0];
+        [self setPenPosition:_penPosition pressure:0.0];
 
     [self setPenButtonPressed:isPenButtonPressed];
 }

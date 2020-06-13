@@ -16,7 +16,7 @@
     if(self == nil)
         return nil;
 
-    m_IsEnabled = NO;
+    _isEnabled = NO;
     [self setGravitySmoothQuant:0.15];
     [self setAnglesSmoothQuant:5.0];
     [self setHardwareZeroX:500 y:500 z:500];
@@ -28,63 +28,63 @@
 
 - (BOOL)isEnabled
 {
-    return m_IsEnabled;
+    return _isEnabled;
 }
 
 - (void)setEnabled:(BOOL)enabled
 {
-    if(m_IsEnabled == enabled)
+    if(_isEnabled == enabled)
         return;
 
 	[self reset];
-    m_IsEnabled = enabled;
+    _isEnabled = enabled;
 
     [_delegate wiimoteAccelerometer:self enabledStateChanged:enabled];
 }
 
 - (CGFloat)gravityX
 {
-    return m_GravityX;
+    return _gravityX;
 }
 
 - (CGFloat)gravityY
 {
-    return m_GravityY;
+    return _gravityY;
 }
 
 - (CGFloat)gravityZ
 {
-    return m_GravityZ;
+    return _gravityZ;
 }
 
 - (CGFloat)pitch
 {
-    return m_Pitch;
+    return _pitch;
 }
 
 - (CGFloat)roll
 {
-    return m_Roll;
+    return _roll;
 }
 
 - (CGFloat)gravitySmoothQuant
 {
-    return m_GravitySmoothQuant;
+    return _gravitySmoothQuant;
 }
 
 - (void)setGravitySmoothQuant:(CGFloat)quant
 {
-    m_GravitySmoothQuant = quant;
+    _gravitySmoothQuant = quant;
 }
 
 - (CGFloat)anglesSmoothQuant
 {
-    return m_AnglesSmoothQuant;
+    return _anglesSmoothQuant;
 }
 
 - (void)setAnglesSmoothQuant:(CGFloat)quant
 {
-    m_AnglesSmoothQuant = quant;
+    _anglesSmoothQuant = quant;
 }
 
 @end

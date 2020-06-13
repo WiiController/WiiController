@@ -34,7 +34,7 @@
 	if(self == nil)
 		return nil;
 
-	m_IsFirstAttempt = YES;
+	_isFirstAttempt = YES;
 
 	return self;
 }
@@ -61,7 +61,7 @@
 	uint8_t		 bytes[6]		= { 0 };
 	unsigned int value			= 0;
 
-	if(m_IsFirstAttempt)
+	if(_isFirstAttempt)
     {
         address = [[IOBluetoothHostController defaultController] addressAsString];
     }
@@ -95,9 +95,9 @@
 {
 	if(error != kIOReturnSuccess)
 	{
-		if(m_IsFirstAttempt)
+		if(_isFirstAttempt)
 		{
-			m_IsFirstAttempt = NO;
+			_isFirstAttempt = NO;
 			[self runWithDevice:[sender device]];
 			return;
 		}

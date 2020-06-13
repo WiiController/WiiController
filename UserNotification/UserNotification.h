@@ -11,9 +11,9 @@
 @interface UserNotification : NSObject<NSCoding>
 {
     @private
-        NSString     *m_Title;
-        NSString     *m_Text;
-        NSDictionary *m_UserInfo;
+        NSString     *_title;
+        NSString     *_text;
+        NSDictionary *_userInfo;
 }
 
 + (UserNotification*)userNotificationWithTitle:(NSString*)title text:(NSString*)text;

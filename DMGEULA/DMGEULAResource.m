@@ -19,25 +19,25 @@
     if(self == nil)
         return nil;
 
-    m_Languages         = [[NSMutableArray alloc] init];
-    m_LicenseFilePaths  = [[NSMutableArray alloc] init];
-    m_DefaultLanguage   = nil;
+    _languages         = [[NSMutableArray alloc] init];
+    _licenseFilePaths  = [[NSMutableArray alloc] init];
+    _defaultLanguage   = nil;
 
     return self;
 }
 
 - (void)dealloc
 {
-    [m_Languages release];
-    [m_LicenseFilePaths release];
-    [m_DefaultLanguage release];
+    [_languages release];
+    [_licenseFilePaths release];
+    [_defaultLanguage release];
 
     [super dealloc];
 }
 
 - (NSArray*)languages
 {
-    return [[m_Languages retain] autorelease];
+    return [[_languages retain] autorelease];
 }
 
 - (NSString*)licenseFilePathForLanguage:(DMGEULALanguage*)language
@@ -46,10 +46,10 @@
         return nil;
 
     NSString    *result = nil;
-    NSUInteger   index  = [m_Languages indexOfObject:language];
+    NSUInteger   index  = [_languages indexOfObject:language];
 
     if(index != NSNotFound)
-        result = [m_LicenseFilePaths objectAtIndex:index];
+        result = [_licenseFilePaths objectAtIndex:index];
 
     return result;
 }
@@ -59,7 +59,7 @@
     if(language == nil)
         return NO;
 
-    return [m_Languages containsObject:language];
+    return [_languages containsObject:language];
 }
 
 - (void)addLanguage:(DMGEULALanguage*)language licenseFilePath:(NSString*)licenseFilePath
@@ -68,10 +68,10 @@
        licenseFilePath  != nil &&
       ![self containsLanguage:language])
     {
-        [m_Languages addObject:language];
-        [m_LicenseFilePaths addObject:licenseFilePath];
+        [_languages addObject:language];
+        [_licenseFilePaths addObject:licenseFilePath];
 
-        if(m_DefaultLanguage == nil)
+        if(_defaultLanguage == nil)
             [self setDefaultLanguage:language];
     }
 }
@@ -81,24 +81,24 @@
     if(language == nil)
         return;
 
-    NSUInteger index = [m_Languages indexOfObject:language];
+    NSUInteger index = [_languages indexOfObject:language];
 
     if(index != NSNotFound)
     {
         BOOL needSetNewDefaultLanguage = NO;
 
-        if(m_DefaultLanguage == [m_Languages objectAtIndex:index])
+        if(_defaultLanguage == [_languages objectAtIndex:index])
             needSetNewDefaultLanguage = YES;
 
-        [m_Languages removeObjectAtIndex:index];
-        [m_LicenseFilePaths removeObjectAtIndex:index];
+        [_languages removeObjectAtIndex:index];
+        [_licenseFilePaths removeObjectAtIndex:index];
 
         if(needSetNewDefaultLanguage)
         {
             DMGEULALanguage *lang = nil;
 
-            if([m_Languages count] > 0)
-                lang = [m_Languages objectAtIndex:0];
+            if([_languages count] > 0)
+                lang = [_languages objectAtIndex:0];
 
             [self setDefaultLanguage:lang];
         }
@@ -107,10 +107,10 @@
 
 - (void)removeAllLanguages
 {
-    [m_Languages removeAllObjects];
-    [m_LicenseFilePaths removeAllObjects];
-    [m_DefaultLanguage release];
-    m_DefaultLanguage = nil;
+    [_languages removeAllObjects];
+    [_licenseFilePaths removeAllObjects];
+    [_defaultLanguage release];
+    _defaultLanguage = nil;
 }
 
 - (NSString*)tableOfContents:(NSError**)error
@@ -120,13 +120,13 @@
     NSUInteger       defaultLangCode    = verUS;
     NSUInteger       index              = 0;
 
-    if(m_DefaultLanguage == nil)
+    if(_defaultLanguage == nil)
     {
         if([langs count] > 0)
             defaultLangCode = [[langs objectAtIndex:0] code];
     }
     else
-        defaultLangCode = [m_DefaultLanguage code];
+        defaultLangCode = [_defaultLanguage code];
 
     [result appendString:@"data 'LPic' (5000) {\n"];
     [result appendFormat:@"\t$\"%04X\"\n", (unsigned int)defaultLangCode];
@@ -285,15 +285,15 @@
 
 - (DMGEULALanguage*)defaultLanguage
 {
-    return [[m_DefaultLanguage retain] autorelease];
+    return [[_defaultLanguage retain] autorelease];
 }
 
 - (void)setDefaultLanguage:(DMGEULALanguage*)language
 {
-    if([m_Languages containsObject:language])
+    if([_languages containsObject:language])
     {
-        [m_DefaultLanguage autorelease];
-        m_DefaultLanguage = [language retain];
+        [_defaultLanguage autorelease];
+        _defaultLanguage = [language retain];
     }
 }
 

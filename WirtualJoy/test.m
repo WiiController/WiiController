@@ -139,23 +139,23 @@ bool WiijiDevice::update(const void *state, size_t stateSize)
     switch(target)
     {
         case hid_XYZ:
-            m_HIDStateData[0] = buttonVector[1];
-            m_HIDStateData[1] = buttonVector[2];
+            _hIDStateData[0] = buttonVector[1];
+            _hIDStateData[1] = buttonVector[2];
             break;
 
         case hid_rXYZ:
-            m_HIDStateData[2] = buttonVector[1];
-            m_HIDStateData[3] = buttonVector[2];
+            _hIDStateData[2] = buttonVector[1];
+            _hIDStateData[3] = buttonVector[2];
             break;
 
         case WiiRemoteUpButton:
         case WiiRemoteDownButton:
-            m_HIDStateData[0] = buttonVector[1] * ((target == WiiRemoteDownButton)*(127) - (target == WiiRemoteUpButton)*(127));
+            _hIDStateData[0] = buttonVector[1] * ((target == WiiRemoteDownButton)*(127) - (target == WiiRemoteUpButton)*(127));
             break;
 
         case WiiRemoteRightButton:
         case WiiRemoteLeftButton:
-            m_HIDStateData[1] = buttonVector[1] * ((target == WiiRemoteLeftButton)*(127) - (target == WiiRemoteRightButton)*(127));
+            _hIDStateData[1] = buttonVector[1] * ((target == WiiRemoteLeftButton)*(127) - (target == WiiRemoteRightButton)*(127));
             break;
 
         default:
@@ -170,13 +170,13 @@ bool WiijiDevice::update(const void *state, size_t stateSize)
                 return false;
         
             if(buttonVector[1])
-                m_HIDStateData[octet] = m_HIDStateData[octet] | action;
+                _hIDStateData[octet] = _hIDStateData[octet] | action;
             else
-                m_HIDStateData[octet] = m_HIDStateData[octet] & ~action;
+                _hIDStateData[octet] = _hIDStateData[octet] & ~action;
             break;
     }
 
-    return m_Device.updateState(m_HIDStateData, sizeof(m_HIDStateData));
+    return _device.updateState(_hIDStateData, sizeof(_hIDStateData));
 }
 
 */

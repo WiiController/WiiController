@@ -70,12 +70,12 @@
     if(self == nil)
         return nil;
 
-    m_IsHowered             = NO;
-    m_IsMouseDragged        = NO;
-    m_IsCloseButtonDragged  = NO;
-    m_IsCloseButtonPressed  = NO;
-    m_IsAlreadyClicked      = NO;
-    m_TrackingRectTag       = 0;
+    _isHowered             = NO;
+    _isMouseDragged        = NO;
+    _isCloseButtonDragged  = NO;
+    _isCloseButtonPressed  = NO;
+    _isAlreadyClicked      = NO;
+    _trackingRectTag       = 0;
 
     [self updateTrackingRect];
 
@@ -88,11 +88,11 @@
     if(self == nil)
         return nil;
 
-    m_IsHowered             = NO;
-    m_IsCloseButtonDragged  = NO;
-    m_IsCloseButtonPressed  = NO;
-    m_IsAlreadyClicked      = NO;
-    m_TrackingRectTag       = 0;
+    _isHowered             = NO;
+    _isCloseButtonDragged  = NO;
+    _isCloseButtonPressed  = NO;
+    _isAlreadyClicked      = NO;
+    _trackingRectTag       = 0;
 
     [self updateTrackingRect];
 
@@ -107,78 +107,78 @@
 
 - (NSImage*)icon
 {
-    return m_Icon;
+    return _icon;
 }
 
 - (void)setIcon:(NSImage*)img
 {
-    if(m_Icon == img)
+    if(_icon == img)
         return;
 
-    m_Icon = img;
+    _icon = img;
 
-    [m_Icon setSize:NSMakeSize(32.0f, 32.0f)];
+    [_icon setSize:NSMakeSize(32.0f, 32.0f)];
     [self setNeedsDisplay:YES];
 }
 
 - (NSString*)title
 {
-    return m_Title;
+    return _title;
 }
 
 - (void)setTitle:(NSString*)str
 {
-    if(m_Title == str)
+    if(_title == str)
         return;
 
-    m_Title = str;
+    _title = str;
 
     [self setNeedsDisplay:YES];
 }
 
 - (NSString*)text
 {
-    return m_Text;
+    return _text;
 }
 
 - (void)setText:(NSString*)str
 {
-    if(m_Text == str)
+    if(_text == str)
         return;
 
-    m_Text = str;
+    _text = str;
 
     [self setNeedsDisplay:YES];
 }
 
 - (id)target
 {
-    return m_Target;
+    return _target;
 }
 
 - (void)setTarget:(id)obj
 {
-    m_Target = obj;
+    _target = obj;
 }
 
 - (SEL)action
 {
-    return m_Action;
+    return _action;
 }
 
 - (void)setAction:(SEL)sel
 {
-    m_Action = sel;
+    _action = sel;
 }
 
 - (id<NotificationWindowViewDelegate>)delegate
 {
-    return m_Delegate;
+    return _delegate;
 }
 
 - (void)setDelegate:(id<NotificationWindowViewDelegate>)obj
 {
-    m_Delegate = obj;
+    _delegate = obj;
 }
 
 - (void)viewDidHide
@@ -205,11 +205,11 @@
             mousePosition,
             [self closeButtonRect:[self bounds]]))
     {
-        m_IsCloseButtonDragged = YES;
+        _isCloseButtonDragged = YES;
         [self setCloseButtonPressed:YES];
     }
 
-    m_IsMouseDragged = YES;
+    _isMouseDragged = YES;
 }
 
 - (void)mouseDragged:(NSEvent*)event
@@ -219,7 +219,7 @@
 
     [self setHowered:NSPointInRect(mousePosition, [self frame])];
 
-    if(m_IsCloseButtonDragged)
+    if(_isCloseButtonDragged)
     {
         [self setCloseButtonPressed:
                             NSPointInRect(
@@ -230,19 +230,19 @@
 
 - (void)mouseUp:(NSEvent*)event
 {
-    if(!m_IsCloseButtonPressed && [self isHowered])
+    if(!_isCloseButtonPressed && [self isHowered])
     {
-        if(m_Target != nil && m_Action != nil && !m_IsAlreadyClicked)
+        if(_target != nil && _action != nil && !_isAlreadyClicked)
         {
             ((void(*)(id self, SEL _cmd, NotificationWindowView *sender))objc_msgSend)
-                (m_Target, m_Action, self);
-            m_IsAlreadyClicked = YES;
+                (_target, _action, self);
+            _isAlreadyClicked = YES;
         }
     }
 
     [self setCloseButtonPressed:NO];
-    m_IsCloseButtonDragged = NO;
-    m_IsMouseDragged = NO;
+    _isCloseButtonDragged = NO;
+    _isMouseDragged = NO;
 
     if([self isHowered])
         [[self window] close];
@@ -250,7 +250,7 @@
 
 - (void)mouseEntered:(NSEvent*)event
 {
-    if(m_IsMouseDragged)
+    if(_isMouseDragged)
         return;
 
     [self setHowered:YES];
@@ -258,7 +258,7 @@
 
 - (void)mouseExited:(NSEvent*)event
 {
-    if(m_IsMouseDragged)
+    if(_isMouseDragged)
         return;
 
     [self setHowered:NO];
@@ -293,32 +293,32 @@
     [bgPath fill];
     [[NotificationWindowView bgGradient] drawInBezierPath:bgPath angle:90.0f];
 
-    if(m_Icon != nil)
+    if(_icon != nil)
     {
-        [m_Icon drawInRect:[self iconRect:rect]
+        [_icon drawInRect:[self iconRect:rect]
                   fromRect:NSZeroRect
                  operation:NSCompositingOperationSourceOver
                   fraction:1.0f];
     }
 
     float titleHeight = 0.0f;
-    if(m_Title != nil)
+    if(_title != nil)
     {
         NSDictionary    *attributes = [NotificationWindowView titleTextAttributes];
         NSRect           textRect   = [self titleRect:rect attributes:attributes];
 
-        [m_Title drawWithRect:textRect
+        [_title drawWithRect:textRect
                       options:0
                    attributes:attributes];
 
         titleHeight = textRect.size.height;
     }
 
-    if(m_Text != nil)
+    if(_text != nil)
     {
         NSDictionary *attributes = [NotificationWindowView textAttributes];
 
-        [m_Text drawWithRect:[self textRect:rect titleHeight:titleHeight attributes:attributes]
+        [_text drawWithRect:[self textRect:rect titleHeight:titleHeight attributes:attributes]
                      options:NSStringDrawingUsesLineFragmentOrigin
                 attributes:attributes];
     }
@@ -352,34 +352,34 @@
 
 - (BOOL)isHowered
 {
-    return m_IsHowered;
+    return _isHowered;
 }
 
 - (void)setHowered:(BOOL)hovered
 {
-    if(m_IsHowered == hovered)
+    if(_isHowered == hovered)
         return;
 
-    m_IsHowered = hovered;
+    _isHowered = hovered;
     [self setNeedsDisplay:YES];
 
     if(hovered)
-        [m_Delegate notificationWindowViewMouseEntered:self];
+        [_delegate notificationWindowViewMouseEntered:self];
     else
-        [m_Delegate notificationWindowViewMouseExited:self];
+        [_delegate notificationWindowViewMouseExited:self];
 }
 
 - (BOOL)isCloseButtonPressed
 {
-    return m_IsCloseButtonPressed;
+    return _isCloseButtonPressed;
 }
 
 - (void)setCloseButtonPressed:(BOOL)pressed
 {
-    if(m_IsCloseButtonPressed == pressed)
+    if(_isCloseButtonPressed == pressed)
         return;
 
-    m_IsCloseButtonPressed = pressed;
+    _isCloseButtonPressed = pressed;
     [self setNeedsDisplay:YES];
 }
 
@@ -394,10 +394,10 @@
 
 - (void)removeTrackingRect
 {
-    if(m_TrackingRectTag != 0)
+    if(_trackingRectTag != 0)
     {
-        [self removeTrackingRect:m_TrackingRectTag];
-        m_TrackingRectTag = 0;
+        [self removeTrackingRect:_trackingRectTag];
+        _trackingRectTag = 0;
     }
 }
 
@@ -405,7 +405,7 @@
 {
     [self removeTrackingRect];
 
-    m_TrackingRectTag = [self addTrackingRect:[self bounds]
+    _trackingRectTag = [self addTrackingRect:[self bounds]
                                         owner:self
                                      userData:NULL
                                  assumeInside:[self isMouseInside]];
@@ -433,7 +433,7 @@
 
 - (NSRect)titleRect:(NSRect)rect attributes:(NSDictionary*)attributes
 {
-    NSSize size = [m_Title sizeWithAttributes:attributes];
+    NSSize size = [_title sizeWithAttributes:attributes];
 
     if(size.width > (rect.size.width - 10.0f - 32.0f - 10.0f - 20.0f))
         size.width = rect.size.width - 10.0f - 32.0f - 10.0f - 20.0f;
@@ -461,7 +461,7 @@
     maxRect.size      = [self maxTextSize:rect titleHeight:titleHeight];
 
     NSRect result =
-           [m_Text boundingRectWithSize:maxRect.size
+           [_text boundingRectWithSize:maxRect.size
                                 options:NSStringDrawingUsesLineFragmentOrigin
                              attributes:attributes];
 
@@ -476,7 +476,7 @@
 
 - (void)drawCloseButton:(NSRect)rect
 {
-    NSImage *image = (m_IsCloseButtonPressed)?
+    NSImage *image = (_isCloseButtonPressed)?
                                 ([NotificationWindowView pressedCloseButtonImage]):
                                 ([NotificationWindowView closeButtonImage]);
 

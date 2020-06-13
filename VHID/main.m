@@ -19,9 +19,9 @@
 @interface VHIDDevice : NSObject
 {
     @private
-        NSData                  *m_Descriptor;
-        NSMutableData           *m_State;
-        id<VHIDDeviceDelegate>   m_Delegate;
+        NSData                  *_descriptor;
+        NSMutableData           *_state;
+        id<VHIDDeviceDelegate>   _delegate;
 }
 
 - (NSData*)descriptor;

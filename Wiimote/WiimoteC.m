@@ -16,7 +16,7 @@ NSString *WiimoteIDKey = @"WiimoteIDKey";
 @interface WiimoteThread : NSObject
 {
     @private
-        NSThread *m_Thread;
+        NSThread *_thread;
 }
 
 + (WiimoteThread*)thread;
@@ -45,12 +45,12 @@ NSString *WiimoteIDKey = @"WiimoteIDKey";
     if(self == nil)
         return nil;
 
-    m_Thread = [[NSThread alloc]
+    _thread = [[NSThread alloc]
                             initWithTarget:self
                                   selector:@selector(thread)
                                     object:nil];
 
-    [m_Thread start];
+    [_thread start];
 
     return self;
 }
@@ -79,7 +79,7 @@ NSString *WiimoteIDKey = @"WiimoteIDKey";
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
     [self performSelector:@selector(runBlock:)
-                 onThread:m_Thread
+                 onThread:_thread
                withObject:block
             waitUntilDone:YES
                     modes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
@@ -89,12 +89,12 @@ NSString *WiimoteIDKey = @"WiimoteIDKey";
 
 - (void)shutdown
 {
-    if(m_Thread == nil)
+    if(_thread == nil)
         return;
 
     [self invoke:^{ CFRunLoopStop([[NSRunLoop currentRunLoop] getCFRunLoop]); }];
-    [m_Thread release];
-    m_Thread = nil;
+    [_thread release];
+    _thread = nil;
 }
 
 @end

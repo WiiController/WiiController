@@ -38,22 +38,22 @@
 {
     self = [super init];
 
-    m_Type      = type;
-    m_Buttons   = [[VHIDButtonCollection alloc] initWithButtonCount:buttonCount];
-    m_Pointers  = [[VHIDPointerCollection alloc] initWithPointerCount:pointerCount
+    _type      = type;
+    _buttons   = [[VHIDButtonCollection alloc] initWithButtonCount:buttonCount];
+    _pointers  = [[VHIDPointerCollection alloc] initWithPointerCount:pointerCount
                                                            isRelative:isRelative];
 
-    m_State     = [[NSMutableData alloc]
+    _state     = [[NSMutableData alloc]
                                 initWithLength:
-                                    [[m_Buttons state] length] +
-                                    [[m_Pointers state] length]];
+                                    [[_buttons state] length] +
+                                    [[_pointers state] length]];
 
-    if(m_Buttons  == nil || m_Pointers == nil)
+    if(_buttons  == nil || _pointers == nil)
     {
         return nil;
     }
 
-    m_Descriptor = [self createDescriptor];
+    _descriptor = [self createDescriptor];
 
     return self;
 }
@@ -61,30 +61,30 @@
 
 - (VHIDDeviceType)type
 {
-    return m_Type;
+    return _type;
 }
 
 - (BOOL)isRelative
 {
-    if(m_Pointers == nil)
+    if(_pointers == nil)
         return NO;
 
-    return [m_Pointers isRelative];
+    return [_pointers isRelative];
 }
 
 - (NSUInteger)buttonCount
 {
-    return [m_Buttons buttonCount];
+    return [_buttons buttonCount];
 }
 
 - (NSUInteger)pointerCount
 {
-    return [m_Pointers pointerCount];
+    return [_pointers pointerCount];
 }
 
 - (BOOL)isButtonPressed:(NSUInteger)buttonIndex
 {
-    return [m_Buttons isButtonPressed:buttonIndex];
+    return [_buttons isButtonPressed:buttonIndex];
 }
 
 - (void)setButton:(NSUInteger)buttonIndex pressed:(BOOL)pressed
@@ -95,18 +95,18 @@
         return;
     }
 
-    [m_Buttons setButton:buttonIndex pressed:pressed];
+    [_buttons setButton:buttonIndex pressed:pressed];
 
-    if(m_Delegate != nil)
-        [m_Delegate VHIDDevice:self stateChanged:[self state]];
+    if(_delegate != nil)
+        [_delegate VHIDDevice:self stateChanged:[self state]];
 }
 
 - (NSPoint)pointerPosition:(NSUInteger)pointerIndex
 {
-    if(m_Pointers == nil)
+    if(_pointers == nil)
         return NSZeroPoint;
 
-    return [m_Pointers pointerPosition:pointerIndex];
+    return [_pointers pointerPosition:pointerIndex];
 }
 
 - (void)setPointer:(NSUInteger)pointerIndex position:(NSPoint)position
@@ -117,31 +117,31 @@
         return;
     }
 
-    [m_Pointers setPointer:pointerIndex position:position];
+    [_pointers setPointer:pointerIndex position:position];
 
-    if(m_Delegate != nil)
-        [m_Delegate VHIDDevice:self stateChanged:[self state]];
+    if(_delegate != nil)
+        [_delegate VHIDDevice:self stateChanged:[self state]];
 }
 
 - (void)reset
 {
-    [m_Buttons reset];
-    [m_Pointers reset];
+    [_buttons reset];
+    [_pointers reset];
 
-    if(m_Delegate != nil)
-        [m_Delegate VHIDDevice:self stateChanged:[self state]];
+    if(_delegate != nil)
+        [_delegate VHIDDevice:self stateChanged:[self state]];
 }
 
 - (NSData*)descriptor
 {
-    return m_Descriptor;
+    return _descriptor;
 }
 
 - (NSData*)state
 {
-    unsigned char   *data           = [m_State mutableBytes];
-    NSData          *buttonState    = [m_Buttons state];
-    NSData          *pointerState   = [m_Pointers state];
+    unsigned char   *data           = [_state mutableBytes];
+    NSData          *buttonState    = [_buttons state];
+    NSData          *pointerState   = [_pointers state];
 
     if(buttonState != nil)
     {
@@ -159,17 +159,17 @@
             [pointerState length]);
     }
 
-    return m_State;
+    return _state;
 }
 
 - (id<VHIDDeviceDelegate>)delegate
 {
-    return m_Delegate;
+    return _delegate;
 }
 
 - (void)setDelegate:(id<VHIDDeviceDelegate>)obj
 {
-    m_Delegate = obj;
+    _delegate = obj;
 }
 
 @end
@@ -178,9 +178,9 @@
 
 - (NSData*)createDescriptor
 {
-    BOOL             isMouse        = (m_Type == VHIDDeviceTypeMouse);
-    NSData          *buttonsHID     = [m_Buttons descriptor];
-    NSData          *pointersHID    = [m_Pointers descriptor];
+    BOOL             isMouse        = (_type == VHIDDeviceTypeMouse);
+    NSData          *buttonsHID     = [_buttons descriptor];
+    NSData          *pointersHID    = [_pointers descriptor];
     NSMutableData   *result         = [NSMutableData dataWithLength:
                                                         [buttonsHID length] +
                                                         [pointersHID length] +

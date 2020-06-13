@@ -14,14 +14,14 @@
 @interface WiimotePartSet : NSObject
 {
     @private
-        Wiimote                 *m_Owner;
-        WiimoteDevice           *m_Device;
+        Wiimote                 *_owner;
+        WiimoteDevice           *_device;
 
-        WiimoteIOManager        *m_IOManager;
-        WiimoteEventDispatcher  *m_EventDispatcher;
+        WiimoteIOManager        *_iOManager;
+        WiimoteEventDispatcher  *_eventDispatcher;
 
-        NSMutableDictionary     *m_PartDictionary;
-        NSMutableArray          *m_PartArray;
+        NSMutableDictionary     *_partDictionary;
+        NSMutableArray          *_partArray;
 }
 
 + (void)registerPartClass:(Class)cls;

@@ -33,7 +33,7 @@
 
 - (void)setXibObject:(id)xibObject
 {
-    m_XibObject = xibObject;
+    _xibObject = xibObject;
 }
 
 - (BOOL)isCanHandleObject:(id)object partially:(BOOL*)isPartially
@@ -73,7 +73,7 @@
 
 - (id)xibObject
 {
-    return m_XibObject;
+    return _xibObject;
 }
 
 - (BOOL)extractProperty:(NSMutableArray*)propertiesArray

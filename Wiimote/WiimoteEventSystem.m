@@ -57,7 +57,7 @@ NSString *WiimoteEventKey                   = @"WiimoteEventKey";
     if(self == nil)
         return nil;
 
-    m_Observers = [[NSMutableSet alloc] init];
+    _observers = [[NSMutableSet alloc] init];
 
     [WiimoteEventSystem subscribeToNotifications:self];
     return self;
@@ -71,12 +71,12 @@ NSString *WiimoteEventKey                   = @"WiimoteEventKey";
 
 - (void)addObserver:(id)observer
 {
-    [m_Observers addObject:observer];
+    [_observers addObject:observer];
 }
 
 - (void)removeObserver:(id)observer
 {
-    [m_Observers removeObject:observer];
+    [_observers removeObject:observer];
 }
 
 @end

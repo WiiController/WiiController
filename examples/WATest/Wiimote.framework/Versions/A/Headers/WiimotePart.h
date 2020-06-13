@@ -13,9 +13,9 @@
 @interface WiimotePart : NSObject
 {
     @private
-        Wiimote                 *m_Owner;
-        WiimoteEventDispatcher  *m_EventDispatcher;
-        WiimoteIOManager        *m_IOManager;
+        Wiimote                 *_owner;
+        WiimoteEventDispatcher  *_eventDispatcher;
+        WiimoteIOManager        *_iOManager;
 }
 
 + (void)registerPartClass:(Class)cls;

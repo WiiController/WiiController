@@ -13,10 +13,10 @@
 @interface WiimoteIRPoint : NSObject
 {
     @private
-        Wiimote     *m_Owner;
-        NSPoint      m_Position;
-        BOOL         m_IsOutOfView;
-        NSUInteger   m_Index;
+        Wiimote     *_owner;
+        NSPoint      _position;
+        BOOL         _isOutOfView;
+        NSUInteger   _index;
 }
 
 - (NSUInteger)index;

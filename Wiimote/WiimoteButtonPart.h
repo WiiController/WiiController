@@ -12,7 +12,7 @@
 @interface WiimoteButtonPart : WiimotePart
 {
     @private
-        BOOL m_ButtonState[WiimoteButtonCount];
+        BOOL _buttonState[WiimoteButtonCount];
 }
 
 - (BOOL)isButtonPressed:(WiimoteButtonType)button;

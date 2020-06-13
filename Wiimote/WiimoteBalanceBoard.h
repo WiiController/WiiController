@@ -13,14 +13,14 @@
                                                 WiimoteBalanceBoardProtocol>
 {
     @private
-        BOOL                                m_IsCalibrationDataReaded;
+        BOOL                                _isCalibrationDataReaded;
 
-        double                              m_TopLeftPress;
-        double                              m_TopRightPress;
-        double                              m_BottomLeftPress;
-        double                              m_BottomRightPress;
+        double                              _topLeftPress;
+        double                              _topRightPress;
+        double                              _bottomLeftPress;
+        double                              _bottomRightPress;
 
-        WiimoteBalanceBoardCalibrationData  m_CalibrationData;
+        WiimoteBalanceBoardCalibrationData  _calibrationData;
 }
 
 @end

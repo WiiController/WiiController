@@ -30,7 +30,7 @@
     if(self == nil)
         return nil;
 
-    m_LastNotifyTime = [[NSDate alloc] init];
+    _lastNotifyTime = [[NSDate alloc] init];
     return self;
 }
 
@@ -39,11 +39,11 @@
 {
     NSDate *now = [NSDate date];
 
-    if([now timeIntervalSinceDate:m_LastNotifyTime] >= 5.0)
+    if([now timeIntervalSinceDate:_lastNotifyTime] >= 5.0)
     {
         IOPMAssertionDeclareUserActivity(kIOPMAssertionTypePreventUserIdleDisplaySleep, kIOPMUserActiveLocal, &_pmAssertionID);
 
-        m_LastNotifyTime = now;
+        _lastNotifyTime = now;
     }
 }
 

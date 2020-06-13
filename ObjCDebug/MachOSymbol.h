@@ -13,8 +13,8 @@
 @interface MachOSymbol : NSObject
 {
     @private
-        NSString        *m_Name;
-        struct nlist_64  m_Info;
+        NSString        *_name;
+        struct nlist_64  _info;
 }
 
 @property (nonatomic, readonly, copy)   NSString                *name;

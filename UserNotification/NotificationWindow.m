@@ -77,36 +77,36 @@
 
     [self setContentView:contentView];
 
-    m_Notification          = notification;
-    m_IsMouseEntered        = NO;
-    m_IsCloseOnMouseExited  = NO;
+    _notification          = notification;
+    _isMouseEntered        = NO;
+    _isCloseOnMouseExited  = NO;
 
     return self;
 }
 
 - (void)dealloc
 {
-    [m_AutocloseTimer invalidate];
+    [_autocloseTimer invalidate];
 }
 
 - (id)target
 {
-    return m_Target;
+    return _target;
 }
 
 - (void)setTarget:(id)obj
 {
-    m_Target = obj;
+    _target = obj;
 }
 
 - (SEL)action
 {
-    return m_Action;
+    return _action;
 }
 
 - (void)setAction:(SEL)sel
 {
-    m_Action = sel;
+    _action = sel;
 }
 
 - (void)showWithTimeout:(NSTimeInterval)timeout
@@ -117,14 +117,14 @@
 
 - (void)close
 {
-    [m_AutocloseTimer invalidate];
-    m_AutocloseTimer = nil;
+    [_autocloseTimer invalidate];
+    _autocloseTimer = nil;
     [super close];
 }
 
 - (UserNotification*)notification
 {
-    return m_Notification;
+    return _notification;
 }
 
 - (BOOL)canBecomeKeyWindow
@@ -139,32 +139,32 @@
 
 - (void)autoclose:(id)sender
 {
-    m_AutocloseTimer = nil;
-    if(!m_IsMouseEntered)
+    _autocloseTimer = nil;
+    if(!_isMouseEntered)
         [self close];
     else
-        m_IsCloseOnMouseExited = YES;
+        _isCloseOnMouseExited = YES;
 }
 
 - (void)contentViewClicked:(id)sender
 {
-    if(m_Target != nil && m_Action != nil)
+    if(_target != nil && _action != nil)
     {
         ((void(*)(id self, SEL _cmd, NotificationWindow *sender))objc_msgSend)
-            (m_Target, m_Action, self);
+            (_target, _action, self);
         
     }
 }
 
 - (void)notificationWindowViewMouseEntered:(NotificationWindowView*)view
 {
-    m_IsMouseEntered = YES;
+    _isMouseEntered = YES;
 }
 
 - (void)notificationWindowViewMouseExited:(NotificationWindowView*)view
 {
-    m_IsMouseEntered = NO;
-    if(m_IsCloseOnMouseExited)
+    _isMouseEntered = NO;
+    if(_isCloseOnMouseExited)
         [self close];
 }
 
@@ -174,16 +174,16 @@
 
 - (void)startAutocloseTimer:(NSTimeInterval)timeout
 {
-    if(m_AutocloseTimer == nil)
+    if(_autocloseTimer == nil)
     {
-        m_AutocloseTimer = [NSTimer scheduledTimerWithTimeInterval:timeout
+        _autocloseTimer = [NSTimer scheduledTimerWithTimeInterval:timeout
                                                             target:self
                                                           selector:@selector(autoclose:)
                                                           userInfo:nil
                                                            repeats:NO];
 
-        [[NSRunLoop currentRunLoop] addTimer:m_AutocloseTimer forMode:NSEventTrackingRunLoopMode];
-        [[NSRunLoop currentRunLoop] addTimer:m_AutocloseTimer forMode:NSModalPanelRunLoopMode];
+        [[NSRunLoop currentRunLoop] addTimer:_autocloseTimer forMode:NSEventTrackingRunLoopMode];
+        [[NSRunLoop currentRunLoop] addTimer:_autocloseTimer forMode:NSModalPanelRunLoopMode];
     }
 }
 

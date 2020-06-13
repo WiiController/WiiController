@@ -76,11 +76,11 @@
     if(self == nil)
         return nil;
 
-    m_NotificationClass       = NSClassFromString(NSUserNotificationClassName);
-    m_NotificationCenterClass = NSClassFromString(NSUserNotificationCenterClassName);
+    _notificationClass       = NSClassFromString(NSUserNotificationClassName);
+    _notificationCenterClass = NSClassFromString(NSUserNotificationCenterClassName);
 
     [(id<NSUserNotificationCenterFutureProtocol>)
-        [m_NotificationCenterClass defaultUserNotificationCenter] setDelegate:self];
+        [_notificationCenterClass defaultUserNotificationCenter] setDelegate:self];
 
     [[NSNotificationCenter defaultCenter]
                                     addObserver:self
@@ -120,8 +120,8 @@
         return;
     }
 
-    id<NSUserNotificationCenterFutureProtocol>  center  = (id)[m_NotificationCenterClass defaultUserNotificationCenter];
-    id<NSUserNotificationFutureProtocol>        n       = [[m_NotificationClass alloc] init];
+    id<NSUserNotificationCenterFutureProtocol>  center  = (id)[_notificationCenterClass defaultUserNotificationCenter];
+    id<NSUserNotificationFutureProtocol>        n       = [[_notificationClass alloc] init];
 
     [n setInformativeText:[notification text]];
     [n setTitle:[notification title]];
@@ -168,7 +168,7 @@
 - (void)applicationWillTerminateNotification:(NSNotification*)notification
 {
     [(id<NSUserNotificationCenterFutureProtocol>)
-        [m_NotificationCenterClass defaultUserNotificationCenter]
+        [_notificationCenterClass defaultUserNotificationCenter]
             removeAllDeliveredNotifications];
 }
 

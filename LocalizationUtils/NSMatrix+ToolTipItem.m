@@ -17,20 +17,20 @@
     if(self == nil)
         return nil;
 
-    m_Cell  = cell;
-    m_Owner = owner;
+    _cell  = cell;
+    _owner = owner;
 
     return self;
 }
 
 - (NSString*)toolTip
 {
-    return [m_Owner toolTipForCell:m_Cell];
+    return [_owner toolTipForCell:_cell];
 }
 
 - (void)setToolTip:(NSString*)toolTip
 {
-    [m_Owner setToolTip:toolTip forCell:m_Cell];
+    [_owner setToolTip:toolTip forCell:_cell];
 }
 
 @end

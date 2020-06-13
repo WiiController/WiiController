@@ -33,16 +33,16 @@
 
 - (void)initParts
 {
-    m_IRPart            = (WiimoteIRPart*)              [self partWithClass:[WiimoteIRPart class]];
-    m_LEDPart           = (WiimoteLEDPart*)             [self partWithClass:[WiimoteLEDPart class]];
-    m_ButtonPart        = (WiimoteButtonPart*)          [self partWithClass:[WiimoteButtonPart class]];
-    m_BatteryPart       = (WiimoteBatteryPart*)         [self partWithClass:[WiimoteBatteryPart class]];
-    m_VibrationPart     = (WiimoteVibrationPart*)       [self partWithClass:[WiimoteVibrationPart class]];
-    m_AccelerometerPart = (WiimoteAccelerometerPart*)   [self partWithClass:[WiimoteAccelerometerPart class]];
-    m_ExtensionPart     = (WiimoteExtensionPart*)       [self partWithClass:[WiimoteExtensionPart class]];
+    _iRPart            = (WiimoteIRPart*)              [self partWithClass:[WiimoteIRPart class]];
+    _lEDPart           = (WiimoteLEDPart*)             [self partWithClass:[WiimoteLEDPart class]];
+    _buttonPart        = (WiimoteButtonPart*)          [self partWithClass:[WiimoteButtonPart class]];
+    _batteryPart       = (WiimoteBatteryPart*)         [self partWithClass:[WiimoteBatteryPart class]];
+    _vibrationPart     = (WiimoteVibrationPart*)       [self partWithClass:[WiimoteVibrationPart class]];
+    _accelerometerPart = (WiimoteAccelerometerPart*)   [self partWithClass:[WiimoteAccelerometerPart class]];
+    _extensionPart     = (WiimoteExtensionPart*)       [self partWithClass:[WiimoteExtensionPart class]];
 
-    [m_LEDPart setDevice:m_Device];
-	[m_VibrationPart setDevice:m_Device];
+    [_lEDPart setDevice:_device];
+	[_vibrationPart setDevice:_device];
 }
 
 - (id)initWithWiimoteDevice:(WiimoteDevice*)device
@@ -51,25 +51,25 @@
     if(self == nil)
         return nil;
 
-    m_Device    = device;
-    m_PartSet   = [[WiimotePartSet alloc] initWithOwner:self device:m_Device];
-    m_ModelName = [[device name] copy];
+    _device    = device;
+    _partSet   = [[WiimotePartSet alloc] initWithOwner:self device:_device];
+    _modelName = [[device name] copy];
 
-    if(m_Device == nil || ![m_Device connect])
+    if(_device == nil || ![_device connect])
     {
         return nil;
     }
 
-	[m_Device setDelegate:self];
+	[_device setDelegate:self];
 
 	[self initParts];
     [self requestUpdateState];
     [self deviceConfigurationChanged];
 
     [Wiimote wiimoteConnected:self];
-	[[m_PartSet eventDispatcher] postConnectedNotification];
+	[[_partSet eventDispatcher] postConnectedNotification];
 
-	[m_PartSet performSelector:@selector(connected)
+	[_partSet performSelector:@selector(connected)
 					withObject:nil
 					afterDelay:0.0];
 
@@ -92,7 +92,7 @@
 
 - (void)dealloc
 {
-    [m_Device disconnect];
+    [_device disconnect];
 }
 
 + (void)connectToHIDDevice:(W_HIDDevice*)device
@@ -107,7 +107,7 @@
 
 - (id)lowLevelDevice
 {
-    return [m_Device lowLevelDevice];
+    return [_device lowLevelDevice];
 }
 
 @end
@@ -116,14 +116,14 @@
 
 - (void)wiimoteDevice:(WiimoteDevice*)device handleReport:(WiimoteDeviceReport*)report
 {
-	[m_PartSet handleReport:report];
+	[_partSet handleReport:report];
 }
 
 - (void)wiimoteDeviceDisconnected:(WiimoteDevice*)device
 {
-	[m_PartSet disconnected];
+	[_partSet disconnected];
     [Wiimote wiimoteDisconnected:self];
-	[[m_PartSet eventDispatcher] postDisconnectNotification];
+	[[_partSet eventDispatcher] postDisconnectNotification];
 }
 
 @end

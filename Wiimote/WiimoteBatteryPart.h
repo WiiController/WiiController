@@ -11,8 +11,8 @@
 @interface WiimoteBatteryPart : WiimotePart
 {
     @private
-        CGFloat m_Level;
-        BOOL    m_IsLow;
+        CGFloat _level;
+        BOOL    _isLow;
 }
 
 - (CGFloat)batteryLevel;

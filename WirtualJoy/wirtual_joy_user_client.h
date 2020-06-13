@@ -46,12 +46,12 @@ class WirtualJoyUserClient : public IOUserClient
         static const size_t                     externalMethodCount = 6;
         static const IOExternalMethodDispatch   externalMethodDispatchTable[externalMethodCount];
 
-        WirtualJoy          *m_Owner;
-        WirtualJoyDevice    *m_Device;
-        OSString            *m_DeviceProductString;
-        OSString            *m_DeviceSerialNumberString;
-        uint32_t             m_DeviceVendorID;
-        uint32_t             m_DeviceProductID;
+        WirtualJoy          *_owner;
+        WirtualJoyDevice    *_device;
+        OSString            *_deviceProductString;
+        OSString            *_deviceSerialNumberString;
+        uint32_t             _deviceVendorID;
+        uint32_t             _deviceProductID;
 
         static IOReturn _enableDevice(WirtualJoyUserClient *target, void *reference, IOExternalMethodArguments *args);
         static IOReturn _disableDevice(WirtualJoyUserClient *target, void *reference, IOExternalMethodArguments *args);

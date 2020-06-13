@@ -71,11 +71,11 @@ static const unsigned char buttonMasks[] =
 
     NSUInteger stateSize = 0;
 
-    m_ButtonCount   = buttonCount;
-    m_Descriptor    = [VHIDButtonCollection descriptorWithButtonCount:buttonCount
+    _buttonCount   = buttonCount;
+    _descriptor    = [VHIDButtonCollection descriptorWithButtonCount:buttonCount
                                                              stateSize:&stateSize];
 
-    m_State         = [[NSMutableData alloc] initWithLength:stateSize];
+    _state         = [[NSMutableData alloc] initWithLength:stateSize];
 
     [self reset];
 
@@ -85,29 +85,29 @@ static const unsigned char buttonMasks[] =
 
 - (NSUInteger)buttonCount
 {
-    return m_ButtonCount;
+    return _buttonCount;
 }
 
 - (BOOL)isButtonPressed:(NSUInteger)buttonIndex
 {
-    if(buttonIndex >= m_ButtonCount)
+    if(buttonIndex >= _buttonCount)
         return NO;
 
     NSUInteger       buttonByte = buttonIndex / 8;
     NSUInteger       buttonBit  = buttonIndex % 8;
-    unsigned char   *data       = (unsigned char*)[m_State mutableBytes];
+    unsigned char   *data       = (unsigned char*)[_state mutableBytes];
 
     return ((data[buttonByte] & buttonMasks[buttonBit]) != 0);
 }
 
 - (void)setButton:(NSUInteger)buttonIndex pressed:(BOOL)pressed
 {
-    if(buttonIndex >= m_ButtonCount)
+    if(buttonIndex >= _buttonCount)
         return;
 
     NSUInteger       buttonByte = buttonIndex / 8;
     NSUInteger       buttonBit  = buttonIndex % 8;
-    unsigned char   *data       = (unsigned char*)[m_State mutableBytes];
+    unsigned char   *data       = (unsigned char*)[_state mutableBytes];
 
     if(pressed)
         data[buttonByte] |= buttonMasks[buttonBit];
@@ -117,17 +117,17 @@ static const unsigned char buttonMasks[] =
 
 - (void)reset
 {
-    memset([m_State mutableBytes], 0, [m_State length]);
+    memset([_state mutableBytes], 0, [_state length]);
 }
 
 - (NSData*)descriptor
 {
-    return m_Descriptor;
+    return _descriptor;
 }
 
 - (NSData*)state
 {
-    return m_State;
+    return _state;
 }
 
 @end

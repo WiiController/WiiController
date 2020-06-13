@@ -11,18 +11,18 @@
 @interface UserNotificationCenterScreenCornerView : NSView
 {
     @private
-        NSImage                            *m_BGImage;
+        NSImage                            *_bGImage;
 
-        UserNotificationCenterScreenCorner  m_ScreenCorner;
-        int                                 m_UnderMouseScreenCorner;
-        int                                 m_DraggedMouseScreenCorner;
-        int                                 m_ClickedMouseScreenCorner;
-        BOOL                                m_IsEnabled;
+        UserNotificationCenterScreenCorner  _screenCorner;
+        int                                 _underMouseScreenCorner;
+        int                                 _draggedMouseScreenCorner;
+        int                                 _clickedMouseScreenCorner;
+        BOOL                                _isEnabled;
 
-        id                                  m_Target;
-        SEL                                 m_Action;
+        id                                  _target;
+        SEL                                 _action;
 
-        NSTrackingRectTag                   m_TrackingRectTags[4];
+        NSTrackingRectTag                   _trackingRectTags[4];
 }
 
 + (NSSize)bestSize;

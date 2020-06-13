@@ -15,12 +15,12 @@
 
 - (void)updateWindowState
 {
-    [m_DiscoveryButton setEnabled:
-                            (!m_IsDiscovering) &&
-                            (m_ConnectedWiimotes == 0)];
+    [_discoveryButton setEnabled:
+                            (!_isDiscovering) &&
+                            (_connectedWiimotes == 0)];
 
-    [m_ConnectedTextField setStringValue:
-                            ((m_ConnectedWiimotes == 0)?
+    [_connectedTextField setStringValue:
+                            ((_connectedWiimotes == 0)?
                                 (@"No wii remote connected"):
                                 (@"Wii remote connected"))];
 }
@@ -58,7 +58,7 @@
 - (IBAction)toggleDebugOutput:(id)sender
 {
     [[OCLog sharedLog] setLevel:
-                            (([m_DebugCheckBox state] == NSOnState)?
+                            (([_debugCheckBox state] == NSOnState)?
                                 (OCLogLevelDebug):
                                 (OCLogLevelError))];
 }
@@ -70,7 +70,7 @@
 
 - (IBAction)clearLog:(id)sender
 {
-    [m_Log setString:@""];
+    [_log setString:@""];
 }
 
 - (IBAction)detectMotionPlus:(id)sender
@@ -90,33 +90,33 @@
     NSAttributedString *tmp = [[NSAttributedString alloc]
                                     initWithString:[NSString stringWithFormat:@"%@\n", logLine]];
 
-    [[m_Log textStorage] appendAttributedString:tmp];
+    [[_log textStorage] appendAttributedString:tmp];
     [tmp release];
 }
 
 - (void)discoveryBegin
 {
-    m_IsDiscovering = YES;
+    _isDiscovering = YES;
     [self updateWindowState];
     [self log:@"Begin discovery..."];
 }
 
 - (void)discoveryEnd
 {
-    m_IsDiscovering = NO;
+    _isDiscovering = NO;
     [self updateWindowState];
     [self log:@"End discovery"];
 }
 
 - (void)wiimoteConnected
 {
-    m_ConnectedWiimotes++;
+    _connectedWiimotes++;
     [self updateWindowState];
 }
 
 - (void)wiimoteDisconnected
 {
-    m_ConnectedWiimotes--;
+    _connectedWiimotes--;
     [self updateWindowState];
 }
 

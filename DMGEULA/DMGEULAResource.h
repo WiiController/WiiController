@@ -11,9 +11,9 @@
 @interface DMGEULAResource : NSObject
 {
     @private
-        NSMutableArray  *m_Languages;
-        NSMutableArray  *m_LicenseFilePaths;
-        DMGEULALanguage *m_DefaultLanguage;
+        NSMutableArray  *_languages;
+        NSMutableArray  *_licenseFilePaths;
+        DMGEULALanguage *_defaultLanguage;
 }
 
 - (NSArray*)languages;

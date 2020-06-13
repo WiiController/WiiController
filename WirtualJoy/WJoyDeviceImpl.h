@@ -30,7 +30,7 @@ typedef enum
 @interface WJoyDeviceImpl : NSObject
 {
     @private
-        io_connect_t m_Connection;
+        io_connect_t _connection;
 }
 
 + (BOOL)prepare;

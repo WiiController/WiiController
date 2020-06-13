@@ -20,7 +20,7 @@
 
 - (BOOL)isVibrationEnabled
 {
-    return [m_Device isVibrationEnabled];
+    return [_device isVibrationEnabled];
 }
 
 - (void)setVibrationEnabled:(BOOL)enabled
@@ -28,7 +28,7 @@
     if([self isVibrationEnabled] == enabled)
         return;
 
-	if(![m_Device setVibrationEnabled:enabled])
+	if(![_device setVibrationEnabled:enabled])
         return;
 
     [[self eventDispatcher] postVibrationStateChangedNotification:enabled];
@@ -36,7 +36,7 @@
 
 - (void)setDevice:(WiimoteDevice*)device
 {
-	m_Device = device;
+	_device = device;
 }
 
 @end

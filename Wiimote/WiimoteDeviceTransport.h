@@ -25,7 +25,7 @@
 @interface WiimoteDeviceTransport : NSObject
 {
     @private
-        id m_Delegate;
+        id _delegate;
 }
 
 + (WiimoteDeviceTransport*)withHIDDevice:(W_HIDDevice*)device;

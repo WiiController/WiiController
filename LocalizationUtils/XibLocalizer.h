@@ -46,7 +46,7 @@ APPKIT_EXTERN NSString *XibLocalizerLocalizableXibsKey;
 @interface XibLocalizer : NSObject
 {
     @private
-        NSMutableDictionary *m_Settings;
+        NSMutableDictionary *_settings;
 }
 
 + (XibLocalizer*)sharedInstance;

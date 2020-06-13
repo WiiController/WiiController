@@ -37,8 +37,8 @@
 @interface LocalizationHook : NSObject
 {
     @private
-        BOOL                            m_IsEnabled;
-        id<LocalizationHookDelegate>    m_Delegate;
+        BOOL                            _isEnabled;
+        id<LocalizationHookDelegate>    _delegate;
 }
 
 - (BOOL)isEnabled;

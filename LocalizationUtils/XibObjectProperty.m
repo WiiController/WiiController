@@ -51,26 +51,26 @@
     if(self == nil)
         return nil;
 
-    m_Owner     = owner;
-    m_GetMethod = getMethod;
-    m_SetMethod = setMethod;
+    _owner     = owner;
+    _getMethod = getMethod;
+    _setMethod = setMethod;
 
     return self;
 }
 
 - (NSString*)value
 {
-    return [m_Owner performSelector:m_GetMethod];
+    return [_owner performSelector:_getMethod];
 }
 
 - (void)setValue:(NSString*)value
 {
-    [m_Owner performSelector:m_SetMethod withObject:value];
+    [_owner performSelector:_setMethod withObject:value];
 }
 
 - (id)owner
 {
-    return m_Owner;
+    return _owner;
 }
 
 @end

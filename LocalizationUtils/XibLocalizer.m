@@ -42,7 +42,7 @@ NSString *XibLocalizerLocalizableXibsKey = @"LocalizedXibs";
     if(self == nil)
         return nil;
 
-    m_Settings = [[NSMutableDictionary alloc] init];
+    _settings = [[NSMutableDictionary alloc] init];
 
     [[NSNotificationCenter defaultCenter]
                                     addObserver:self
@@ -65,7 +65,7 @@ NSString *XibLocalizerLocalizableXibsKey = @"LocalizedXibs";
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [m_Settings release];
+    [_settings release];
     [super dealloc];
 }
 
@@ -86,12 +86,12 @@ NSString *XibLocalizerLocalizableXibsKey = @"LocalizedXibs";
 
 - (void)addXib:(NSString*)name bundle:(NSBundle*)bundle stringsFileName:(NSString*)stringsFileName
 {
-    NSMutableDictionary *bundleSettings = [m_Settings objectForKey:[bundle bundlePath]];
+    NSMutableDictionary *bundleSettings = [_settings objectForKey:[bundle bundlePath]];
 
     if(bundleSettings == nil)
     {
         bundleSettings = [NSMutableDictionary dictionary];
-        [m_Settings setObject:bundleSettings forKey:[bundle bundlePath]];
+        [_settings setObject:bundleSettings forKey:[bundle bundlePath]];
     }
 
     [bundleSettings setObject:stringsFileName forKey:name];
@@ -105,7 +105,7 @@ NSString *XibLocalizerLocalizableXibsKey = @"LocalizedXibs";
     if(dictionary == nil)
         return;
 
-    [m_Settings setObject:[[dictionary mutableCopy] autorelease]
+    [_settings setObject:[[dictionary mutableCopy] autorelease]
                    forKey:[bundle bundlePath]];
 }
 
@@ -119,12 +119,12 @@ NSString *XibLocalizerLocalizableXibsKey = @"LocalizedXibs";
 
 - (void)removeXib:(NSString*)name bundle:(NSBundle*)bundle
 {
-    NSMutableDictionary *bundleSettings = [m_Settings objectForKey:[bundle bundlePath]];
+    NSMutableDictionary *bundleSettings = [_settings objectForKey:[bundle bundlePath]];
 
     [bundleSettings removeObjectForKey:name];
 
     if([bundleSettings count] == 0)
-        [m_Settings removeObjectForKey:[bundle bundlePath]];
+        [_settings removeObjectForKey:[bundle bundlePath]];
 }
 
 - (void)removeXib:(NSString*)name
@@ -134,12 +134,12 @@ NSString *XibLocalizerLocalizableXibsKey = @"LocalizedXibs";
 
 - (void)removeBundle:(NSBundle*)bundle
 {
-    [m_Settings removeObjectForKey:[bundle bundlePath]];
+    [_settings removeObjectForKey:[bundle bundlePath]];
 }
 
 - (NSDictionary*)settings
 {
-    return [[m_Settings retain] autorelease];
+    return [[_settings retain] autorelease];
 }
 
 - (NSString*)processString:(NSString*)string
@@ -207,7 +207,7 @@ NSString *XibLocalizerLocalizableXibsKey = @"LocalizedXibs";
                 bundle:(NSBundle*)bundle
            rootObjects:(NSArray*)rootObjects
 {
-    NSDictionary    *bundleSettings     = [m_Settings objectForKey:[bundle bundlePath]];
+    NSDictionary    *bundleSettings     = [_settings objectForKey:[bundle bundlePath]];
     NSString        *stringsFileName    = [bundleSettings objectForKey:xibName];
 
     if(stringsFileName == nil)
@@ -319,7 +319,7 @@ NSString *XibLocalizerLocalizableXibsKey = @"LocalizedXibs";
     }
 
     NSAutoreleasePool       *pool               = nil;
-    NSString                *stringsFileName    = [[m_Settings objectForKey:[bundle bundlePath]] objectForKey:xibName];
+    NSString                *stringsFileName    = [[_settings objectForKey:[bundle bundlePath]] objectForKey:xibName];
     NSMutableArray          *objects            = [NSMutableArray arrayWithArray:rootObjects];
     NSMutableArray          *properties         = [NSMutableArray array];
     NSMutableSet            *processedObjects   = [NSMutableSet set];
@@ -329,7 +329,7 @@ NSString *XibLocalizerLocalizableXibsKey = @"LocalizedXibs";
 
     if(stringsFileName == nil)
     {
-        stringsFileName = [[m_Settings objectForKey:[bundle bundlePath]]
+        stringsFileName = [[_settings objectForKey:[bundle bundlePath]]
                                 objectForKey:[NSString stringWithFormat:@"*%@", xibName]];
 
         isOnlyProcess   = YES;

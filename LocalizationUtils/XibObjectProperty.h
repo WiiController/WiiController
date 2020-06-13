@@ -11,9 +11,9 @@
 @interface XibObjectProperty : NSObject
 {
     @private
-        id  m_Owner;
-        SEL m_GetMethod;
-        SEL m_SetMethod;
+        id  _owner;
+        SEL _getMethod;
+        SEL _setMethod;
 }
 
 + (BOOL)addTo:(NSMutableArray*)propertyArray

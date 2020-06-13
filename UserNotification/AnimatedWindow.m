@@ -30,7 +30,7 @@
     if(self == nil)
         return nil;
 
-    m_IsAnimationEnabled = NO;
+    _isAnimationEnabled = NO;
 
     return self;
 }
@@ -50,20 +50,20 @@
     if(self == nil)
         return nil;
 
-    m_IsAnimationEnabled = NO;
+    _isAnimationEnabled = NO;
 
     return self;
 }
 
 - (void)dealloc
 {
-    [m_CurrentAnimation stopAnimation];
+    [_currentAnimation stopAnimation];
 }
 
 - (void)makeKeyAndOrderFromWithoutAnimation:(id)sender
 {
-    [m_CurrentAnimation stopAnimation];
-    m_CurrentAnimation = nil;
+    [_currentAnimation stopAnimation];
+    _currentAnimation = nil;
 
     [super makeKeyAndOrderFront:sender];
     [self setAlphaValue:1.0f];
@@ -71,7 +71,7 @@
 
 - (void)makeKeyAndOrderFront:(id)sender
 {
-    if(![self isVisible] && m_IsAnimationEnabled)
+    if(![self isVisible] && _isAnimationEnabled)
     {
         [self setAlphaValue:0.0f];
         [super makeKeyAndOrderFront:sender];
@@ -83,7 +83,7 @@
 
 - (void)orderFront:(id)sender
 {
-    if(![self isVisible] && m_IsAnimationEnabled)
+    if(![self isVisible] && _isAnimationEnabled)
     {
         [self setAlphaValue:0.0f];
         [super orderFront:sender];
@@ -95,7 +95,7 @@
 
 - (void)orderOut:(id)sender
 {
-    if([self isVisible] && m_IsAnimationEnabled)
+    if([self isVisible] && _isAnimationEnabled)
     {
         [self setAlphaValue:1.0f];
         [super orderOut:sender];
@@ -107,11 +107,11 @@
 
 - (void)close
 {
-    if([self isVisible] && m_IsAnimationEnabled)
+    if([self isVisible] && _isAnimationEnabled)
     {
-        if(m_CurrentAnimation == nil ||
-         ![m_CurrentAnimation isAnimating] ||
-          ((id)[m_CurrentAnimation delegate]) != self)
+        if(_currentAnimation == nil ||
+         ![_currentAnimation isAnimating] ||
+          ((id)[_currentAnimation delegate]) != self)
         {
             [self fadeOut];
         }
@@ -122,24 +122,24 @@
 
 - (BOOL)isAnimationEnabled
 {
-    return m_IsAnimationEnabled;
+    return _isAnimationEnabled;
 }
 
 - (void)setAnimationEnabled:(BOOL)enabled
 {
-    if(m_IsAnimationEnabled == enabled)
+    if(_isAnimationEnabled == enabled)
         return;
 
-    m_IsAnimationEnabled = enabled;
-    if(m_IsAnimationEnabled)
+    _isAnimationEnabled = enabled;
+    if(_isAnimationEnabled)
     {
         if(![self isVisible])
             [self setAlphaValue:0.0f];
     }
     else
     {
-        [m_CurrentAnimation stopAnimation];
-        m_CurrentAnimation = nil;
+        [_currentAnimation stopAnimation];
+        _currentAnimation = nil;
 
         [self setAlphaValue:1.0f];
     }
@@ -147,7 +147,7 @@
 
 - (void)animationDidEnd:(NSAnimation*)animation
 {
-    m_CurrentAnimation = nil;
+    _currentAnimation = nil;
     [super close];
 }
 
@@ -157,37 +157,37 @@
 
 - (void)fadeIn
 {
-    [m_CurrentAnimation stopAnimation];
+    [_currentAnimation stopAnimation];
 
-    m_CurrentAnimation = [[NSViewAnimation alloc] initWithViewAnimations:
+    _currentAnimation = [[NSViewAnimation alloc] initWithViewAnimations:
                             [NSArray arrayWithObject:
                                 [NSDictionary dictionaryWithObjectsAndKeys:
                                     self,                           NSViewAnimationTargetKey,
                                     NSViewAnimationFadeInEffect,    NSViewAnimationEffectKey,
                                     nil]]];
 
-    [m_CurrentAnimation setDuration:0.25];
-    [m_CurrentAnimation setCurrentProgress:[self alphaValue]];
-    [m_CurrentAnimation setAnimationBlockingMode:NSAnimationNonblocking];
-    [m_CurrentAnimation startAnimation];
+    [_currentAnimation setDuration:0.25];
+    [_currentAnimation setCurrentProgress:[self alphaValue]];
+    [_currentAnimation setAnimationBlockingMode:NSAnimationNonblocking];
+    [_currentAnimation startAnimation];
 }
 
 - (void)fadeOut
 {
-    [m_CurrentAnimation stopAnimation];
+    [_currentAnimation stopAnimation];
 
-    m_CurrentAnimation = [[NSViewAnimation alloc] initWithViewAnimations:
+    _currentAnimation = [[NSViewAnimation alloc] initWithViewAnimations:
                             [NSArray arrayWithObject:
                                 [NSDictionary dictionaryWithObjectsAndKeys:
                                     self,                           NSViewAnimationTargetKey,
                                     NSViewAnimationFadeOutEffect,   NSViewAnimationEffectKey,
                                     nil]]];
 
-    [m_CurrentAnimation setDuration:0.25];
-    [m_CurrentAnimation setDelegate:(id)self];
-    [m_CurrentAnimation setCurrentProgress:1.0 - [self alphaValue]];
-    [m_CurrentAnimation setAnimationBlockingMode:NSAnimationNonblocking];
-    [m_CurrentAnimation startAnimation];
+    [_currentAnimation setDuration:0.25];
+    [_currentAnimation setDelegate:(id)self];
+    [_currentAnimation setCurrentProgress:1.0 - [self alphaValue]];
+    [_currentAnimation setAnimationBlockingMode:NSAnimationNonblocking];
+    [_currentAnimation startAnimation];
 }
 
 @end

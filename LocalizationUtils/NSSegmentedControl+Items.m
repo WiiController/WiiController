@@ -11,8 +11,8 @@
 @implementation NSSegmentedControlItem : NSObject
 {
     @private
-        NSSegmentedControl  *m_Owner;
-        NSUInteger           m_Index;
+        NSSegmentedControl  *_owner;
+        NSUInteger           _index;
 }
 
 - (id)initWithIndex:(NSUInteger)index owner:(NSSegmentedControl*)owner
@@ -22,25 +22,25 @@
     if(self == nil)
         return nil;
 
-    m_Index = index;
-    m_Owner = owner;
+    _index = index;
+    _owner = owner;
 
     return self;
 }
 
 - (NSString*)title
 {
-    return [m_Owner labelForSegment:m_Index];
+    return [_owner labelForSegment:_index];
 }
 
 - (void)setTitle:(NSString*)title
 {
-    [m_Owner setLabel:title forSegment:m_Index];
+    [_owner setLabel:title forSegment:_index];
 }
 
 - (NSMenu*)menu
 {
-    return [m_Owner menuForSegment:m_Index];
+    return [_owner menuForSegment:_index];
 }
 
 @end

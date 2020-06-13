@@ -14,11 +14,11 @@
 @interface WiimoteDeviceReport : NSObject
 {
 	@private
-		NSUInteger		 m_Type;
-		WiimoteDevice	*m_Device;
-		Wiimote			*m_Wiimote;
-        const uint8_t   *m_Data;
-        NSUInteger       m_DataLength;
+		NSUInteger		 _type;
+		WiimoteDevice	*_device;
+		Wiimote			*_wiimote;
+        const uint8_t   *_data;
+        NSUInteger       _dataLength;
 }
 
 - (NSUInteger)type; // WiimoteDeviceReportType

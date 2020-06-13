@@ -47,39 +47,39 @@ NSString *WJoyDeviceSerialNumberStringKey   = @"WJoyDeviceSerialNumberStringKey"
     NSString    *productString      = [properties objectForKey:WJoyDeviceProductStringKey];
     NSString    *serialNumberString = [properties objectForKey:WJoyDeviceSerialNumberStringKey];
 
-    m_Impl = [[WJoyDeviceImpl alloc] init];
-    if(m_Impl == nil)
+    _impl = [[WJoyDeviceImpl alloc] init];
+    if(_impl == nil)
     {
         return nil;
     }
 
     if(productString != nil)
-        [m_Impl setDeviceProductString:productString];
+        [_impl setDeviceProductString:productString];
 
     if(serialNumberString != nil)
-        [m_Impl setDeviceSerialNumberString:serialNumberString];
+        [_impl setDeviceSerialNumberString:serialNumberString];
 
     if(vendorID != 0 || productID != 0)
-        [m_Impl setDeviceVendorID:vendorID productID:productID];
+        [_impl setDeviceVendorID:vendorID productID:productID];
 
-    if(![m_Impl enable:HIDDescriptor])
+    if(![_impl enable:HIDDescriptor])
     {
         return nil;
     }
 
-    m_Properties = [properties copy];
+    _properties = [properties copy];
     return self;
 }
 
 
 - (NSDictionary*)properties
 {
-    return m_Properties;
+    return _properties;
 }
 
 - (BOOL)updateHIDState:(NSData*)HIDState
 {
-    return [m_Impl updateState:HIDState];
+    return [_impl updateState:HIDState];
 }
 
 @end

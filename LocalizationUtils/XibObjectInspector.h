@@ -11,7 +11,7 @@
 @interface XibObjectInspector : NSObject
 {
     @private
-        id m_XibObject;
+        id _xibObject;
 }
 
 // Проходит по всем plugin-ам, и проверяет на соответствие класс обьекта

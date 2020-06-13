@@ -37,8 +37,8 @@
     if(self == nil)
         return nil;
 
-    m_Delegate  = nil;
-    m_IsEnabled = NO;
+    _delegate  = nil;
+    _isEnabled = NO;
 
     return self;
 }
@@ -51,12 +51,12 @@
 
 - (BOOL)isEnabled
 {
-    return m_IsEnabled;
+    return _isEnabled;
 }
 
 - (void)setEnabled:(BOOL)enabled
 {
-    if(m_IsEnabled == enabled)
+    if(_isEnabled == enabled)
         return;
 
     if(enabled)
@@ -64,17 +64,17 @@
     else
         [LocalizationHook unregisterHook:self];
 
-    m_IsEnabled = enabled;
+    _isEnabled = enabled;
 }
 
 - (id<LocalizationHookDelegate>)delegate
 {
-    return m_Delegate;
+    return _delegate;
 }
 
 - (void)setDelegate:(id<LocalizationHookDelegate>)delegate
 {
-    m_Delegate = delegate;
+    _delegate = delegate;
 }
 
 @end
@@ -168,18 +168,18 @@
 
 - (NSString*)stringWillLocalize:(NSString*)string table:(NSString*)tableName
 {
-    if(m_Delegate == nil)
+    if(_delegate == nil)
         return string;
 
-    return [m_Delegate localizationHook:self stringWillLocalize:string table:tableName];
+    return [_delegate localizationHook:self stringWillLocalize:string table:tableName];
 }
 
 - (NSString*)stringDidLocalize:(NSString*)string table:(NSString*)tableName
 {
-    if(m_Delegate == nil)
+    if(_delegate == nil)
         return string;
 
-    return [m_Delegate localizationHook:self stringDidLocalize:string table:tableName];
+    return [_delegate localizationHook:self stringDidLocalize:string table:tableName];
 }
 
 @end

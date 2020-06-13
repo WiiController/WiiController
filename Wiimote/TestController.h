@@ -13,13 +13,13 @@
 @interface TestController : NSObject< OCLogHandler >
 {
     @private
-        IBOutlet NSTextView     *m_Log;
-        IBOutlet NSButton       *m_DiscoveryButton;
-        IBOutlet NSTextField    *m_ConnectedTextField;
-        IBOutlet NSButton       *m_DebugCheckBox;
+        IBOutlet NSTextView     *_log;
+        IBOutlet NSButton       *_discoveryButton;
+        IBOutlet NSTextField    *_connectedTextField;
+        IBOutlet NSButton       *_debugCheckBox;
 
-        NSUInteger               m_ConnectedWiimotes;
-        BOOL                     m_IsDiscovering;
+        NSUInteger               _connectedWiimotes;
+        BOOL                     _isDiscovering;
 }
 
 - (IBAction)toggleUseOneButtonClickConnection:(id)sender;

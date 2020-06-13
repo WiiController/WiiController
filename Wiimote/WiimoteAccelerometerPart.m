@@ -33,29 +33,29 @@
     if(self == nil)
         return nil;
 
-    m_IsCalibrationDataReaded   = NO;
-    m_Accelerometer             = [[WiimoteAccelerometer alloc] init];
+    _isCalibrationDataReaded   = NO;
+    _accelerometer             = [[WiimoteAccelerometer alloc] init];
 
-    [m_Accelerometer setDelegate:self];
+    [_accelerometer setDelegate:self];
 
     return self;
 }
 
 - (void)dealloc
 {
-    [m_Accelerometer setDelegate:nil];
+    [_accelerometer setDelegate:nil];
 }
 
 - (WiimoteAccelerometer*)accelerometer
 {
-    return m_Accelerometer;
+    return _accelerometer;
 }
 
 - (NSSet*)allowedReportTypeSet
 {
     static NSSet *result = nil;
 
-    if(![m_Accelerometer isEnabled])
+    if(![_accelerometer isEnabled])
         return nil;
 
     if(result == nil)
@@ -79,7 +79,7 @@
 
 - (void)handleReport:(WiimoteDeviceReport*)report
 {
-    if(![m_Accelerometer isEnabled] || !m_IsCalibrationDataReaded)
+    if(![_accelerometer isEnabled] || !_isCalibrationDataReaded)
         return;
 
     if([report length] < sizeof(WiimoteDeviceButtonAndAccelerometerStateReport))
@@ -106,12 +106,12 @@
     uint16_t y = (((uint16_t)stateReport->accelerometerY) << 2) | (((stateReport->accelerometerAdditionalYZ >> 5) & 0x1) << 1);
     uint16_t z = (((uint16_t)stateReport->accelerometerZ) << 2) | (((stateReport->accelerometerAdditionalYZ >> 6) & 0x1) << 1);
 
-    [m_Accelerometer setHardwareValueX:x y:y z:z];
+    [_accelerometer setHardwareValueX:x y:y z:z];
 }
 
 - (void)disconnected
 {
-    [m_Accelerometer reset];
+    [_accelerometer reset];
 }
 
 @end
@@ -141,19 +141,19 @@
     const WiimoteDeviceAccelerometerCalibrationData *calibrationData =
                 (const WiimoteDeviceAccelerometerCalibrationData*)[data bytes];
 
-    [m_Accelerometer setCalibrationData:calibrationData];
+    [_accelerometer setCalibrationData:calibrationData];
 	[self checkCalibrationData];
 
-    m_IsCalibrationDataReaded = YES;
+    _isCalibrationDataReaded = YES;
 }
 
 - (void)checkCalibrationData
 {
-    if([m_Accelerometer isHardwareZeroValuesInvalid])
-        [m_Accelerometer setHardwareZeroX:500 y:500 z:500];
+    if([_accelerometer isHardwareZeroValuesInvalid])
+        [_accelerometer setHardwareZeroX:500 y:500 z:500];
 
-    if([m_Accelerometer isHardware1gValuesInvalid])
-        [m_Accelerometer setHardware1gX:600 y:600 z:600];
+    if([_accelerometer isHardware1gValuesInvalid])
+        [_accelerometer setHardware1gX:600 y:600 z:600];
 }
 
 - (void)wiimoteAccelerometer:(WiimoteAccelerometer*)accelerometer

@@ -23,10 +23,10 @@
 
 @implementation WiimoteAutoWrapper
 {
-    Wiimote         *m_Device;
-    VHIDDevice      *m_HIDState;
-    NSPoint             m_ShiftsState;
-    WJoyDevice      *m_WJoy;
+    Wiimote         *_device;
+    VHIDDevice      *_hIDState;
+    NSPoint             _shiftsState;
+    WJoyDevice      *_wJoy;
     // For calibration of the analog sticks
     NSPoint minL, maxL, minR, maxR;
 }
@@ -71,12 +71,12 @@ static NSUInteger maxConnectedDevices = 0;
 
 - (void)wiimote:(Wiimote*)wiimote buttonPressed:(WiimoteButtonType)button
 {
-    [m_HIDState setButton:button pressed:YES];
+    [_hIDState setButton:button pressed:YES];
 }
 
 - (void)wiimote:(Wiimote*)wiimote buttonReleased:(WiimoteButtonType)button
 {
-    [m_HIDState setButton:button pressed:NO];
+    [_hIDState setButton:button pressed:NO];
 }
 
 - (void)wiimoteDisconnected:(Wiimote*)wiimote
@@ -85,31 +85,31 @@ static NSUInteger maxConnectedDevices = 0;
 
 - (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck buttonPressed:(WiimoteNunchuckButtonType)button
 {
-    [m_HIDState setButton:WiimoteButtonCount + button pressed:YES];
+    [_hIDState setButton:WiimoteButtonCount + button pressed:YES];
 }
 
 - (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck buttonReleased:(WiimoteNunchuckButtonType)button
 {
-    [m_HIDState setButton:WiimoteButtonCount + button pressed:NO];
+    [_hIDState setButton:WiimoteButtonCount + button pressed:NO];
 }
 
 - (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck stickPositionChanged:(NSPoint)position
 {
-    [m_HIDState setPointer:0 position:position];
+    [_hIDState setPointer:0 position:position];
 }
 
 - (void)      wiimote:(Wiimote*)wiimote
     classicController:(WiimoteClassicControllerExtension*)classic
         buttonPressed:(WiimoteClassicControllerButtonType)button
 {
-    [m_HIDState setButton:WiimoteButtonCount + button pressed:YES];
+    [_hIDState setButton:WiimoteButtonCount + button pressed:YES];
 }
 
 - (void)      wiimote:(Wiimote*)wiimote
     classicController:(WiimoteClassicControllerExtension*)classic
        buttonReleased:(WiimoteClassicControllerButtonType)button
 {
-    [m_HIDState setButton:WiimoteButtonCount + button pressed:NO];
+    [_hIDState setButton:WiimoteButtonCount + button pressed:NO];
 }
 
 - (void)      wiimote:(Wiimote*)wiimote
@@ -117,7 +117,7 @@ static NSUInteger maxConnectedDevices = 0;
                 stick:(WiimoteClassicControllerStickType)stick
       positionChanged:(NSPoint)position
 {
-    [m_HIDState setPointer:stick position:position];
+    [_hIDState setPointer:stick position:position];
 }
 
 - (void)      wiimote:(Wiimote*)wiimote
@@ -128,29 +128,29 @@ static NSUInteger maxConnectedDevices = 0;
 	switch(shift)
 	{
 		case WiimoteClassicControllerAnalogShiftTypeLeft:
-			m_ShiftsState.x = position;
+			_shiftsState.x = position;
 			break;
 
 		case WiimoteClassicControllerAnalogShiftTypeRight:
-			m_ShiftsState.y = position;
+			_shiftsState.y = position;
 			break;
 	}
 
-	[m_HIDState setPointer:WiimoteClassicControllerStickCount position:m_ShiftsState];
+	[_hIDState setPointer:WiimoteClassicControllerStickCount position:_shiftsState];
 }
 
 - (void)      wiimote:(Wiimote*)wiimote
 	   uProController:(WiimoteUProControllerExtension*)uPro
         buttonPressed:(WiimoteUProControllerButtonType)button
 {
-	[m_HIDState setButton:WiimoteButtonCount + button pressed:YES];
+	[_hIDState setButton:WiimoteButtonCount + button pressed:YES];
 }
 
 - (void)      wiimote:(Wiimote*)wiimote
 	   uProController:(WiimoteUProControllerExtension*)uPro
        buttonReleased:(WiimoteUProControllerButtonType)button
 {
-	[m_HIDState setButton:WiimoteButtonCount + button pressed:NO];
+	[_hIDState setButton:WiimoteButtonCount + button pressed:NO];
 }
 
 - (void)      wiimote:(Wiimote*)wiimote
@@ -186,29 +186,29 @@ static NSUInteger maxConnectedDevices = 0;
     NSLog(@"\nMinLx: %f\tMinLy: %f\tMaxLx: %f\tMaxLy: %f", minL.x, minL.y, maxL.x, maxL.y);
     NSLog(@"\nMinRx: %f\tMinRy: %f\tMaxRx: %f\tMaxRy: %f", minR.x, minR.y, maxR.x, maxR.y);
 	
-	[m_HIDState setPointer:stick position:position];
+	[_hIDState setPointer:stick position:position];
 }
 
 - (void)wiimote:(Wiimote*)wiimote extensionDisconnected:(WiimoteExtension*)extension
 {
-	m_ShiftsState = NSZeroPoint;
+	_shiftsState = NSZeroPoint;
 
 	for(NSUInteger i = 0; i <= WiimoteClassicControllerStickCount; i++)
-		[m_HIDState setPointer:0 position:NSZeroPoint];
+		[_hIDState setPointer:0 position:NSZeroPoint];
 
 	for(NSUInteger i = 0; i < WiimoteClassicControllerButtonCount; i++)
-		[m_HIDState setButton:WiimoteButtonCount + i pressed:NO];
+		[_hIDState setButton:WiimoteButtonCount + i pressed:NO];
 }
 
 - (void)VHIDDevice:(VHIDDevice*)device stateChanged:(NSData*)state
 {
     [[UserActivityNotifier sharedNotifier] notify];
-    [m_WJoy updateHIDState:state];
+    [_wJoy updateHIDState:state];
 }
 
 - (void)applicationWillTerminateNotification:(NSNotification*)notification
 {
-    [m_Device disconnect];
+    [_device disconnect];
 }
 
 @end
@@ -238,25 +238,25 @@ static NSUInteger maxConnectedDevices = 0;
         return nil;
     }
 
-    m_Device    = device;
-    m_HIDState  = [[VHIDDevice alloc] initWithType:VHIDDeviceTypeJoystick
+    _device    = device;
+    _hIDState  = [[VHIDDevice alloc] initWithType:VHIDDeviceTypeJoystick
                                       pointerCount:WiimoteClassicControllerStickCount + 1
                                        buttonCount:WiimoteButtonCount + WiimoteClassicControllerButtonCount
                                         isRelative:NO];
 
-    m_WJoy      = [[WJoyDevice alloc]
-                             initWithHIDDescriptor:[m_HIDState descriptor]
+    _wJoy      = [[WJoyDevice alloc]
+                             initWithHIDDescriptor:[_hIDState descriptor]
                                      productString:[WiimoteAutoWrapper wjoyNameFromWiimote:device]];
 
-    if(m_HIDState   == nil ||
-       m_WJoy       == nil)
+    if(_hIDState   == nil ||
+       _wJoy       == nil)
     {
         [device disconnect];
         return nil;
     }
 
-    [m_Device setDelegate:self];
-    [m_HIDState setDelegate:self];
+    [_device setDelegate:self];
+    [_hIDState setDelegate:self];
 
     [[NSNotificationCenter defaultCenter]
                                     addObserver:self

@@ -37,22 +37,22 @@
     NSArray     *partClasses        = [WiimotePartSet registredPartClasses];
     NSUInteger   countPartClasses   = [partClasses count];
 
-    m_Owner             = owner;
-    m_Device            = device;
-    m_IOManager         = [[WiimoteIOManager alloc] initWithOwner:owner device:device];
-    m_EventDispatcher   = [[WiimoteEventDispatcher alloc] initWithOwner:owner];
-    m_PartDictionary    = [[NSMutableDictionary alloc] initWithCapacity:countPartClasses];
-    m_PartArray         = [[NSMutableArray alloc] initWithCapacity:countPartClasses];
+    _owner             = owner;
+    _device            = device;
+    _iOManager         = [[WiimoteIOManager alloc] initWithOwner:owner device:device];
+    _eventDispatcher   = [[WiimoteEventDispatcher alloc] initWithOwner:owner];
+    _partDictionary    = [[NSMutableDictionary alloc] initWithCapacity:countPartClasses];
+    _partArray         = [[NSMutableArray alloc] initWithCapacity:countPartClasses];
 
     for(NSUInteger i = 0; i < countPartClasses; i++)
     {
         Class        partClass  = [partClasses objectAtIndex:i];
         WiimotePart *part       = [[partClass alloc] initWithOwner:owner
-                                                   eventDispatcher:m_EventDispatcher
-                                                         ioManager:m_IOManager];
+                                                   eventDispatcher:_eventDispatcher
+                                                         ioManager:_iOManager];
 
-        [m_PartDictionary setObject:part forKey:(id)partClass];
-        [m_PartArray addObject:part];
+        [_partDictionary setObject:part forKey:(id)partClass];
+        [_partArray addObject:part];
     }
 
     return self;
@@ -61,27 +61,27 @@
 
 - (Wiimote*)owner
 {
-    return m_Owner;
+    return _owner;
 }
 
 - (WiimoteDevice*)device
 {
-    return m_Device;
+    return _device;
 }
 
 - (WiimoteEventDispatcher*)eventDispatcher
 {
-    return m_EventDispatcher;
+    return _eventDispatcher;
 }
 
 - (WiimotePart*)partWithClass:(Class)cls
 {
-    return [m_PartDictionary objectForKey:cls];
+    return [_partDictionary objectForKey:cls];
 }
 
 - (WiimoteDeviceReportType)bestReportType
 {
-    NSUInteger    countParts  = [m_PartArray count];
+    NSUInteger    countParts  = [_partArray count];
     NSMutableSet *reportTypes = [NSMutableSet setWithObjects:
                                     [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonState],
                                     [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerState],
@@ -95,7 +95,7 @@
 
     for(NSUInteger i = 0; i < countParts; i++)
     {
-        NSSet *partReports = [[m_PartArray objectAtIndex:i] allowedReportTypeSet];
+        NSSet *partReports = [[_partArray objectAtIndex:i] allowedReportTypeSet];
 
         if(partReports == nil)
             continue;
@@ -115,27 +115,27 @@
 
 - (void)connected
 {
-	NSUInteger countParts = [m_PartArray count];
+	NSUInteger countParts = [_partArray count];
 
     for(NSUInteger i = 0; i < countParts; i++)
-        [[m_PartArray objectAtIndex:i] connected];
+        [[_partArray objectAtIndex:i] connected];
 }
 
 - (void)handleReport:(WiimoteDeviceReport*)report
 {
-    NSUInteger countParts = [m_PartArray count];
+    NSUInteger countParts = [_partArray count];
 
 	[report setWiimote:[self owner]];
     for(NSUInteger i = 0; i < countParts; i++)
-        [[m_PartArray objectAtIndex:i] handleReport:report];
+        [[_partArray objectAtIndex:i] handleReport:report];
 }
 
 - (void)disconnected
 {
-    NSUInteger countParts = [m_PartArray count];
+    NSUInteger countParts = [_partArray count];
 
     for(NSUInteger i = 0; i < countParts; i++)
-        [[m_PartArray objectAtIndex:i] disconnected];
+        [[_partArray objectAtIndex:i] disconnected];
 }
 
 @end

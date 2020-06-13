@@ -63,12 +63,12 @@
 
 - (NSPoint)stickPosition:(WiimoteUProControllerStickType)stick
 {
-	return m_StickPositions[stick];
+	return _stickPositions[stick];
 }
 
 - (BOOL)isButtonPressed:(WiimoteUProControllerButtonType)button
 {
-	return m_ButtonState[button];
+	return _buttonState[button];
 }
 
 - (NSPoint)normalizeStick:(WiimoteUProControllerStickType)stick position:(NSPoint)position
@@ -82,10 +82,10 @@
 {
     newPosition = [self normalizeStick:stick position:newPosition];
 
-    if(WiimoteDeviceIsPointEqual(m_StickPositions[stick], newPosition))
+    if(WiimoteDeviceIsPointEqual(_stickPositions[stick], newPosition))
         return;
 
-    m_StickPositions[stick] = newPosition;
+    _stickPositions[stick] = newPosition;
 
     [[self eventDispatcher]
                 postUProController:self
@@ -95,10 +95,10 @@
 
 - (void)setButton:(WiimoteUProControllerButtonType)button pressed:(BOOL)pressed
 {
-    if(m_ButtonState[button] == pressed)
+    if(_buttonState[button] == pressed)
         return;
 
-    m_ButtonState[button] = pressed;
+    _buttonState[button] = pressed;
 
     if(pressed)
     {
@@ -177,10 +177,10 @@
 - (void)reset
 {
 	for(NSUInteger i = 0; i < WiimoteUProControllerButtonCount; i++)
-        m_ButtonState[i] = NO;
+        _buttonState[i] = NO;
 
     for(NSUInteger i = 0; i < WiimoteUProControllerStickCount; i++)
-        m_StickPositions[i] = NSZeroPoint;
+        _stickPositions[i] = NSZeroPoint;
 }
 
 @end

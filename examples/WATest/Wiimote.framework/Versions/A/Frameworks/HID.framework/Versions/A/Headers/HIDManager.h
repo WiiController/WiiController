@@ -16,8 +16,8 @@ FOUNDATION_EXPORT NSString *HIDManagerDeviceKey;
 @interface HIDManager : NSObject
 {
     @private
-        IOHIDManagerRef  m_Handle;
-        NSMutableSet    *m_ConnectedDevices;
+        IOHIDManagerRef  _handle;
+        NSMutableSet    *_connectedDevices;
 }
 
 + (HIDManager*)manager;

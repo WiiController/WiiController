@@ -1117,7 +1117,7 @@
         <customObject id="420" customClass="NSFontManager"/>
         <customObject id="667" customClass="MainController">
             <connections>
-                <outlet property="m_Window" destination="371" id="668"/>
+                <outlet property="_window" destination="371" id="668"/>
             </connections>
         </customObject>
     </objects>

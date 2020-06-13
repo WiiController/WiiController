@@ -11,9 +11,9 @@
 @interface ObjCCallTracer : NSObject
 {
     @private
-        uint64_t    m_LogEnableFn;
-        uint64_t    m_SetLogFnFn;
-        BOOL        m_IsEnabled;
+        uint64_t    _logEnableFn;
+        uint64_t    _setLogFnFn;
+        BOOL        _isEnabled;
 }
 
 + (ObjCCallTracer*)sharedInstance;

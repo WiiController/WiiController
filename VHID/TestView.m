@@ -27,32 +27,32 @@
 
 - (void)moveRight:(id)sender
 {
-    [m_Delegate testView:self keyPressed:TestViewKeyRight];
+    [_delegate testView:self keyPressed:TestViewKeyRight];
 }
 
 - (void)moveLeft:(id)sender
 {
-    [m_Delegate testView:self keyPressed:TestViewKeyLeft];
+    [_delegate testView:self keyPressed:TestViewKeyLeft];
 }
 
 - (void)moveUp:(id)sender
 {
-    [m_Delegate testView:self keyPressed:TestViewKeyUp];
+    [_delegate testView:self keyPressed:TestViewKeyUp];
 }
 
 - (void)moveDown:(id)sender
 {
-    [m_Delegate testView:self keyPressed:TestViewKeyDown];
+    [_delegate testView:self keyPressed:TestViewKeyDown];
 }
 
 - (id<TestViewDelegate>)delegate
 {
-    return m_Delegate;
+    return _delegate;
 }
 
 - (void)setDelegate:(id<TestViewDelegate>)obj
 {
-    m_Delegate = obj;
+    _delegate = obj;
 }
 
 @end

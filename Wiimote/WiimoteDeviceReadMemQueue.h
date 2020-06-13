@@ -15,9 +15,9 @@
 @interface WiimoteDeviceReadMemQueue : NSObject
 {
 	@private
-		WiimoteDevice					*m_Device;
-		NSMutableArray					*m_ReadMemHandlersQueue;
-        WiimoteDeviceReadMemHandler		*m_CurrentMemHandler;
+		WiimoteDevice					*_device;
+		NSMutableArray					*_readMemHandlersQueue;
+        WiimoteDeviceReadMemHandler		*_currentMemHandler;
 }
 
 - (id)initWithDevice:(WiimoteDevice*)device;

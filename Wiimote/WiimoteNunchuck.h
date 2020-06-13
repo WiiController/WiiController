@@ -15,14 +15,14 @@
                                             WiimoteNunchuckProtocol>
 {
     @private
-		BOOL								 m_IsCalibrationDataReaded;
+		BOOL								 _isCalibrationDataReaded;
 
-        BOOL								 m_ButtonState[WiimoteNunchuckButtonCount];
+        BOOL								 _buttonState[WiimoteNunchuckButtonCount];
 
-		NSPoint								 m_StickPosition;
-        WiimoteDeviceStickCalibrationData	 m_StickCalibrationData;
+		NSPoint								 _stickPosition;
+        WiimoteDeviceStickCalibrationData	 _stickCalibrationData;
 
-        WiimoteAccelerometer                *m_Accelerometer;
+        WiimoteAccelerometer                *_accelerometer;
 }
 
 @end

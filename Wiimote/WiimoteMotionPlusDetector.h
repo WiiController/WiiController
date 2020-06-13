@@ -12,16 +12,16 @@
 @interface WiimoteMotionPlusDetector : NSObject
 {
     @private
-        WiimoteIOManager *m_IOManager;
+        WiimoteIOManager *_iOManager;
 
-        id                m_Target;
-        SEL               m_Action;
+        id                _target;
+        SEL               _action;
 
-        BOOL              m_IsRun;
-        NSUInteger        m_CancelCount;
-        NSUInteger        m_ReadTryCount;
+        BOOL              _isRun;
+        NSUInteger        _cancelCount;
+        NSUInteger        _readTryCount;
 
-        NSTimer          *m_LastTryTimer;
+        NSTimer          *_lastTryTimer;
 }
 
 + (void)activateMotionPlus:(WiimoteIOManager*)ioManager

@@ -14,8 +14,8 @@
 @interface MainController : NSObject<VHIDDeviceDelegate, TestViewDelegate>
 {
     @private
-        VHIDDevice *m_MouseState;
-        WJoyDevice *m_VirtualMouse;
+        VHIDDevice *_mouseState;
+        WJoyDevice *_virtualMouse;
 }
 
 @end

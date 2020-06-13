@@ -21,13 +21,13 @@
 @interface NotificationSystem : NSObject
 {
     @private
-        NotificationLayoutManager       *m_LayoutManager;
-        NSMutableArray                  *m_NotificationQueue;
-        NSMutableArray                  *m_ActiveNotifications;
+        NotificationLayoutManager       *_layoutManager;
+        NSMutableArray                  *_notificationQueue;
+        NSMutableArray                  *_activeNotifications;
 
-        NSTimeInterval                   m_NotificationTimeout;
+        NSTimeInterval                   _notificationTimeout;
 
-        id<NotificationSystemDelegate>   m_Delegate;
+        id<NotificationSystemDelegate>   _delegate;
 }
 
 + (NotificationSystem*)sharedInstance;

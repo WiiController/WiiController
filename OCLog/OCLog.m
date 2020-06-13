@@ -35,8 +35,8 @@
 
 @implementation OCLog
 {
-    OCLogLevel                   m_Level;
-    NSObject< OCLogHandler >    *m_Handler;
+    OCLogLevel                   _level;
+    NSObject< OCLogHandler >    *_handler;
 }
 
 + (NSString*)levelAsString:(OCLogLevel)level
@@ -78,8 +78,8 @@
     if(self == nil)
         return nil;
 
-    m_Handler   = [OCDefaultLogHandler defaultLogHandler];
-    m_Level     = OCLogLevelError;
+    _handler   = [OCDefaultLogHandler defaultLogHandler];
+    _level     = OCLogLevelError;
 
     return self;
 }
@@ -87,22 +87,22 @@
 
 - (OCLogLevel)level
 {
-    return m_Level;
+    return _level;
 }
 
 - (void)setLevel:(OCLogLevel)level
 {
-    m_Level = level;
+    _level = level;
 }
 
 - (NSObject< OCLogHandler >*)handler
 {
-    return m_Handler;
+    return _handler;
 }
 
 - (void)setHandler:(NSObject< OCLogHandler >*)handler
 {
-    m_Handler = handler;
+    _handler = handler;
 }
 
 - (void)level:(OCLogLevel)level
@@ -111,7 +111,7 @@
  functionName:(const char*)functionName
       message:(NSString*)message
 {
-    [m_Handler log:self
+    [_handler log:self
              level:level
         sourceFile:sourceFile
               line:line
@@ -126,7 +126,7 @@
  functionName:(const char*)functionName
       message:(NSString*)message
 {
-    [m_Handler log:self
+    [_handler log:self
              level:level
         sourceFile:sourceFile
               line:line

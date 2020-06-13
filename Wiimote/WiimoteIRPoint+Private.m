@@ -21,22 +21,22 @@
     if(self == nil)
         return nil;
 
-    m_Owner         = owner;
-    m_Position      = NSZeroPoint;
-    m_IsOutOfView   = YES;
-    m_Index         = index;
+    _owner         = owner;
+    _position      = NSZeroPoint;
+    _isOutOfView   = YES;
+    _index         = index;
 
     return self;
 }
 
 - (void)setPosition:(NSPoint)position
 {
-    m_Position = position;
+    _position = position;
 }
 
 - (void)setOutOfView:(BOOL)outOfView
 {
-    m_IsOutOfView = outOfView;
+    _isOutOfView = outOfView;
 }
 
 @end

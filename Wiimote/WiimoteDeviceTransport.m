@@ -17,7 +17,7 @@
 @interface WiimoteHIDDeviceTransport : WiimoteDeviceTransport <W_HIDDeviceDelegate>
 {
     @private
-        W_HIDDevice *m_Device;
+        W_HIDDevice *_device;
 }
 
 - (id)initWithHIDDevice:(W_HIDDevice*)device;
@@ -27,11 +27,11 @@
 @interface WiimoteBluetoothDeviceTransport : WiimoteDeviceTransport
 {
     @private
-        IOBluetoothDevice       *m_Device;
-		IOBluetoothL2CAPChannel *m_DataChannel;
-        IOBluetoothL2CAPChannel *m_ControlChannel;
+        IOBluetoothDevice       *_device;
+		IOBluetoothL2CAPChannel *_dataChannel;
+        IOBluetoothL2CAPChannel *_controlChannel;
 
-        BOOL                     m_IsOpen;
+        BOOL                     _isOpen;
 }
 
 - (id)initWithBluetoothDevice:(IOBluetoothDevice*)device;
@@ -52,8 +52,8 @@
         return nil;
     }
 
-    m_Device = device;
-    [m_Device setDelegate:self];
+    _device = device;
+    [_device setDelegate:self];
 
     return self;
 }
@@ -61,7 +61,7 @@
 
 - (NSString*)name
 {
-    return [m_Device name];
+    return [_device name];
 }
 
 - (NSData*)address
@@ -87,22 +87,22 @@
 
 - (NSString*)addressString
 {
-    return [m_Device address];
+    return [_device address];
 }
 
 - (id)lowLevelDevice
 {
-    return m_Device;
+    return _device;
 }
 
 - (BOOL)isOpen
 {
-    return [m_Device isValid];
+    return [_device isValid];
 }
 
 - (BOOL)open
 {
-    return [m_Device setOptions:kIOHIDOptionsTypeSeizeDevice];
+    return [_device setOptions:kIOHIDOptionsTypeSeizeDevice];
 }
 
 - (void)close
@@ -113,13 +113,13 @@
 
         [[self address] getBytes:address.data length:sizeof(address.data)];
         [[IOBluetoothDevice deviceWithAddress:&address] closeConnection];
-        [m_Device invalidate];
+        [_device invalidate];
     }
 }
 
 - (BOOL)postBytes:(const uint8_t*)bytes length:(NSUInteger)length
 {
-    return [m_Device postBytes:bytes length:length];
+    return [_device postBytes:bytes length:length];
 }
 
 - (void)HIDDevice:(W_HIDDevice*)device reportDataReceived:(const uint8_t*)bytes length:(NSUInteger)length
@@ -148,10 +148,10 @@
         return nil;
     }
 
-    m_Device            = device;
-	m_DataChannel       = nil;
-	m_ControlChannel    = nil;
-    m_IsOpen            = NO;
+    _device            = device;
+	_dataChannel       = nil;
+	_controlChannel    = nil;
+    _isOpen            = NO;
 
     return self;
 }
@@ -165,7 +165,7 @@
 {
 	IOBluetoothL2CAPChannel *result = nil;
 
-	if([m_Device openL2CAPChannelSync:&result
+	if([_device openL2CAPChannelSync:&result
                               withPSM:channelID
                              delegate:self] != kIOReturnSuccess)
     {
@@ -177,12 +177,12 @@
 
 - (NSString*)name
 {
-    return [m_Device name];
+    return [_device name];
 }
 
 - (NSData*)address
 {
-    const BluetoothDeviceAddress *address = [m_Device getAddress];
+    const BluetoothDeviceAddress *address = [_device getAddress];
     if(address == NULL)
         return nil;
 
@@ -192,17 +192,17 @@
 
 - (NSString*)addressString
 {
-    return [m_Device addressString];
+    return [_device addressString];
 }
 
 - (id)lowLevelDevice
 {
-    return m_Device;
+    return _device;
 }
 
 - (BOOL)isOpen
 {
-    return m_IsOpen;
+    return _isOpen;
 }
 
 - (BOOL)open
@@ -210,11 +210,11 @@
     if([self isOpen])
 		return YES;
 
-	m_IsOpen            = YES;
-	m_ControlChannel	= [self openChannel:kBluetoothL2CAPPSMHIDControl];
-	m_DataChannel		= [self openChannel:kBluetoothL2CAPPSMHIDInterrupt];
+	_isOpen            = YES;
+	_controlChannel	= [self openChannel:kBluetoothL2CAPPSMHIDControl];
+	_dataChannel		= [self openChannel:kBluetoothL2CAPPSMHIDInterrupt];
 
-	if(m_ControlChannel == nil || m_DataChannel    == nil)
+	if(_controlChannel == nil || _dataChannel    == nil)
     {
 		[self close];
         return NO;
@@ -228,14 +228,14 @@
     if(![self isOpen])
         return;
 
-    [m_ControlChannel setDelegate:nil];
-	[m_DataChannel setDelegate:nil];
+    [_controlChannel setDelegate:nil];
+	[_dataChannel setDelegate:nil];
 
-	[m_ControlChannel closeChannel];
-	[m_DataChannel closeChannel];
-	[m_Device closeConnection];
+	[_controlChannel closeChannel];
+	[_dataChannel closeChannel];
+	[_device closeConnection];
 
-	m_IsOpen = NO;
+	_isOpen = NO;
 
 	[[self delegate] wiimoteDeviceTransportDisconnected:self];
 }
@@ -253,7 +253,7 @@
     buffer[0] = 0xA2; // 0xA2 - HID output report
     memcpy(buffer + 1, bytes, length);
 
-    return ([m_DataChannel
+    return ([_dataChannel
                     writeSync:buffer
                        length:sizeof(buffer)] == kIOReturnSuccess);
 }
@@ -331,12 +331,12 @@
 
 - (id)delegate
 {
-    return m_Delegate;
+    return _delegate;
 }
 
 - (void)setDelegate:(id)delegate
 {
-    m_Delegate = delegate;
+    _delegate = delegate;
 }
 
 @end

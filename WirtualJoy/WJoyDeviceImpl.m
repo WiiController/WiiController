@@ -47,8 +47,8 @@
         return nil;
     }
 
-    m_Connection = [WJoyDeviceImpl createNewConnection];
-    if(m_Connection == IO_OBJECT_NULL)
+    _connection = [WJoyDeviceImpl createNewConnection];
+    if(_connection == IO_OBJECT_NULL)
     {
         return nil;
     }
@@ -58,8 +58,8 @@
 
 - (void)dealloc
 {
-    if(m_Connection != IO_OBJECT_NULL)
-        IOServiceClose(m_Connection);
+    if(_connection != IO_OBJECT_NULL)
+        IOServiceClose(_connection);
 
 }
 
@@ -71,7 +71,7 @@
 - (BOOL)call:(WJoyDeviceMethodSelector)selector data:(NSData*)data
 {
     return (IOConnectCallMethod(
-            m_Connection,
+            _connection,
             selector,
             NULL,
             0,

@@ -11,21 +11,21 @@
 @interface WiimoteExtensionHelper : NSObject
 {
     @private
-        Wiimote                 *m_Wiimote;
-        WiimoteEventDispatcher  *m_EventDispatcher;
-        WiimoteIOManager        *m_IOManager;
+        Wiimote                 *_wiimote;
+        WiimoteEventDispatcher  *_eventDispatcher;
+        WiimoteIOManager        *_iOManager;
 
-        NSMutableArray          *m_ExtensionClasses;
-        Class                    m_CurrentClass;
-        WiimoteExtension        *m_Extension;
-        WiimoteExtension        *m_SubExtension;
+        NSMutableArray          *_extensionClasses;
+        Class                    _currentClass;
+        WiimoteExtension        *_extension;
+        WiimoteExtension        *_subExtension;
 
-        BOOL                     m_IsInitialized;
-        BOOL                     m_IsStarted;
-        BOOL                     m_IsCanceled;
+        BOOL                     _isInitialized;
+        BOOL                     _isStarted;
+        BOOL                     _isCanceled;
 
-        id                       m_Target;
-        SEL                      m_Action;
+        id                       _target;
+        SEL                      _action;
 }
 
 - (id)initWithWiimote:(Wiimote*)wiimote
