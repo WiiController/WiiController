@@ -14,17 +14,11 @@
 NSString *WiimoteWatchdogEnabledChangedNotification  = @"WiimoteWatchdogEnabledChangedNotification";
 NSString *WiimoteWatchdogPingNotification            = @"WiimoteWatchdogPingNotification";
 
-@interface WiimoteWatchdog (PrivatePart)
-
-- (id)initInternal;
-
-- (void)onTimer:(id)sender;
-
-- (void)applicationWillTerminateNotification:(NSNotification*)notification;
-
-@end
-
 @implementation WiimoteWatchdog
+{
+    @private
+        NSTimer *_timer;
+}
 
 + (WiimoteWatchdog*)sharedWatchdog
 {
@@ -75,7 +69,7 @@ NSString *WiimoteWatchdogPingNotification            = @"WiimoteWatchdogPingNoti
         _timer = nil;
     }
 
-    if(_isPingNotificationEnabled)
+    if(_pingNotificationEnabled)
     {
         [[NSNotificationCenter defaultCenter]
                                 postNotificationName:WiimoteWatchdogEnabledChangedNotification
@@ -83,28 +77,14 @@ NSString *WiimoteWatchdogPingNotification            = @"WiimoteWatchdogPingNoti
     }
 }
 
-- (BOOL)isPingNotificationEnabled
-{
-    return _isPingNotificationEnabled;
-}
-
-- (void)setPingNotificationEnabled:(BOOL)enabled
-{
-    _isPingNotificationEnabled = enabled;
-}
-
-@end
-
-@implementation WiimoteWatchdog (PrivatePart)
-
 - (id)initInternal
 {
     self = [super init];
     if(self == nil)
         return nil;
 
-    _timer                     = nil;
-    _isPingNotificationEnabled = YES;
+    _timer                   = nil;
+    _pingNotificationEnabled = YES;
 
     return self;
 }

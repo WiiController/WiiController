@@ -38,6 +38,9 @@ NSString *WiimoteAccelerometerPitchKey                              = @"WiimoteA
 NSString *WiimoteAccelerometerRollKey                               = @"WiimoteAccelerometerRollKey";
 NSString *WiimoteExtensionKey                                       = @"WiimoteExtensionKey";
 
+@interface NSObject (WiimoteDelegate) <WiimoteDelegate>
+@end
+
 @implementation NSObject (WiimoteDelegate)
 
 - (void)wiimote:(Wiimote*)wiimote buttonPressed:(WiimoteButtonType)button

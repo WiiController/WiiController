@@ -8,20 +8,13 @@
 
 #import "WiimoteAccelerometer+PlugIn.h"
 
-@interface WiimoteAccelerometer (PrivatePart)
-
-- (void)setGravityX:(CGFloat)x y:(CGFloat)y z:(CGFloat)z;
-- (void)setPitch:(CGFloat)pitch roll:(CGFloat)roll;
-
-@end
-
 @implementation WiimoteAccelerometer (PlugIn)
 
 - (void)setHardwareValueX:(uint16_t)x y:(uint16_t)y z:(uint16_t)z
 {
-    CGFloat newX = (((CGFloat)x) - ((CGFloat)_zeroX)) / (((CGFloat)m_1gX) - ((CGFloat)_zeroX));
-    CGFloat newY = (((CGFloat)y) - ((CGFloat)_zeroY)) / (((CGFloat)m_1gY) - ((CGFloat)_zeroY));
-    CGFloat newZ = (((CGFloat)z) - ((CGFloat)_zeroZ)) / (((CGFloat)m_1gZ) - ((CGFloat)_zeroZ));
+    CGFloat newX = (((CGFloat)x) - ((CGFloat)_zeroX)) / (((CGFloat)_1gX) - ((CGFloat)_zeroX));
+    CGFloat newY = (((CGFloat)y) - ((CGFloat)_zeroY)) / (((CGFloat)_1gY) - ((CGFloat)_zeroY));
+    CGFloat newZ = (((CGFloat)z) - ((CGFloat)_zeroZ)) / (((CGFloat)_1gZ) - ((CGFloat)_zeroZ));
 
     [self setGravityX:newX y:newY z:newZ];
 
@@ -37,10 +30,10 @@
     CGFloat newPitch = _pitch;
     CGFloat newRoll  = _roll;
 
-    if(abs(x - _zeroX) <= (m_1gX - _zeroX))
+    if(abs(x - _zeroX) <= (_1gX - _zeroX))
         newRoll  = (atan2(newX, newZ) * 180.0) / M_PI;
 
-    if(abs(y - _zeroY) <= (m_1gY - _zeroY))
+    if(abs(y - _zeroY) <= (_1gY - _zeroY))
         newPitch = (atan2(newY, newZ) * 180.0) / M_PI;
 
     [self setPitch:newPitch roll:newRoll];
@@ -55,9 +48,9 @@
 
 - (void)setHardware1gX:(uint16_t)x y:(uint16_t)y z:(uint16_t)z
 {
-    m_1gX = x;
-    m_1gY = y;
-    m_1gZ = z;
+    _1gX = x;
+    _1gY = y;
+    _1gZ = z;
 }
 
 - (void)setCalibrationData:(const WiimoteDeviceAccelerometerCalibrationData*)calibrationData
@@ -83,9 +76,9 @@
 
 - (BOOL)isHardware1gValuesInvalid
 {
-    return (m_1gX == 0 ||
-            m_1gY == 0 ||
-            m_1gZ == 0);
+    return (_1gX == 0 ||
+            _1gY == 0 ||
+            _1gZ == 0);
 }
 
 - (void)reset
@@ -97,7 +90,7 @@
     _pitch     = 0.0;
     _roll      = 0.0;
 
-    _isEnabled = NO;
+    _enabled = NO;
 }
 
 - (id)delegate
@@ -108,10 +101,6 @@
 {
     _delegate = delegate;
 }
-
-@end
-
-@implementation WiimoteAccelerometer (PrivatePart)
 
 - (void)setGravityX:(CGFloat)x y:(CGFloat)y z:(CGFloat)z
 {

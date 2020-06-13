@@ -79,8 +79,9 @@ FOUNDATION_EXPORT NSString *WiimoteExtensionKey;
 @class Wiimote;
 @class WiimoteExtension;
 
-@interface NSObject (WiimoteDelegate)
+@protocol WiimoteDelegate
 
+@optional
 - (void)wiimote:(Wiimote*)wiimote buttonPressed:(WiimoteButtonType)button;
 - (void)wiimote:(Wiimote*)wiimote buttonReleased:(WiimoteButtonType)button;
 - (void)wiimote:(Wiimote*)wiimote vibrationStateChanged:(BOOL)isVibrationEnabled;

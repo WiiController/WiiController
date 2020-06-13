@@ -10,44 +10,27 @@
 
 @interface WiimoteAccelerometer : NSObject
 {
-    @private
-        BOOL        _isEnabled;
+    BOOL _enabled;
+    
+    CGFloat _gravityX, _gravityY, _gravityZ;
+    CGFloat _pitch, _roll;
+    CGFloat _gravitySmoothQuant, _anglesSmoothQuant;
+    uint16_t _zeroX, _zeroY, _zeroZ;
+    uint16_t _1gX, _1gY, _1gZ;
 
-        CGFloat     _gravityX;
-        CGFloat     _gravityY;
-        CGFloat     _gravityZ;
-
-        CGFloat     _pitch;
-        CGFloat     _roll;
-
-        CGFloat     _gravitySmoothQuant;
-        CGFloat     _anglesSmoothQuant;
-
-        uint16_t    _zeroX;
-        uint16_t    _zeroY;
-        uint16_t    _zeroZ;
-
-        uint16_t    m_1gX;
-        uint16_t    m_1gY;
-        uint16_t    m_1gZ;
-
-        id          _delegate;
+    id _delegate;
 }
 
-- (BOOL)isEnabled;
-- (void)setEnabled:(BOOL)enabled;
+@property(nonatomic,getter=isEnabled) BOOL enabled;
 
-- (CGFloat)gravityX;
-- (CGFloat)gravityY;
-- (CGFloat)gravityZ;
+@property(nonatomic,readonly) CGFloat gravityX;
+@property(nonatomic,readonly) CGFloat gravityY;
+@property(nonatomic,readonly) CGFloat gravityZ;
 
-- (CGFloat)pitch;
-- (CGFloat)roll;
+@property(nonatomic,readonly) CGFloat pitch;
+@property(nonatomic,readonly) CGFloat roll;
 
-- (CGFloat)gravitySmoothQuant;
-- (void)setGravitySmoothQuant:(CGFloat)quant;
-
-- (CGFloat)anglesSmoothQuant;
-- (void)setAnglesSmoothQuant:(CGFloat)quant;
+@property(nonatomic) CGFloat gravitySmoothQuant;
+@property(nonatomic) CGFloat anglesSmoothQuant;
 
 @end

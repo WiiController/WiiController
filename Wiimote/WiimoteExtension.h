@@ -13,9 +13,8 @@
 
 @interface WiimoteExtension : NSObject
 {
-	@private
-        Wiimote *_owner;
-        WiimoteEventDispatcher  *_eventDispatcher;
+    Wiimote *_owner;
+    WiimoteEventDispatcher  *_eventDispatcher;
 }
 
 @property(nonatomic,readonly) Wiimote *owner;

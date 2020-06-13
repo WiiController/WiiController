@@ -10,13 +10,13 @@
 
 @implementation WiimoteAccelerometer
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if(self == nil)
         return nil;
 
-    _isEnabled = NO;
+    _enabled = NO;
     [self setGravitySmoothQuant:0.15];
     [self setAnglesSmoothQuant:5.0];
     [self setHardwareZeroX:500 y:500 z:500];
@@ -26,65 +26,15 @@
     return self;
 }
 
-- (BOOL)isEnabled
-{
-    return _isEnabled;
-}
-
 - (void)setEnabled:(BOOL)enabled
 {
-    if(_isEnabled == enabled)
+    if(_enabled == enabled)
         return;
 
 	[self reset];
-    _isEnabled = enabled;
+    _enabled = enabled;
 
     [_delegate wiimoteAccelerometer:self enabledStateChanged:enabled];
-}
-
-- (CGFloat)gravityX
-{
-    return _gravityX;
-}
-
-- (CGFloat)gravityY
-{
-    return _gravityY;
-}
-
-- (CGFloat)gravityZ
-{
-    return _gravityZ;
-}
-
-- (CGFloat)pitch
-{
-    return _pitch;
-}
-
-- (CGFloat)roll
-{
-    return _roll;
-}
-
-- (CGFloat)gravitySmoothQuant
-{
-    return _gravitySmoothQuant;
-}
-
-- (void)setGravitySmoothQuant:(CGFloat)quant
-{
-    _gravitySmoothQuant = quant;
-}
-
-- (CGFloat)anglesSmoothQuant
-{
-    return _anglesSmoothQuant;
-}
-
-- (void)setAnglesSmoothQuant:(CGFloat)quant
-{
-    _anglesSmoothQuant = quant;
 }
 
 @end

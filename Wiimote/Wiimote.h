@@ -32,20 +32,19 @@ FOUNDATION_EXPORT NSString *WiimoteUseOneButtonClickConnectionKey;
 
 @interface Wiimote : NSObject
 {
-	@private
-		WiimoteDevice               *_device;
-        WiimotePartSet              *_partSet;
-        NSString                    *_modelName;
+    WiimoteDevice               *_device;
+    WiimotePartSet              *_partSet;
+    NSString                    *_modelName;
 
-        WiimoteIRPart               *_iRPart;
-        WiimoteLEDPart              *_lEDPart;
-        WiimoteButtonPart           *_buttonPart;
-        WiimoteBatteryPart          *_batteryPart;
-        WiimoteVibrationPart        *_vibrationPart;
-        WiimoteAccelerometerPart    *_accelerometerPart;
-        WiimoteExtensionPart        *_extensionPart;
+    WiimoteIRPart               *_iRPart;
+    WiimoteLEDPart              *_lEDPart;
+    WiimoteButtonPart           *_buttonPart;
+    WiimoteBatteryPart          *_batteryPart;
+    WiimoteVibrationPart        *_vibrationPart;
+    WiimoteAccelerometerPart    *_accelerometerPart;
+    WiimoteExtensionPart        *_extensionPart;
 
-		NSDictionary                *_userInfo;
+    NSDictionary                *_userInfo;
 }
 
 + (BOOL)isBluetoothEnabled;
@@ -60,41 +59,38 @@ FOUNDATION_EXPORT NSString *WiimoteUseOneButtonClickConnectionKey;
 
 + (NSArray*)connectedDevices;
 
-- (BOOL)isConnected;
+@property(nonatomic,readonly,getter=isConnected) BOOL connected;
 - (void)disconnect;
 
-- (BOOL)isWiiUProController;
-- (BOOL)isBalanceBoard;
+@property(nonatomic,readonly) BOOL isWiiUProController;
+@property(nonatomic,readonly) BOOL isBalanceBoard;
 
-- (NSData*)address;
-- (NSString*)addressString;
-- (NSString*)modelName;
-- (NSString*)marketingName;
+@property(nonatomic,readonly) NSData *address;
+@property(nonatomic,readonly) NSString *addressString;
+@property(nonatomic,readonly) NSString *modelName;
+@property(nonatomic,readonly) NSString *marketingName;
 
 - (void)playConnectEffect;
 
 // or'ed WiimoteLED flags
-- (NSUInteger)highlightedLEDMask;
-- (void)setHighlightedLEDMask:(NSUInteger)mask;
+@property(nonatomic) NSUInteger highlightedLEDMask;
 
-- (BOOL)isVibrationEnabled;
-- (void)setVibrationEnabled:(BOOL)enabled;
+@property(nonatomic,getter=isVibrationEnabled) BOOL vibrationEnabled;
 
 - (BOOL)isButtonPressed:(WiimoteButtonType)button;
 
 // 0.0 - 100.0 %, or -1 if undefined
-- (CGFloat)batteryLevel;
-- (NSString*)batteryLevelDescription;
-- (BOOL)isBatteryLevelLow;
+@property(nonatomic,readonly) CGFloat batteryLevel;
+@property(nonatomic,readonly) NSString *batteryLevelDescription;
+@property(nonatomic,readonly) BOOL isBatteryLevelLow;
 
-- (BOOL)isIREnabled;
-- (void)setIREnabled:(BOOL)enabled;
+@property(nonatomic,getter=isIREnabled) BOOL IREnabled;
 
 - (WiimoteIRPoint*)irPoint:(NSUInteger)index;
 
-- (WiimoteAccelerometer*)accelerometer;
+@property(nonatomic,readonly) WiimoteAccelerometer *accelerometer;
 
-- (WiimoteExtension*)connectedExtension;
+@property(nonatomic,readonly) WiimoteExtension *connectedExtension;
 
 - (void)detectMotionPlus;
 - (void)reconnectExtension;
@@ -104,13 +100,10 @@ FOUNDATION_EXPORT NSString *WiimoteUseOneButtonClickConnectionKey;
 
 // disable all notifications, except begin/end discovery,
 // battery level, extensions connect/disconnect and wiimote connect/disconnect
-- (BOOL)isStateChangeNotificationsEnabled;
-- (void)setStateChangeNotificationsEnabled:(BOOL)enabled;
+@property(nonatomic,readonly,getter=isStateChangeNotificationsEnabled) BOOL stateChangeNotificationsEnabled;
 
-- (NSDictionary*)userInfo;
-- (void)setUserInfo:(NSDictionary*)userInfo;
+@property(nonatomic) NSDictionary *userInfo;
 
-- (id)delegate;
-- (void)setDelegate:(id)delegate;
+@property(nonatomic) id <WiimoteDelegate> delegate;
 
 @end
