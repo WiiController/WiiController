@@ -89,8 +89,10 @@ bool WirtualJoyDevice::init(
     if(!parseHidDescriptor(hidDescriptorData, hidDescriptorDataSize))
         return false;
 
-// NOTE: Apple Removed #def kMaxHIDReportSize in OS X 10.10.3 so we aren't going to check size
-// TODO: figure out if there still exists some max HID Report Size that we should check
+// NOTE: Apple Removed #def kMaxHIDReportSize in OS X 10.10.3 so we aren't going to check size.
+// According to this archived CVS commit from 2002, this is apparently "only an initial value, not a limit!"
+// https://www.mail-archive.com/cvs-log-iousbfamily@opensource.apple.com/msg00000.html
+// Hardly definitive, but considering it's been removed we're probably fine.
 //    if(_capabilities.inputReportByteLength > kMaxHIDReportSize)
 //        return false;
 
