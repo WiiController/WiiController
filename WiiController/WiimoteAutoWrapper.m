@@ -206,7 +206,7 @@ static NSUInteger maxConnectedDevices = 0;
 
 + (NSString*)wjoyNameFromWiimote:(Wiimote*)device
 {
-    return [NSString stringWithFormat:@"Wiimote (%@)", [device addressString]];
+    return [NSString stringWithFormat:@"%@ (%@)", [device marketingName], [device addressString]];
 }
 
 + (void)newWiimoteDeviceNotification:(NSNotification*)notification

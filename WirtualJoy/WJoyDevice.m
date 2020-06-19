@@ -29,9 +29,7 @@ NSString *WJoyDeviceSerialNumberStringKey   = @"WJoyDeviceSerialNumberStringKey"
 
 - (id)initWithHIDDescriptor:(NSData*)HIDDescriptor productString:(NSString*)productString
 {
-    NSDictionary *properties = [NSDictionary
-                                        dictionaryWithObject:productString
-                                                      forKey:WJoyDeviceProductStringKey];
+    NSDictionary *properties = @{WJoyDeviceProductStringKey: productString};
 
     return [self initWithHIDDescriptor:HIDDescriptor properties:properties];
 }
