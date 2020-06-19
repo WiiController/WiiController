@@ -196,7 +196,7 @@ OSString *WirtualJoyDevice::newSerialNumberString() const
 
 OSNumber *WirtualJoyDevice::newVersionNumber() const
 {
-    return wirtual_joy_make_osnumber(WIRTUAL_JOY_VERSION);
+    return wirtual_joy_make_osnumber(1);
 }
 
 // Not sure if this is still necessary, but leaving it here just in case.
