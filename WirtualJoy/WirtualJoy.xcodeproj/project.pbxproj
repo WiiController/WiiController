@@ -95,6 +95,7 @@
 		0A469B1215B5AD59003AB8FD /* wirtual_joy_debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wirtual_joy_debug.h; sourceTree = "<group>"; };
 		32D94FCF0562CBF700B6AF17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32D94FD00562CBF700B6AF17 /* wjoy.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wjoy.kext; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CB6CCFB249C51FD002B2FAA /* wirtual_joy_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wirtual_joy_helper.h; sourceTree = "<group>"; };
 		8DA8362C06AD9B9200E5AC22 /* Kernel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kernel.framework; path = /System/Library/Frameworks/Kernel.framework; sourceTree = "<absolute>"; };
 		ED2254E72EC36EC17E2D341A /* STPrivilegedTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPrivilegedTask.h; sourceTree = "<group>"; };
 		ED2258E16C66CE05147C7C4F /* STPrivilegedTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPrivilegedTask.m; sourceTree = "<group>"; };
@@ -169,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				0A469B1115B5AD59003AB8FD /* wirtual_joy_config.h */,
+				3CB6CCFB249C51FD002B2FAA /* wirtual_joy_helper.h */,
 				0A469B1215B5AD59003AB8FD /* wirtual_joy_debug.h */,
 				0A1CB50315B03FA10012FCC7 /* wirtual_joy_device.h */,
 				0A1CB50415B03FA10012FCC7 /* wirtual_joy_device.cpp */,
@@ -625,6 +627,7 @@
 				GCC_ENABLE_KERNEL_DEVELOPMENT = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = "WIRTUAL_JOY_VERSION=$(CURRENT_PROJECT_VERSION)";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Library/Extensions;
 				MARKETING_VERSION = 3.0.0;
@@ -648,6 +651,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = "WIRTUAL_JOY_VERSION=$(CURRENT_PROJECT_VERSION)";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Library/Extensions;
 				MARKETING_VERSION = 3.0.0;

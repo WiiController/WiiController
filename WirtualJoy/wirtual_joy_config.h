@@ -14,4 +14,8 @@
 #define WirtualJoyDevice        com_alxn1_driver_WirtualJoyDevice
 #define WirtualJoyUserClient    com_alxn1_driver_WirtualJoyUserClient
 
+#ifndef WIRTUAL_JOY_VERSION
+#error "WIRTUAL_JOY_VERSION must be defined to the driver's current version."
+#endif
+
 #endif /* WIRTUAL_JOY_CONFIG_H */

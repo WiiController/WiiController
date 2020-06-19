@@ -8,6 +8,7 @@
  */
 
 #include "wirtual_joy_device.h"
+#include "wirtual_joy_helper.h"
 #include "wirtual_joy_debug.h"
 
 #pragma clang diagnostic push
@@ -16,7 +17,6 @@
 #pragma clang diagnostic pop
 
 #define super IOHIDDevice
-#define kMaxHIDReportSize 256
 
 OSDefineMetaClassAndStructors(WirtualJoyDevice, super)
 
@@ -196,50 +196,48 @@ OSString *WirtualJoyDevice::newSerialNumberString() const
 
 OSNumber *WirtualJoyDevice::newVersionNumber() const
 {
-	return OSNumber::withNumber(1, 32);
+    return wirtual_joy_make_osnumber(WIRTUAL_JOY_VERSION);
 }
 
+// Not sure if this is still necessary, but leaving it here just in case.
 OSNumber *WirtualJoyDevice::newSerialNumber() const
 {
-	uint32_t number = 0;
-	return OSNumber::withNumber(number, 32);
+    return wirtual_joy_make_osnumber(0);
 }
 
 OSNumber *WirtualJoyDevice::newVendorIDNumber() const
 {
-	return OSNumber::withNumber(_vendorID, 32);
+    return wirtual_joy_make_osnumber(_vendorID);
 }
 
 OSNumber *WirtualJoyDevice::newProductIDNumber() const
 {
-	return OSNumber::withNumber(_productID, 32);
+    return wirtual_joy_make_osnumber(_productID);
 }
 
 OSNumber *WirtualJoyDevice::newPrimaryUsageNumber() const
 {
-    return OSNumber::withNumber(_capabilities.usage, 32);
+    return wirtual_joy_make_osnumber(_capabilities.usage);
 }
 
 OSNumber *WirtualJoyDevice::newPrimaryUsagePageNumber() const
 {
-    return OSNumber::withNumber(_capabilities.usagePage, 32);
+    return wirtual_joy_make_osnumber(_capabilities.usagePage);
 }
 
 OSNumber *WirtualJoyDevice::newLocationIDNumber() const
 {
-    return OSNumber::withNumber(_locationID, 32);
+    return wirtual_joy_make_osnumber(_locationID);
 }
 
 OSNumber *WirtualJoyDevice::newVendorIDSourceNumber() const
 {
-	uint32_t number = 0;
-	return OSNumber::withNumber(number, 32);
+    return wirtual_joy_make_osnumber(0);
 }
 
 OSNumber *WirtualJoyDevice::newCountryCodeNumber() const
 {
-	uint32_t number = 0;
-	return OSNumber::withNumber(number, 32);
+    return wirtual_joy_make_osnumber(0);
 }
 
 bool WirtualJoyDevice::updateState(const void *hidData, size_t hidDataSize)
@@ -253,16 +251,16 @@ bool WirtualJoyDevice::updateState(const void *hidData, size_t hidDataSize)
 
 void WirtualJoyDevice::free()
 {
-    if(_productString != 0)
+    if(_productString)
         _productString->release();
 
-    if(_serialNumberString != 0)
+    if(_serialNumberString)
         _serialNumberString->release();
 
-    if(_hIDReportDescriptor != 0)
+    if(_hIDReportDescriptor)
         _hIDReportDescriptor->release();
 
-    if(_stateBuffer != 0)
+    if(_stateBuffer)
         _stateBuffer->release();
 
     dmsg("free");
