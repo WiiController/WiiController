@@ -14,7 +14,4 @@
 
 - (BOOL)updateFromReportData:(const uint8_t*)data length:(NSUInteger)length;
 
-@property(nonatomic) Wiimote *wiimote;
-@property(nonatomic) WiimoteDevice *device;
-
 @end

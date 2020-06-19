@@ -18,6 +18,7 @@
 @property(nonatomic,readonly) uint8_t const* data;
 @property(nonatomic,readonly) NSUInteger length;
 
-@property(nonatomic,readonly) Wiimote *wiimote;
+@property(nonatomic) Wiimote *wiimote;
+@property(nonatomic) WiimoteDevice *device;
 
 @end
