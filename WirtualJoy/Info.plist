@@ -27,7 +27,7 @@
 		<key>wjoy</key>
 		<dict>
 			<key>CFBundleIdentifier</key>
-			<string>com.alxn1.driver.${PRODUCT_NAME:rfc1034Identifier}</string>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 			<key>IOClass</key>
 			<string>com_alxn1_driver_WirtualJoy</string>
 			<key>IOKitDebug</key>
