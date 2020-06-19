@@ -90,7 +90,8 @@ bool WirtualJoyDevice::init(
         return false;
 
 // NOTE: Apple Removed #def kMaxHIDReportSize in OS X 10.10.3 so we aren't going to check size.
-// According to this archived CVS commit from 2002, this is apparently "only an initial value, not a limit!"
+// Comment from Ian: According to this archived CVS commit from 2002,
+// this is apparently "only an initial value, not a limit!"
 // https://www.mail-archive.com/cvs-log-iousbfamily@opensource.apple.com/msg00000.html
 // Hardly definitive, but considering it's been removed we're probably fine.
 //    if(_capabilities.inputReportByteLength > kMaxHIDReportSize)
@@ -102,6 +103,11 @@ bool WirtualJoyDevice::init(
           _capabilities.usage == kHIDUsage_GD_Keyboard)
         {
             // hack for Apple HID subsystem
+            // Comment from Ian: I have little idea what this does,
+            // practically speaking; but tons of Apple's and other open-source
+            // driver code sets it. That said, sometimes it's a string,
+            // sometimes it's empty string, and sometimes it's boolean true...
+            // but eh, it's not causing any harm (that I'm aware of).
             OSString *str = OSString::withCString(
                                         (_capabilities.usage == kHIDUsage_GD_Mouse)?
                                             ("Mouse"):
