@@ -11,8 +11,6 @@
 #import <sys/stat.h>
 #import <IOKit/kext/KextManager.h>
 
-#define WJoyBundleId @"com.alxn1.driver.wjoy"
-
 typedef enum {
     WorkModeRepairRights,
     WorkModeLoadDriver,
@@ -48,11 +46,6 @@ static BOOL repairDriverRights(const char *path) {
     return doCommandWithPath("chown -R root:wheel", path) == EXIT_SUCCESS;
 }
 
-static BOOL installDriver(const char *path) {
-    return system([[NSString stringWithFormat:@"cp -r \"%@\" /Library/Extensions/wjoy.kext",
-                                              [NSString stringWithUTF8String:path]] UTF8String]) == EXIT_SUCCESS;
-}
-
 static int loadDriver(const char *path) {
     if (seteuid(0) != 0 || setuid(0) != 0)
         return EXIT_FAILURE;
@@ -60,11 +53,10 @@ static int loadDriver(const char *path) {
     if (!repairDriverRights(path))
         return EXIT_FAILURE;
 
-    if (!installDriver(path))
-        return EXIT_FAILURE;
-
-    CFStringRef bundleId_ = (__bridge CFStringRef) WJoyBundleId;
-    OSReturn result = KextManagerLoadKextWithIdentifier(bundleId_, NULL);
+    OSReturn result = KextManagerLoadKextWithURL(
+        (__bridge CFURLRef)[NSURL fileURLWithPath:[NSString stringWithUTF8String:path]],
+        NULL
+    );
 
     if (result == kOSReturnSuccess) {
         return EXIT_SUCCESS;

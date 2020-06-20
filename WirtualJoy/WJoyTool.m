@@ -6,6 +6,8 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
+// TODO: We should eventually switch over to launchd and ServiceManagement.framework, which would allow us to stop using AuthorizationExecuteWithPrivileges.
+
 #import "WJoyTool.h"
 #import "WJoyToolInterface.h"
 #import "WJoyAdminToolRight.h"
@@ -13,98 +15,25 @@
 
 #define WJoyDeviceDriverName @"wjoy.kext"
 
-@interface WJoyTool (PrivatePart)
-
-+ (NSBundle*)bundle;
-+ (NSString*)toolPath;
-+ (NSString*)driverPath;
-
-+ (BOOL)repairToolRights;
-+ (BOOL)doCommand:(NSString*)command argument:(NSString*)argument;
-+ (BOOL)doLoadOrUnloadCommand:(NSString*)command;
-
-@end
-
-@implementation WJoyTool
-
-+ (BOOL)loadDriver
-{
-    return [self doLoadOrUnloadCommand:WJoyToolLoadDriverCommand];
+static NSBundle* wirtualJoyBundle(void) {
+    return [NSBundle bundleForClass:[WJoyTool class]];
 }
 
-+ (BOOL)unloadDriver
-{
-	return YES;
-	// return [self doLoadOrUnloadCommand:WJoyToolUnloadDriverCommand];
+static NSString* toolPath(void) {
+    return [[wirtualJoyBundle() resourcePath] stringByAppendingPathComponent:WJoyToolName];
 }
 
-@end
-
-@implementation WJoyTool (PrivatePart)
-
-+ (NSBundle*)bundle
-{
-    return [NSBundle bundleForClass:[self class]];
+static NSString* driverPath(void) {
+    return [[wirtualJoyBundle() resourcePath] stringByAppendingPathComponent:WJoyDeviceDriverName];
 }
 
-+ (NSString*)toolPath
-{
-    return [[[self bundle] resourcePath]
-                stringByAppendingPathComponent:WJoyToolName];
-}
-
-+ (NSString*)driverPath
-{
-    return [[[self bundle] resourcePath]
-                stringByAppendingPathComponent:WJoyDeviceDriverName];
-}
-
-+ (BOOL)repairToolRights
-{
-    WJoyAdminToolRight *rights = [[WJoyAdminToolRight alloc] init];
-
-    if(![rights obtain])
-        return NO;
-
-    char *args[] =
-    {
-        (char*)[WJoyToolRepairRightsCommand UTF8String],
-        0
-    };
-
-    FILE *toolOutput = NULL;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    if(AuthorizationExecuteWithPrivileges(
-#pragma clang diagnostic pop
-                                     [rights authRef],
-                                     [[self toolPath] UTF8String],
-                                     kAuthorizationFlagDefaults,
-                                     args,
-                                    &toolOutput) != noErr)
-    {
-        [rights discard];
-        return NO;
-    }
-
-    char buffer[64];
-    while(YES)
-    {
-        if(fread(buffer, sizeof(buffer), 1, toolOutput) <= 0)
-            break;
-    }
-
-    fclose(toolOutput);
-    [rights discard];
-    return YES;
-}
-
-+ (BOOL)doCommand:(NSString*)command argument:(NSString*)argument
-{
+/// Attempts to run WJoyTool as root, given @c arguments.
+/// Prompts the user for admin permission first.
+static BOOL runToolWithArguments(NSArray<NSString*> *arguments) {
     STPrivilegedTask *task = [[STPrivilegedTask alloc] init];
 
-    [task setLaunchPath:[self toolPath]];
-    [task setArguments:[NSArray arrayWithObjects:command, argument, nil]];
+    [task setLaunchPath:toolPath()];
+    [task setArguments:arguments];
     OSStatus err = [task launch];
     if (err != errAuthorizationSuccess) {
         return NO;
@@ -117,15 +46,38 @@
     return result;
 }
 
-+ (BOOL)doLoadOrUnloadCommand:(NSString*)command
-{
-    if([self doCommand:command argument:[self driverPath]])
+static BOOL actuallyRunLoadOrUnloadToolCommand(NSString *command) {
+    return runToolWithArguments(@[command, driverPath()]);
+}
+
+/// Attempts to run the tool's self-repair action (`WJoyToolRepairRightsCommand`).
+static BOOL runSelfRepairToolCommand(void) {
+    return runToolWithArguments(@[WJoyToolRepairRightsCommand]);
+}
+
+/// Attempts to run load or unload @c command.
+static BOOL runLoadOrUnloadToolCommand(NSString *command) {
+    if(actuallyRunLoadOrUnloadToolCommand(command))
         return YES;
 
-    if(![self repairToolRights])
+    if(!runSelfRepairToolCommand())
         return NO;
 
-    return [self doCommand:command argument:[self driverPath]];
+    return actuallyRunLoadOrUnloadToolCommand(command);
+}
+
+@implementation WJoyTool
+
++ (BOOL)loadDriver
+{
+    return runLoadOrUnloadToolCommand(WJoyToolLoadDriverCommand);
+}
+
++ (BOOL)unloadDriver
+{
+    // This was patched out a long time ago, for macOS 10.8.
+    // I don't know exactly why.
+	return YES;
 }
 
 @end

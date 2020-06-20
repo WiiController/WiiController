@@ -9,8 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface WJoyTool : NSObject
-{
-}
 
 + (BOOL)loadDriver;
 + (BOOL)unloadDriver;
