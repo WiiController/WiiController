@@ -14,7 +14,7 @@
 
 @property(nonatomic,readonly) NSUInteger index;
 @property(nonatomic,readonly,getter=isOutOfView) BOOL outOfView;
-@property(nonatomic,readonly) NSPoint position;
+@property(nonatomic) NSPoint position;
 @property(nonatomic,readonly) Wiimote *owner;
 
 @end
