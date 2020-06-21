@@ -628,6 +628,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
+				INSTALL_OWNER = 0;
 				INSTALL_PATH = /Library/Extensions;
 				MARKETING_VERSION = 3.0.0;
 				MODULE_NAME = com.alxn1.driver.wjoy;
@@ -635,6 +636,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alxn1.driver.${PRODUCT_NAME:rfc1034Identifier}";
 				PRODUCT_NAME = wjoy;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx10.11;
 				WRAPPER_EXTENSION = kext;
 			};
 			name = Debug;
@@ -651,6 +653,7 @@
 				DEVELOPMENT_TEAM = "";
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
+				INSTALL_OWNER = 0;
 				INSTALL_PATH = /Library/Extensions;
 				MARKETING_VERSION = 3.0.0;
 				MODULE_NAME = com.alxn1.driver.wjoy;
@@ -658,6 +661,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alxn1.driver.${PRODUCT_NAME:rfc1034Identifier}";
 				PRODUCT_NAME = wjoy;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx10.11;
 				WRAPPER_EXTENSION = kext;
 			};
 			name = Release;
