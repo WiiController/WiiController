@@ -1,0 +1,31 @@
+name: CI (Package)
+
+on: [push, pull_request]
+
+jobs:
+  package:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install older macOS SDK to build kexts for older systems
+      run: |
+        wget https://github.com/phracker/MacOSX-SDKs/releases/download/10.15/MacOSX10.11.sdk.tar.xz
+        gunzip MacOSX10.11.sdk.tar.xz
+        tar -xf MacOSX10.11.sdk.tar.xz
+        rm MacOSX10.11.sdk.tar.xz
+        sudo ln -s $(pwd)/MacOSX10.11.sdk $(xcode-select -p)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
+    - name: Build and package
+      id: build
+      run: |
+        cd "$GITHUB_WORKSPACE"
+        xcodebuild -workspace "$WORKSPACE_PATH" -scheme "$SCHEME"
+        echo "::set-env name=VERSION::$(xcodebuild -showBuildSettings -workspace "$WORKSPACE_PATH" -scheme "$SCHEME" | grep MARKETING_VERSION | head -1 | tr -d '[:alpha:][:space:]_=')"
+        echo "::set-env name=SHA_SHORT::$(git rev-parse --short $GITHUB_SHA)"
+      env:
+        WORKSPACE_PATH: WiiController.xcworkspace
+        SCHEME: Build DMG
+    - name: Upload package
+      uses: actions/upload-artifact@v1
+      with:
+        name: WiiController.${{ steps.build.outputs.VERSION }}.git.${{ steps.build.outputs.SHA_SHORT }}.dmg
+        path: ${{ github.workspace }}/WiiController/WiiController.dmg
