@@ -11,7 +11,7 @@ jobs:
       run: |
         wget https://github.com/phracker/MacOSX-SDKs/releases/download/10.15/MacOSX10.11.sdk.tar.xz
         gunzip MacOSX10.11.sdk.tar.xz
-        tar -xf MacOSX10.11.sdk.tar.xz
+        tar -xf MacOSX10.11.sdk.tar
         rm MacOSX10.11.sdk.tar.xz
         sudo ln -s $(pwd)/MacOSX10.11.sdk $(xcode-select -p)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
     - name: Build and package
