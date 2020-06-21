@@ -21,7 +21,9 @@ jobs:
       id: build
       run: |
         cd "$GITHUB_WORKSPACE"
-        xcodebuild -workspace "$WORKSPACE_PATH" -scheme "$SCHEME"
+        xcodebuild -workspace "$WORKSPACE_PATH" -list
+        exit 1
+        xcodebuild -workspace "$WORKSPACE_PATH" -scheme "$SCHEME" | xcpretty
         echo "::set-env name=VERSION::$(xcodebuild -showBuildSettings -workspace "$WORKSPACE_PATH" -scheme "$SCHEME" | grep MARKETING_VERSION | head -1 | tr -d '[:alpha:][:space:]_=')"
         echo "::set-env name=SHA_SHORT::$(git rev-parse --short $GITHUB_SHA)"
       env:
