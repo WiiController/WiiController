@@ -22,15 +22,13 @@ jobs:
       run: |
         cd "$GITHUB_WORKSPACE"
         xcodebuild -project "$PROJECT_PATH" -target "$SCHEME" | xcpretty
-        echo "::set-env name=VERSION::$(xcodebuild -showBuildSettings -workspace "$WORKSPACE_PATH" -scheme "$SCHEME" | grep MARKETING_VERSION | head -1 | tr -d '[:alpha:][:space:]_=')"
+        echo "::set-env name=VERSION::$(xcodebuild -showBuildSettings -project "$PROJECT_PATH" -target "$TARGET" | grep MARKETING_VERSION | head -1 | tr -d '[:alpha:][:space:]_=')"
         echo "::set-env name=SHA_SHORT::$(git rev-parse --short $GITHUB_SHA)"
       env:
-        WORKSPACE_PATH: WiiController.xcworkspace
-        SCHEME: Build DMG
         PROJECT_PATH: WiiController/WiiController.xcodeproj
         TARGET: Build DMG
     - name: Upload package
       uses: actions/upload-artifact@v1
       with:
-        name: WiiController.${{ steps.build.outputs.VERSION }}.git.${{ steps.build.outputs.SHA_SHORT }}.dmg
+        name: WiiController.${{ VERSION }}.git.${{ SHA_SHORT }}.dmg
         path: ${{ github.workspace }}/WiiController/WiiController.dmg
