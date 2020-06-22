@@ -103,7 +103,7 @@
     [UserNotificationCenter
         deliver:[UserNotification
                     userNotificationWithTitle:@"Pairing Disabled"
-                                         text:@"Select Pair Device from the WJoy menu to re-enable pairing."]];
+                                         text:@"Select Pair Device from the WiiController menu to re-enable pairing."]];
 }
 
 - (void)onDeviceConnected:(NSNotification *)notification
