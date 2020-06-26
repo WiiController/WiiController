@@ -1,5 +1,5 @@
 # WiiController
-## Connect your Nintendo Wii and Wii U controllers to your macOS machine
+## Use your Nintendo Wii and Wii U controllers on macOS as standard gamepads
 
 WiiController is a device driver and helper application that allows you to use the following Nintendo Bluetooth controllers as virtual gamepads on macOS:
 
