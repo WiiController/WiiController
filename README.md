@@ -19,7 +19,7 @@ This repository builds on the work of [JustinBis/wjoy-foohid](https://github.com
 
 **Please use appropriate caution:** You are about to install a kernel-level device driver. I am not aware of anything wrong with the code, and it has never caused me any noticable problems or kernel panics, but _this may be different for you_ and installation is entirely _at your own risk_. If you encounter problems, I will try to help you to the best of my ability, but this software comes with **absolutely no warranty**.
 
-The driver and app _should_ work on macOS 10.11 or later. As of now, this fork has only been tested on 10.15.5, but I have not touched the driver code at all, so that part should at least be OK.
+The driver and app _should_ work on macOS 10.11 or later. As of now, this fork has only been tested on 10.15.5 and 10.14.6.
 
 ### Disable SIP kext protections
 
