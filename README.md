@@ -47,25 +47,3 @@ csrutil enable --without kext
 ## I need help!
 
 Please check the [wiki](https://github.com/WiiController/WiiController/wiki).
-
-## Notes on Wii U Pro Controller and Steam games
-
-(These notes are from [JustinBis/wjoy-foohid](https://github.com/JustinBis/wjoy-foohid). I have not confirmed any of this myself, but I presume it is correct.)
-
-In my experience, Unity games for Mac do not support the Wii U Pro Controller, since they tend to use the XInput package. There is no application that emulates an Xbox controller for Mac.
-
-Working:
-
- - Binding of Isaac
- - DolphinEmu
- - Antichamber
- - Hotline Miami
- - Teleglitch
-
-Not working:
-
- - Ultimate Chicken Horse
- - Gang Beasts
- - Broforce
- - Monaco
- - Superhot
