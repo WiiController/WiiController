@@ -120,7 +120,7 @@
             batteryLevel = [NSString stringWithFormat:@"%.0lf%%", [device batteryLevel]];
 
         NSMenuItem *item = [[NSMenuItem alloc]
-            initWithTitle:[NSString stringWithFormat:@"#%li %@ (%@ Battery) / %@",
+            initWithTitle:[NSString stringWithFormat:@"%@ #%li (%@ Battery) / %@",
                 [device marketingName],
                 i+1,
                 [device batteryLevelDescription],
