@@ -27,13 +27,13 @@
 
 + (void)wiimoteConnected:(Wiimote*)wiimote
 {
-    NSLog(@"Wiimote connected, address %@", [wiimote addressString]);
+    NSLog(@"%@ connected, address %@", [wiimote marketingName], [wiimote addressString]);
     [[self mutableConnectedWiimotes] addObject:wiimote];
 }
 
 + (void)wiimoteDisconnected:(Wiimote*)wiimote
 {
-    NSLog(@"Wiimote disconnected, address %@", [wiimote addressString]);
+    NSLog(@"%@ disconnected, address %@", [wiimote marketingName], [wiimote addressString]);
     [[self mutableConnectedWiimotes] removeObject:wiimote];
 }
 
