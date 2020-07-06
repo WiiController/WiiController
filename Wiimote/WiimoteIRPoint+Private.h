@@ -14,6 +14,4 @@
 
 - (id)initWithOwner:(Wiimote*)owner index:(NSUInteger)index;
 
-@property(nonatomic,getter=isOutOfView) BOOL outOfView;
-
 @end

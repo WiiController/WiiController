@@ -13,7 +13,7 @@
 @interface WiimoteIRPoint : NSObject
 
 @property(nonatomic,readonly) NSUInteger index;
-@property(nonatomic,readonly,getter=isOutOfView) BOOL outOfView;
+@property(nonatomic,getter=isOutOfView) BOOL outOfView;
 @property(nonatomic) NSPoint position;
 @property(nonatomic,readonly) Wiimote *owner;
 
