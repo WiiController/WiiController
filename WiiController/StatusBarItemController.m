@@ -10,11 +10,14 @@
 
 #import "StatusBarItemController.h"
 
+@interface StatusBarItemController () <NSMenuDelegate>
+
+@end
+
 @implementation StatusBarItemController
 {
     NSMenu          *_menu;
     NSStatusItem    *_item;
-    NSMenuItem      *_discoveryMenuItem;
 }
 
 + (void)start
@@ -36,18 +39,9 @@
     _item              = [[NSStatusBar systemStatusBar]
                                     statusItemWithLength:NSSquareStatusItemLength];
 
-    _discoveryMenuItem = [[NSMenuItem alloc]
-                                    initWithTitle:@"Pair Device"
-                                           action:@selector(beginDiscovery)
-                                    keyEquivalent:@""];
+    [_menu setDelegate:self];
 
-    [_discoveryMenuItem setTarget:[Wiimote class]];
-    [_discoveryMenuItem setEnabled:![Wiimote isDiscovering]];
-    [_menu addItem:_discoveryMenuItem];
-    [_menu setAutoenablesItems:NO];
-    [_menu setDelegate:(id)self];
-
-    NSImage *icon = [[[NSApplication sharedApplication] applicationIconImage] copy];
+    NSImage *icon = [NSImage imageNamed:@"wiimote"];
 
     [icon setSize:NSMakeSize(20.0f, 20.0f)];
 
@@ -82,41 +76,41 @@
         [wiimote requestUpdateState];
     }
 
-    while([_menu numberOfItems] > 1)
-        [_menu removeItemAtIndex:1];
+    [_menu removeAllItems];
+
+    __auto_type discoveryItem = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
 
     if([Wiimote isBluetoothEnabled])
     {
-        [_discoveryMenuItem setImage:nil];
-
         if([Wiimote isDiscovering])
         {
-            [_discoveryMenuItem setEnabled:NO];
-            [_discoveryMenuItem setTitle:@"Discovering: Press red pairing button on Nintendo device"];
+            [discoveryItem setTitle:@"Discovering: Press red pairing button on Nintendo device"];
         }
         else
         {
             NSImage *icon = [NSImage imageNamed:NSImageNameBluetoothTemplate];
-            [_discoveryMenuItem setImage:icon];
-            [_discoveryMenuItem setEnabled:YES];
-            [_discoveryMenuItem setTitle:@"Pair Device"];
+            [discoveryItem setImage:icon];
+            [discoveryItem setTitle:@"Pair Device"];
+            [discoveryItem setTarget:[Wiimote class]];
+            [discoveryItem setAction:@selector(beginDiscovery)];
         }
     }
     else
     {
         NSImage *icon = [NSImage imageNamed:@"warning"];
         [icon setSize:NSMakeSize(16.0f, 16.0f)];
-        [_discoveryMenuItem setImage:icon];
-        [_discoveryMenuItem setEnabled:NO];
-        [_discoveryMenuItem setTitle:@"Bluetooth is disabled!"];
+        [discoveryItem setImage:icon];
+        [discoveryItem setTitle:@"Bluetooth is disabled!"];
     }
+
+    [_menu addItem:discoveryItem];
+    
+    [_menu addItem:[NSMenuItem separatorItem]];
 
     NSArray     *connectedDevices   = [Wiimote connectedDevices];
     NSUInteger   countConnected     = [connectedDevices count];
 
-    if(countConnected > 0)
-        [_menu addItem:[NSMenuItem separatorItem]];
-
+    [_menu addItem:[[NSMenuItem alloc] initWithTitle:(countConnected ? @"Connected:" : @"No Devices Connected") action:nil keyEquivalent:@""]];
     for(NSUInteger i = 0; i < countConnected; i++)
     {
         Wiimote         *device       = [connectedDevices objectAtIndex:i];
@@ -126,13 +120,14 @@
             batteryLevel = [NSString stringWithFormat:@"%.0lf%%", [device batteryLevel]];
 
         NSMenuItem *item = [[NSMenuItem alloc]
-            initWithTitle:[NSString stringWithFormat:@"%@ #%li (%@ Battery) / %@",
+            initWithTitle:[NSString stringWithFormat:@"#%li %@ (%@ Battery) / %@",
                 [device marketingName],
                 i+1,
                 [device batteryLevelDescription],
                 [device addressString]]
             action:nil
             keyEquivalent:@""];
+        [item setIndentationLevel:1];
 
         if([device isBatteryLevelLow])
         {
@@ -144,16 +139,31 @@
         [_menu addItem:item];
     }
 
+    [_menu addItem:[NSMenuItem separatorItem]];
+
     NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@"Auto-connect to Paired Devices (Experimental)" action:@selector(toggleOneButtonClickConnection) keyEquivalent:@""];
     [item setTarget:self];
     [item setState:([Wiimote isUseOneButtonClickConnection])?(NSOnState):(NSOffState)];
-    [_menu addItem:[NSMenuItem separatorItem]];
     [_menu addItem:item];
+
+    [_menu addItem:[NSMenuItem separatorItem]];
+
+    item = [[NSMenuItem alloc] initWithTitle:@"About WiiController" action:@selector(showAboutPanel:) keyEquivalent:@""];
+    [item setTarget:self];
+    [_menu addItem:item];
+    
+    [_menu addItem:[NSMenuItem separatorItem]];
 
     item = [[NSMenuItem alloc] initWithTitle:@"Quit WiiController" action:@selector(terminate:) keyEquivalent:@"q"];
     [item setTarget:[NSApplication sharedApplication]];
-    [_menu addItem:[NSMenuItem separatorItem]];
     [_menu addItem:item];
+}
+
+- (void)showAboutPanel:(id)sender
+{
+    __auto_type app = [NSApplication sharedApplication];
+    [app orderFrontStandardAboutPanel:nil];
+    [app unhide:nil];
 }
 
 @end
