@@ -42,7 +42,6 @@ csrutil enable --without kext
  3. Start the WiiController application.
  4. Pairing should begin automatically, but will expire after 10 seconds. To re-enable it if 10 seconds have passed, click the Wii Remote icon in the menu bar and select Pair Device.
  5. Press the small red "sync" button on your Nintendo device. To pair multiple devices, select Pair Device again for each.
- 6. (Optional) Once connected, configure your controller as a Steam controller in Steam Big Picture Mode. Read more here: https://www.howtogeek.com/234427/how-to-remap-buttons-on-your-steam-controller/
 
 ## I need help!
 
