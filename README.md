@@ -42,7 +42,8 @@ csrutil enable --without kext
  3. Start the WiiController application.
  4. Pairing should begin automatically, but will expire after 10 seconds. To re-enable it if 10 seconds have passed, click the Wii Remote icon in the menu bar and select Pair Device.
  5. Press the small red "sync" button on your Nintendo device. To pair multiple devices, select Pair Device again for each.
+ 6. [Check the wiki on GitHub]([wiki](https://github.com/WiiController/WiiController/wiki) for further usage instructions and support articles.
 
 ## I need help!
 
-Please check the [wiki](https://github.com/WiiController/WiiController/wiki).
+Please check the [wiki on GitHub](https://github.com/WiiController/WiiController/wiki).
