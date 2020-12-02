@@ -22,8 +22,8 @@ jobs:
       run: |
         cd "$GITHUB_WORKSPACE"
         xcodebuild -project "$PROJECT_PATH" -target "$TARGET" | xcpretty
-        echo "::set-env name=VERSION::$(xcodebuild -showBuildSettings -project "$PROJECT_PATH" | grep MARKETING_VERSION | head -1 | tr -d '[:alpha:][:space:]_=')"
-        echo "::set-env name=SHA_SHORT::$(git rev-parse --short $GITHUB_SHA)"
+        echo "VERSION=$(xcodebuild -showBuildSettings -project "$PROJECT_PATH" | grep MARKETING_VERSION | head -1 | tr -d '[:alpha:][:space:]_=')" >> $GITHUB_ENV
+        echo "SHA_SHORT=$(git rev-parse --short $GITHUB_SHA)" >> $GITHUB_ENV
       env:
         PROJECT_PATH: WiiController/WiiController.xcodeproj
         TARGET: Build DMG
