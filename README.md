@@ -21,6 +21,8 @@ This repository builds on the work of [JustinBis/wjoy-foohid](https://github.com
 
 The driver and app _should_ work on macOS 10.11 or later. As of now, this fork has only been tested on 10.15.5 and 10.14.6.
 
+**Architecture caveat**: This app does not currently work on ARM (Apple M-series) CPUs.
+
 ### Disable SIP kext protections
 
 You must have the kernel extensions protection of [System Integrity Protection (SIP)](http://www.imore.com/el-capitan-system-integrity-protection-helps-keep-malware-away) disabled for the driver to load. To disable SIP, boot into [recovery mode](https://support.apple.com/en-ca/HT201314), select Terminal from Utilities in the menu bar, and run the following:
