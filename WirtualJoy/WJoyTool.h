@@ -8,9 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface WJoyTool : NSObject
+#import "DriverManager.h"
 
-+ (BOOL)loadDriver;
-+ (BOOL)unloadDriver;
+@interface WJoyTool : NSObject <DriverManager>
 
 @end

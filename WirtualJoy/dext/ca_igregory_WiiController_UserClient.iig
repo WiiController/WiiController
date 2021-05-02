@@ -1,0 +1,49 @@
+//
+//  UserClient.iig
+//  WirtualJoy
+//
+//  Created by Ian Gregory on 30 Apr ’21.
+//
+
+#ifndef WiiControllerUserClient_h
+#define WiiControllerUserClient_h
+
+#include <Availability.h>
+#include <DriverKit/IOUserClient.iig>
+
+class ca_igregory_WiiController;
+
+class ca_igregory_WiiController_UserClient : public IOUserClient
+{
+public:
+    virtual bool init(void) override;
+    virtual void free(void) override;
+    
+    virtual kern_return_t Start(IOService *provider) override;
+    virtual kern_return_t Stop(IOService *provider) override;
+    
+    virtual kern_return_t ExternalMethod(
+        uint64_t selector,
+        IOUserClientMethodArguments *arguments,
+        IOUserClientMethodDispatch const *dispatch,
+        OSObject *target,
+        void *reference
+    ) override;
+    
+private:
+    static kern_return_t _enableDevice(ca_igregory_WiiController_UserClient *target, void *reference, IOUserClientMethodArguments *args) LOCALONLY;
+    static kern_return_t _disableDevice(ca_igregory_WiiController_UserClient *target, void *reference, IOUserClientMethodArguments *args) LOCALONLY;
+    static kern_return_t _updateDeviceState(ca_igregory_WiiController_UserClient *target, void *reference, IOUserClientMethodArguments *args) LOCALONLY;
+    static kern_return_t _setDeviceProductString(ca_igregory_WiiController_UserClient *target, void *reference, IOUserClientMethodArguments *args) LOCALONLY;
+    static kern_return_t _setDeviceSerialNumberString(ca_igregory_WiiController_UserClient *target, void *reference, IOUserClientMethodArguments *args) LOCALONLY;
+    static kern_return_t _setDeviceVendorAndProductID(ca_igregory_WiiController_UserClient *target, void *reference, IOUserClientMethodArguments *args) LOCALONLY;
+
+    kern_return_t enableDevice(OSData *hidDescriptorData) LOCALONLY;
+    kern_return_t disableDevice() LOCALONLY;
+    kern_return_t updateDeviceState(OSData *hidReportData) LOCALONLY;
+    kern_return_t setDeviceProductString(OSData *productStringData) LOCALONLY;
+    kern_return_t setDeviceSerialNumberString(OSData *serialNumberStringData) LOCALONLY;
+    kern_return_t setDeviceVendorAndProductID(uint32_t vendorID, uint32_t productID) LOCALONLY;
+};
+
+#endif /* WiiControllerUserClient_h */

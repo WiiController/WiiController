@@ -8,9 +8,11 @@
 
 #import "WJoyDeviceImpl.h"
 #import "WJoyTool.h"
+#import "DextManager.h"
 #import <IOKit/kext/KextManager.h>
 
-#define WJoyDeviceDriverID @"com_alxn1_driver_WirtualJoy"
+static char const *WJoyDeviceDriverClass = "com_alxn1_driver_WirtualJoy";
+static char const *driverKitDriverUserClass = "ca_igregory_WiiController";
 
 @interface WJoyDeviceImpl (PrivatePart)
 
@@ -24,6 +26,14 @@
 + (BOOL)unloadDriver;
 
 @end
+
+static Class <DriverManager> driverManager() {
+    if (@available(macOS 10.15, *)) {
+        return [DextManager self];
+    } else {
+        return [WJoyTool self];
+    }
+}
 
 @implementation WJoyDeviceImpl
 
@@ -144,37 +154,33 @@ static void onApplicationExit(void)
 
 + (void)registerAtExitCallback
 {
-    static BOOL isRegistred = NO;
-
-    if(isRegistred)
-        return;
-
-    atexit(onApplicationExit);
-    isRegistred = YES;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        atexit(onApplicationExit);
+    });
 }
 
 + (io_service_t)findService
 {
-    io_service_t	result = IO_OBJECT_NULL;
-    io_iterator_t 	iterator;
-
-    if(IOServiceGetMatchingServices(
-            kIOMasterPortDefault,
-            IOServiceMatching([WJoyDeviceDriverID UTF8String]),
-            &iterator) != KERN_SUCCESS)
-    {
-        return result;
+    io_service_t result = IO_OBJECT_NULL;
+    
+    result = IOServiceGetMatchingService(
+        kIOMasterPortDefault,
+        IOServiceMatching(WJoyDeviceDriverClass)
+    );
+    if (!result) {
+        result = IOServiceGetMatchingService(
+             kIOMasterPortDefault,
+             IOServiceNameMatching(driverKitDriverUserClass));
     }
 
-    result = IOIteratorNext(iterator);
-    IOObjectRelease(iterator);
     return result;
 }
 
 + (io_connect_t)createNewConnection
 {
-    io_connect_t result    = IO_OBJECT_NULL;
-    io_service_t service   = [WJoyDeviceImpl findService];
+    io_connect_t result = IO_OBJECT_NULL;
+    io_service_t service = [WJoyDeviceImpl findService];
 
     if(service == IO_OBJECT_NULL)
         return result;
@@ -195,18 +201,14 @@ static void onApplicationExit(void)
 }
 
 + (BOOL)loadDriver {
-    if ([self isDriverLoaded])
-        return YES;
-
-    return [WJoyTool loadDriver];
+    if ([self isDriverLoaded]) return YES;
+    return [driverManager() loadDriver];
 }
 
 + (BOOL)unloadDriver
 {
-    if(![self isDriverLoaded])
-        return YES;
-
-    return [WJoyTool unloadDriver];
+    if(![self isDriverLoaded]) return YES;
+    return [driverManager() unloadDriver];
 }
 
 @end

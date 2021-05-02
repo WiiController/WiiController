@@ -1,0 +1,39 @@
+//
+//  Device.iig
+//  wiicontroller
+//
+//  Created by Ian Gregory on 30 Apr ’21.
+//
+
+#ifndef WiiControllerDevice_h
+#define WiiControllerDevice_h
+
+#include <Availability.h>
+#include <DriverKit/IOService.iig>
+#include <HIDDriverKit/IOUserHIDDevice.iig>
+
+class ca_igregory_WiiController_Device : public IOUserHIDDevice
+{
+public:
+    virtual bool init(void) override;
+    virtual void free(void) override;
+    
+    virtual OSDictionary *newDeviceDescription(void) override;
+    virtual OSData *newReportDescriptor(void) override;
+    
+    // Called by enableDevice() external method, via user client.
+    static ca_igregory_WiiController_Device *withHidDescriptor(
+        IOService *provider,
+        const void *hidDescriptorData,
+        size_t hidDescriptorDataSize,
+        OSString *productString,
+        OSString *serialNumberString,
+        uint32_t vendorID,
+        uint32_t productID
+    ) LOCALONLY;
+    
+    // Called by updateDeviceState() external method, via user client.
+    bool updateState(void const *hidData, size_t hidDataSize) LOCALONLY;
+};
+
+#endif /* WiiControllerDevice_h */
