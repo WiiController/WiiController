@@ -14,9 +14,6 @@
       location = "group:WirtualJoy/WirtualJoy.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:LocalizationUtils/LocalizationUtils.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:WiiController/WiiController.xcodeproj">
    </FileRef>
    <FileRef
