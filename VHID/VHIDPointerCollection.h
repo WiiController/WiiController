@@ -10,11 +10,11 @@
 
 @interface VHIDPointerCollection : NSObject
 {
-    @private
-        NSUInteger       _pointerCount;
-        BOOL             _isRelative;
-        NSData          *_descriptor;
-        NSMutableData   *_state;
+@private
+    NSUInteger _pointerCount;
+    BOOL _isRelative;
+    NSData *_descriptor;
+    NSMutableData *_state;
 }
 
 + (NSUInteger)maxPointerCount;
@@ -29,7 +29,7 @@
 - (void)setPointer:(NSUInteger)pointerIndex position:(NSPoint)position;
 - (void)reset;
 
-- (NSData*)descriptor;
-- (NSData*)state;
+- (NSData *)descriptor;
+- (NSData *)state;
 
 @end

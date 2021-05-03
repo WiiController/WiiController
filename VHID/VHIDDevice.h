@@ -20,20 +20,20 @@ typedef enum
 
 @protocol VHIDDeviceDelegate <NSObject>
 
-- (void)VHIDDevice:(VHIDDevice*)device stateChanged:(NSData*)state;
+- (void)VHIDDevice:(VHIDDevice *)device stateChanged:(NSData *)state;
 
 @end
 
 @interface VHIDDevice : NSObject
 {
-    @private
-        VHIDDeviceType           _type;
-        VHIDButtonCollection    *_buttons;
-        VHIDPointerCollection   *_pointers;
-        NSData                  *_descriptor;
-        NSMutableData           *_state;
+@private
+    VHIDDeviceType _type;
+    VHIDButtonCollection *_buttons;
+    VHIDPointerCollection *_pointers;
+    NSData *_descriptor;
+    NSMutableData *_state;
 
-        id<VHIDDeviceDelegate>   _delegate;
+    id<VHIDDeviceDelegate> _delegate;
 }
 
 + (NSUInteger)maxButtonCount;
@@ -59,8 +59,8 @@ typedef enum
 
 - (void)reset;
 
-- (NSData*)descriptor;
-- (NSData*)state;
+- (NSData *)descriptor;
+- (NSData *)state;
 
 - (id<VHIDDeviceDelegate>)delegate;
 - (void)setDelegate:(id<VHIDDeviceDelegate>)obj;

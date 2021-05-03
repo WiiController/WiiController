@@ -10,12 +10,12 @@
 #import "VHIDButtonCollection.h"
 #import "VHIDPointerCollection.h"
 
-#define HIDDescriptorMouseAdditionalBytes       12
-#define HIDDescriptorJoystickAdditionalBytes    10
+#define HIDDescriptorMouseAdditionalBytes 12
+#define HIDDescriptorJoystickAdditionalBytes 10
 
 @interface VHIDDevice (PrivatePart)
 
-- (NSData*)createDescriptor;
+- (NSData *)createDescriptor;
 
 @end
 
@@ -38,17 +38,17 @@
 {
     self = [super init];
 
-    _type      = type;
-    _buttons   = [[VHIDButtonCollection alloc] initWithButtonCount:buttonCount];
-    _pointers  = [[VHIDPointerCollection alloc] initWithPointerCount:pointerCount
-                                                           isRelative:isRelative];
+    _type = type;
+    _buttons = [[VHIDButtonCollection alloc] initWithButtonCount:buttonCount];
+    _pointers = [[VHIDPointerCollection alloc] initWithPointerCount:pointerCount
+                                                         isRelative:isRelative];
 
-    _state     = [[NSMutableData alloc]
-                                initWithLength:
-                                    [[_buttons state] length] +
-                                    [[_pointers state] length]];
+    _state = [[NSMutableData alloc]
+        initWithLength:
+            [[_buttons state] length] +
+        [[_pointers state] length]];
 
-    if(_buttons  == nil || _pointers == nil)
+    if (_buttons == nil || _pointers == nil)
     {
         return nil;
     }
@@ -58,7 +58,6 @@
     return self;
 }
 
-
 - (VHIDDeviceType)type
 {
     return _type;
@@ -66,7 +65,7 @@
 
 - (BOOL)isRelative
 {
-    if(_pointers == nil)
+    if (_pointers == nil)
         return NO;
 
     return [_pointers isRelative];
@@ -89,21 +88,21 @@
 
 - (void)setButton:(NSUInteger)buttonIndex pressed:(BOOL)pressed
 {
-    if(buttonIndex >= [self buttonCount] ||
-       [self isButtonPressed:buttonIndex] == pressed)
+    if (buttonIndex >= [self buttonCount] ||
+        [self isButtonPressed:buttonIndex] == pressed)
     {
         return;
     }
 
     [_buttons setButton:buttonIndex pressed:pressed];
 
-    if(_delegate != nil)
+    if (_delegate != nil)
         [_delegate VHIDDevice:self stateChanged:[self state]];
 }
 
 - (NSPoint)pointerPosition:(NSUInteger)pointerIndex
 {
-    if(_pointers == nil)
+    if (_pointers == nil)
         return NSZeroPoint;
 
     return [_pointers pointerPosition:pointerIndex];
@@ -111,15 +110,14 @@
 
 - (void)setPointer:(NSUInteger)pointerIndex position:(NSPoint)position
 {
-    if(pointerIndex >= [self pointerCount] ||
-       NSEqualPoints([self pointerPosition:pointerIndex], position))
+    if (pointerIndex >= [self pointerCount] || NSEqualPoints([self pointerPosition:pointerIndex], position))
     {
         return;
     }
 
     [_pointers setPointer:pointerIndex position:position];
 
-    if(_delegate != nil)
+    if (_delegate != nil)
         [_delegate VHIDDevice:self stateChanged:[self state]];
 }
 
@@ -128,22 +126,22 @@
     [_buttons reset];
     [_pointers reset];
 
-    if(_delegate != nil)
+    if (_delegate != nil)
         [_delegate VHIDDevice:self stateChanged:[self state]];
 }
 
-- (NSData*)descriptor
+- (NSData *)descriptor
 {
     return _descriptor;
 }
 
-- (NSData*)state
+- (NSData *)state
 {
-    unsigned char   *data           = [_state mutableBytes];
-    NSData          *buttonState    = [_buttons state];
-    NSData          *pointerState   = [_pointers state];
+    unsigned char *data = [_state mutableBytes];
+    NSData *buttonState = [_buttons state];
+    NSData *pointerState = [_pointers state];
 
-    if(buttonState != nil)
+    if (buttonState != nil)
     {
         memcpy(
             data,
@@ -151,7 +149,7 @@
             [buttonState length]);
     }
 
-    if(pointerState != nil)
+    if (pointerState != nil)
     {
         memcpy(
             data + [buttonState length],
@@ -176,46 +174,60 @@
 
 @implementation VHIDDevice (PrivatePart)
 
-- (NSData*)createDescriptor
+- (NSData *)createDescriptor
 {
-    BOOL             isMouse        = (_type == VHIDDeviceTypeMouse);
-    NSData          *buttonsHID     = [_buttons descriptor];
-    NSData          *pointersHID    = [_pointers descriptor];
-    NSMutableData   *result         = [NSMutableData dataWithLength:
-                                                        [buttonsHID length] +
-                                                        [pointersHID length] +
-                                                        ((isMouse)?
-                                                            (HIDDescriptorMouseAdditionalBytes):
-                                                            (HIDDescriptorJoystickAdditionalBytes))];
+    BOOL isMouse = (_type == VHIDDeviceTypeMouse);
+    NSData *buttonsHID = [_buttons descriptor];
+    NSData *pointersHID = [_pointers descriptor];
+    NSMutableData *result = [NSMutableData dataWithLength:
+                                               [buttonsHID length] +
+                                           [pointersHID length] + ((isMouse) ? (HIDDescriptorMouseAdditionalBytes) : (HIDDescriptorJoystickAdditionalBytes))];
 
-    unsigned char   *data           = [result mutableBytes];
-    unsigned char    usage          = ((isMouse)?(0x02):(0x05));
+    unsigned char *data = [result mutableBytes];
+    unsigned char usage = ((isMouse) ? (0x02) : (0x05));
 
-    *data = 0x05; data++; *data = 0x01; data++;      // USAGE_PAGE (Generic Desktop)
-    *data = 0x09; data++; *data = usage; data++;     // USAGE (Mouse/Game Pad)
-    *data = 0xA1; data++; *data = 0x01; data++;      // COLLECTION (Application)
+    *data = 0x05;
+    data++;
+    *data = 0x01;
+    data++; // USAGE_PAGE (Generic Desktop)
+    *data = 0x09;
+    data++;
+    *data = usage;
+    data++; // USAGE (Mouse/Game Pad)
+    *data = 0xA1;
+    data++;
+    *data = 0x01;
+    data++; // COLLECTION (Application)
 
-    if(isMouse)
+    if (isMouse)
     {
-        *data = 0x09; data++; *data = 0x01; data++;  // USAGE (Pointer)
+        *data = 0x09;
+        data++;
+        *data = 0x01;
+        data++; // USAGE (Pointer)
     }
 
-    *data = 0xA1; data++; *data = 0x00; data++;      // COLLECTION (Physical)
+    *data = 0xA1;
+    data++;
+    *data = 0x00;
+    data++; // COLLECTION (Physical)
 
-    if(buttonsHID != nil)
+    if (buttonsHID != nil)
     {
         memcpy(data, [buttonsHID bytes], [buttonsHID length]);
         data += [buttonsHID length];
     }
 
-    if(pointersHID != nil)
+    if (pointersHID != nil)
     {
         memcpy(data, [pointersHID bytes], [pointersHID length]);
         data += [pointersHID length];
     }
 
-    *data = 0xC0; data++; // END_COLLECTION
-    *data = 0xC0; data++; // END_COLLECTION
+    *data = 0xC0;
+    data++; // END_COLLECTION
+    *data = 0xC0;
+    data++; // END_COLLECTION
 
     return result;
 }
