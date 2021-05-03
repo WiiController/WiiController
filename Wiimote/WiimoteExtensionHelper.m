@@ -10,54 +10,53 @@
 
 @implementation WiimoteExtensionHelper
 {
-    Wiimote                 *_wiimote;
-    WiimoteEventDispatcher  *_eventDispatcher;
-    WiimoteIOManager        *_iOManager;
+    Wiimote *_wiimote;
+    WiimoteEventDispatcher *_eventDispatcher;
+    WiimoteIOManager *_iOManager;
 
-    NSMutableArray          *_extensionClasses;
-    Class                    _currentClass;
-    WiimoteExtension        *_extension;
+    NSMutableArray *_extensionClasses;
+    Class _currentClass;
+    WiimoteExtension *_extension;
 
-    BOOL                     _isInitialized;
-    BOOL                     _isStarted;
-    BOOL                     _isCanceled;
+    BOOL _isInitialized;
+    BOOL _isStarted;
+    BOOL _isCanceled;
 
-    id                       _target;
-    SEL                      _action;
-    
+    id _target;
+    SEL _action;
+
     id _retainedSelf;
 }
 
-- (id)initWithWiimote:(Wiimote*)wiimote
-      eventDispatcher:(WiimoteEventDispatcher*)dispatcher
-            ioManager:(WiimoteIOManager*)ioManager
-     extensionClasses:(NSArray*)extensionClasses
-         subExtension:(WiimoteExtension*)extension
+- (id)initWithWiimote:(Wiimote *)wiimote
+      eventDispatcher:(WiimoteEventDispatcher *)dispatcher
+            ioManager:(WiimoteIOManager *)ioManager
+     extensionClasses:(NSArray *)extensionClasses
+         subExtension:(WiimoteExtension *)extension
                target:(id)target
                action:(SEL)action
 {
     self = [super init];
-    if(self == nil)
+    if (self == nil)
         return nil;
 
-    _wiimote           = wiimote;
-    _eventDispatcher   = dispatcher;
-    _iOManager         = ioManager;
-    _extensionClasses  = [extensionClasses mutableCopy];
-    _currentClass      = nil;
-    _extension         = nil;
-    _subExtension      = extension;
+    _wiimote = wiimote;
+    _eventDispatcher = dispatcher;
+    _iOManager = ioManager;
+    _extensionClasses = [extensionClasses mutableCopy];
+    _currentClass = nil;
+    _extension = nil;
+    _subExtension = extension;
 
-    _isInitialized     = NO;
-    _isStarted         = NO;
-    _isCanceled        = NO;
+    _isInitialized = NO;
+    _isStarted = NO;
+    _isCanceled = NO;
 
-    _target            = target;
-    _action            = action;
+    _target = target;
+    _action = action;
 
     return self;
 }
-
 
 - (void)initializeExtensionPort
 {
@@ -65,11 +64,11 @@
 
     data = WiimoteDeviceRoutineExtensionInitValue1;
     [_iOManager writeMemory:WiimoteDeviceRoutineExtensionInitAddress1 data:&data length:sizeof(data)];
-	usleep(50000);
+    usleep(50000);
 
     data = WiimoteDeviceRoutineExtensionInitValue2;
     [_iOManager writeMemory:WiimoteDeviceRoutineExtensionInitAddress2 data:&data length:sizeof(data)];
-	usleep(50000);
+    usleep(50000);
 
     _isInitialized = YES;
 }
@@ -84,9 +83,9 @@
     _retainedSelf = nil;
 }
 
-- (void)probeFinished:(WiimoteExtension*)extension
+- (void)probeFinished:(WiimoteExtension *)extension
 {
-    if(_target != nil && _action != nil)
+    if (_target != nil && _action != nil)
         [_target performSelector:_action withObject:extension afterDelay:0.0];
 
     [self endProbe];
@@ -94,13 +93,13 @@
 
 - (void)probeNextClass
 {
-    if(_isCanceled)
+    if (_isCanceled)
     {
         [self endProbe];
         return;
     }
 
-    if([_extensionClasses count] == 0)
+    if ([_extensionClasses count] == 0)
     {
         [self probeFinished:nil];
         return;
@@ -109,51 +108,51 @@
     _currentClass = [_extensionClasses objectAtIndex:0];
     [_extensionClasses removeObjectAtIndex:0];
 
-    if(!_isInitialized &&
-       [_currentClass merit] >= WiimoteExtensionMeritClassSystemHigh)
+    if (!_isInitialized &&
+        [_currentClass merit] >= WiimoteExtensionMeritClassSystemHigh)
     {
         [self initializeExtensionPort];
     }
 
     [_currentClass probe:_iOManager
-                   target:self
-                   action:@selector(currentClassProbeFinished:)];
+                  target:self
+                  action:@selector(currentClassProbeFinished:)];
 }
 
-- (void)currentClassProbeFinished:(NSNumber*)result
+- (void)currentClassProbeFinished:(NSNumber *)result
 {
-    if(_isCanceled)
+    if (_isCanceled)
     {
         [self endProbe];
         return;
     }
 
-    if(![result boolValue])
+    if (![result boolValue])
     {
         [self probeNextClass];
         return;
     }
 
     _extension = [[_currentClass alloc] initWithOwner:_wiimote
-                                        eventDispatcher:_eventDispatcher];
+                                      eventDispatcher:_eventDispatcher];
 
-    if(_extension == nil)
+    if (_extension == nil)
     {
         [self probeNextClass];
         return;
     }
 
     [_extension calibrate:_iOManager];
-	[self probeFinished:_extension];
+    [self probeFinished:_extension];
 }
 
 - (void)start
 {
-    if(_isStarted)
+    if (_isStarted)
         return;
 
     _isInitialized = NO;
-	[self beginProbe];
+    [self beginProbe];
     [self probeNextClass];
 }
 

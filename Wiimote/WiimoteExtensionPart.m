@@ -14,18 +14,18 @@
 
 @implementation WiimoteExtensionPart
 {
-    BOOL                         _isExtensionConnected;
-    WiimoteExtensionHelper      *_probeHelper;
-    WiimoteMotionPlusDetector   *_motionPlusDetector;
-    WiimoteExtension            *_extension;
+    BOOL _isExtensionConnected;
+    WiimoteExtensionHelper *_probeHelper;
+    WiimoteMotionPlusDetector *_motionPlusDetector;
+    WiimoteExtension *_extension;
 }
 
 static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *context)
 {
-    if([cls1 merit] > [cls2 merit])
+    if ([cls1 merit] > [cls2 merit])
         return NSOrderedDescending;
 
-    if([cls1 merit] < [cls2 merit])
+    if ([cls1 merit] < [cls2 merit])
         return NSOrderedAscending;
 
     return NSOrderedSame;
@@ -36,7 +36,7 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
     [WiimotePart registerPartClass:[WiimoteExtensionPart class]];
 }
 
-+ (NSMutableArray*)registredExtensionClasses
++ (NSMutableArray *)registredExtensionClasses
 {
     static NSMutableArray *result = nil;
     static dispatch_once_t once;
@@ -48,39 +48,39 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 
 + (void)sortExtensionClassesByMerit
 {
-    @autoreleasepool {
+    @autoreleasepool
+    {
 
         [[WiimoteExtensionPart registredExtensionClasses]
-                                            sortUsingFunction:sortExtensionClassesByMeritFn
-                                                      context:NULL];
-
+            sortUsingFunction:sortExtensionClassesByMeritFn
+                      context:NULL];
     }
 }
 
 + (void)registerExtensionClass:(Class)cls
 {
-    if(![[WiimoteExtensionPart registredExtensionClasses] containsObject:cls])
+    if (![[WiimoteExtensionPart registredExtensionClasses] containsObject:cls])
     {
         [[WiimoteExtensionPart registredExtensionClasses] addObject:cls];
         [WiimoteExtensionPart sortExtensionClassesByMerit];
     }
 }
 
-- (id)initWithOwner:(Wiimote*)owner
-    eventDispatcher:(WiimoteEventDispatcher*)dispatcher
-          ioManager:(WiimoteIOManager*)ioManager
+- (id)initWithOwner:(Wiimote *)owner
+    eventDispatcher:(WiimoteEventDispatcher *)dispatcher
+          ioManager:(WiimoteIOManager *)ioManager
 {
     self = [super initWithOwner:owner eventDispatcher:dispatcher ioManager:ioManager];
-    if(self == nil)
+    if (self == nil)
         return nil;
 
-    _probeHelper           = nil;
-    _extension             = nil;
-    _isExtensionConnected  = NO;
-    _motionPlusDetector    = [[WiimoteMotionPlusDetector alloc]
-                                                        initWithIOManager:ioManager
-                                                                   target:self
-                                                                   action:@selector(motionPlusDetectFinish:)];
+    _probeHelper = nil;
+    _extension = nil;
+    _isExtensionConnected = NO;
+    _motionPlusDetector = [[WiimoteMotionPlusDetector alloc]
+        initWithIOManager:ioManager
+                   target:self
+                   action:@selector(motionPlusDetectFinish:)];
 
     return self;
 }
@@ -90,9 +90,9 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
     [self extensionDisconnected];
 }
 
-- (WiimoteExtension*)connectedExtension
+- (WiimoteExtension *)connectedExtension
 {
-    if(!_isExtensionConnected)
+    if (!_isExtensionConnected)
         return nil;
 
     return _extension;
@@ -100,15 +100,15 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 
 - (void)detectMotionPlus
 {
-    if(_probeHelper == nil)
+    if (_probeHelper == nil)
         [_motionPlusDetector run];
 }
 
 - (void)reconnectExtension
 {
-	[self extensionDisconnected];
-	_isExtensionConnected = NO;
-	[[self owner] requestUpdateState];
+    [self extensionDisconnected];
+    _isExtensionConnected = NO;
+    [[self owner] requestUpdateState];
 }
 
 - (void)disconnectExtension
@@ -117,69 +117,67 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
     [[self owner] deviceConfigurationChanged];
 }
 
-- (NSSet*)allowedReportTypeSet
+- (NSSet *)allowedReportTypeSet
 {
-    if(_extension == nil)
+    if (_extension == nil)
         return nil;
 
-    NSUInteger       minReportDataSize  = [[_extension class] minReportDataSize];
-    NSMutableSet    *result             = [NSMutableSet set];
+    NSUInteger minReportDataSize = [[_extension class] minReportDataSize];
+    NSMutableSet *result = [NSMutableSet set];
 
-    if(minReportDataSize <= 6)
+    if (minReportDataSize <= 6)
     {
         [result addObject:[NSNumber numberWithInteger:
-            WiimoteDeviceReportTypeButtonAndAccelerometerAndIR10BytesAndExtension6Bytes]];
+                                        WiimoteDeviceReportTypeButtonAndAccelerometerAndIR10BytesAndExtension6Bytes]];
     }
 
-    if(minReportDataSize <= 8)
+    if (minReportDataSize <= 8)
     {
         [result addObject:[NSNumber numberWithInteger:
-            WiimoteDeviceReportTypeButtonAndExtension8BytesState]];
+                                        WiimoteDeviceReportTypeButtonAndExtension8BytesState]];
     }
 
-    if(minReportDataSize <= 9)
+    if (minReportDataSize <= 9)
     {
         [result addObject:[NSNumber numberWithInteger:
-            WiimoteDeviceReportTypeButtonAndIR10BytesAndExtension9BytesState]];
+                                        WiimoteDeviceReportTypeButtonAndIR10BytesAndExtension9BytesState]];
     }
 
-    if(minReportDataSize <= 16)
+    if (minReportDataSize <= 16)
     {
         [result addObject:[NSNumber numberWithInteger:
-            WiimoteDeviceReportTypeButtonAndAccelerometerAndExtension16BytesState]];
+                                        WiimoteDeviceReportTypeButtonAndAccelerometerAndExtension16BytesState]];
     }
 
-    if(minReportDataSize <= 19)
+    if (minReportDataSize <= 19)
     {
         [result addObject:[NSNumber numberWithInteger:
-            WiimoteDeviceReportTypeButtonAndExtension19BytesState]];
+                                        WiimoteDeviceReportTypeButtonAndExtension19BytesState]];
     }
 
     return result;
 }
 
-- (void)handleReport:(WiimoteDeviceReport*)report
+- (void)handleReport:(WiimoteDeviceReport *)report
 {
     [self processExtensionReport:report];
 
-    if([report type]    != WiimoteDeviceReportTypeState ||
-       [report length]  < sizeof(WiimoteDeviceStateReport))
+    if ([report type] != WiimoteDeviceReportTypeState ||
+        [report length] < sizeof(WiimoteDeviceStateReport))
     {
         return;
     }
 
-    const WiimoteDeviceStateReport *state =
-                (const WiimoteDeviceStateReport*)[report data];
+    const WiimoteDeviceStateReport *state = (const WiimoteDeviceStateReport *)[report data];
 
-    BOOL isExtensionConnected = ((state->flagsAndLEDState &
-                        WiimoteDeviceStateReportFlagExtensionConnected) != 0);
+    BOOL isExtensionConnected = ((state->flagsAndLEDState & WiimoteDeviceStateReportFlagExtensionConnected) != 0);
 
-    if(_isExtensionConnected == isExtensionConnected)
+    if (_isExtensionConnected == isExtensionConnected)
         return;
 
     _isExtensionConnected = isExtensionConnected;
 
-    if(!isExtensionConnected)
+    if (!isExtensionConnected)
         [self extensionDisconnected];
     else
         [self extensionConnected];
@@ -192,61 +190,61 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
     [self extensionDisconnected];
 }
 
-- (const uint8_t*)extractExtensionReportPart:(WiimoteDeviceReport*)report length:(NSUInteger*)length;
+- (const uint8_t *)extractExtensionReportPart:(WiimoteDeviceReport *)report length:(NSUInteger *)length;
 {
-    WiimoteDeviceReportType reportType              = (WiimoteDeviceReportType)[report type];
-    NSUInteger              extensionBytesOffset    = 0;
-    NSUInteger              extensionBytesSize      = 0;
+    WiimoteDeviceReportType reportType = (WiimoteDeviceReportType)[report type];
+    NSUInteger extensionBytesOffset = 0;
+    NSUInteger extensionBytesSize = 0;
 
-    switch(reportType)
+    switch (reportType)
     {
-        case WiimoteDeviceReportTypeButtonAndExtension8BytesState:
-            extensionBytesOffset    = sizeof(WiimoteDeviceButtonState);
-            extensionBytesSize      = 8;
-            break;
+    case WiimoteDeviceReportTypeButtonAndExtension8BytesState:
+        extensionBytesOffset = sizeof(WiimoteDeviceButtonState);
+        extensionBytesSize = 8;
+        break;
 
-        case WiimoteDeviceReportTypeButtonAndExtension19BytesState:
-            extensionBytesOffset    = sizeof(WiimoteDeviceButtonState);
-            extensionBytesSize      = 19;
-            break;
+    case WiimoteDeviceReportTypeButtonAndExtension19BytesState:
+        extensionBytesOffset = sizeof(WiimoteDeviceButtonState);
+        extensionBytesSize = 19;
+        break;
 
-        case WiimoteDeviceReportTypeButtonAndAccelerometerAndIR10BytesAndExtension6Bytes:
-            extensionBytesOffset    = sizeof(WiimoteDeviceButtonState) + WiimoteDeviceAccelerometerDataSize + 10;
-            extensionBytesSize      = 6;
-            break;
+    case WiimoteDeviceReportTypeButtonAndAccelerometerAndIR10BytesAndExtension6Bytes:
+        extensionBytesOffset = sizeof(WiimoteDeviceButtonState) + WiimoteDeviceAccelerometerDataSize + 10;
+        extensionBytesSize = 6;
+        break;
 
-        case WiimoteDeviceReportTypeButtonAndAccelerometerAndExtension16BytesState:
-            extensionBytesOffset    = sizeof(WiimoteDeviceButtonState) + WiimoteDeviceAccelerometerDataSize;
-            extensionBytesSize      = 16;
-            break;
+    case WiimoteDeviceReportTypeButtonAndAccelerometerAndExtension16BytesState:
+        extensionBytesOffset = sizeof(WiimoteDeviceButtonState) + WiimoteDeviceAccelerometerDataSize;
+        extensionBytesSize = 16;
+        break;
 
-        case WiimoteDeviceReportTypeButtonAndIR10BytesAndExtension9BytesState:
-            extensionBytesOffset    = sizeof(WiimoteDeviceButtonState) + 10;
-            extensionBytesSize      = 9;
-            break;
-        
-        default:
-            return NULL;
+    case WiimoteDeviceReportTypeButtonAndIR10BytesAndExtension9BytesState:
+        extensionBytesOffset = sizeof(WiimoteDeviceButtonState) + 10;
+        extensionBytesSize = 9;
+        break;
+
+    default:
+        return NULL;
     }
 
-    if([report length] < (extensionBytesOffset + extensionBytesSize))
+    if ([report length] < (extensionBytesOffset + extensionBytesSize))
         return NULL;
 
-    if(length != NULL)
+    if (length != NULL)
         *length = extensionBytesSize;
 
     return ([report data] + extensionBytesOffset);
 }
 
-- (void)processExtensionReport:(WiimoteDeviceReport*)report
+- (void)processExtensionReport:(WiimoteDeviceReport *)report
 {
-    if(_extension == nil)
+    if (_extension == nil)
         return;
 
-    NSUInteger       length              = 0;
-    const uint8_t   *extensionReportPart = [self extractExtensionReportPart:report length:&length];
+    NSUInteger length = 0;
+    const uint8_t *extensionReportPart = [self extractExtensionReportPart:report length:&length];
 
-    if(extensionReportPart == NULL)
+    if (extensionReportPart == NULL)
         return;
 
     [_extension handleReport:extensionReportPart length:length];
@@ -258,59 +256,59 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
     [self extensionDisconnected];
 
     _probeHelper = [[WiimoteExtensionHelper alloc]
-                                          initWithWiimote:[self owner]
-                                          eventDispatcher:[self eventDispatcher]
-                                                ioManager:[self ioManager]
-                                         extensionClasses:[WiimoteExtensionPart registredExtensionClasses]
-                                             subExtension:extension
-                                                   target:self
-                                                   action:@selector(extensionCreated:)];
+         initWithWiimote:[self owner]
+         eventDispatcher:[self eventDispatcher]
+               ioManager:[self ioManager]
+        extensionClasses:[WiimoteExtensionPart registredExtensionClasses]
+            subExtension:extension
+                  target:self
+                  action:@selector(extensionCreated:)];
 
     [_probeHelper start];
 }
 
-- (void)extensionCreated:(WiimoteExtension*)extension
+- (void)extensionCreated:(WiimoteExtension *)extension
 {
-	WiimoteExtension *subExtension = [_probeHelper subExtension];
+    WiimoteExtension *subExtension = [_probeHelper subExtension];
 
     _extension = extension;
-	_probeHelper = nil;
+    _probeHelper = nil;
 
-	if(_extension != nil)
-	{
+    if (_extension != nil)
+    {
         [[self eventDispatcher] postExtensionConnectedNotification:_extension];
-		[_extension setSubExtension:subExtension];
+        [_extension setSubExtension:subExtension];
         [[self owner] deviceConfigurationChanged];
     }
 }
 
 - (void)extensionDisconnected
 {
-	WiimoteExtension *ex = _extension;
+    WiimoteExtension *ex = _extension;
 
     [_probeHelper cancel];
     [_motionPlusDetector cancel];
 
-    _probeHelper   = nil;
-    _extension     = nil;
+    _probeHelper = nil;
+    _extension = nil;
 
-	if(ex != nil)
-	{
-		[ex disconnected];
+    if (ex != nil)
+    {
+        [ex disconnected];
         [[self eventDispatcher] postExtensionDisconnectedNotification:ex];
-	}
+    }
 }
 
-- (void)motionPlusDetectFinish:(NSNumber*)detected
+- (void)motionPlusDetectFinish:(NSNumber *)detected
 {
-    if(![detected boolValue])
+    if (![detected boolValue])
         return;
 
     [WiimoteMotionPlusDetector
-                    activateMotionPlus:[self ioManager]
-                          subExtension:_extension];
+        activateMotionPlus:[self ioManager]
+              subExtension:_extension];
 
-    if(_extension != nil)
+    if (_extension != nil)
     {
         _isExtensionConnected = YES;
         [self extensionConnected];

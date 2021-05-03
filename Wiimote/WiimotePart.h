@@ -14,18 +14,18 @@
 
 + (void)registerPartClass:(Class)cls;
 
-- (id)initWithOwner:(Wiimote*)owner
-    eventDispatcher:(WiimoteEventDispatcher*)dispatcher
-          ioManager:(WiimoteIOManager*)ioManager;
+- (id)initWithOwner:(Wiimote *)owner
+    eventDispatcher:(WiimoteEventDispatcher *)dispatcher
+          ioManager:(WiimoteIOManager *)ioManager;
 
-@property(nonatomic,readonly) Wiimote *owner;
-@property(nonatomic,readonly) WiimoteIOManager *ioManager;
-@property(nonatomic,readonly) WiimoteEventDispatcher *eventDispatcher;
+@property(nonatomic, readonly) Wiimote *owner;
+@property(nonatomic, readonly) WiimoteIOManager *ioManager;
+@property(nonatomic, readonly) WiimoteEventDispatcher *eventDispatcher;
 
-@property(nonatomic,readonly) NSSet *allowedReportTypeSet;
+@property(nonatomic, readonly) NSSet *allowedReportTypeSet;
 
 - (void)connected;
-- (void)handleReport:(WiimoteDeviceReport*)report;
+- (void)handleReport:(WiimoteDeviceReport *)report;
 - (void)disconnected;
 
 @end

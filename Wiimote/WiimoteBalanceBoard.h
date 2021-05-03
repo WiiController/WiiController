@@ -9,18 +9,18 @@
 #import "WiimoteGenericExtension.h"
 #import "WiimoteEventDispatcher+BalanceBoard.h"
 
-@interface WiimoteBalanceBoard : WiimoteGenericExtension<
-                                                WiimoteBalanceBoardProtocol>
+@interface WiimoteBalanceBoard : WiimoteGenericExtension <
+                                     WiimoteBalanceBoardProtocol>
 {
-    @private
-        BOOL                                _isCalibrationDataReaded;
+@private
+    BOOL _isCalibrationDataReaded;
 
-        double                              _topLeftPress;
-        double                              _topRightPress;
-        double                              _bottomLeftPress;
-        double                              _bottomRightPress;
+    double _topLeftPress;
+    double _topRightPress;
+    double _bottomLeftPress;
+    double _bottomRightPress;
 
-        WiimoteBalanceBoardCalibrationData  _calibrationData;
+    WiimoteBalanceBoardCalibrationData _calibrationData;
 }
 
 @end

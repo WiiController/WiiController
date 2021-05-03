@@ -31,8 +31,8 @@ typedef WiimoteExtension<WiimoteBalanceBoardProtocol> WiimoteBalanceBoardExtensi
 
 @interface NSObject (WiimoteBalanceBoardDelegate)
 
-- (void)     wiimote:(Wiimote*)wiimote
-        balanceBoard:(WiimoteBalanceBoardExtension*)balanceBoard
+- (void)wiimote:(Wiimote *)wiimote
+        balanceBoard:(WiimoteBalanceBoardExtension *)balanceBoard
         topLeftPress:(double)topLeft
        topRightPress:(double)topRight
      bottomLeftPress:(double)bottomLeft

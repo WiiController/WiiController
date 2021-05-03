@@ -20,12 +20,12 @@
           ioManager:(WiimoteIOManager*)ioManager
 {
     self = [super init];
-    if(self == nil)
+    if (self == nil)
         return nil;
 
-    _owner             = owner;
-    _eventDispatcher   = dispatcher;
-    _ioManager         = ioManager;
+    _owner = owner;
+    _eventDispatcher = dispatcher;
+    _ioManager = ioManager;
 
     return self;
 }

@@ -41,6 +41,6 @@
 
 - (void)reset;
 
-@property(nonatomic,weak) id <WiimoteAccelerometerDelegate> delegate;
+@property(nonatomic, weak) id<WiimoteAccelerometerDelegate> delegate;
 
 @end

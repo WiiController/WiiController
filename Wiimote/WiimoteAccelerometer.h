@@ -11,7 +11,7 @@
 @interface WiimoteAccelerometer : NSObject
 {
     BOOL _enabled;
-    
+
     CGFloat _gravityX, _gravityY, _gravityZ;
     CGFloat _pitch, _roll;
     CGFloat _gravitySmoothQuant, _anglesSmoothQuant;
@@ -21,14 +21,14 @@
     id _delegate;
 }
 
-@property(nonatomic,getter=isEnabled) BOOL enabled;
+@property(nonatomic, getter=isEnabled) BOOL enabled;
 
-@property(nonatomic,readonly) CGFloat gravityX;
-@property(nonatomic,readonly) CGFloat gravityY;
-@property(nonatomic,readonly) CGFloat gravityZ;
+@property(nonatomic, readonly) CGFloat gravityX;
+@property(nonatomic, readonly) CGFloat gravityY;
+@property(nonatomic, readonly) CGFloat gravityZ;
 
-@property(nonatomic,readonly) CGFloat pitch;
-@property(nonatomic,readonly) CGFloat roll;
+@property(nonatomic, readonly) CGFloat pitch;
+@property(nonatomic, readonly) CGFloat roll;
 
 @property(nonatomic) CGFloat gravitySmoothQuant;
 @property(nonatomic) CGFloat anglesSmoothQuant;

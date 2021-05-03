@@ -10,15 +10,15 @@
 
 @interface WiimoteExtensionHelper : NSObject
 
-- (id)initWithWiimote:(Wiimote*)wiimote
-      eventDispatcher:(WiimoteEventDispatcher*)dispatcher
-            ioManager:(WiimoteIOManager*)ioManager
-     extensionClasses:(NSArray*)extensionClasses
-         subExtension:(WiimoteExtension*)extension
+- (id)initWithWiimote:(Wiimote *)wiimote
+      eventDispatcher:(WiimoteEventDispatcher *)dispatcher
+            ioManager:(WiimoteIOManager *)ioManager
+     extensionClasses:(NSArray *)extensionClasses
+         subExtension:(WiimoteExtension *)extension
                target:(id)target
                action:(SEL)action;
 
-@property(nonatomic,readonly) WiimoteExtension *subExtension;
+@property(nonatomic, readonly) WiimoteExtension *subExtension;
 
 - (void)start;
 - (void)cancel;

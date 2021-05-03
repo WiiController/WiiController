@@ -8,12 +8,12 @@
 #import "WiimoteGenericExtension.h"
 #import "WiimoteEventDispatcher+UProController.h"
 
-@interface WiimoteUProController : WiimoteGenericExtension<
-											WiimoteUProControllerProtocol>
+@interface WiimoteUProController : WiimoteGenericExtension <
+                                       WiimoteUProControllerProtocol>
 {
-	@private
-		BOOL		_buttonState[WiimoteUProControllerButtonCount];
-        NSPoint		_stickPositions[WiimoteUProControllerStickCount];
+@private
+    BOOL _buttonState[WiimoteUProControllerButtonCount];
+    NSPoint _stickPositions[WiimoteUProControllerStickCount];
 }
 
 @end

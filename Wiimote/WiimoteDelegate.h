@@ -14,36 +14,36 @@
 #import <Wiimote/WiimoteUDrawDelegate.h>
 #import <Wiimote/WiimoteMotionPlusDelegate.h>
 
-#define WiimoteButtonCount         11
+#define WiimoteButtonCount 11
 
-#define WiimoteIRPointCount        4
+#define WiimoteIRPointCount 4
 
-#define WiimoteIRMinX              0.0
-#define WiimoteIRMinY              0.0
-#define WiimoteIRMaxX              1023.0
-#define WiimoteIRMaxY              767.0
+#define WiimoteIRMinX 0.0
+#define WiimoteIRMinY 0.0
+#define WiimoteIRMaxX 1023.0
+#define WiimoteIRMaxY 767.0
 
 typedef enum : NSInteger
 {
-    WiimoteLEDFlagOne           =  1,
-    WiimoteLEDFlagTwo           =  2,
-    WiimoteLEDFlagThree         =  4,
-    WiimoteLEDFlagFour          =  8
+    WiimoteLEDFlagOne = 1,
+    WiimoteLEDFlagTwo = 2,
+    WiimoteLEDFlagThree = 4,
+    WiimoteLEDFlagFour = 8
 } WiimoteLEDFlag;
 
 typedef enum : NSInteger
 {
-    WiimoteButtonTypeLeft       =  0,
-    WiimoteButtonTypeRight      =  1,
-    WiimoteButtonTypeUp         =  2,
-    WiimoteButtonTypeDown       =  3,
-    WiimoteButtonTypeA          =  4,
-    WiimoteButtonTypeB          =  5,
-    WiimoteButtonTypePlus       =  6,
-    WiimoteButtonTypeMinus      =  7,
-    WiimoteButtonTypeHome       =  8,
-    WiimoteButtonTypeOne        =  9,
-    WiimoteButtonTypeTwo        = 10
+    WiimoteButtonTypeLeft = 0,
+    WiimoteButtonTypeRight = 1,
+    WiimoteButtonTypeUp = 2,
+    WiimoteButtonTypeDown = 3,
+    WiimoteButtonTypeA = 4,
+    WiimoteButtonTypeB = 5,
+    WiimoteButtonTypePlus = 6,
+    WiimoteButtonTypeMinus = 7,
+    WiimoteButtonTypeHome = 8,
+    WiimoteButtonTypeOne = 9,
+    WiimoteButtonTypeTwo = 10
 } WiimoteButtonType;
 
 FOUNDATION_EXPORT NSString *WiimoteConnectedNotification;
@@ -82,19 +82,19 @@ FOUNDATION_EXPORT NSString *WiimoteExtensionKey;
 @protocol WiimoteDelegate <NSObject>
 
 @optional
-- (void)wiimote:(Wiimote*)wiimote buttonPressed:(WiimoteButtonType)button;
-- (void)wiimote:(Wiimote*)wiimote buttonReleased:(WiimoteButtonType)button;
-- (void)wiimote:(Wiimote*)wiimote vibrationStateChanged:(BOOL)isVibrationEnabled;
-- (void)wiimote:(Wiimote*)wiimote highlightedLEDMaskChanged:(NSUInteger)mask;
-- (void)wiimote:(Wiimote*)wiimote batteryLevelUpdated:(CGFloat)batteryLevel isLow:(BOOL)isLow;
-- (void)wiimote:(Wiimote*)wiimote irEnabledStateChanged:(BOOL)enabled;
-- (void)wiimote:(Wiimote*)wiimote irPointPositionChanged:(WiimoteIRPoint*)point;
-- (void)wiimote:(Wiimote*)wiimote accelerometerEnabledStateChanged:(BOOL)enabled;
-- (void)wiimote:(Wiimote*)wiimote accelerometerChangedGravityX:(CGFloat)x y:(CGFloat)y z:(CGFloat)z;
-- (void)wiimote:(Wiimote*)wiimote accelerometerChangedPitch:(CGFloat)pitch roll:(CGFloat)roll;
-- (void)wiimote:(Wiimote*)wiimote extensionConnected:(WiimoteExtension*)extension;
-- (void)wiimote:(Wiimote*)wiimote extensionDisconnected:(WiimoteExtension*)extension;
-- (void)wiimoteDisconnected:(Wiimote*)wiimote;
+- (void)wiimote:(Wiimote *)wiimote buttonPressed:(WiimoteButtonType)button;
+- (void)wiimote:(Wiimote *)wiimote buttonReleased:(WiimoteButtonType)button;
+- (void)wiimote:(Wiimote *)wiimote vibrationStateChanged:(BOOL)isVibrationEnabled;
+- (void)wiimote:(Wiimote *)wiimote highlightedLEDMaskChanged:(NSUInteger)mask;
+- (void)wiimote:(Wiimote *)wiimote batteryLevelUpdated:(CGFloat)batteryLevel isLow:(BOOL)isLow;
+- (void)wiimote:(Wiimote *)wiimote irEnabledStateChanged:(BOOL)enabled;
+- (void)wiimote:(Wiimote *)wiimote irPointPositionChanged:(WiimoteIRPoint *)point;
+- (void)wiimote:(Wiimote *)wiimote accelerometerEnabledStateChanged:(BOOL)enabled;
+- (void)wiimote:(Wiimote *)wiimote accelerometerChangedGravityX:(CGFloat)x y:(CGFloat)y z:(CGFloat)z;
+- (void)wiimote:(Wiimote *)wiimote accelerometerChangedPitch:(CGFloat)pitch roll:(CGFloat)roll;
+- (void)wiimote:(Wiimote *)wiimote extensionConnected:(WiimoteExtension *)extension;
+- (void)wiimote:(Wiimote *)wiimote extensionDisconnected:(WiimoteExtension *)extension;
+- (void)wiimoteDisconnected:(Wiimote *)wiimote;
 
 @end
 

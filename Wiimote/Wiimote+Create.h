@@ -17,6 +17,6 @@
 + (void)connectToHIDDevice:(W_HIDDevice*)device;
 + (void)connectToBluetoothDevice:(IOBluetoothDevice*)device;
 
-@property(nonatomic,readonly) id lowLevelDevice;
+@property(nonatomic, readonly) id lowLevelDevice;
 
 @end

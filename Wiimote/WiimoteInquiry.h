@@ -17,15 +17,15 @@ FOUNDATION_EXPORT NSString *WiimoteDeviceNameBalanceBoard;
 
 @interface WiimoteInquiry : NSObject
 
-+ (WiimoteInquiry*)sharedInquiry;
++ (WiimoteInquiry *)sharedInquiry;
 
-+ (NSArray*)supportedModelNames;
-+ (void)registerSupportedModelName:(NSString*)name;
++ (NSArray *)supportedModelNames;
++ (void)registerSupportedModelName:(NSString *)name;
 
 - (BOOL)startWithTarget:(id)target didEndAction:(SEL)action;
-@property(nonatomic,readonly,getter=isStarted) BOOL started;
+@property(nonatomic, readonly, getter=isStarted) BOOL started;
 - (BOOL)stop;
 
-@property(nonatomic,getter=isUseOneButtonClickConnection) BOOL useOneButtonClickConnection;
+@property(nonatomic, getter=isUseOneButtonClickConnection) BOOL useOneButtonClickConnection;
 
 @end

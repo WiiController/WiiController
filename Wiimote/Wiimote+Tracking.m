@@ -10,7 +10,7 @@
 
 @implementation Wiimote (Tracking)
 
-+ (NSMutableArray*)mutableConnectedWiimotes
++ (NSMutableArray *)mutableConnectedWiimotes
 {
     static NSMutableArray *result = nil;
     static dispatch_once_t once;
@@ -20,18 +20,18 @@
     return result;
 }
 
-+ (NSArray*)connectedWiimotes
++ (NSArray *)connectedWiimotes
 {
     return [self mutableConnectedWiimotes];
 }
 
-+ (void)wiimoteConnected:(Wiimote*)wiimote
++ (void)wiimoteConnected:(Wiimote *)wiimote
 {
     NSLog(@"%@ connected, address %@", [wiimote marketingName], [wiimote addressString]);
     [[self mutableConnectedWiimotes] addObject:wiimote];
 }
 
-+ (void)wiimoteDisconnected:(Wiimote*)wiimote
++ (void)wiimoteDisconnected:(Wiimote *)wiimote
 {
     NSLog(@"%@ disconnected, address %@", [wiimote marketingName], [wiimote addressString]);
     [[self mutableConnectedWiimotes] removeObject:wiimote];

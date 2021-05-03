@@ -12,51 +12,50 @@
 
 @implementation WiimoteDeviceReport
 {
-    WiimoteDevice    *_device;
+    WiimoteDevice *_device;
 }
 
-+ (WiimoteDeviceReport*)deviceReportWithType:(NSUInteger)type
-                                        data:(const uint8_t*)data
-                                      length:(NSUInteger)length
-                                      device:(WiimoteDevice*)device
++ (WiimoteDeviceReport *)deviceReportWithType:(NSUInteger)type
+                                         data:(const uint8_t *)data
+                                       length:(NSUInteger)length
+                                       device:(WiimoteDevice *)device
 {
     WiimoteDeviceReport *result = [[WiimoteDeviceReport alloc] initWithDevice:device];
 
-    if(result == nil)
+    if (result == nil)
         return nil;
 
-    result->_type          = type;
-    result->_data          = data;
-    result->_length    = length;
+    result->_type = type;
+    result->_data = data;
+    result->_length = length;
 
     return result;
 }
 
-- (id)initWithDevice:(WiimoteDevice*)device
+- (id)initWithDevice:(WiimoteDevice *)device
 {
     self = [super init];
-    if(self == nil)
+    if (self == nil)
         return nil;
 
-    _device        = device;
-    _data          = NULL;
-    _length    = 0;
-    _type          = 0;
+    _device = device;
+    _data = NULL;
+    _length = 0;
+    _type = 0;
 
     return self;
 }
 
-- (BOOL)updateFromReportData:(const uint8_t*)data length:(NSUInteger)length
+- (BOOL)updateFromReportData:(const uint8_t *)data length:(NSUInteger)length
 {
-    if(data == NULL || length < 1)
+    if (data == NULL || length < 1)
         return NO;
 
-    _type          = data[0];
-    _data          = data   + 1;
-    _length    = length - 1;
+    _type = data[0];
+    _data = data + 1;
+    _length = length - 1;
 
     return YES;
 }
 
 @end
-

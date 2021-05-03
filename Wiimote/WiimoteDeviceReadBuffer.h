@@ -14,11 +14,11 @@
 
 - (id)initWithMemoryRange:(NSRange)memoryRange fullCallback:(WiimoteDeviceReadCallback)fullCallback;
 
-@property(nonatomic,readonly) NSRange memoryRange;
+@property(nonatomic, readonly) NSRange memoryRange;
 
 - (void)append:(const uint8_t*)data length:(NSUInteger)length;
 
-@property(nonatomic,readonly) BOOL isFull;
+@property(nonatomic, readonly) BOOL isFull;
 
 - (void)errorOccured;
 - (void)disconnected;

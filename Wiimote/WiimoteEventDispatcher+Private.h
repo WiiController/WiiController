@@ -17,7 +17,7 @@
 - (void)postConnectedNotification;
 - (void)postDisconnectNotification;
 
-@property(nonatomic,getter=isStateNotificationsEnabled) BOOL stateNotificationsEnabled;
-@property(nonatomic,weak) id <WiimoteDelegate> delegate;
+@property(nonatomic, getter=isStateNotificationsEnabled) BOOL stateNotificationsEnabled;
+@property(nonatomic, weak) id<WiimoteDelegate> delegate;
 
 @end

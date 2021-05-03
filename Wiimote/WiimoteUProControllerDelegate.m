@@ -8,32 +8,32 @@
 
 #import "WiimoteUProControllerDelegate.h"
 
-NSString *WiimoteUProControllerButtonPressedNotification		= @"WiimoteUProControllerButtonPressedNotification";
-NSString *WiimoteUProControllerButtonReleasedNotification		= @"WiimoteUProControllerButtonReleasedNotification";
-NSString *WiimoteUProControllerStickPositionChangedNotification	= @"WiimoteUProControllerStickPositionChangedNotification";
+NSString *WiimoteUProControllerButtonPressedNotification = @"WiimoteUProControllerButtonPressedNotification";
+NSString *WiimoteUProControllerButtonReleasedNotification = @"WiimoteUProControllerButtonReleasedNotification";
+NSString *WiimoteUProControllerStickPositionChangedNotification = @"WiimoteUProControllerStickPositionChangedNotification";
 
-NSString *WiimoteUProControllerStickKey							= @"WiimoteUProControllerStickKey";
-NSString *WiimoteUProControllerButtonKey						= @"WiimoteUProControllerButtonKey";
-NSString *WiimoteUProControllerStickPositionKey					= @"WiimoteUProControllerStickPositionKey";
+NSString *WiimoteUProControllerStickKey = @"WiimoteUProControllerStickKey";
+NSString *WiimoteUProControllerButtonKey = @"WiimoteUProControllerButtonKey";
+NSString *WiimoteUProControllerStickPositionKey = @"WiimoteUProControllerStickPositionKey";
 
 @implementation NSObject (WiimoteUProControllerDelegate)
 
-- (void)      wiimote:(Wiimote*)wiimote
-	   uProController:(WiimoteUProControllerExtension*)uPro
-        buttonPressed:(WiimoteUProControllerButtonType)button
+- (void)wiimote:(Wiimote *)wiimote
+    uProController:(WiimoteUProControllerExtension *)uPro
+     buttonPressed:(WiimoteUProControllerButtonType)button
 {
 }
 
-- (void)      wiimote:(Wiimote*)wiimote
-	   uProController:(WiimoteUProControllerExtension*)uPro
-       buttonReleased:(WiimoteUProControllerButtonType)button
+- (void)wiimote:(Wiimote *)wiimote
+    uProController:(WiimoteUProControllerExtension *)uPro
+    buttonReleased:(WiimoteUProControllerButtonType)button
 {
 }
 
-- (void)      wiimote:(Wiimote*)wiimote
-	   uProController:(WiimoteUProControllerExtension*)uPro
-                stick:(WiimoteUProControllerStickType)stick
-      positionChanged:(NSPoint)position
+- (void)wiimote:(Wiimote *)wiimote
+     uProController:(WiimoteUProControllerExtension *)uPro
+              stick:(WiimoteUProControllerStickType)stick
+    positionChanged:(NSPoint)position
 {
 }
 

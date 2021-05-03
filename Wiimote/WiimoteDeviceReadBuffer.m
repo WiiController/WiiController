@@ -17,19 +17,19 @@
 
 - (id)initWithMemoryRange:(NSRange)memoryRange fullCallback:(WiimoteDeviceReadCallback)fullCallback
 {
-	self = [super init];
-	if (!self) return nil;
-    
+    self = [super init];
+    if (!self) return nil;
+
     if (memoryRange.length == 0) return nil;
 
-	_memoryRange = memoryRange;
-	_data = [NSMutableData dataWithCapacity:memoryRange.length];
+    _memoryRange = memoryRange;
+    _data = [NSMutableData dataWithCapacity:memoryRange.length];
     _fullCallback = fullCallback;
 
-	return self;
+    return self;
 }
 
-- (void)append:(const uint8_t*)data length:(NSUInteger)length
+- (void)append:(const uint8_t *)data length:(NSUInteger)length
 {
     [_data appendBytes:data length:length];
     if (self.isFull) [self finish];

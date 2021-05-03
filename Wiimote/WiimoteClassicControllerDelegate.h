@@ -8,39 +8,39 @@
 
 #import <Foundation/Foundation.h>
 
-#define WiimoteClassicControllerButtonCount           15
-#define WiimoteClassicControllerStickCount             2
-#define WiimoteClassicControllerAnalogShiftCount       2
+#define WiimoteClassicControllerButtonCount 15
+#define WiimoteClassicControllerStickCount 2
+#define WiimoteClassicControllerAnalogShiftCount 2
 
 typedef enum : NSInteger
 {
-    WiimoteClassicControllerButtonTypeA             =  0,
-    WiimoteClassicControllerButtonTypeB             =  1,
-    WiimoteClassicControllerButtonTypeMinus         =  2,
-    WiimoteClassicControllerButtonTypeHome          =  3,
-    WiimoteClassicControllerButtonTypePlus          =  4,
-    WiimoteClassicControllerButtonTypeX             =  5,
-    WiimoteClassicControllerButtonTypeY             =  6,
-    WiimoteClassicControllerButtonTypeUp            =  7,
-    WiimoteClassicControllerButtonTypeDown          =  8,
-    WiimoteClassicControllerButtonTypeLeft          =  9,
-    WiimoteClassicControllerButtonTypeRight         = 10,
-    WiimoteClassicControllerButtonTypeL             = 11,
-    WiimoteClassicControllerButtonTypeR             = 12,
-    WiimoteClassicControllerButtonTypeZL            = 13,
-    WiimoteClassicControllerButtonTypeZR            = 14
+    WiimoteClassicControllerButtonTypeA = 0,
+    WiimoteClassicControllerButtonTypeB = 1,
+    WiimoteClassicControllerButtonTypeMinus = 2,
+    WiimoteClassicControllerButtonTypeHome = 3,
+    WiimoteClassicControllerButtonTypePlus = 4,
+    WiimoteClassicControllerButtonTypeX = 5,
+    WiimoteClassicControllerButtonTypeY = 6,
+    WiimoteClassicControllerButtonTypeUp = 7,
+    WiimoteClassicControllerButtonTypeDown = 8,
+    WiimoteClassicControllerButtonTypeLeft = 9,
+    WiimoteClassicControllerButtonTypeRight = 10,
+    WiimoteClassicControllerButtonTypeL = 11,
+    WiimoteClassicControllerButtonTypeR = 12,
+    WiimoteClassicControllerButtonTypeZL = 13,
+    WiimoteClassicControllerButtonTypeZR = 14
 } WiimoteClassicControllerButtonType;
 
 typedef enum : NSInteger
 {
-    WiimoteClassicControllerStickTypeLeft           =  0,
-    WiimoteClassicControllerStickTypeRight          =  1
+    WiimoteClassicControllerStickTypeLeft = 0,
+    WiimoteClassicControllerStickTypeRight = 1
 } WiimoteClassicControllerStickType;
 
 typedef enum : NSInteger
 {
-    WiimoteClassicControllerAnalogShiftTypeLeft     =  0,
-    WiimoteClassicControllerAnalogShiftTypeRight    =  1
+    WiimoteClassicControllerAnalogShiftTypeLeft = 0,
+    WiimoteClassicControllerAnalogShiftTypeRight = 1
 } WiimoteClassicControllerAnalogShiftType;
 
 FOUNDATION_EXPORT NSString *WiimoteClassicControllerButtonPressedNotification;
@@ -69,21 +69,21 @@ typedef WiimoteExtension<WiimoteClassicControllerProtocol> WiimoteClassicControl
 
 @interface NSObject (WiimoteClassicControllerDelegate)
 
-- (void)      wiimote:(Wiimote*)wiimote
-    classicController:(WiimoteClassicControllerExtension*)classic
+- (void)wiimote:(Wiimote *)wiimote
+    classicController:(WiimoteClassicControllerExtension *)classic
         buttonPressed:(WiimoteClassicControllerButtonType)button;
 
-- (void)      wiimote:(Wiimote*)wiimote
-    classicController:(WiimoteClassicControllerExtension*)classic
+- (void)wiimote:(Wiimote *)wiimote
+    classicController:(WiimoteClassicControllerExtension *)classic
        buttonReleased:(WiimoteClassicControllerButtonType)button;
 
-- (void)      wiimote:(Wiimote*)wiimote
-    classicController:(WiimoteClassicControllerExtension*)classic
+- (void)wiimote:(Wiimote *)wiimote
+    classicController:(WiimoteClassicControllerExtension *)classic
                 stick:(WiimoteClassicControllerStickType)stick
       positionChanged:(NSPoint)position;
 
-- (void)      wiimote:(Wiimote*)wiimote
-    classicController:(WiimoteClassicControllerExtension*)classic
+- (void)wiimote:(Wiimote *)wiimote
+    classicController:(WiimoteClassicControllerExtension *)classic
           analogShift:(WiimoteClassicControllerAnalogShiftType)shift
       positionChanged:(CGFloat)position;
 

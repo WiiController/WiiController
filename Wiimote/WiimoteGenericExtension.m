@@ -15,14 +15,14 @@
 {
     static NSMutableDictionary *results = nil;
 
-    if(results == nil)
+    if (results == nil)
         results = [[NSMutableDictionary alloc] init];
 
     NSNumber *merit = [results objectForKey:[self class]];
-    if(merit == nil)
+    if (merit == nil)
     {
         merit = [NSNumber numberWithInteger:
-                    [WiimoteExtension nextFreedomMeritInClass:[self meritClass]]];
+                              [WiimoteExtension nextFreedomMeritInClass:[self meritClass]]];
 
         [results setObject:merit forKey:(id)[self class]];
     }
@@ -30,16 +30,16 @@
     return [merit integerValue];
 }
 
-+ (NSData*)extensionSignature
++ (NSData *)extensionSignature
 {
     return nil;
 }
 
-+ (NSArray*)extensionSignatures
++ (NSArray *)extensionSignatures
 {
     NSData *signature = [self extensionSignature];
 
-    if(signature == nil)
+    if (signature == nil)
         return nil;
 
     return [NSArray arrayWithObject:signature];
@@ -60,24 +60,24 @@
     return 0;
 }
 
-+ (void)probe:(WiimoteIOManager*)ioManager
++ (void)probe:(WiimoteIOManager *)ioManager
        target:(id)target
        action:(SEL)action
 {
     [WiimoteExtensionProbeHandler
-                            routineProbe:ioManager
-                              signatures:[self extensionSignatures]
-                                  target:target
-                                  action:action];
+        routineProbe:ioManager
+          signatures:[self extensionSignatures]
+              target:target
+              action:action];
 }
 
-- (id)initWithOwner:(Wiimote*)owner
-    eventDispatcher:(WiimoteEventDispatcher*)dispatcher
+- (id)initWithOwner:(Wiimote *)owner
+    eventDispatcher:(WiimoteEventDispatcher *)dispatcher
 {
     return [super initWithOwner:owner eventDispatcher:dispatcher];
 }
 
-- (void)calibrate:(WiimoteIOManager*)ioManager
+- (void)calibrate:(WiimoteIOManager *)ioManager
 {
     NSRange calibrationMemoryRange = [self.class calibrationDataMemoryRange];
 
@@ -98,15 +98,15 @@
     return [super motionPlusMode];
 }
 
-- (void)handleCalibrationData:(const uint8_t*)data length:(NSUInteger)length
+- (void)handleCalibrationData:(const uint8_t *)data length:(NSUInteger)length
 {
 }
 
-- (void)handleReport:(const uint8_t*)extensionData length:(NSUInteger)length
+- (void)handleReport:(const uint8_t *)extensionData length:(NSUInteger)length
 {
 }
 
-- (void)handleMotionPlusReport:(const uint8_t*)extensionData
+- (void)handleMotionPlusReport:(const uint8_t *)extensionData
                         length:(NSUInteger)length
 {
 }

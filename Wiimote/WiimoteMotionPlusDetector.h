@@ -20,7 +20,7 @@
 
 - (void)dealloc;
 
-@property(nonatomic,readonly) BOOL isRun;
+@property(nonatomic, readonly) BOOL isRun;
 
 - (void)run;
 - (void)cancel;

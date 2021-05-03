@@ -13,37 +13,37 @@
 
 @implementation WiimoteIOManager
 {
-    WiimoteDevice   *_device;
+    WiimoteDevice *_device;
 }
 
 - (BOOL)postCommand:(WiimoteDeviceCommandType)command
-			   data:(const uint8_t*)data
+               data:(const uint8_t *)data
              length:(NSUInteger)length
 {
     return [_device postCommand:command data:data length:length];
 }
 
 - (BOOL)writeMemory:(NSUInteger)address
-			   data:(const uint8_t*)data
+               data:(const uint8_t *)data
              length:(NSUInteger)length
 {
     return [_device writeMemory:address data:data length:length];
 }
 
 - (BOOL)readMemory:(NSRange)memoryRange
-			  then:(WiimoteIOManagerReadMemoryCallback)callback
+              then:(WiimoteIOManagerReadMemoryCallback)callback
 {
     return [_device readMemory:memoryRange then:callback];
 }
 
-- (id)initWithOwner:(Wiimote*)owner device:(WiimoteDevice*)device
+- (id)initWithOwner:(Wiimote *)owner device:(WiimoteDevice *)device
 {
     self = [super init];
-    if(self == nil)
+    if (self == nil)
         return nil;
 
-    _owner     = owner;
-    _device    = device;
+    _owner = owner;
+    _device = device;
 
     return self;
 }

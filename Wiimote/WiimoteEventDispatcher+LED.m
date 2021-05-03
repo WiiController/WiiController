@@ -15,7 +15,7 @@
 {
     [self.delegate wiimote:self.owner highlightedLEDMaskChanged:mask];
 
-    if([self isStateNotificationsEnabled])
+    if ([self isStateNotificationsEnabled])
     {
         [self postNotification:WiimoteHighlightedLEDMaskChangedNotification
                          param:[NSNumber numberWithInteger:mask]

@@ -12,7 +12,7 @@
 
 @interface WiimoteVibrationPart : WiimotePart
 
-@property(nonatomic,getter=isVibrationEnabled) BOOL vibrationEnabled;
+@property(nonatomic, getter=isVibrationEnabled) BOOL vibrationEnabled;
 
 - (void)setDevice:(WiimoteDevice*)device;
 

@@ -24,16 +24,16 @@
 {
     [self.delegate wiimote:self.owner accelerometerChangedGravityX:x y:y z:z];
 
-    if([self isStateNotificationsEnabled])
+    if ([self isStateNotificationsEnabled])
     {
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    [NSNumber numberWithDouble:x],
-                                        WiimoteAccelerometerGravityXKey,
-                                    [NSNumber numberWithDouble:y],
-                                        WiimoteAccelerometerGravityYKey,
-                                    [NSNumber numberWithDouble:z],
-                                        WiimoteAccelerometerGravityZKey,
-                                    nil];
+                                                 [NSNumber numberWithDouble:x],
+                                                 WiimoteAccelerometerGravityXKey,
+                                                 [NSNumber numberWithDouble:y],
+                                                 WiimoteAccelerometerGravityYKey,
+                                                 [NSNumber numberWithDouble:z],
+                                                 WiimoteAccelerometerGravityZKey,
+                                                 nil];
 
         [self postNotification:WiimoteAccelerometerGravityChangedNotification
                         params:params];
@@ -44,14 +44,14 @@
 {
     [self.delegate wiimote:self.owner accelerometerChangedPitch:pitch roll:roll];
 
-    if([self isStateNotificationsEnabled])
+    if ([self isStateNotificationsEnabled])
     {
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    [NSNumber numberWithDouble:pitch],
-                                        WiimoteAccelerometerPitchKey,
-                                    [NSNumber numberWithDouble:roll],
-                                        WiimoteAccelerometerRollKey,
-                                    nil];
+                                                 [NSNumber numberWithDouble:pitch],
+                                                 WiimoteAccelerometerPitchKey,
+                                                 [NSNumber numberWithDouble:roll],
+                                                 WiimoteAccelerometerRollKey,
+                                                 nil];
 
         [self postNotification:WiimoteAccelerometerAnglesChangedNotification
                         params:params];

@@ -16,12 +16,12 @@
     [self.delegate wiimote:self.owner batteryLevelUpdated:batteryLevel isLow:isLow];
 
     NSDictionary *params = [NSDictionary
-                                dictionaryWithObjectsAndKeys:
-                                        [NSNumber numberWithDouble:batteryLevel],
-                                            WiimoteBatteryLevelKey,
-                                        [NSNumber numberWithBool:isLow],
-                                            WiimoteIsBatteryLevelLowKey,
-                                        nil];
+        dictionaryWithObjectsAndKeys:
+            [NSNumber numberWithDouble:batteryLevel],
+            WiimoteBatteryLevelKey,
+            [NSNumber numberWithBool:isLow],
+            WiimoteIsBatteryLevelLowKey,
+            nil];
 
     [self postNotification:WiimoteBatteryLevelUpdatedNotification params:params];
 }

@@ -13,7 +13,7 @@
 
 - (void)postIREnabledStateChangedNotification:(BOOL)enabled
 {
-	[self.delegate wiimote:self.owner irEnabledStateChanged:enabled];
+    [self.delegate wiimote:self.owner irEnabledStateChanged:enabled];
 
     [self postNotification:WiimoteIREnabledStateChangedNotification
                      param:[NSNumber numberWithBool:enabled]
@@ -22,9 +22,9 @@
 
 - (void)postIRPointPositionChangedNotification:(WiimoteIRPoint*)point
 {
-	[self.delegate wiimote:self.owner irPointPositionChanged:point];
+    [self.delegate wiimote:self.owner irPointPositionChanged:point];
 
-    if([self isStateNotificationsEnabled])
+    if ([self isStateNotificationsEnabled])
     {
         [self postNotification:WiimoteIRPointPositionChangedNotification
                          param:point

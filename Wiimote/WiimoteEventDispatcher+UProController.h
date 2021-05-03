@@ -11,13 +11,13 @@
 @interface WiimoteEventDispatcher (UProController)
 
 - (void)postUProController:(WiimoteUProControllerExtension*)uPro
-			 buttonPressed:(WiimoteUProControllerButtonType)button;
+             buttonPressed:(WiimoteUProControllerButtonType)button;
 
 - (void)postUProController:(WiimoteUProControllerExtension*)uPro
-			buttonReleased:(WiimoteUProControllerButtonType)button;
+            buttonReleased:(WiimoteUProControllerButtonType)button;
 
 - (void)postUProController:(WiimoteUProControllerExtension*)uPro
-					 stick:(WiimoteUProControllerStickType)stick
-		   positionChanged:(NSPoint)position;
+                     stick:(WiimoteUProControllerStickType)stick
+           positionChanged:(NSPoint)position;
 
 @end

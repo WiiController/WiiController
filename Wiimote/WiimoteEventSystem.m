@@ -7,13 +7,13 @@
 
 #import "WiimoteEventSystem+PlugIn.h"
 
-NSString *WiimoteEventSystemNotification    = @"WiimoteEventSystemNotification";
+NSString *WiimoteEventSystemNotification = @"WiimoteEventSystemNotification";
 
-NSString *WiimoteEventKey                   = @"WiimoteEventKey";
+NSString *WiimoteEventKey = @"WiimoteEventKey";
 
 @implementation NSObject (WiimoteEventSystemObserver)
 
-- (void)wiimoteEvent:(WiimoteEvent*)event
+- (void)wiimoteEvent:(WiimoteEvent *)event
 {
 }
 
@@ -21,14 +21,14 @@ NSString *WiimoteEventKey                   = @"WiimoteEventKey";
 
 @implementation WiimoteEventSystem
 
-+ (void)subscribeToNotifications:(WiimoteEventSystem*)system
++ (void)subscribeToNotifications:(WiimoteEventSystem *)system
 {
-    NSNotificationCenter    *center = [NSNotificationCenter defaultCenter];
-    NSDictionary            *map    = [WiimoteEventSystem notificationDictionary];
-    NSEnumerator            *en     = [map keyEnumerator];
-    NSString                *name   = [en nextObject];
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    NSDictionary *map = [WiimoteEventSystem notificationDictionary];
+    NSEnumerator *en = [map keyEnumerator];
+    NSString *name = [en nextObject];
 
-    while(name != nil)
+    while (name != nil)
     {
         SEL selector = [[map objectForKey:name] pointerValue];
 
@@ -41,7 +41,7 @@ NSString *WiimoteEventKey                   = @"WiimoteEventKey";
     }
 }
 
-+ (WiimoteEventSystem*)defaultEventSystem
++ (WiimoteEventSystem *)defaultEventSystem
 {
     static WiimoteEventSystem *result = nil;
     static dispatch_once_t once;
@@ -54,7 +54,7 @@ NSString *WiimoteEventKey                   = @"WiimoteEventKey";
 - (id)init
 {
     self = [super init];
-    if(self == nil)
+    if (self == nil)
         return nil;
 
     _observers = [[NSMutableSet alloc] init];
@@ -66,7 +66,6 @@ NSString *WiimoteEventKey                   = @"WiimoteEventKey";
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-
 }
 
 - (void)addObserver:(id)observer

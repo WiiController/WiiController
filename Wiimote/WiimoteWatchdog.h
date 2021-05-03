@@ -13,9 +13,9 @@ FOUNDATION_EXPORT NSString *WiimoteWatchdogPingNotification;
 
 @interface WiimoteWatchdog : NSObject
 
-+ (WiimoteWatchdog*)sharedWatchdog;
++ (WiimoteWatchdog *)sharedWatchdog;
 
-@property(nonatomic,getter=isEnabled) BOOL enabled;
-@property(nonatomic,getter=isPingNotificationEnabled) BOOL pingNotificationEnabled;
+@property(nonatomic, getter=isEnabled) BOOL enabled;
+@property(nonatomic, getter=isPingNotificationEnabled) BOOL pingNotificationEnabled;
 
 @end

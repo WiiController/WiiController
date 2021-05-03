@@ -15,7 +15,7 @@
 {
     [self.delegate wiimote:self.owner vibrationStateChanged:state];
 
-    if([self isStateNotificationsEnabled])
+    if ([self isStateNotificationsEnabled])
     {
         [self postNotification:WiimoteVibrationStateChangedNotification
                          param:[NSNumber numberWithBool:state]

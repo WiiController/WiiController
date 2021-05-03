@@ -14,9 +14,9 @@
                             value:(CGFloat)value
 {
     return [[WiimoteEvent alloc]
-                        initWithWiimote:wiimote
-                                   path:path
-                                  value:value];
+        initWithWiimote:wiimote
+                   path:path
+                  value:value];
 }
 
 - (id)initWithWiimote:(Wiimote*)wiimote
@@ -24,17 +24,16 @@
                 value:(CGFloat)value
 {
     self = [super init];
-    if(self == nil)
+    if (self == nil)
         return nil;
 
-    _wiimote           = wiimote;
-    _path              = [path copy];
-    _pathComponents    = [_path componentsSeparatedByString:@"."];
-    _value             = value;
+    _wiimote = wiimote;
+    _path = [path copy];
+    _pathComponents = [_path componentsSeparatedByString:@"."];
+    _value = value;
 
     return self;
 }
-
 
 - (Wiimote*)wiimote
 {

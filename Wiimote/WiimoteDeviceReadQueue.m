@@ -16,79 +16,72 @@
 @implementation WiimoteDeviceReadQueue
 {
     WiimoteDevice *_device;
-    NSMutableArray<WiimoteDeviceReadBuffer*> *_readMemHandlersQueue;
+    NSMutableArray<WiimoteDeviceReadBuffer *> *_readMemHandlersQueue;
     WiimoteDeviceReadBuffer *_currentBuffer;
 }
 
-- (id)initWithDevice:(WiimoteDevice*)device
+- (id)initWithDevice:(WiimoteDevice *)device
 {
-	self = [super init];
-	if(self == nil)
-		return nil;
+    self = [super init];
+    if (self == nil)
+        return nil;
 
-	_device = device;
-	_readMemHandlersQueue = [NSMutableArray array];
-	_currentBuffer = nil;
+    _device = device;
+    _readMemHandlersQueue = [NSMutableArray array];
+    _currentBuffer = nil;
 
-	return self;
+    return self;
 }
-
 
 - (BOOL)readMemory:(NSRange)memoryRange
               then:(WiimoteDeviceReadCallback)callback
 {
-	if (!_device.transport.isOpen) return NO;
+    if (!_device.transport.isOpen) return NO;
 
-	if (memoryRange.length == 0) return YES;
+    if (memoryRange.length == 0) return YES;
 
-	WiimoteDeviceReadBuffer *handler =
-			[[WiimoteDeviceReadBuffer alloc]
-									initWithMemoryRange:memoryRange
-                                           fullCallback:callback];
+    WiimoteDeviceReadBuffer *handler =
+        [[WiimoteDeviceReadBuffer alloc]
+            initWithMemoryRange:memoryRange
+                   fullCallback:callback];
 
-	if (!_currentBuffer) return [self runHandler:handler];
+    if (!_currentBuffer) return [self runHandler:handler];
 
     [self addHandlerToQueue:handler];
-	return YES;
+    return YES;
 }
 
-- (void)handleReport:(WiimoteDeviceReport*)report
+- (void)handleReport:(WiimoteDeviceReport *)report
 {
-	if(_currentBuffer == nil)
-		return;
+    if (_currentBuffer == nil)
+        return;
 
-    if([report type] != WiimoteDeviceReportTypeReadMemory ||
-       [report length] < sizeof(WiimoteDeviceReadMemoryReport))
+    if ([report type] != WiimoteDeviceReportTypeReadMemory ||
+        [report length] < sizeof(WiimoteDeviceReadMemoryReport))
     {
         return;
     }
 
-    const WiimoteDeviceReadMemoryReport *memoryReport =
-                                            (const WiimoteDeviceReadMemoryReport*)[report data];
+    const WiimoteDeviceReadMemoryReport *memoryReport = (const WiimoteDeviceReadMemoryReport *)[report data];
 
-    if(((memoryReport->errorAndDataSize &
-            WiimoteDeviceReadMemoryReportErrorMask) >>
-                WiimoteDeviceReadMemoryReportErrorOffset) !=
-                                        WiimoteDeviceReadMemoryReportErrorOk)
+    if (((memoryReport->errorAndDataSize & WiimoteDeviceReadMemoryReportErrorMask) >> WiimoteDeviceReadMemoryReportErrorOffset) != WiimoteDeviceReadMemoryReportErrorOk)
     {
         [_currentBuffer errorOccured];
         [self runNextHandler];
         return;
     }
 
-    NSUInteger dataSize = ((memoryReport->errorAndDataSize &
-                                WiimoteDeviceReadMemoryReportDataSizeMask) >>
-                                    WiimoteDeviceReadMemoryReportDataSizeOffset) + 1;
+    NSUInteger dataSize = ((memoryReport->errorAndDataSize & WiimoteDeviceReadMemoryReportDataSizeMask) >> WiimoteDeviceReadMemoryReportDataSizeOffset) + 1;
 
     [_currentBuffer append:memoryReport->data length:dataSize];
 
-	if ([_currentBuffer isFull])
+    if ([_currentBuffer isFull])
         [self runNextHandler];
 }
 
 - (void)handleDisconnect
 {
-	if (_currentBuffer)
+    if (_currentBuffer)
     {
         [_currentBuffer disconnected];
         _currentBuffer = nil;
@@ -102,28 +95,28 @@
 
 - (BOOL)isQueueEmpty
 {
-	return ([_readMemHandlersQueue count] == 0);
+    return ([_readMemHandlersQueue count] == 0);
 }
 
-- (WiimoteDeviceReadBuffer*)nextHandlerFromQueue
+- (WiimoteDeviceReadBuffer *)nextHandlerFromQueue
 {
-	if ([self isQueueEmpty]) return nil;
+    if ([self isQueueEmpty]) return nil;
 
-	WiimoteDeviceReadBuffer *result =
-			[_readMemHandlersQueue objectAtIndex:0];
+    WiimoteDeviceReadBuffer *result =
+        [_readMemHandlersQueue objectAtIndex:0];
 
-	[_readMemHandlersQueue removeObjectAtIndex:0];
-	return result;
+    [_readMemHandlersQueue removeObjectAtIndex:0];
+    return result;
 }
 
-- (void)addHandlerToQueue:(WiimoteDeviceReadBuffer*)handler
+- (void)addHandlerToQueue:(WiimoteDeviceReadBuffer *)handler
 {
-	[_readMemHandlersQueue addObject:handler];
+    [_readMemHandlersQueue addObject:handler];
 }
 
-- (BOOL)runHandler:(WiimoteDeviceReadBuffer*)handler
+- (BOOL)runHandler:(WiimoteDeviceReadBuffer *)handler
 {
-	if (!handler) return NO;
+    if (!handler) return NO;
 
     WiimoteDeviceReadMemoryParams params;
     NSRange memoryRange = [handler memoryRange];
@@ -131,8 +124,8 @@
     params.address = OSSwapHostToBigConstInt32((uint32_t)memoryRange.location);
     params.length = OSSwapHostToBigConstInt16((uint16_t)memoryRange.length);
 
-	if ([_device postCommand:WiimoteDeviceCommandTypeReadMemory
-						data:(const uint8_t*)&params
+    if ([_device postCommand:WiimoteDeviceCommandTypeReadMemory
+                        data:(const uint8_t *)&params
                       length:sizeof(params)])
     {
         _currentBuffer = handler;
@@ -146,11 +139,11 @@
 
 - (void)runNextHandler
 {
-	_currentBuffer = nil;
+    _currentBuffer = nil;
 
-	while (![self isQueueEmpty] && ![self runHandler:[self nextHandlerFromQueue]])
-	{
-	}
+    while (![self isQueueEmpty] && ![self runHandler:[self nextHandlerFromQueue]])
+    {
+    }
 }
 
 @end

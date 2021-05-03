@@ -12,24 +12,24 @@
 + (void)load
 {
     [WiimoteEventSystem
-            registerNotification:WiimoteUDrawPenPressedNotification
-                        selector:@selector(wiimoteUDrawPenPressedNotification:)];
+        registerNotification:WiimoteUDrawPenPressedNotification
+                    selector:@selector(wiimoteUDrawPenPressedNotification:)];
 
     [WiimoteEventSystem
-            registerNotification:WiimoteUDrawPenReleasedNotification
-                        selector:@selector(wiimoteUDrawPenReleasedNotification:)];
+        registerNotification:WiimoteUDrawPenReleasedNotification
+                    selector:@selector(wiimoteUDrawPenReleasedNotification:)];
 
     [WiimoteEventSystem
-            registerNotification:WiimoteUDrawPenPositionChangedNotification
-                        selector:@selector(wiimoteUDrawPenPositionChangedNotification:)];
+        registerNotification:WiimoteUDrawPenPositionChangedNotification
+                    selector:@selector(wiimoteUDrawPenPositionChangedNotification:)];
 
     [WiimoteEventSystem
-            registerNotification:WiimoteUDrawPenButtonPressedNotification
-                        selector:@selector(wiimoteUDrawPenButtonPressedNotification:)];
+        registerNotification:WiimoteUDrawPenButtonPressedNotification
+                    selector:@selector(wiimoteUDrawPenButtonPressedNotification:)];
 
     [WiimoteEventSystem
-            registerNotification:WiimoteUDrawPenButtonReleasedNotification
-                        selector:@selector(wiimoteUDrawPenButtonReleasedNotification:)];
+        registerNotification:WiimoteUDrawPenButtonReleasedNotification
+                    selector:@selector(wiimoteUDrawPenButtonReleasedNotification:)];
 }
 
 - (void)wiimoteUDrawPenPressedNotification:(NSNotification*)notification
@@ -53,7 +53,7 @@
 
     [self postEventForWiimoteExtension:[notification object] path:@"Pen.Position.X" value:position.x];
     [self postEventForWiimoteExtension:[notification object] path:@"Pen.Position.Y" value:position.y];
-    [self postEventForWiimoteExtension:[notification object] path:@"Pen.Pressure"   value:pressure];
+    [self postEventForWiimoteExtension:[notification object] path:@"Pen.Pressure" value:pressure];
 }
 
 - (void)wiimoteUDrawPenButtonPressedNotification:(NSNotification*)notification

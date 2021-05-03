@@ -18,30 +18,30 @@
 
 @protocol WiimoteDeviceDelegate <NSObject>
 
-- (void)wiimoteDevice:(WiimoteDevice*)device handleReport:(WiimoteDeviceReport*)report;
-- (void)wiimoteDeviceDisconnected:(WiimoteDevice*)device;
+- (void)wiimoteDevice:(WiimoteDevice *)device handleReport:(WiimoteDeviceReport *)report;
+- (void)wiimoteDeviceDisconnected:(WiimoteDevice *)device;
 
 @end
 
 @interface WiimoteDevice : NSObject
 
-- (instancetype)initWithHIDDevice:(W_HIDDevice*)device;
-- (instancetype)initWithBluetoothDevice:(IOBluetoothDevice*)device;
+- (instancetype)initWithHIDDevice:(W_HIDDevice *)device;
+- (instancetype)initWithBluetoothDevice:(IOBluetoothDevice *)device;
 
-@property(nonatomic,readonly) id <WiimoteDeviceTransport> transport;
+@property(nonatomic, readonly) id<WiimoteDeviceTransport> transport;
 
 - (BOOL)connect;
 - (void)disconnect;
 
 - (BOOL)postCommand:(WiimoteDeviceCommandType)command
-               data:(const uint8_t*)data
+               data:(const uint8_t *)data
              length:(NSUInteger)length;
 
 - (BOOL)writeMemory:(NSUInteger)address
-               data:(const uint8_t*)data
+               data:(const uint8_t *)data
              length:(NSUInteger)length;
 
-typedef void(^WiimoteDeviceReadCallback)(NSData *);
+typedef void (^WiimoteDeviceReadCallback)(NSData *);
 
 - (BOOL)readMemory:(NSRange)memoryRange
               then:(WiimoteDeviceReadCallback)callback;
@@ -49,13 +49,13 @@ typedef void(^WiimoteDeviceReadCallback)(NSData *);
 - (BOOL)requestStateReport;
 - (BOOL)requestReportType:(WiimoteDeviceReportType)type;
 
-@property(nonatomic,readonly) BOOL isVibrationEnabled;
+@property(nonatomic, readonly) BOOL isVibrationEnabled;
 - (BOOL)setVibrationEnabled:(BOOL)enabled;
 
 // WiimoteDeviceSetLEDStateCommandFlag mask
-@property(nonatomic,readonly) uint8_t LEDsState;
+@property(nonatomic, readonly) uint8_t LEDsState;
 - (BOOL)setLEDsState:(uint8_t)state;
 
-@property(nonatomic,weak) id <WiimoteDeviceDelegate> delegate;
+@property(nonatomic, weak) id<WiimoteDeviceDelegate> delegate;
 
 @end

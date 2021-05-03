@@ -10,14 +10,14 @@
 
 @implementation WiimoteEventDispatcher (ClassicController)
 
-- (void)postClassicController:(WiimoteClassicControllerExtension*)classic
+- (void)postClassicController:(WiimoteClassicControllerExtension *)classic
                 buttonPressed:(WiimoteClassicControllerButtonType)button
 {
     [self.delegate wiimote:self.owner
-           classicController:classic
-               buttonPressed:button];
+         classicController:classic
+             buttonPressed:button];
 
-    if([self isStateNotificationsEnabled])
+    if ([self isStateNotificationsEnabled])
     {
         [self postNotification:WiimoteClassicControllerButtonPressedNotification
                          param:[NSNumber numberWithInteger:button]
@@ -26,14 +26,14 @@
     }
 }
 
-- (void)postClassicController:(WiimoteClassicControllerExtension*)classic
+- (void)postClassicController:(WiimoteClassicControllerExtension *)classic
                buttonReleased:(WiimoteClassicControllerButtonType)button
 {
     [self.delegate wiimote:self.owner
-           classicController:classic
-			  buttonReleased:button];
+         classicController:classic
+            buttonReleased:button];
 
-    if([self isStateNotificationsEnabled])
+    if ([self isStateNotificationsEnabled])
     {
         [self postNotification:WiimoteClassicControllerButtonReleasedNotification
                          param:[NSNumber numberWithInteger:button]
@@ -42,23 +42,23 @@
     }
 }
 
-- (void)postClassicController:(WiimoteClassicControllerExtension*)classic
+- (void)postClassicController:(WiimoteClassicControllerExtension *)classic
                         stick:(WiimoteClassicControllerStickType)stick
               positionChanged:(NSPoint)position
 {
     [self.delegate wiimote:self.owner
-           classicController:classic
-                       stick:stick
-             positionChanged:position];
+         classicController:classic
+                     stick:stick
+           positionChanged:position];
 
-    if([self isStateNotificationsEnabled])
+    if ([self isStateNotificationsEnabled])
     {
         NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                    [NSValue valueWithPoint:position],
-                                                        WiimoteClassicControllerStickPositionKey,
-                                                    [NSNumber numberWithInteger:stick],
-                                                        WiimoteClassicControllerStickKey,
-                                                    nil];
+                                                   [NSValue valueWithPoint:position],
+                                                   WiimoteClassicControllerStickPositionKey,
+                                                   [NSNumber numberWithInteger:stick],
+                                                   WiimoteClassicControllerStickKey,
+                                                   nil];
 
         [self postNotification:WiimoteClassicControllerStickPositionChangedNotification
                         params:userInfo
@@ -66,23 +66,23 @@
     }
 }
 
-- (void)postClassicController:(WiimoteClassicControllerExtension*)classic
+- (void)postClassicController:(WiimoteClassicControllerExtension *)classic
                   analogShift:(WiimoteClassicControllerAnalogShiftType)shift
               positionChanged:(CGFloat)position
 {
     [self.delegate wiimote:self.owner
-           classicController:classic
-                 analogShift:shift
-             positionChanged:position];
+         classicController:classic
+               analogShift:shift
+           positionChanged:position];
 
-    if([self isStateNotificationsEnabled])
+    if ([self isStateNotificationsEnabled])
     {
         NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                    [NSNumber numberWithFloat:position],
-                                                        WiimoteClassicControllerAnalogShiftPositionKey,
-                                                    [NSNumber numberWithInteger:shift],
-                                                        WiimoteClassicControllerAnalogShiftKey,
-                                                    nil];
+                                                   [NSNumber numberWithFloat:position],
+                                                   WiimoteClassicControllerAnalogShiftPositionKey,
+                                                   [NSNumber numberWithInteger:shift],
+                                                   WiimoteClassicControllerAnalogShiftKey,
+                                                   nil];
 
         [self postNotification:WiimoteClassicControllerAnalogShiftPositionChangedNotification
                         params:userInfo

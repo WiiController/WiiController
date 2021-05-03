@@ -20,9 +20,9 @@
 
 #import <objc/message.h>
 
-NSString *WiimoteDeviceName             = @"Nintendo RVL-CNT-01";
-NSString *WiimoteDeviceNameTR           = @"Nintendo RVL-CNT-01-TR";
-NSString *WiimoteDeviceNameUPro         = @"Nintendo RVL-CNT-01-UC";
+NSString *WiimoteDeviceName = @"Nintendo RVL-CNT-01";
+NSString *WiimoteDeviceNameTR = @"Nintendo RVL-CNT-01-TR";
+NSString *WiimoteDeviceNameUPro = @"Nintendo RVL-CNT-01-UC";
 NSString *WiimoteDeviceNameBalanceBoard = @"Nintendo RVL-WBC-01";
 
 @interface WiimoteInquiry () <IOBluetoothDeviceInquiryDelegate>
@@ -31,19 +31,19 @@ NSString *WiimoteDeviceNameBalanceBoard = @"Nintendo RVL-WBC-01";
 @implementation WiimoteInquiry
 {
     IOBluetoothDeviceInquiry *_inquiry;
-    id                        _target;
-    SEL                       _action;
+    id _target;
+    SEL _action;
 }
 
 + (void)load
 {
     [WiimoteInquiry registerSupportedModelName:WiimoteDeviceName];
     [WiimoteInquiry registerSupportedModelName:WiimoteDeviceNameTR];
-	[WiimoteInquiry registerSupportedModelName:WiimoteDeviceNameUPro];
+    [WiimoteInquiry registerSupportedModelName:WiimoteDeviceNameUPro];
     [WiimoteInquiry registerSupportedModelName:WiimoteDeviceNameBalanceBoard];
 }
 
-+ (WiimoteInquiry*)sharedInquiry
++ (WiimoteInquiry *)sharedInquiry
 {
     static WiimoteInquiry *result = nil;
     static dispatch_once_t once;
@@ -53,7 +53,7 @@ NSString *WiimoteDeviceNameBalanceBoard = @"Nintendo RVL-WBC-01";
     return result;
 }
 
-+ (NSMutableArray*)mutableSupportedModelNames
++ (NSMutableArray *)mutableSupportedModelNames
 {
     static NSMutableArray *result = nil;
     static dispatch_once_t once;
@@ -63,18 +63,18 @@ NSString *WiimoteDeviceNameBalanceBoard = @"Nintendo RVL-WBC-01";
     return result;
 }
 
-+ (NSArray*)supportedModelNames
++ (NSArray *)supportedModelNames
 {
     return [WiimoteInquiry mutableSupportedModelNames];
 }
 
-+ (void)registerSupportedModelName:(NSString*)name
++ (void)registerSupportedModelName:(NSString *)name
 {
-    if(![[WiimoteInquiry mutableSupportedModelNames] containsObject:name])
+    if (![[WiimoteInquiry mutableSupportedModelNames] containsObject:name])
         [[WiimoteInquiry mutableSupportedModelNames] addObject:name];
 }
 
-+ (BOOL)isModelSupported:(NSString*)name
++ (BOOL)isModelSupported:(NSString *)name
 {
     return [[self supportedModelNames] containsObject:name];
 }
@@ -82,7 +82,7 @@ NSString *WiimoteDeviceNameBalanceBoard = @"Nintendo RVL-WBC-01";
 - (void)dealloc
 {
     [self stop];
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (BOOL)isStarted
@@ -95,19 +95,19 @@ NSString *WiimoteDeviceNameBalanceBoard = @"Nintendo RVL-WBC-01";
     if ([self isStarted]) return YES;
     if (!wiimoteIsBluetoothEnabled()) return NO;
 
-	_inquiry = [IOBluetoothDeviceInquiry inquiryWithDelegate:self];
+    _inquiry = [IOBluetoothDeviceInquiry inquiryWithDelegate:self];
 
-	[_inquiry setInquiryLength:WIIMOTE_INQUIRY_TIME_IN_SECONDS];
-	[_inquiry setSearchCriteria:kBluetoothServiceClassMajorAny
+    [_inquiry setInquiryLength:WIIMOTE_INQUIRY_TIME_IN_SECONDS];
+    [_inquiry setSearchCriteria:kBluetoothServiceClassMajorAny
                majorDeviceClass:kBluetoothDeviceClassMajorAny
                minorDeviceClass:kBluetoothDeviceClassMinorAny];
 
-	if ([_inquiry start] != kIOReturnSuccess)
+    if ([_inquiry start] != kIOReturnSuccess)
     {
         W_ERROR(@"[IOBluetoothDeviceInquiry start] failed");
-		[self stop];
-		return NO;
-	}
+        [self stop];
+        return NO;
+    }
 
     _target = target;
     _action = action;
@@ -119,36 +119,36 @@ NSString *WiimoteDeviceNameBalanceBoard = @"Nintendo RVL-WBC-01";
     if (![self isStarted]) return YES;
 
     [_inquiry stop];
-	[_inquiry setDelegate:nil];
-	_inquiry = nil;
+    [_inquiry setDelegate:nil];
+    _inquiry = nil;
 
     return YES;
 }
 
 - (void)setUseOneButtonClickConnection:(BOOL)useOneButtonClickConnection
 {
-    if(_useOneButtonClickConnection == useOneButtonClickConnection)
+    if (_useOneButtonClickConnection == useOneButtonClickConnection)
         return;
 
     _useOneButtonClickConnection = useOneButtonClickConnection;
 
-    if(_useOneButtonClickConnection)
+    if (_useOneButtonClickConnection)
         [self connectToPairedDevices];
 }
 
-- (void)hidManagerDeviceConnectedNotification:(NSNotification*)notification
+- (void)hidManagerDeviceConnectedNotification:(NSNotification *)notification
 {
-    if(![self isUseOneButtonClickConnection])
+    if (![self isUseOneButtonClickConnection])
         return;
 
-	W_HIDDevice	*device = [[notification userInfo] objectForKey:HIDManagerDeviceKey];
-	NSString *deviceName = device.name;
+    W_HIDDevice *device = [[notification userInfo] objectForKey:HIDManagerDeviceKey];
+    NSString *deviceName = device.name;
 
     W_DEBUG_F(@"hid device connected: %@", deviceName);
-	if([WiimoteInquiry isModelSupported:deviceName])
+    if ([WiimoteInquiry isModelSupported:deviceName])
     {
         W_DEBUG(@"connecting...");
-		[Wiimote connectToHIDDevice:device];
+        [Wiimote connectToHIDDevice:device];
     }
     else
         W_DEBUG(@"not supported");
@@ -157,17 +157,17 @@ NSString *WiimoteDeviceNameBalanceBoard = @"Nintendo RVL-WBC-01";
 - (id)initInternal
 {
     self = [super init];
-    if(self == nil)
+    if (self == nil)
         return nil;
 
     _inquiry = nil;
     _useOneButtonClickConnection = NO;
 
-	[[NSNotificationCenter defaultCenter]
-								addObserver:self
-								   selector:@selector(hidManagerDeviceConnectedNotification:)
-									   name:HIDManagerDeviceConnectedNotification
-									 object:[HIDManager manager]];
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+           selector:@selector(hidManagerDeviceConnectedNotification:)
+               name:HIDManagerDeviceConnectedNotification
+             object:[HIDManager manager]];
 
     return self;
 }
@@ -183,45 +183,46 @@ NSString *WiimoteDeviceNameBalanceBoard = @"Nintendo RVL-WBC-01";
     if (ignoreHIDDeviceFn) ignoreHIDDeviceFn(device);
 }
 
-- (void)connectToDevices:(NSArray<IOBluetoothDevice*>*)devices
-{
-    for(IOBluetoothDevice *device in devices)
-    {
-        W_DEBUG_F(@"bluetooth device connected: %@", device.name);
-        if([WiimoteInquiry isModelSupported:device.name])
-		{
-            W_DEBUG(@"connecting...");
-            [self postIgnoreHintToSystem:(__bridge IOBluetoothDeviceRef)(device)];
-            [Wiimote connectToBluetoothDevice:device];
-		}
-        else
-            W_DEBUG(@"not supported");
-    }
-}
-
-- (void)pairWithDevices:(NSArray<IOBluetoothDevice*>*)devices
+- (void)connectToDevices:(NSArray<IOBluetoothDevice *> *)devices
 {
     for (IOBluetoothDevice *device in devices)
     {
         W_DEBUG_F(@"bluetooth device connected: %@", device.name);
         if ([WiimoteInquiry isModelSupported:device.name])
-		{
-			if (!device.isPaired)
+        {
+            W_DEBUG(@"connecting...");
+            [self postIgnoreHintToSystem:(__bridge IOBluetoothDeviceRef)(device)];
+            [Wiimote connectToBluetoothDevice:device];
+        }
+        else
+            W_DEBUG(@"not supported");
+    }
+}
+
+- (void)pairWithDevices:(NSArray<IOBluetoothDevice *> *)devices
+{
+    for (IOBluetoothDevice *device in devices)
+    {
+        W_DEBUG_F(@"bluetooth device connected: %@", device.name);
+        if ([WiimoteInquiry isModelSupported:device.name])
+        {
+            if (!device.isPaired)
             {
                 W_DEBUG(@"pairing...");
                 wiimotePairWithDevice(device);
             }
             else
                 W_DEBUG(@"already paired");
-		}
+        }
         else
             W_DEBUG(@"not supported");
     }
 }
 
-- (BOOL)isHIDDeviceAlreadyConnected:(W_HIDDevice*)device wiimotes:(NSArray*)wiimotes
+- (BOOL)isHIDDeviceAlreadyConnected:(W_HIDDevice *)device wiimotes:(NSArray *)wiimotes
 {
-    for (Wiimote *wiimote in wiimotes) {
+    for (Wiimote *wiimote in wiimotes)
+    {
         if (wiimote.lowLevelDevice == device) return YES;
     }
     return NO;
@@ -229,16 +230,16 @@ NSString *WiimoteDeviceNameBalanceBoard = @"Nintendo RVL-WBC-01";
 
 - (void)connectToPairedDevices
 {
-    NSEnumerator	*en         = [[[HIDManager manager] connectedDevices] objectEnumerator];
-    W_HIDDevice		*device     = [en nextObject];
-    NSArray         *wiimotes   = [Wiimote connectedDevices];
+    NSEnumerator *en = [[[HIDManager manager] connectedDevices] objectEnumerator];
+    W_HIDDevice *device = [en nextObject];
+    NSArray *wiimotes = [Wiimote connectedDevices];
 
-    while(device != nil)
+    while (device != nil)
     {
         W_DEBUG_F(@"hid device connected: %@", [device name]);
-        if(![self isHIDDeviceAlreadyConnected:device wiimotes:wiimotes])
+        if (![self isHIDDeviceAlreadyConnected:device wiimotes:wiimotes])
         {
-            if([WiimoteInquiry isModelSupported:[device name]])
+            if ([WiimoteInquiry isModelSupported:[device name]])
             {
                 W_DEBUG(@"connecting...");
                 [Wiimote connectToHIDDevice:device];
@@ -255,23 +256,23 @@ NSString *WiimoteDeviceNameBalanceBoard = @"Nintendo RVL-WBC-01";
 
 // MARK: IOBluetoothInquiryDelegate
 
-- (void)deviceInquiryDeviceFound:(IOBluetoothDeviceInquiry*)sender
-						  device:(IOBluetoothDevice*)device
+- (void)deviceInquiryDeviceFound:(IOBluetoothDeviceInquiry *)sender
+                          device:(IOBluetoothDevice *)device
 {
-	if([WiimoteInquiry isModelSupported:[device name]])
-		[_inquiry stop];
+    if ([WiimoteInquiry isModelSupported:[device name]])
+        [_inquiry stop];
 }
 
-- (void)deviceInquiryComplete:(IOBluetoothDeviceInquiry*)sender 
-						error:(IOReturn)error
-					  aborted:(BOOL)aborted
+- (void)deviceInquiryComplete:(IOBluetoothDeviceInquiry *)sender
+                        error:(IOReturn)error
+                      aborted:(BOOL)aborted
 {
     [_inquiry stop];
-	[_inquiry setDelegate:nil];
+    [_inquiry setDelegate:nil];
 
-    if(error == kIOReturnSuccess)
+    if (error == kIOReturnSuccess)
     {
-        if([self isUseOneButtonClickConnection])
+        if ([self isUseOneButtonClickConnection])
             [self pairWithDevices:[_inquiry foundDevices]];
         else
             [self connectToDevices:[_inquiry foundDevices]];
@@ -281,11 +282,9 @@ NSString *WiimoteDeviceNameBalanceBoard = @"Nintendo RVL-WBC-01";
 
     [self stop];
 
-    if(_target != nil &&
-       _action != nil)
+    if (_target != nil && _action != nil)
     {
-        ((void(*)(id self, SEL _cmd))objc_msgSend)
-            (_target, _action);
+        ((void (*)(id self, SEL _cmd))objc_msgSend)(_target, _action);
     }
 
     _target = nil;
