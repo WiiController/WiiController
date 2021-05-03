@@ -29,7 +29,7 @@
 
 + (BOOL)prepare
 {
-    if(![WJoyDeviceImpl loadDriver])
+    if (![WJoyDeviceImpl loadDriver])
         return NO;
 
     [WJoyDeviceImpl registerAtExitCallback];
@@ -39,16 +39,16 @@
 - (id)init
 {
     self = [super init];
-    if(self == nil)
+    if (self == nil)
         return nil;
 
-    if(![WJoyDeviceImpl prepare])
+    if (![WJoyDeviceImpl prepare])
     {
         return nil;
     }
 
     _connection = [WJoyDeviceImpl createNewConnection];
-    if(_connection == IO_OBJECT_NULL)
+    if (_connection == IO_OBJECT_NULL)
     {
         return nil;
     }
@@ -58,9 +58,8 @@
 
 - (void)dealloc
 {
-    if(_connection != IO_OBJECT_NULL)
+    if (_connection != IO_OBJECT_NULL)
         IOServiceClose(_connection);
-
 }
 
 - (BOOL)call:(WJoyDeviceMethodSelector)selector
@@ -68,25 +67,15 @@
     return [self call:selector data:nil];
 }
 
-- (BOOL)call:(WJoyDeviceMethodSelector)selector data:(NSData*)data
+- (BOOL)call:(WJoyDeviceMethodSelector)selector data:(NSData *)data
 {
-    return (IOConnectCallMethod(
-            _connection,
-            selector,
-            NULL,
-            0,
-            [data bytes],
-            [data length],
-            NULL,
-            NULL,
-            NULL,
-            NULL) == KERN_SUCCESS);
+    return (IOConnectCallMethod(_connection, selector, NULL, 0, [data bytes], [data length], NULL, NULL, NULL, NULL) == KERN_SUCCESS);
 }
 
-- (BOOL)call:(WJoyDeviceMethodSelector)selector string:(NSString*)string
+- (BOOL)call:(WJoyDeviceMethodSelector)selector string:(NSString *)string
 {
     const char *data = [string UTF8String];
-    size_t      size = strlen(data) + 1; // zero-terminator
+    size_t size = strlen(data) + 1; // zero-terminator
 
     return [self call:selector data:[NSData dataWithBytes:data length:size]];
 }
@@ -95,12 +84,12 @@
 
 @implementation WJoyDeviceImpl (Methods)
 
-- (BOOL)setDeviceProductString:(NSString*)string
+- (BOOL)setDeviceProductString:(NSString *)string
 {
     return [self call:WJoyDeviceMethodSelectorSetDeviceProductString string:string];
 }
 
-- (BOOL)setDeviceSerialNumberString:(NSString*)string
+- (BOOL)setDeviceSerialNumberString:(NSString *)string
 {
     return [self call:WJoyDeviceMethodSelectorSetDeviceSerialNumberString string:string];
 }
@@ -116,7 +105,7 @@
                  data:[NSData dataWithBytes:data length:sizeof(data)]];
 }
 
-- (BOOL)enable:(NSData*)HIDDescriptor
+- (BOOL)enable:(NSData *)HIDDescriptor
 {
     return [self call:WJoyDeviceMethodSelectorEnable data:HIDDescriptor];
 }
@@ -126,7 +115,7 @@
     return [self call:WJoyDeviceMethodSelectorDisable];
 }
 
-- (BOOL)updateState:(NSData*)HIDState
+- (BOOL)updateState:(NSData *)HIDState
 {
     return [self call:WJoyDeviceMethodSelectorUpdateState data:HIDState];
 }
@@ -137,7 +126,8 @@
 
 static void onApplicationExit(void)
 {
-    @autoreleasepool {
+    @autoreleasepool
+    {
         [WJoyDeviceImpl unloadDriver];
     }
 }
@@ -146,7 +136,7 @@ static void onApplicationExit(void)
 {
     static BOOL isRegistred = NO;
 
-    if(isRegistred)
+    if (isRegistred)
         return;
 
     atexit(onApplicationExit);
@@ -155,13 +145,14 @@ static void onApplicationExit(void)
 
 + (io_service_t)findService
 {
-    io_service_t	result = IO_OBJECT_NULL;
-    io_iterator_t 	iterator;
+    io_service_t result = IO_OBJECT_NULL;
+    io_iterator_t iterator;
 
-    if(IOServiceGetMatchingServices(
+    if (IOServiceGetMatchingServices(
             kIOMasterPortDefault,
             IOServiceMatching([WJoyDeviceDriverID UTF8String]),
-            &iterator) != KERN_SUCCESS)
+            &iterator)
+        != KERN_SUCCESS)
     {
         return result;
     }
@@ -173,20 +164,21 @@ static void onApplicationExit(void)
 
 + (io_connect_t)createNewConnection
 {
-    io_connect_t result    = IO_OBJECT_NULL;
-    io_service_t service   = [WJoyDeviceImpl findService];
+    io_connect_t result = IO_OBJECT_NULL;
+    io_service_t service = [WJoyDeviceImpl findService];
 
-    if(service == IO_OBJECT_NULL)
+    if (service == IO_OBJECT_NULL)
         return result;
 
-    if(IOServiceOpen(service, mach_task_self(), 0, &result) != KERN_SUCCESS)
+    if (IOServiceOpen(service, mach_task_self(), 0, &result) != KERN_SUCCESS)
         result = IO_OBJECT_NULL;
 
     IOObjectRelease(service);
     return result;
 }
 
-+ (BOOL)isDriverLoaded {
++ (BOOL)isDriverLoaded
+{
     io_service_t service = [WJoyDeviceImpl findService];
     BOOL result = (service != IO_OBJECT_NULL);
 
@@ -194,7 +186,8 @@ static void onApplicationExit(void)
     return result;
 }
 
-+ (BOOL)loadDriver {
++ (BOOL)loadDriver
+{
     if ([self isDriverLoaded])
         return YES;
 
@@ -203,7 +196,7 @@ static void onApplicationExit(void)
 
 + (BOOL)unloadDriver
 {
-    if(![self isDriverLoaded])
+    if (![self isDriverLoaded])
         return YES;
 
     return [WJoyTool unloadDriver];

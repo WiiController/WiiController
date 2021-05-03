@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-#define WJoyToolLoadDriverCommand       @"--load"
-#define WJoyToolUnloadDriverCommand     @"--unload"
-#define WJoyToolRepairRightsCommand     @"--repair-rights"
+#define WJoyToolLoadDriverCommand @"--load"
+#define WJoyToolUnloadDriverCommand @"--unload"
+#define WJoyToolRepairRightsCommand @"--repair-rights"
 
-#define WJoyToolName                    @"WJoyTool"
+#define WJoyToolName @"WJoyTool"
