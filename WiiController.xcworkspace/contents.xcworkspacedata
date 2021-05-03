@@ -22,7 +22,4 @@
    <FileRef
       location = "group:UserNotification/UserNotification.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:DMGEULA/DMGEULA.xcodeproj">
-   </FileRef>
 </Workspace>

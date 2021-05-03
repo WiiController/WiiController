@@ -14,7 +14,6 @@
 				0A161400172979E300F0D5B2 /* Script */,
 			);
 			dependencies = (
-				0A161405172979E800F0D5B2 /* PBXTargetDependency */,
 				0A16140817297A1100F0D5B2 /* PBXTargetDependency */,
 			);
 			name = "Build DMG";
@@ -51,27 +50,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0A1613FB172979CA00F0D5B2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0A1613F2172979CA00F0D5B2 /* DMGEULA.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DD76F6C0486A84900D96B5E;
-			remoteInfo = dmgeula;
-		};
-		0A1613FD172979CA00F0D5B2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0A1613F2172979CA00F0D5B2 /* DMGEULA.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0A1613211729766E00F0D5B2;
-			remoteInfo = DMGEULA;
-		};
-		0A161404172979E800F0D5B2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0A1613F2172979CA00F0D5B2 /* DMGEULA.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DD76F620486A84900D96B5E;
-			remoteInfo = dmgeula;
-		};
 		0A16140717297A1100F0D5B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -245,7 +223,6 @@
 		0A10280A15C2BA85006715D7 /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
 		0A10280B15C2BA85006715D7 /* MainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainController.m; sourceTree = "<group>"; };
 		0A10283615C2BE36006715D7 /* warning.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = warning.icns; sourceTree = "<group>"; };
-		0A1613F2172979CA00F0D5B2 /* DMGEULA.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DMGEULA.xcodeproj; path = ../DMGEULA/DMGEULA.xcodeproj; sourceTree = SOURCE_ROOT; };
 		0A16140E17297AA300F0D5B2 /* BSD_License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = BSD_License.rtf; sourceTree = "<group>"; };
 		0A16140F17297AA300F0D5B2 /* dmg_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dmg_background.png; sourceTree = "<group>"; };
 		0A16141017297AA300F0D5B2 /* fix_dmg.applescript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.applescript; path = fix_dmg.applescript; sourceTree = "<group>"; };
@@ -313,15 +290,6 @@
 				0A10280B15C2BA85006715D7 /* MainController.m */,
 			);
 			name = Classes;
-			sourceTree = "<group>";
-		};
-		0A1613F3172979CA00F0D5B2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				0A1613FC172979CA00F0D5B2 /* dmgeula */,
-				0A1613FE172979CA00F0D5B2 /* DMGEULA.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		0A16140D17297A9100F0D5B2 /* DMG */ = {
@@ -420,7 +388,6 @@
 				0A2206D715C2AF0C004D168E /* Wiimote.xcodeproj */,
 				0A2206B715C2AEFC004D168E /* UserNotification.xcodeproj */,
 				0A95C84818CE0A9D00C66818 /* OCLog.xcodeproj */,
-				0A1613F2172979CA00F0D5B2 /* DMGEULA.xcodeproj */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				0A16140D17297A9100F0D5B2 /* DMG */,
@@ -517,10 +484,6 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 0A1613F3172979CA00F0D5B2 /* Products */;
-					ProjectRef = 0A1613F2172979CA00F0D5B2 /* DMGEULA.xcodeproj */;
-				},
-				{
 					ProductGroup = 0A95C84918CE0A9D00C66818 /* Products */;
 					ProjectRef = 0A95C84818CE0A9D00C66818 /* OCLog.xcodeproj */;
 				},
@@ -550,20 +513,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		0A1613FC172979CA00F0D5B2 /* dmgeula */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = dmgeula;
-			remoteRef = 0A1613FB172979CA00F0D5B2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0A1613FE172979CA00F0D5B2 /* DMGEULA.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = DMGEULA.framework;
-			remoteRef = 0A1613FD172979CA00F0D5B2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		0A2206C115C2AEFC004D168E /* UserNotification.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -722,11 +671,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0A161405172979E800F0D5B2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = dmgeula;
-			targetProxy = 0A161404172979E800F0D5B2 /* PBXContainerItemProxy */;
-		};
 		0A16140817297A1100F0D5B2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8D1107260486CEB800E47090 /* WiiController */;
