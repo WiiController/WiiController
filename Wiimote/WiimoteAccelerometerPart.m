@@ -49,10 +49,10 @@
     if (result == nil)
     {
         result = [[NSSet alloc] initWithObjects:
-                                    [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerState],
-                                    [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerAndIR12BytesState],
-                                    [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerAndExtension16BytesState],
-                                    [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerAndIR10BytesAndExtension6Bytes],
+                                    @(WiimoteDeviceReportTypeButtonAndAccelerometerState),
+                                    @(WiimoteDeviceReportTypeButtonAndAccelerometerAndIR12BytesState),
+                                    @(WiimoteDeviceReportTypeButtonAndAccelerometerAndExtension16BytesState),
+                                    @(WiimoteDeviceReportTypeButtonAndAccelerometerAndIR10BytesAndExtension6Bytes),
                                     nil];
     }
 

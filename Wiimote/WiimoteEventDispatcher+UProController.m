@@ -19,7 +19,7 @@
     if ([self isStateNotificationsEnabled])
     {
         [self postNotification:WiimoteUProControllerButtonPressedNotification
-                         param:[NSNumber numberWithInteger:button]
+                         param:@(button)
                            key:WiimoteUProControllerButtonKey
                         sender:uPro];
     }
@@ -35,7 +35,7 @@
     if ([self isStateNotificationsEnabled])
     {
         [self postNotification:WiimoteUProControllerButtonReleasedNotification
-                         param:[NSNumber numberWithInteger:button]
+                         param:@(button)
                            key:WiimoteUProControllerButtonKey
                         sender:uPro];
     }
@@ -52,12 +52,10 @@
 
     if ([self isStateNotificationsEnabled])
     {
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                   [NSValue valueWithPoint:position],
-                                                   WiimoteUProControllerStickPositionKey,
-                                                   [NSNumber numberWithInteger:stick],
-                                                   WiimoteUProControllerStickKey,
-                                                   nil];
+        NSDictionary *userInfo = @{
+            WiimoteUProControllerStickPositionKey : @(position),
+            WiimoteUProControllerStickKey : @(stick)
+        };
 
         [self postNotification:WiimoteUProControllerStickPositionChangedNotification
                         params:userInfo

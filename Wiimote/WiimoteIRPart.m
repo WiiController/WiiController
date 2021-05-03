@@ -40,12 +40,7 @@
     _iRReportMode = -1;
     _reportType = -1;
     _reportCounter = 0;
-    _points = [[NSArray alloc] initWithObjects:
-                                   [WiimoteIRPoint pointWithOwner:owner index:0],
-                                   [WiimoteIRPoint pointWithOwner:owner index:1],
-                                   [WiimoteIRPoint pointWithOwner:owner index:2],
-                                   [WiimoteIRPoint pointWithOwner:owner index:3],
-                                   nil];
+    _points = @[ [WiimoteIRPoint pointWithOwner:owner index:0], [WiimoteIRPoint pointWithOwner:owner index:1], [WiimoteIRPoint pointWithOwner:owner index:2], [WiimoteIRPoint pointWithOwner:owner index:3] ];
 
     return self;
 }
@@ -84,9 +79,9 @@
     if (allowedReportTypeSet == nil)
     {
         allowedReportTypeSet = [[NSSet alloc] initWithObjects:
-                                                  [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerAndIR12BytesState],
-                                                  [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndIR10BytesAndExtension9BytesState],
-                                                  [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerAndIR10BytesAndExtension6Bytes],
+                                                  @(WiimoteDeviceReportTypeButtonAndAccelerometerAndIR12BytesState),
+                                                  @(WiimoteDeviceReportTypeButtonAndIR10BytesAndExtension9BytesState),
+                                                  @(WiimoteDeviceReportTypeButtonAndAccelerometerAndIR10BytesAndExtension6Bytes),
                                                   nil];
     }
 

@@ -82,7 +82,7 @@ NSString *WiimoteIDKey = @"WiimoteIDKey";
                  onThread:_thread
                withObject:block
             waitUntilDone:YES
-                    modes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
+                    modes:@[ NSRunLoopCommonModes ]];
 
     [pool release];
 }
@@ -173,7 +173,7 @@ static void wiimote_set_id(Wiimote *wiimote, int wid)
 {
     [wiimote setUserInfo:
                  [NSMutableDictionary
-                     dictionaryWithObject:[NSNumber numberWithInt:wid]
+                     dictionaryWithObject:@(wid)
                                    forKey:WiimoteIDKey]];
 }
 

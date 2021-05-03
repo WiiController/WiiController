@@ -126,7 +126,7 @@
         return;
     }
 
-    [device setUserInfo:[NSDictionary dictionary]];
+    [device setUserInfo:@{}];
 
     [UserNotificationCenter
         deliver:[UserNotification

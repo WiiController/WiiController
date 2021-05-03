@@ -31,7 +31,7 @@
     NSDictionary *params = nil;
 
     if (param != nil && key != nil)
-        params = [NSDictionary dictionaryWithObject:param forKey:key];
+        params = @{ key : param };
 
     [self postNotification:notification
                     params:params

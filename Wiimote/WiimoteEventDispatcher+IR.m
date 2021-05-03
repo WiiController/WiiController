@@ -16,7 +16,7 @@
     [self.delegate wiimote:self.owner irEnabledStateChanged:enabled];
 
     [self postNotification:WiimoteIREnabledStateChangedNotification
-                     param:[NSNumber numberWithBool:enabled]
+                     param:@(enabled)
                        key:WiimoteIREnabledStateKey];
 }
 

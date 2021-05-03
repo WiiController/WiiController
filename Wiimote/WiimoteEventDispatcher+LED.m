@@ -18,7 +18,7 @@
     if ([self isStateNotificationsEnabled])
     {
         [self postNotification:WiimoteHighlightedLEDMaskChangedNotification
-                         param:[NSNumber numberWithInteger:mask]
+                         param:@(mask)
                            key:WiimoteHighlightedLEDMaskKey];
     }
 }

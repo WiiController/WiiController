@@ -18,7 +18,7 @@
     if ([self isStateNotificationsEnabled])
     {
         [self postNotification:WiimoteVibrationStateChangedNotification
-                         param:[NSNumber numberWithBool:state]
+                         param:@(state)
                            key:WiimoteVibrationStateKey];
     }
 }

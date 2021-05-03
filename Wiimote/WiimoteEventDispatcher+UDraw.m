@@ -37,10 +37,10 @@
 
     if ([self isStateNotificationsEnabled])
     {
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                 [NSValue valueWithPoint:position], WiimoteUDrawPenPositionKey,
-                                                 [NSNumber numberWithDouble:pressure], WiimoteUDrawPenPressureKey,
-                                                 nil];
+        NSDictionary *params = @{
+            WiimoteUDrawPenPositionKey : @(position),
+            WiimoteUDrawPenPressureKey : @(pressure)
+        };
 
         [self postNotification:WiimoteUDrawPenPositionChangedNotification
                         params:params];

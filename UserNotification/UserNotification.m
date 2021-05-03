@@ -114,11 +114,11 @@
 
 - (NSDictionary*)asDictionary
 {
-    return [NSDictionary dictionaryWithObjectsAndKeys:
-                                                _title,    @"title",
-                                                _text,     @"text",
-                                                _userInfo, @"userInfo",
-                                                nil];
+    return @{
+        @"title": _title,
+        @"text": _text,
+        @"userInfo": _userInfo
+    };
 }
 
 - (NSString*)description
@@ -139,7 +139,7 @@
         _text = @"";
 
     if(_userInfo == nil)
-        _userInfo = [[NSDictionary alloc] init];
+        _userInfo = @{};
 }
 
 @end

@@ -17,7 +17,7 @@
     if ([self isStateNotificationsEnabled])
     {
         [self postNotification:WiimoteButtonPresedNotification
-                         param:[NSNumber numberWithInteger:button]
+                         param:@(button)
                            key:WiimoteButtonKey];
     }
 }
@@ -29,7 +29,7 @@
     if ([self isStateNotificationsEnabled])
     {
         [self postNotification:WiimoteButtonReleasedNotification
-                         param:[NSNumber numberWithInteger:button]
+                         param:@(button)
                            key:WiimoteButtonKey];
     }
 }

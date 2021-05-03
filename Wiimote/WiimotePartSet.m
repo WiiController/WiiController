@@ -73,14 +73,14 @@
 {
     NSUInteger countParts = [_partArray count];
     NSMutableSet *reportTypes = [NSMutableSet setWithObjects:
-                                                  [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonState],
-                                                  [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerState],
-                                                  [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndExtension8BytesState],
-                                                  [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerAndIR12BytesState],
-                                                  [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndExtension19BytesState],
-                                                  [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerAndExtension16BytesState],
-                                                  [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndIR10BytesAndExtension9BytesState],
-                                                  [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerAndIR10BytesAndExtension6Bytes],
+                                                  @(WiimoteDeviceReportTypeButtonState),
+                                                  @(WiimoteDeviceReportTypeButtonAndAccelerometerState),
+                                                  @(WiimoteDeviceReportTypeButtonAndExtension8BytesState),
+                                                  @(WiimoteDeviceReportTypeButtonAndAccelerometerAndIR12BytesState),
+                                                  @(WiimoteDeviceReportTypeButtonAndExtension19BytesState),
+                                                  @(WiimoteDeviceReportTypeButtonAndAccelerometerAndExtension16BytesState),
+                                                  @(WiimoteDeviceReportTypeButtonAndIR10BytesAndExtension9BytesState),
+                                                  @(WiimoteDeviceReportTypeButtonAndAccelerometerAndIR10BytesAndExtension6Bytes),
                                                   nil];
 
     for (NSUInteger i = 0; i < countParts; i++)
@@ -94,7 +94,7 @@
     }
 
     if ([reportTypes count] == 0 ||
-        [reportTypes containsObject:[NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonState]])
+        [reportTypes containsObject:@(WiimoteDeviceReportTypeButtonState)])
     {
         return WiimoteDeviceReportTypeButtonState;
     }

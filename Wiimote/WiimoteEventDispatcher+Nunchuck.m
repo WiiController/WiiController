@@ -17,7 +17,7 @@
     if ([self isStateNotificationsEnabled])
     {
         [self postNotification:WiimoteNunchuckButtonPressedNotification
-                         param:[NSNumber numberWithInteger:button]
+                         param:@(button)
                            key:WiimoteNunchuckButtonKey
                         sender:nunchuck];
     }
@@ -30,7 +30,7 @@
     if ([self isStateNotificationsEnabled])
     {
         [self postNotification:WiimoteNunchuckButtonReleasedNotification
-                         param:[NSNumber numberWithInteger:button]
+                         param:@(button)
                            key:WiimoteNunchuckButtonKey
                         sender:nunchuck];
     }
@@ -43,7 +43,7 @@
     if ([self isStateNotificationsEnabled])
     {
         [self postNotification:WiimoteNunchuckStickPositionChangedNotification
-                         param:[NSValue valueWithPoint:position]
+                         param:@(position)
                            key:WiimoteNunchuckStickPositionKey
                         sender:nunchuck];
     }
@@ -54,7 +54,7 @@
     [self.delegate wiimote:self.owner nunchuck:nunchuck accelerometerEnabledStateChanged:enabled];
 
     [self postNotification:WiimoteNunchuckAccelerometerEnabledStateChangedNotification
-                     param:[NSNumber numberWithBool:enabled]
+                     param:@(enabled)
                        key:WiimoteNunchuckAccelerometerEnabledStateKey
                     sender:nunchuck];
 }
@@ -65,14 +65,11 @@
 
     if (![self isStateNotificationsEnabled])
     {
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                 [NSNumber numberWithDouble:x],
-                                                 WiimoteNunchuckAccelerometerGravityXKey,
-                                                 [NSNumber numberWithDouble:y],
-                                                 WiimoteNunchuckAccelerometerGravityYKey,
-                                                 [NSNumber numberWithDouble:z],
-                                                 WiimoteNunchuckAccelerometerGravityZKey,
-                                                 nil];
+        NSDictionary *params = @{
+            WiimoteNunchuckAccelerometerGravityXKey : @(x),
+            WiimoteNunchuckAccelerometerGravityYKey : @(y),
+            WiimoteNunchuckAccelerometerGravityZKey : @(z)
+        };
 
         [self postNotification:WiimoteNunchuckAccelerometerGravityChangedNotification
                         params:params
@@ -86,12 +83,10 @@
 
     if (![self isStateNotificationsEnabled])
     {
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                 [NSNumber numberWithDouble:roll],
-                                                 WiimoteNunchuckAccelerometerRollKey,
-                                                 [NSNumber numberWithDouble:pitch],
-                                                 WiimoteNunchuckAccelerometerPitchKey,
-                                                 nil];
+        NSDictionary *params = @{
+            WiimoteNunchuckAccelerometerPitchKey : @(pitch),
+            WiimoteNunchuckAccelerometerRollKey : @(roll)
+        };
 
         [self postNotification:WiimoteNunchuckAccelerometerAnglesChangedNotification
                         params:params

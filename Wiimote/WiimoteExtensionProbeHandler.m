@@ -92,7 +92,7 @@
 {
     (void)[[WiimoteExtensionRoutineProbeHandler alloc]
         initWithIOManager:manager
-               signatures:[NSArray arrayWithObject:signature]
+               signatures:@[ signature ]
                    target:target
                    action:action];
 }

@@ -39,12 +39,12 @@
 
     if (result == nil)
     {
-        result = [[NSArray alloc] initWithObjects:
-                                      [NSData dataWithBytes:signature1 length:sizeof(signature1)],
-                                      [NSData dataWithBytes:signature2 length:sizeof(signature2)],
-                                      [NSData dataWithBytes:signature3 length:sizeof(signature3)],
-                                      [NSData dataWithBytes:signature4 length:sizeof(signature4)],
-                                      nil];
+        result = @[
+            [NSData dataWithBytes:signature1 length:sizeof(signature1)],
+            [NSData dataWithBytes:signature2 length:sizeof(signature2)],
+            [NSData dataWithBytes:signature3 length:sizeof(signature3)],
+            [NSData dataWithBytes:signature4 length:sizeof(signature4)]
+        ];
     }
 
     return result;

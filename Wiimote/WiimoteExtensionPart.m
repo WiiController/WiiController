@@ -127,32 +127,27 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 
     if (minReportDataSize <= 6)
     {
-        [result addObject:[NSNumber numberWithInteger:
-                                        WiimoteDeviceReportTypeButtonAndAccelerometerAndIR10BytesAndExtension6Bytes]];
+        [result addObject:@(WiimoteDeviceReportTypeButtonAndAccelerometerAndIR10BytesAndExtension6Bytes)];
     }
 
     if (minReportDataSize <= 8)
     {
-        [result addObject:[NSNumber numberWithInteger:
-                                        WiimoteDeviceReportTypeButtonAndExtension8BytesState]];
+        [result addObject:@(WiimoteDeviceReportTypeButtonAndExtension8BytesState)];
     }
 
     if (minReportDataSize <= 9)
     {
-        [result addObject:[NSNumber numberWithInteger:
-                                        WiimoteDeviceReportTypeButtonAndIR10BytesAndExtension9BytesState]];
+        [result addObject:@(WiimoteDeviceReportTypeButtonAndIR10BytesAndExtension9BytesState)];
     }
 
     if (minReportDataSize <= 16)
     {
-        [result addObject:[NSNumber numberWithInteger:
-                                        WiimoteDeviceReportTypeButtonAndAccelerometerAndExtension16BytesState]];
+        [result addObject:@(WiimoteDeviceReportTypeButtonAndAccelerometerAndExtension16BytesState)];
     }
 
     if (minReportDataSize <= 19)
     {
-        [result addObject:[NSNumber numberWithInteger:
-                                        WiimoteDeviceReportTypeButtonAndExtension19BytesState]];
+        [result addObject:@(WiimoteDeviceReportTypeButtonAndExtension19BytesState)];
     }
 
     return result;

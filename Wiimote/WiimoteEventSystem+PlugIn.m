@@ -58,9 +58,7 @@
     [[NSNotificationCenter defaultCenter]
         postNotificationName:WiimoteEventSystemNotification
                       object:self
-                    userInfo:[NSDictionary
-                                 dictionaryWithObject:event
-                                               forKey:WiimoteEventKey]];
+                    userInfo:@{ WiimoteEventKey : event }];
 }
 
 @end

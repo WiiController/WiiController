@@ -27,12 +27,12 @@
 
     if ([self isStateNotificationsEnabled])
     {
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                 [NSNumber numberWithDouble:topLeft], WiimoteBalanceBoardTopLeftPressKey,
-                                                 [NSNumber numberWithDouble:topLeft], WiimoteBalanceBoardTopLeftPressKey,
-                                                 [NSNumber numberWithDouble:topLeft], WiimoteBalanceBoardTopLeftPressKey,
-                                                 [NSNumber numberWithDouble:topLeft], WiimoteBalanceBoardTopLeftPressKey,
-                                                 nil];
+        NSDictionary *params = @{
+            WiimoteBalanceBoardTopLeftPressKey : @(topLeft),
+            WiimoteBalanceBoardTopRightPressKey : @(topRight),
+            WiimoteBalanceBoardBottomLeftPressKey : @(bottomLeft),
+            WiimoteBalanceBoardBottomRightPressKey : @(bottomRight)
+        };
 
         [self postNotification:WiimoteBalanceBoardPressChangedNotification
                         params:params

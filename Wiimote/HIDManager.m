@@ -47,7 +47,7 @@ static void HIDManagerDeviceConnected(
         return nil;
     }
 
-    IOHIDManagerSetDeviceMatching(_handle, (CFDictionaryRef)[NSDictionary dictionary]);
+    IOHIDManagerSetDeviceMatching(_handle, (CFDictionaryRef) @{});
     IOHIDManagerRegisterDeviceMatchingCallback(_handle, HIDManagerDeviceConnected, (__bridge void *_Nullable)(self));
     IOHIDManagerScheduleWithRunLoop(
         _handle,
@@ -96,9 +96,7 @@ static void HIDManagerDeviceConnected(
     [[NSNotificationCenter defaultCenter]
         postNotificationName:HIDManagerDeviceDisconnectedNotification
                       object:self
-                    userInfo:[NSDictionary
-                                 dictionaryWithObject:device
-                                               forKey:HIDManagerDeviceKey]];
+                    userInfo:@{ HIDManagerDeviceKey : device }];
 }
 
 - (void)rawDeviceConnected:(IOHIDDeviceRef)device
@@ -121,9 +119,7 @@ static void HIDManagerDeviceConnected(
     [[NSNotificationCenter defaultCenter]
         postNotificationName:HIDManagerDeviceConnectedNotification
                       object:self
-                    userInfo:[NSDictionary
-                                 dictionaryWithObject:device
-                                               forKey:HIDManagerDeviceKey]];
+                    userInfo:@{ HIDManagerDeviceKey : device }];
 }
 
 @end

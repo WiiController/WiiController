@@ -21,8 +21,7 @@
     NSNumber *merit = [results objectForKey:[self class]];
     if (merit == nil)
     {
-        merit = [NSNumber numberWithInteger:
-                              [WiimoteExtension nextFreedomMeritInClass:[self meritClass]]];
+        merit = @([WiimoteExtension nextFreedomMeritInClass:[self meritClass]]);
 
         [results setObject:merit forKey:(id)[self class]];
     }
@@ -42,7 +41,7 @@
     if (signature == nil)
         return nil;
 
-    return [NSArray arrayWithObject:signature];
+    return @[ signature ];
 }
 
 + (NSRange)calibrationDataMemoryRange

@@ -30,10 +30,7 @@
 
     if (result == nil)
     {
-        result = [[NSArray alloc] initWithObjects:
-                                      [NSData dataWithBytes:signature1 length:sizeof(signature1)],
-                                      [NSData dataWithBytes:signature2 length:sizeof(signature2)],
-                                      nil];
+        result = @[ [NSData dataWithBytes:signature1 length:sizeof(signature1)], [NSData dataWithBytes:signature2 length:sizeof(signature2)] ];
     }
 
     return result;
