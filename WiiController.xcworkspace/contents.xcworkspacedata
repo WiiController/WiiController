@@ -5,9 +5,6 @@
       location = "group:Wiimote/Wiimote.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:ObjCDebug/ObjCDebug.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:VHID/VHID.xcodeproj">
    </FileRef>
    <FileRef
