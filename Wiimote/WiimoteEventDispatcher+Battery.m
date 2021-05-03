@@ -13,7 +13,7 @@
 
 - (void)postBatteryLevelUpdateNotification:(CGFloat)batteryLevel isLow:(BOOL)isLow
 {
-    [[self delegate] wiimote:[self owner] batteryLevelUpdated:batteryLevel isLow:isLow];
+    [self.delegate wiimote:self.owner batteryLevelUpdated:batteryLevel isLow:isLow];
 
     NSDictionary *params = [NSDictionary
                                 dictionaryWithObjectsAndKeys:

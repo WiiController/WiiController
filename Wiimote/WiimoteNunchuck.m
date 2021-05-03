@@ -10,14 +10,21 @@
 #import "WiimoteAccelerometer+PlugIn.h"
 #import "Wiimote.h"
 
-@interface WiimoteNunchuck (PrivatePart)
-
-- (void)checkCalibrationData;
-- (void)reset;
+@interface WiimoteNunchuck () <WiimoteAccelerometerDelegate>
 
 @end
 
 @implementation WiimoteNunchuck
+{
+    BOOL _isCalibrationDataRead;
+
+    BOOL _buttonState[WiimoteNunchuckButtonCount];
+
+    NSPoint _stickPosition;
+    WiimoteDeviceStickCalibrationData _stickCalibrationData;
+
+    WiimoteAccelerometer *_accelerometer;
+}
 
 + (void)load
 {
@@ -66,18 +73,13 @@
     if(self == nil)
         return nil;
 
-	_isCalibrationDataReaded	= NO;
+	_isCalibrationDataRead	= NO;
     _accelerometer             = [[WiimoteAccelerometer alloc] init];
 
-    [_accelerometer setDelegate:self];
+    _accelerometer.delegate = self;
 
     [self reset];
     return self;
-}
-
-- (void)dealloc
-{
-    [_accelerometer setDelegate:nil];
 }
 
 - (NSString*)name
@@ -152,7 +154,7 @@
     [_accelerometer setCalibrationData:&(calibrationData->accelerometer)];
 	[self checkCalibrationData];
 
-	_isCalibrationDataReaded = YES;
+	_isCalibrationDataRead = YES;
 }
 
 - (void)handleReport:(const uint8_t*)extensionData length:(NSUInteger)length
@@ -163,7 +165,7 @@
     const WiimoteDeviceNunchuckReport *nunchuckReport =
                 (const WiimoteDeviceNunchuckReport*)extensionData;
 
-	if(_isCalibrationDataReaded)
+	if(_isCalibrationDataRead)
 	{
 		NSPoint stickPostion;
 
@@ -215,26 +217,24 @@
     [self handleReport:data length:sizeof(data)];
 }
 
-@end
-
-@implementation WiimoteNunchuck (PrivatePart)
+// MARK: WiimoteAccelerometerDelegate
 
 - (void)checkCalibrationData
 {
     WiimoteDeviceCheckStickCalibration(_stickCalibrationData, 0, 127, 255);
 
-    if([_accelerometer isHardwareZeroValuesInvalid])
+    if ([_accelerometer isHardwareZeroValuesInvalid])
 		[_accelerometer setHardwareZeroX:500 y:500 z:500];
 
-	if([_accelerometer isHardware1gValuesInvalid])
+	if ([_accelerometer isHardware1gValuesInvalid])
 		[_accelerometer setHardware1gX:700 y:700 z:700];
 }
 
 - (void)reset
 {
-	_buttonState[WiimoteNunchuckButtonTypeC]   = NO;
-	_buttonState[WiimoteNunchuckButtonTypeZ]   = NO;
-	_stickPosition                             = NSZeroPoint;
+	_buttonState[WiimoteNunchuckButtonTypeC] = NO;
+	_buttonState[WiimoteNunchuckButtonTypeZ] = NO;
+	_stickPosition = NSZeroPoint;
 
 	[_accelerometer reset];
 }
@@ -242,10 +242,9 @@
 - (void)wiimoteAccelerometer:(WiimoteAccelerometer*)accelerometer
          enabledStateChanged:(BOOL)enabled
 {
-    if(![[self owner] isConnected])
+    if (!self.owner.isConnected)
     {
-        if(enabled)
-            [accelerometer setEnabled:NO];
+        if (enabled) accelerometer.enabled = NO;
 
         return;
     }

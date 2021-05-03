@@ -14,24 +14,22 @@
 
 #import "WiimoteProtocol.h"
 
-@interface WiimoteHIDDeviceTransport : WiimoteDeviceTransport <W_HIDDeviceDelegate>
+@interface WiimoteHIDDeviceTransport : NSObject <WiimoteDeviceTransport, W_HIDDeviceDelegate>
 {
-    @private
-        W_HIDDevice *_device;
+    W_HIDDevice *_device;
 }
 
 - (id)initWithHIDDevice:(W_HIDDevice*)device;
 
 @end
 
-@interface WiimoteBluetoothDeviceTransport : WiimoteDeviceTransport
+@interface WiimoteBluetoothDeviceTransport : NSObject <WiimoteDeviceTransport>
 {
-    @private
-        IOBluetoothDevice       *_device;
-		IOBluetoothL2CAPChannel *_dataChannel;
-        IOBluetoothL2CAPChannel *_controlChannel;
+    IOBluetoothDevice       *_device;
+    IOBluetoothL2CAPChannel *_dataChannel;
+    IOBluetoothL2CAPChannel *_controlChannel;
 
-        BOOL                     _isOpen;
+    BOOL                     _isOpen;
 }
 
 - (id)initWithBluetoothDevice:(IOBluetoothDevice*)device;
@@ -39,6 +37,8 @@
 @end
 
 @implementation WiimoteHIDDeviceTransport
+
+@synthesize delegate;
 
 - (id)initWithHIDDevice:(W_HIDDevice*)device
 {
@@ -53,7 +53,6 @@
     }
 
     _device = device;
-    [_device setDelegate:self];
 
     return self;
 }
@@ -135,6 +134,8 @@
 @end
 
 @implementation WiimoteBluetoothDeviceTransport
+
+@synthesize delegate;
 
 - (id)initWithBluetoothDevice:(IOBluetoothDevice*)device
 {
@@ -278,65 +279,12 @@
 
 @end
 
-@implementation WiimoteDeviceTransport
-
-+ (WiimoteDeviceTransport*)withHIDDevice:(W_HIDDevice*)device
+id <WiimoteDeviceTransport> wiimoteDeviceTransportWithHIDDevice(W_HIDDevice *device)
 {
     return [[WiimoteHIDDeviceTransport alloc] initWithHIDDevice:device];
 }
 
-+ (WiimoteDeviceTransport*)withBluetoothDevice:(IOBluetoothDevice*)device
+id <WiimoteDeviceTransport> wiimoteDeviceTransportWithBluetoothDevice(IOBluetoothDevice *device)
 {
     return [[WiimoteBluetoothDeviceTransport alloc] initWithBluetoothDevice:device];
 }
-
-- (NSString*)name
-{
-    return nil;
-}
-
-- (NSData*)address
-{
-    return nil;
-}
-
-- (NSString*)addressString
-{
-    return nil;
-}
-
-- (id)lowLevelDevice
-{
-    return nil;
-}
-
-- (BOOL)isOpen
-{
-    return NO;
-}
-
-- (BOOL)open
-{
-    return NO;
-}
-
-- (void)close
-{
-}
-
-- (BOOL)postBytes:(const uint8_t*)bytes length:(NSUInteger)length
-{
-    return NO;
-}
-
-- (id)delegate
-{
-    return _delegate;
-}
-
-- (void)setDelegate:(id)delegate
-{
-    _delegate = delegate;
-}
-
-@end

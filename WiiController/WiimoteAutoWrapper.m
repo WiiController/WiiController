@@ -12,6 +12,7 @@
 #import <Cocoa/Cocoa.h>
 
 @interface WiimoteAutoWrapper () <WiimoteDelegate>
+
 @end
 
 @implementation WiimoteAutoWrapper

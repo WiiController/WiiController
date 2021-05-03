@@ -36,7 +36,7 @@
 
 - (BOOL)postBytes:(const uint8_t*)bytes length:(NSUInteger)length;
 
-@property(nonatomic) id <W_HIDDeviceDelegate> delegate;
+@property(nonatomic,weak) id <W_HIDDeviceDelegate> delegate;
 
 @property(nonatomic,readonly) NSString *name;
 @property(nonatomic,readonly) NSString *address;

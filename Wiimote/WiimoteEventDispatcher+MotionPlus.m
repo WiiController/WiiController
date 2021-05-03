@@ -13,7 +13,7 @@
 - (void)postMotionPlus:(WiimoteMotionPlusExtension*)motionPlus
 	extensionConnected:(WiimoteExtension*)extension
 {
-	[[self delegate] wiimote:[self owner]
+	[self.delegate wiimote:self.owner
 				  motionPlus:motionPlus
 	   subExtensionConnected:extension];
 
@@ -26,7 +26,7 @@
 - (void)postMotionPlus:(WiimoteMotionPlusExtension*)motionPlus
  extensionDisconnected:(WiimoteExtension*)extension
 {
-	[[self delegate] wiimote:[self owner]
+	[self.delegate wiimote:self.owner
 				  motionPlus:motionPlus
 	subExtensionDisconnected:extension];
 
@@ -39,7 +39,7 @@
 - (void)postMotionPlus:(WiimoteMotionPlusExtension*)motionPlus
 				report:(const WiimoteMotionPlusReport*)report
 {
-	[[self delegate] wiimote:[self owner]
+	[self.delegate wiimote:self.owner
 				  motionPlus:motionPlus
 					  report:report];
 

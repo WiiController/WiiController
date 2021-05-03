@@ -80,7 +80,7 @@
 
     __auto_type discoveryItem = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
 
-    if([Wiimote isBluetoothEnabled])
+    if(wiimoteIsBluetoothEnabled())
     {
         if([Wiimote isDiscovering])
         {

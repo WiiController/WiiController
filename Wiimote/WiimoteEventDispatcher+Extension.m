@@ -12,7 +12,7 @@
 
 - (void)postExtensionConnectedNotification:(WiimoteExtension*)extension
 {
-    [[self delegate] wiimote:[self owner] extensionConnected:extension];
+    [self.delegate wiimote:self.owner extensionConnected:extension];
 
     [self postNotification:WiimoteExtensionConnectedNotification
                      param:extension
@@ -21,7 +21,7 @@
 
 - (void)postExtensionDisconnectedNotification:(WiimoteExtension*)extension
 {
-    [[self delegate] wiimote:[self owner] extensionDisconnected:extension];
+    [self.delegate wiimote:self.owner extensionDisconnected:extension];
 
     [self postNotification:WiimoteExtensionDisconnectedNotification
                      param:extension

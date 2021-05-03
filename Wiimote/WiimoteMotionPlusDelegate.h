@@ -16,8 +16,8 @@ FOUNDATION_EXPORT NSString *WiimoteMotionPlusSubExtensionKey;
 FOUNDATION_EXPORT NSString *WiimoteMotionPlusReportKey;
 
 typedef struct {
-	uint16_t                    speed;
-	BOOL                        isSlowMode;
+	uint16_t speed;
+	BOOL isSlowMode;
 } WiimoteMotionPlusAngleSpeed;
 
 typedef struct {
@@ -29,7 +29,7 @@ typedef struct {
 @class Wiimote;
 @class WiimoteExtension;
 
-@protocol WiimoteMotionPlusProtocol
+@protocol WiimoteMotionPlusProtocol <NSObject>
 
 - (const WiimoteMotionPlusReport*)lastReport;
 

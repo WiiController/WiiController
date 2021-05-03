@@ -79,9 +79,9 @@
 
 - (void)calibrate:(WiimoteIOManager*)ioManager
 {
-    NSRange calibrationMemoryRange = [[self class] calibrationDataMemoryRange];
+    NSRange calibrationMemoryRange = [self.class calibrationDataMemoryRange];
 
-    if(calibrationMemoryRange.length != 0)
+    if (calibrationMemoryRange.length != 0)
     {
         [self beginReadCalibrationData:ioManager
                            memoryRange:calibrationMemoryRange];

@@ -18,7 +18,7 @@ typedef enum
 @class VHIDButtonCollection;
 @class VHIDPointerCollection;
 
-@protocol VHIDDeviceDelegate
+@protocol VHIDDeviceDelegate <NSObject>
 
 - (void)VHIDDevice:(VHIDDevice*)device stateChanged:(NSData*)state;
 

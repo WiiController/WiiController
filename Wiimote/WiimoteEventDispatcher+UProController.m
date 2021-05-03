@@ -12,7 +12,7 @@
 - (void)postUProController:(WiimoteUProControllerExtension*)uPro
 			 buttonPressed:(WiimoteUProControllerButtonType)button
 {
-	[[self delegate] wiimote:[self owner]
+	[self.delegate wiimote:self.owner
 			  uProController:uPro
                buttonPressed:button];
 
@@ -28,7 +28,7 @@
 - (void)postUProController:(WiimoteUProControllerExtension*)uPro
 			buttonReleased:(WiimoteUProControllerButtonType)button
 {
-	[[self delegate] wiimote:[self owner]
+	[self.delegate wiimote:self.owner
 			  uProController:uPro
 			  buttonReleased:button];
 
@@ -45,7 +45,7 @@
 					 stick:(WiimoteUProControllerStickType)stick
 		   positionChanged:(NSPoint)position
 {
-	[[self delegate] wiimote:[self owner]
+	[self.delegate wiimote:self.owner
 			  uProController:uPro
                        stick:stick
              positionChanged:position];

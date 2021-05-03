@@ -25,9 +25,6 @@ NSString *WiimoteDeviceNameTR           = @"Nintendo RVL-CNT-01-TR";
 NSString *WiimoteDeviceNameUPro         = @"Nintendo RVL-CNT-01-UC";
 NSString *WiimoteDeviceNameBalanceBoard = @"Nintendo RVL-WBC-01";
 
-extern Boolean IOBluetoothLocalDeviceAvailable(void);
-extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *state);
-
 @interface WiimoteInquiry () <IOBluetoothDeviceInquiryDelegate>
 @end
 
@@ -44,21 +41,6 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
     [WiimoteInquiry registerSupportedModelName:WiimoteDeviceNameTR];
 	[WiimoteInquiry registerSupportedModelName:WiimoteDeviceNameUPro];
     [WiimoteInquiry registerSupportedModelName:WiimoteDeviceNameBalanceBoard];
-}
-
-+ (BOOL)isBluetoothEnabled
-{
-    BOOL result = NO;
-
-    if(IOBluetoothLocalDeviceAvailable())
-    {
-        BluetoothHCIPowerState powerState = kBluetoothHCIPowerStateOFF;
-
-        if(IOBluetoothLocalDeviceGetPowerState(&powerState) == kIOReturnSuccess)
-            result = (powerState == kBluetoothHCIPowerStateON);
-    }
-
-    return result;
 }
 
 + (WiimoteInquiry*)sharedInquiry
@@ -110,21 +92,17 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
 
 - (BOOL)startWithTarget:(id)target didEndAction:(SEL)action
 {
-    if([self isStarted])
-        return YES;
-
-    if(![WiimoteInquiry isBluetoothEnabled])
-        return NO;
+    if ([self isStarted]) return YES;
+    if (!wiimoteIsBluetoothEnabled()) return NO;
 
 	_inquiry = [IOBluetoothDeviceInquiry inquiryWithDelegate:self];
 
-    [_inquiry setUpdateNewDeviceNames:YES];
 	[_inquiry setInquiryLength:WIIMOTE_INQUIRY_TIME_IN_SECONDS];
 	[_inquiry setSearchCriteria:kBluetoothServiceClassMajorAny
-                majorDeviceClass:kBluetoothDeviceClassMajorAny
-                minorDeviceClass:kBluetoothDeviceClassMinorAny];
+               majorDeviceClass:kBluetoothDeviceClassMajorAny
+               minorDeviceClass:kBluetoothDeviceClassMinorAny];
 
-	if([_inquiry start] != kIOReturnSuccess)
+	if ([_inquiry start] != kIOReturnSuccess)
     {
         W_ERROR(@"[IOBluetoothDeviceInquiry start] failed");
 		[self stop];
@@ -138,8 +116,7 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
 
 - (BOOL)stop
 {
-    if(![self isStarted])
-        return YES;
+    if (![self isStarted]) return YES;
 
     [_inquiry stop];
 	[_inquiry setDelegate:nil];
@@ -164,8 +141,8 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
     if(![self isUseOneButtonClickConnection])
         return;
 
-	W_HIDDevice	*device		= [[notification userInfo] objectForKey:HIDManagerDeviceKey];
-	NSString	*deviceName	= [device name];
+	W_HIDDevice	*device = [[notification userInfo] objectForKey:HIDManagerDeviceKey];
+	NSString *deviceName = device.name;
 
     W_DEBUG_F(@"hid device connected: %@", deviceName);
 	if([WiimoteInquiry isModelSupported:deviceName])
@@ -183,7 +160,7 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
     if(self == nil)
         return nil;
 
-    _inquiry                       = nil;
+    _inquiry = nil;
     _useOneButtonClickConnection = NO;
 
 	[[NSNotificationCenter defaultCenter]
@@ -197,29 +174,21 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
 
 - (void)postIgnoreHintToSystem:(IOBluetoothDeviceRef)device
 {
-    static BOOL isInit                                              = NO;
-    static void (*ignoreHIDDeviceFn)(IOBluetoothDeviceRef device)   = NULL;
+    static void (*ignoreHIDDeviceFn)(IOBluetoothDeviceRef device) = NULL;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        ignoreHIDDeviceFn = dlsym(RTLD_DEFAULT, "IOBluetoothIgnoreHIDDevice");
+    });
 
-    if(!isInit)
-    {
-		ignoreHIDDeviceFn	= dlsym(RTLD_DEFAULT, "IOBluetoothIgnoreHIDDevice");
-        isInit				= YES;
-    }
-
-    if(ignoreHIDDeviceFn != NULL)
-        ignoreHIDDeviceFn(device);
+    if (ignoreHIDDeviceFn) ignoreHIDDeviceFn(device);
 }
 
-- (void)connectToDevices:(NSArray*)devices
+- (void)connectToDevices:(NSArray<IOBluetoothDevice*>*)devices
 {
-    NSUInteger count = [devices count];
-
-    for(NSUInteger i = 0; i < count; i++)
+    for(IOBluetoothDevice *device in devices)
     {
-        IOBluetoothDevice *device = [devices objectAtIndex:i];
-
-        W_DEBUG_F(@"bluetooth device connected: %@", [device name]);
-        if([WiimoteInquiry isModelSupported:[device name]])
+        W_DEBUG_F(@"bluetooth device connected: %@", device.name);
+        if([WiimoteInquiry isModelSupported:device.name])
 		{
             W_DEBUG(@"connecting...");
             [self postIgnoreHintToSystem:(__bridge IOBluetoothDeviceRef)(device)];
@@ -230,21 +199,17 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
     }
 }
 
-- (void)pairWithDevices:(NSArray*)devices
+- (void)pairWithDevices:(NSArray<IOBluetoothDevice*>*)devices
 {
-    NSUInteger count = [devices count];
-
-    for(NSUInteger i = 0; i < count; i++)
+    for (IOBluetoothDevice *device in devices)
     {
-        IOBluetoothDevice *device = [devices objectAtIndex:i];
-
-        W_DEBUG_F(@"bluetooth device connected: %@", [device name]);
-        if([WiimoteInquiry isModelSupported:[device name]])
+        W_DEBUG_F(@"bluetooth device connected: %@", device.name);
+        if ([WiimoteInquiry isModelSupported:device.name])
 		{
-			if(![device isPaired])
+			if (!device.isPaired)
             {
                 W_DEBUG(@"pairing...");
-				[WiimoteDevicePair pairWithDevice:device];
+                wiimotePairWithDevice(device);
             }
             else
                 W_DEBUG(@"already paired");
@@ -256,14 +221,9 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
 
 - (BOOL)isHIDDeviceAlreadyConnected:(W_HIDDevice*)device wiimotes:(NSArray*)wiimotes
 {
-    NSUInteger count = [wiimotes count];
-
-    for(NSUInteger i = 0; i < count; i++)
-    {
-        if([[wiimotes objectAtIndex:i] lowLevelDevice] == device)
-            return YES;
+    for (Wiimote *wiimote in wiimotes) {
+        if (wiimote.lowLevelDevice == device) return YES;
     }
-
     return NO;
 }
 

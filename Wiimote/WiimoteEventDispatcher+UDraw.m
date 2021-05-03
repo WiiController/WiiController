@@ -11,7 +11,7 @@
 
 - (void)postUDrawPenPressed:(WiimoteUDrawExtension*)uDraw
 {
-    [[self delegate] wiimote:[self owner] uDrawPenPressed:uDraw];
+    [self.delegate wiimote:self.owner uDrawPenPressed:uDraw];
 
     if([self isStateNotificationsEnabled])
         [self postNotification:WiimoteUDrawPenPressedNotification];
@@ -19,7 +19,7 @@
 
 - (void)postUDrawPenReleased:(WiimoteUDrawExtension*)uDraw
 {
-    [[self delegate] wiimote:[self owner] uDrawPenReleased:uDraw];
+    [self.delegate wiimote:self.owner uDrawPenReleased:uDraw];
 
     if([self isStateNotificationsEnabled])
         [self postNotification:WiimoteUDrawPenReleasedNotification];
@@ -49,7 +49,7 @@
 
 - (void)postUDrawPenButtonPressed:(WiimoteUDrawExtension*)uDraw
 {
-    [[self delegate] wiimote:[self owner] uDrawPenButtonPressed:uDraw];
+    [self.delegate wiimote:self.owner uDrawPenButtonPressed:uDraw];
 
     if([self isStateNotificationsEnabled])
         [self postNotification:WiimoteUDrawPenButtonPressedNotification];
@@ -57,7 +57,7 @@
 
 - (void)postUDrawPenButtonReleased:(WiimoteUDrawExtension*)uDraw
 {
-    [[self delegate] wiimote:[self owner] uDrawPenButtonReleased:uDraw];
+    [self.delegate wiimote:self.owner uDrawPenButtonReleased:uDraw];
 
     if([self isStateNotificationsEnabled])
         [self postNotification:WiimoteUDrawPenButtonReleasedNotification];

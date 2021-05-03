@@ -111,7 +111,7 @@
     _isRun = YES;
     _readTryCount = 0;
     [self initializeMotionPlus];
-    [self beginReadSignature];
+    [self readSignature];
 }
 
 - (void)cancel
@@ -140,63 +140,57 @@
     usleep(50000);
 }
 
-- (void)beginReadSignature
+- (void)readSignature
 {
     _readTryCount++;
     _lastTryTimer = nil;
 
-    [_iOManager readMemory:[WiimoteMotionPlusDetector motionPlusSignatureMemRange]
-                     target:self
-                     action:@selector(signatureReaded:)];
+    [_iOManager readMemory:[WiimoteMotionPlusDetector motionPlusSignatureMemRange] then:^(NSData *data) {
+        W_DEBUG_F(@"Possible wiimote ID: %@", data);
 
-}
+        if(self->_cancelCount > 0)
+        {
+            self->_cancelCount--;
+            return;
+        }
 
-- (void)signatureReaded:(NSData*)data
-{
-    W_DEBUG_F(@"Possible wiimote ID: %@", data);
+        if(data == nil)
+        {
+            [self detectionFinished:NO];
+            return;
+        }
 
-    if(_cancelCount > 0)
-    {
-        _cancelCount--;
-        return;
-    }
+        NSArray        *signatures         = [WiimoteMotionPlusDetector motionPlusSignatures];
+        NSUInteger   countSignatures = [signatures count];
 
-    if(data == nil)
-    {
-        [self detectionFinished:NO];
-        return;
-    }
+        for(NSUInteger i = 0; i < countSignatures; i++)
+        {
+            if([data isEqualToData:[signatures objectAtIndex:i]])
+            {
+                [self detectionFinished:YES];
+                return;
+            }
+        }
 
-	NSArray		*signatures		 = [WiimoteMotionPlusDetector motionPlusSignatures];
-	NSUInteger   countSignatures = [signatures count];
+        if(self->_readTryCount >= WiimoteDeviceMotionPlusDetectTriesCount)
+        {
+            [self detectionFinished:NO];
+            return;
+        }
 
-	for(NSUInteger i = 0; i < countSignatures; i++)
-	{
-		if([data isEqualToData:[signatures objectAtIndex:i]])
-		{
-			[self detectionFinished:YES];
-			return;
-		}
-	}
+        if(self->_readTryCount < (WiimoteDeviceMotionPlusDetectTriesCount - 1))
+        {
+            usleep(50000);
+            [self readSignature];
+            return;
+        }
 
-    if(_readTryCount >= WiimoteDeviceMotionPlusDetectTriesCount)
-    {
-        [self detectionFinished:NO];
-        return;
-    }
-
-    if(_readTryCount < (WiimoteDeviceMotionPlusDetectTriesCount - 1))
-    {
-        usleep(50000);
-        [self beginReadSignature];
-        return;
-    }
-
-    _lastTryTimer = [NSTimer scheduledTimerWithTimeInterval:WiimoteDeviceMotionPlusLastTryDelay
-                                                      target:self
-                                                    selector:@selector(beginReadSignature)
-                                                    userInfo:nil
-                                                     repeats:NO];
+        self->_lastTryTimer = [NSTimer scheduledTimerWithTimeInterval:WiimoteDeviceMotionPlusLastTryDelay
+                                                          target:self
+                                                        selector:@selector(readSignature)
+                                                        userInfo:nil
+                                                         repeats:NO];
+    }];
 }
 
 - (void)detectionFinished:(BOOL)detected

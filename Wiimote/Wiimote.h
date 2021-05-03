@@ -10,6 +10,7 @@
 #import <Wiimote/WiimoteExtension.h>
 #import <Wiimote/WiimoteAccelerometer.h>
 #import <Wiimote/WiimoteWatchdog.h>
+#import <Wiimote/WiimoteBluetooth.h>
 
 #define WIIMOTE_INQUIRY_TIME_IN_SECONDS 10
 
@@ -46,8 +47,6 @@ FOUNDATION_EXPORT NSString *WiimoteUseOneButtonClickConnectionKey;
 
     NSDictionary                *_userInfo;
 }
-
-+ (BOOL)isBluetoothEnabled;
 
 + (NSArray*)supportedModelNames;
 
@@ -104,6 +103,6 @@ FOUNDATION_EXPORT NSString *WiimoteUseOneButtonClickConnectionKey;
 
 @property(nonatomic) NSDictionary *userInfo;
 
-@property(nonatomic) id <WiimoteDelegate> delegate;
+@property(nonatomic,weak) id <WiimoteDelegate> delegate;
 
 @end

@@ -22,10 +22,7 @@
 
 #import "WiimotePartSet.h"
 
-@interface Wiimote (WiimoteDeviceDelegate)
-
-- (void)wiimoteDevice:(WiimoteDevice*)device handleReport:(WiimoteDeviceReport*)report;
-- (void)wiimoteDeviceDisconnected:(WiimoteDevice*)device;
+@interface Wiimote (Create_WiimoteDeviceDelegate) <WiimoteDeviceDelegate>
 
 @end
 
@@ -48,19 +45,15 @@
 - (id)initWithWiimoteDevice:(WiimoteDevice*)device
 {
     self = [super init];
-    if(self == nil)
-        return nil;
+    if (!self) return nil;
 
-    _device    = device;
-    _partSet   = [[WiimotePartSet alloc] initWithOwner:self device:_device];
-    _modelName = [[device name] copy];
+    _device = device;
+    _partSet = [[WiimotePartSet alloc] initWithOwner:self device:_device];
+    _modelName = [device.transport.name copy];
 
-    if(_device == nil || ![_device connect])
-    {
-        return nil;
-    }
+    if (!_device || ![_device connect]) return nil;
 
-	[_device setDelegate:self];
+    _device.delegate = self;
 
 	[self initParts];
     [self requestUpdateState];
@@ -107,12 +100,13 @@
 
 - (id)lowLevelDevice
 {
-    return [_device lowLevelDevice];
+    return _device.transport.lowLevelDevice;
 }
 
 @end
 
-@implementation Wiimote (WiimoteDeviceDelegate)
+// MARK: WiimoteDeviceDelegate
+@implementation Wiimote (Create_WiimoteDeviceDelegate)
 
 - (void)wiimoteDevice:(WiimoteDevice*)device handleReport:(WiimoteDeviceReport*)report
 {

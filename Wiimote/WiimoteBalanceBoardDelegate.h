@@ -18,7 +18,7 @@ FOUNDATION_EXPORT NSString *WiimoteBalanceBoardBottomRightPressKey;
 @class Wiimote;
 @class WiimoteExtension;
 
-@protocol WiimoteBalanceBoardProtocol
+@protocol WiimoteBalanceBoardProtocol <NSObject>
 
 - (double)topLeftPress;
 - (double)topRightPress;

@@ -10,6 +10,10 @@
 #import "WiimoteEventDispatcher+Accelerometer.h"
 #import "Wiimote+PlugIn.h"
 
+@interface WiimoteAccelerometerPart () <WiimoteAccelerometerDelegate>
+
+@end
+
 @implementation WiimoteAccelerometerPart
 {
     BOOL _isCalibrationDataRead;
@@ -25,20 +29,14 @@
           ioManager:(WiimoteIOManager*)ioManager
 {
     self = [super initWithOwner:owner eventDispatcher:dispatcher ioManager:ioManager];
-    if(self == nil)
-        return nil;
+    if (!self) return nil;
 
-    _isCalibrationDataRead   = NO;
-    _accelerometer           = [[WiimoteAccelerometer alloc] init];
+    _isCalibrationDataRead = NO;
+    _accelerometer = [[WiimoteAccelerometer alloc] init];
 
-    [_accelerometer setDelegate:self];
+    _accelerometer.delegate = self;
 
     return self;
-}
-
-- (void)dealloc
-{
-    [_accelerometer setDelegate:nil];
 }
 
 - (NSSet*)allowedReportTypeSet
@@ -64,7 +62,7 @@
 - (void)connected
 {
 	if(![[self owner] isWiiUProController])
-		[self beginReadCalibrationData];
+		[self readCalibrationData];
 }
 
 - (void)handleReport:(WiimoteDeviceReport*)report
@@ -104,33 +102,20 @@
     [_accelerometer reset];
 }
 
-- (void)beginReadCalibrationData
+- (void)readCalibrationData
 {
-    NSRange memRange = NSMakeRange(
-                                WiimoteDeviceCalibrationDataAddress,
-                                sizeof(WiimoteDeviceAccelerometerCalibrationData));
+    NSRange memRange = NSMakeRange(WiimoteDeviceCalibrationDataAddress, sizeof(WiimoteDeviceAccelerometerCalibrationData));
 
-    if(![[self ioManager] readMemory:memRange
-                              target:self
-                              action:@selector(handleCalibrationData:)])
-    {
-        return;
-    }
+    (void)[self.ioManager readMemory:memRange then:^(NSData *data) {
+        if(data.length < sizeof(WiimoteDeviceAccelerometerCalibrationData)) return;
 
-}
+        const WiimoteDeviceAccelerometerCalibrationData *calibrationData = (const WiimoteDeviceAccelerometerCalibrationData*)data.bytes;
 
-- (void)handleCalibrationData:(NSData*)data
-{
-    if([data length] < sizeof(WiimoteDeviceAccelerometerCalibrationData))
-        return;
+        [self->_accelerometer setCalibrationData:calibrationData];
+        [self checkCalibrationData];
 
-    const WiimoteDeviceAccelerometerCalibrationData *calibrationData =
-                (const WiimoteDeviceAccelerometerCalibrationData*)[data bytes];
-
-    [_accelerometer setCalibrationData:calibrationData];
-	[self checkCalibrationData];
-
-    _isCalibrationDataRead = YES;
+        self->_isCalibrationDataRead = YES;
+    }];
 }
 
 - (void)checkCalibrationData
@@ -141,6 +126,8 @@
     if([_accelerometer isHardware1gValuesInvalid])
         [_accelerometer setHardware1gX:600 y:600 z:600];
 }
+
+// MARK: WiimoteAccelerometerDelegate
 
 - (void)wiimoteAccelerometer:(WiimoteAccelerometer*)accelerometer
          enabledStateChanged:(BOOL)enabled

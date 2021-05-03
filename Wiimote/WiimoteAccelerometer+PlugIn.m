@@ -140,25 +140,3 @@
 }
 
 @end
-
-@implementation NSObject (WiimoteAccelerometerDelegate)
-
-- (void)wiimoteAccelerometer:(WiimoteAccelerometer*)accelerometer
-         enabledStateChanged:(BOOL)enabled
-{
-}
-
-- (void)wiimoteAccelerometer:(WiimoteAccelerometer*)accelerometer
-             gravityChangedX:(CGFloat)x
-                           y:(CGFloat)y
-                           z:(CGFloat)z
-{
-}
-
-- (void)wiimoteAccelerometer:(WiimoteAccelerometer*)accelerometer
-                pitchChanged:(CGFloat)pitch
-                        roll:(CGFloat)roll
-{
-}
-
-@end

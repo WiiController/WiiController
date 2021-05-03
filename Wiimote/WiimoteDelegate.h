@@ -79,7 +79,7 @@ FOUNDATION_EXPORT NSString *WiimoteExtensionKey;
 @class Wiimote;
 @class WiimoteExtension;
 
-@protocol WiimoteDelegate
+@protocol WiimoteDelegate <NSObject>
 
 @optional
 - (void)wiimote:(Wiimote*)wiimote buttonPressed:(WiimoteButtonType)button;
@@ -95,5 +95,9 @@ FOUNDATION_EXPORT NSString *WiimoteExtensionKey;
 - (void)wiimote:(Wiimote*)wiimote extensionConnected:(WiimoteExtension*)extension;
 - (void)wiimote:(Wiimote*)wiimote extensionDisconnected:(WiimoteExtension*)extension;
 - (void)wiimoteDisconnected:(Wiimote*)wiimote;
+
+@end
+
+@interface NSObject (WiimoteDelegate) <WiimoteDelegate>
 
 @end

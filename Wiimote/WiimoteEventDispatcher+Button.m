@@ -12,7 +12,7 @@
 
 - (void)postButtonPressedNotification:(WiimoteButtonType)button
 {
-    [[self delegate] wiimote:[self owner] buttonPressed:button];
+    [self.delegate wiimote:self.owner buttonPressed:button];
 
     if([self isStateNotificationsEnabled])
     {
@@ -24,7 +24,7 @@
 
 - (void)postButtonReleasedNotification:(WiimoteButtonType)button
 {
-    [[self delegate] wiimote:[self owner] buttonReleased:button];
+    [self.delegate wiimote:self.owner buttonReleased:button];
 
     if([self isStateNotificationsEnabled])
     {

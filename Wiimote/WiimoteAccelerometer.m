@@ -13,10 +13,8 @@
 - (instancetype)init
 {
     self = [super init];
-    if(self == nil)
-        return nil;
+    if (!self) return nil;
 
-    _enabled = NO;
     [self setGravitySmoothQuant:0.15];
     [self setAnglesSmoothQuant:5.0];
     [self setHardwareZeroX:500 y:500 z:500];
@@ -28,8 +26,7 @@
 
 - (void)setEnabled:(BOOL)enabled
 {
-    if(_enabled == enabled)
-        return;
+    if (_enabled == enabled) return;
 
 	[self reset];
     _enabled = enabled;

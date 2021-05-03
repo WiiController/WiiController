@@ -31,10 +31,9 @@
 }
 
 - (BOOL)readMemory:(NSRange)memoryRange
-			target:(id)target
-			action:(SEL)action
+			  then:(WiimoteIOManagerReadMemoryCallback)callback
 {
-    return [_device readMemory:memoryRange target:target action:action];
+    return [_device readMemory:memoryRange then:callback];
 }
 
 - (id)initWithOwner:(Wiimote*)owner device:(WiimoteDevice*)device

@@ -57,7 +57,7 @@ FOUNDATION_EXPORT NSString *WiimoteClassicControllerAnalogShiftPositionKey;
 @class Wiimote;
 @class WiimoteExtension;
 
-@protocol WiimoteClassicControllerProtocol
+@protocol WiimoteClassicControllerProtocol <NSObject>
 
 - (NSPoint)stickPosition:(WiimoteClassicControllerStickType)stick;
 - (BOOL)isButtonPressed:(WiimoteClassicControllerButtonType)button;

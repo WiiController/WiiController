@@ -23,6 +23,6 @@
 - (void)postNotification:(NSString*)notification params:(NSDictionary*)params;
 - (void)postNotification:(NSString*)notification params:(NSDictionary*)params sender:(id)sender;
 
-@property(nonatomic,readonly) id delegate;
+@property(nonatomic,weak,readonly) id delegate;
 
 @end

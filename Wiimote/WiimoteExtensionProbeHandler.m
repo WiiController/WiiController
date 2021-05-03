@@ -13,16 +13,13 @@
 
 @interface WiimoteExtensionRoutineProbeHandler : WiimoteExtensionProbeHandler
 {
-    @private
-        NSArray *_signatures;
+    NSArray<NSData*> *_signatures;
 }
 
 - (id)initWithIOManager:(WiimoteIOManager*)manager
              signatures:(NSArray*)signatures
                  target:(id)target
                  action:(SEL)action;
-
-- (void)ioManagerDataReaded:(NSData*)data;
 
 @end
 
@@ -39,18 +36,37 @@
 
     _signatures = signatures;
 
-    if(_signatures			== nil ||
-      [_signatures count]  == 0)
+    if (!_signatures || _signatures.count == 0)
     {
         [self probeFinished:NO];
         return nil;
     }
 
-    if(![manager readMemory:NSMakeRange(
-								WiimoteDeviceRoutineExtensionProbeAddress,
-								[[_signatures objectAtIndex:0] length])
-                     target:self
-                     action:@selector(ioManagerDataReaded:)])
+    NSRange memRange = NSMakeRange(WiimoteDeviceRoutineExtensionProbeAddress, [[_signatures objectAtIndex:0] length]);
+    BOOL success = [manager readMemory:memRange then:^(NSData *data){
+        if (!data) return;
+
+        if (data.length < self->_signatures[0].length)
+        {
+            W_ERROR(@"read data chunk too small");
+            [self probeFinished:NO];
+            return;
+        }
+
+        BOOL isOk = NO;
+        for (NSData *signature in self->_signatures) {
+            if([signature isEqualToData:data])
+            {
+                isOk = YES;
+                break;
+            }
+        }
+
+        W_DEBUG_F(@"probe finished (%@): %@", data, ((isOk)?(@"Ok"):(@"Not Ok")));
+        [self probeFinished:isOk];
+    }];
+    
+    if(!success)
     {
         W_ERROR(@"[WiimoteIOManager readMemory: target: action:] failed");
         [self probeFinished:NO];
@@ -60,43 +76,12 @@
     return self;
 }
 
-
-- (void)ioManagerDataReaded:(NSData*)data
-{
-    if(data == nil)
-    {
-        return;
-    }
-
-    if([data length] < [[_signatures objectAtIndex:0] length])
-    {
-        W_ERROR(@"readed data chunk too small");
-        [self probeFinished:NO];
-        return;
-    }
-
-    BOOL		isOk			= NO;
-	NSUInteger	countSignatures = [_signatures count];
-
-	for(NSUInteger i = 0; i < countSignatures; i++)
-	{
-		if([[_signatures objectAtIndex:i] isEqualToData:data])
-		{
-            isOk = YES;
-			break;
-		}
-	}
-
-    W_DEBUG_F(@"probe finished (%@): %@", data, ((isOk)?(@"Ok"):(@"Not Ok")));
-    [self probeFinished:isOk];
-}
-
 @end
 
 @implementation WiimoteExtensionProbeHandler
 {
-    id       _target;
-    SEL      _action;
+    id _target;
+    SEL _action;
 }
 
 + (void)routineProbe:(WiimoteIOManager*)manager

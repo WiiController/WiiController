@@ -80,22 +80,16 @@
 
 @implementation WiimoteExtension (CalibrationUtils)
 
-- (void)ioManagerCalibrationDataReaded:(NSData*)data
-{
-    if(data != nil)
-    {
-        [self handleCalibrationData:(const uint8_t*)[data bytes]
-                             length:[data length]];
-    }
-}
-
 - (BOOL)beginReadCalibrationData:(WiimoteIOManager*)ioManager
                      memoryRange:(NSRange)memoryRange
 {
 
-    if(![ioManager readMemory:memoryRange
-                       target:self
-                       action:@selector(ioManagerCalibrationDataReaded:)])
+    BOOL success = [ioManager readMemory:memoryRange then:^(NSData *data) {
+        if (!data) return;
+        [self handleCalibrationData:(const uint8_t*)data.bytes length:data.length];
+    }];
+    
+    if(!success)
     {
         W_ERROR(@"[WiimoteIOManager readMemory: target: action:] failed");
 
@@ -116,32 +110,30 @@
 + (NSUInteger)nextFreedomMeritInClass:(WiimoteExtensionMeritClass)meritClass
 {
     static NSMutableDictionary *counterDict = nil;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        counterDict = [NSMutableDictionary dictionaryWithCapacity:5];
+    });
 
-    if(counterDict == nil)
-        counterDict = [[NSMutableDictionary alloc] initWithCapacity:5];
+    NSNumber *key = @(meritClass);
+    NSNumber *merit = counterDict[key];
 
-    NSNumber *key   = [NSNumber numberWithInteger:meritClass];
-    NSNumber *merit = [counterDict objectForKey:key];
+    if (merit) merit = @(merit.integerValue + 1);
+    else merit = @(meritClass + 1);
 
-    if(merit == nil)
-        merit = [NSNumber numberWithInteger:meritClass + 1];
-    else
-        merit = [NSNumber numberWithInteger:[merit integerValue] + 1];
+    counterDict[key] = merit;
 
-    [counterDict setObject:merit forKey:key];
-
-    return [merit integerValue];
+    return merit.integerValue;
 }
 
 + (void)probeFinished:(BOOL)result
                target:(id)target
                action:(SEL)action
 {
-    if(target == nil || action == nil)
-        return;
+    if (!target || !action) return;
 
     [target performSelector:action
-                 withObject:[NSNumber numberWithBool:result]
+                 withObject:@(result)
                  afterDelay:0.0];
 }
 

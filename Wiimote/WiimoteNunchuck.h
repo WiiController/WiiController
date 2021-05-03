@@ -11,18 +11,6 @@
 
 @class WiimoteAccelerometer;
 
-@interface WiimoteNunchuck : WiimoteGenericExtension<
-                                            WiimoteNunchuckProtocol>
-{
-    @private
-		BOOL								 _isCalibrationDataReaded;
-
-        BOOL								 _buttonState[WiimoteNunchuckButtonCount];
-
-		NSPoint								 _stickPosition;
-        WiimoteDeviceStickCalibrationData	 _stickCalibrationData;
-
-        WiimoteAccelerometer                *_accelerometer;
-}
+@interface WiimoteNunchuck : WiimoteGenericExtension <WiimoteNunchuckProtocol>
 
 @end

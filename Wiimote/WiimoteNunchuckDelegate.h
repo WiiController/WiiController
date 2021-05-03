@@ -37,18 +37,18 @@ FOUNDATION_EXPORT NSString *WiimoteNunchuckAccelerometerRollKey;
 @class WiimoteExtension;
 @class WiimoteAccelerometer;
 
-@protocol WiimoteNunchuckProtocol
+@protocol WiimoteNunchuckProtocol <NSObject>
 
 - (NSPoint)stickPosition;
 - (BOOL)isButtonPressed:(WiimoteNunchuckButtonType)button;
 
-- (WiimoteAccelerometer*)accelerometer;
+@property(nonatomic,readonly) WiimoteAccelerometer *accelerometer;
 
 @end
 
-typedef WiimoteExtension<WiimoteNunchuckProtocol> WiimoteNunchuckExtension;
+typedef WiimoteExtension <WiimoteNunchuckProtocol> WiimoteNunchuckExtension;
 
-@interface NSObject (WiimoteNunchuckDelegate)
+@protocol WiimoteNunchuckDelegate <NSObject>
 
 - (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck buttonPressed:(WiimoteNunchuckButtonType)button;
 - (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck buttonReleased:(WiimoteNunchuckButtonType)button;

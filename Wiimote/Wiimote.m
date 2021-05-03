@@ -29,11 +29,6 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
 
 @implementation Wiimote
 
-+ (BOOL)isBluetoothEnabled
-{
-    return [WiimoteInquiry isBluetoothEnabled];
-}
-
 + (NSArray*)supportedModelNames
 {
     return [WiimoteInquiry supportedModelNames];
@@ -94,7 +89,7 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
 
 - (BOOL)isConnected
 {
-    return [_device isConnected];
+    return _device.transport.isOpen;
 }
 
 - (void)disconnect
@@ -114,12 +109,12 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
 
 - (NSData*)address
 {
-    return [_device address];
+    return _device.transport.address;
 }
 
 - (NSString*)addressString
 {
-    return [_device addressString];
+    return _device.transport.addressString;
 }
 
 - (NSString*)modelName

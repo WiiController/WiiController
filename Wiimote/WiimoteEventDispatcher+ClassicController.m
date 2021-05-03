@@ -13,7 +13,7 @@
 - (void)postClassicController:(WiimoteClassicControllerExtension*)classic
                 buttonPressed:(WiimoteClassicControllerButtonType)button
 {
-    [[self delegate] wiimote:[self owner]
+    [self.delegate wiimote:self.owner
            classicController:classic
                buttonPressed:button];
 
@@ -29,7 +29,7 @@
 - (void)postClassicController:(WiimoteClassicControllerExtension*)classic
                buttonReleased:(WiimoteClassicControllerButtonType)button
 {
-    [[self delegate] wiimote:[self owner]
+    [self.delegate wiimote:self.owner
            classicController:classic
 			  buttonReleased:button];
 
@@ -46,7 +46,7 @@
                         stick:(WiimoteClassicControllerStickType)stick
               positionChanged:(NSPoint)position
 {
-    [[self delegate] wiimote:[self owner]
+    [self.delegate wiimote:self.owner
            classicController:classic
                        stick:stick
              positionChanged:position];
@@ -70,7 +70,7 @@
                   analogShift:(WiimoteClassicControllerAnalogShiftType)shift
               positionChanged:(CGFloat)position
 {
-    [[self delegate] wiimote:[self owner]
+    [self.delegate wiimote:self.owner
            classicController:classic
                  analogShift:shift
              positionChanged:position];

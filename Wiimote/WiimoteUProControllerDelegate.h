@@ -46,7 +46,7 @@ FOUNDATION_EXPORT NSString *WiimoteUProControllerStickPositionKey;
 @class Wiimote;
 @class WiimoteExtension;
 
-@protocol WiimoteUProControllerProtocol
+@protocol WiimoteUProControllerProtocol <NSObject>
 
 - (NSPoint)stickPosition:(WiimoteUProControllerStickType)stick;
 - (BOOL)isButtonPressed:(WiimoteUProControllerButtonType)button;

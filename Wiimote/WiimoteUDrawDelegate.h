@@ -19,7 +19,7 @@ FOUNDATION_EXPORT NSString *WiimoteUDrawPenPressureKey;
 @class Wiimote;
 @class WiimoteExtension;
 
-@protocol WiimoteUDrawProtocol
+@protocol WiimoteUDrawProtocol <NSObject>
 
 - (BOOL)isPenPressed;
 - (NSPoint)penPosition;

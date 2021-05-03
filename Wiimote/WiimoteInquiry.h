@@ -17,8 +17,6 @@ FOUNDATION_EXPORT NSString *WiimoteDeviceNameBalanceBoard;
 
 @interface WiimoteInquiry : NSObject
 
-+ (BOOL)isBluetoothEnabled;
-
 + (WiimoteInquiry*)sharedInquiry;
 
 + (NSArray*)supportedModelNames;

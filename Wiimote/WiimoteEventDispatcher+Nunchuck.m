@@ -12,7 +12,7 @@
 
 - (void)postNunchuck:(WiimoteNunchuckExtension*)nunchuck buttonPressed:(WiimoteNunchuckButtonType)button
 {
-    [[self delegate] wiimote:[self owner] nunchuck:nunchuck buttonPressed:button];
+    [self.delegate wiimote:self.owner nunchuck:nunchuck buttonPressed:button];
 
     if([self isStateNotificationsEnabled])
     {
@@ -25,7 +25,7 @@
 
 - (void)postNunchuck:(WiimoteNunchuckExtension*)nunchuck buttonReleased:(WiimoteNunchuckButtonType)button
 {
-    [[self delegate] wiimote:[self owner] nunchuck:nunchuck buttonReleased:button];
+    [self.delegate wiimote:self.owner nunchuck:nunchuck buttonReleased:button];
 
     if([self isStateNotificationsEnabled])
     {
@@ -38,7 +38,7 @@
 
 - (void)postNunchuck:(WiimoteNunchuckExtension*)nunchuck stickPositionChanged:(NSPoint)position
 {
-    [[self delegate] wiimote:[self owner] nunchuck:nunchuck stickPositionChanged:position];
+    [self.delegate wiimote:self.owner nunchuck:nunchuck stickPositionChanged:position];
 
     if([self isStateNotificationsEnabled])
     {
@@ -51,7 +51,7 @@
 
 - (void)postNunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerEnabledStateChanged:(BOOL)enabled
 {
-    [[self delegate] wiimote:[self owner] nunchuck:nunchuck accelerometerEnabledStateChanged:enabled];
+    [self.delegate wiimote:self.owner nunchuck:nunchuck accelerometerEnabledStateChanged:enabled];
 
     [self postNotification:WiimoteNunchuckAccelerometerEnabledStateChangedNotification
                      param:[NSNumber numberWithBool:enabled]
@@ -61,7 +61,7 @@
 
 - (void)postNunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerChangedGravityX:(CGFloat)x y:(CGFloat)y z:(CGFloat)z
 {
-    [[self delegate] wiimote:[self owner] nunchuck:nunchuck accelerometerChangedGravityX:x y:y z:z];
+    [self.delegate wiimote:self.owner nunchuck:nunchuck accelerometerChangedGravityX:x y:y z:z];
 
     if(![self isStateNotificationsEnabled])
     {
@@ -82,7 +82,7 @@
 
 - (void)postNunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerChangedPitch:(CGFloat)pitch roll:(CGFloat)roll
 {
-    [[self delegate] wiimote:[self owner] nunchuck:nunchuck accelerometerChangedPitch:pitch roll:roll];
+    [self.delegate wiimote:self.owner nunchuck:nunchuck accelerometerChangedPitch:pitch roll:roll];
 
     if(![self isStateNotificationsEnabled])
     {

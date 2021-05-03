@@ -8,6 +8,8 @@
 
 #import "WiimoteEventDispatcher.h"
 
+@protocol WiimoteDelegate;
+
 @interface WiimoteEventDispatcher (Private)
 
 - (instancetype)initWithOwner:(Wiimote*)owner;
@@ -16,6 +18,6 @@
 - (void)postDisconnectNotification;
 
 @property(nonatomic,getter=isStateNotificationsEnabled) BOOL stateNotificationsEnabled;
-@property(nonatomic) id delegate;
+@property(nonatomic,weak) id <WiimoteDelegate> delegate;
 
 @end

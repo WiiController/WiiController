@@ -21,9 +21,10 @@
 			   data:(const uint8_t*)data
              length:(NSUInteger)length;
 
+typedef void(^WiimoteIOManagerReadMemoryCallback)(NSData *);
+
 - (BOOL)readMemory:(NSRange)memoryRange
-			target:(id)target
-			action:(SEL)action;
+              then:(WiimoteIOManagerReadMemoryCallback)callback;
 
 @property(nonatomic,readonly) Wiimote *owner;
 

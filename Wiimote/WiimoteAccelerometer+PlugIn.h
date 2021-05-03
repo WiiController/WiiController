@@ -11,7 +11,7 @@
 
 @class WiimoteAccelerometer;
 
-@interface NSObject (WiimoteAccelerometerDelegate)
+@protocol WiimoteAccelerometerDelegate <NSObject>
 
 - (void)wiimoteAccelerometer:(WiimoteAccelerometer*)accelerometer
          enabledStateChanged:(BOOL)enabled;
@@ -41,6 +41,6 @@
 
 - (void)reset;
 
-@property(nonatomic) id delegate;
+@property(nonatomic,weak) id <WiimoteAccelerometerDelegate> delegate;
 
 @end

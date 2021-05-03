@@ -236,7 +236,7 @@ int wmc_is_bluetooth_enabled(void)
 
     [[WiimoteThread thread] invoke:^
     {
-        result = [Wiimote isBluetoothEnabled];
+        result = wiimoteIsBluetoothEnabled();
     }];
 
     return result;

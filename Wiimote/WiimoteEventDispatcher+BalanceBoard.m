@@ -18,7 +18,7 @@
          bottomLeftPress:(double)bottomLeft
         bottomRightPress:(double)bottomRight
 {
-    [[self delegate] wiimote:[self owner]
+    [self.delegate wiimote:self.owner
                 balanceBoard:balanceBoard
                 topLeftPress:topLeft
                topRightPress:topRight
