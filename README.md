@@ -1,51 +1,63 @@
 # WiiController
-## Use your Nintendo Wii and Wii U controllers on macOS as standard gamepads
+## Use your Wii and Wii U controllers on macOS as standard gamepads
 
-WiiController is a device driver and helper application that allows you to use the following Nintendo Bluetooth controllers as virtual gamepads on macOS:
+WiiController is a macOS device driver application that allows you to use the following controllers as standard HID gamepads:
 
-- Wii Remote
-- Wii Remote Plus
-- Wii U Pro Controller
-- Wii Balance Board
-- Supported accessories:
+- Wii Remote (original or Plus)
   - Nunchuck
   - Classic Controller (original or Pro)
-  - Wii Motion Plus (for original Wii Remote) (untested, may not work)
-  - UDraw Tablet (untested, may not work)
+  - Wii Motion Plus (unverified)
+  - UDraw Tablet (unverified)
+- Wii U Pro Controller
+- Wii Balance Board (unverified)
 
-This repository builds on the work of [JustinBis/wjoy-foohid](https://github.com/JustinBis/wjoy-foohid), which in turn updated the [original wjoy driver](https://github.com/alxn1/wjoy) by [alxn1](https://github.com/alxn1).
+## How does it work?
+
+Since Wii devices require a special Bluetooth pairing procedure, the app handles this. Once pairing succeeds and a connection is established, the app creates a virtual HID gamepad (joystick) device to represent the controller. Note that this requires a driver extension, or kernel extension before macOS 10.15.
+
+Once everything is set up, the app continually translates input from the controllers (which use a proprietary protocol over Bluetooth) to normal HID events in real time. The result is that, as long as the app is running, your controllers effectively speak HID!
+
+WiiController stands on the shoulders of alxn1's [WJoy](https://github.com/alxn1/wjoy), and incorporates some patches from [JustinBis/wjoy-foohid](https://github.com/JustinBis/wjoy-foohid). Most of the code is from WJoy, but cleaned up and updated. The kext has been translated to a dext for macOS 10.15 and up.
 
 ## Install
 
-**Please use appropriate caution:** You are about to install a kernel-level device driver. I am not aware of anything wrong with the code, and it has never caused me any noticable problems or kernel panics, but _this may be different for you_ and installation is entirely _at your own risk_. If you encounter problems, I will try to help you to the best of my ability, but this software comes with **absolutely no warranty**.
+### Please note
 
-The driver and app _should_ work on macOS 10.11 or later. As of now, this fork has only been tested on 10.15.5 and 10.14.6.
+**If you are running macOS 10.15 or later:** Please note that a driver extension is required for WiiController to function. Until I obtain a signing certificate, it may be a security hole. Installation is at your own risk.
 
-**Architecture caveat**: This app does not currently work on ARM (Apple M-series) CPUs.
+**If you are running macOS 10.14 or earlier:** Please use appropriate caution and note that a kernel extension is required for WiiController to function. I have not heard of it causing any kernel panics, but it may be a security hole. Installation is at your own risk. If you encounter problems with it, I will try to help you to the best of my ability, but this software comes with **no warranty**.
 
-### Disable SIP kext protections
+### Requirements
 
-You must have the kernel extensions protection of [System Integrity Protection (SIP)](http://www.imore.com/el-capitan-system-integrity-protection-helps-keep-malware-away) disabled for the driver to load. To disable SIP, boot into [recovery mode](https://support.apple.com/en-ca/HT201314), select Terminal from Utilities in the menu bar, and run the following:
+- WiiController should work on macOS 10.11 or later. It has been tested on 10.14.6, 10.15.7, and 11.2.3.
+- WiiController should work on both Intel and Apple M-series CPU types. Both have been tested. Please note that apps running under Rosetta seem to be unable to see the controller events.
+
+### Disable SIP
+
+As I cannot sign dexts or kexts, you must have [System Integrity Protection (SIP)](http://www.imore.com/el-capitan-system-integrity-protection-helps-keep-malware-away) disabled for the driver to load. To disable SIP, boot into [recovery mode](https://support.apple.com/en-ca/HT201314), select Terminal from Utilities in the menu bar, and run the following:
 
 ```
 csrutil disable
 ```
 
-This second command is optional, but will re-harden (re-enable) other parts of system security that WiiController does not care about. This is ultimately your choice.
+If you are running macOS 10.15 or later, restart your computer now.
+
+If you are running macOS 10.14 or earlier, you may _optionally_ run this second command that will re-enable other parts of system security that WiiController does not care about:
 
 ```
 csrutil enable --without kext
 ```
 
-### Installation steps _after you have disabled SIP kext protections_
+Finally, restart your computer.
 
- 1. **Download WiiController**: https://github.com/WiiController/WiiController/releases
- 2. Turn on Bluetooth.
- 3. Start the WiiController application.
- 4. Pairing should begin automatically, but will expire after 10 seconds. To re-enable it if 10 seconds have passed, click the Wii Remote icon in the menu bar and select Pair Device.
- 5. Press the small red "sync" button on your Nintendo device. To pair multiple devices, select Pair Device again for each.
- 6. [Check the wiki on GitHub](https://github.com/WiiController/WiiController/wiki) for further usage instructions and support articles.
+### Installation steps
 
-## I need help!
-
-Please check the [wiki on GitHub](https://github.com/WiiController/WiiController/wiki).
+1. Disable SIP as described above.
+2. **Download WiiController**: https://github.com/WiiController/WiiController/releases
+3. Install the app by dragging it to your Applications folder. This is **required** on macOS 10.15 or later.
+4. Turn on Bluetooth.
+5. Start WiiController by right-clicking it in Finder and selecting Open. (This technique allows you to run an unsigned app.)
+6. Enter your password if necessary, and approve the system extension when prompted.
+7. Pairing should begin automatically, but will expire after 10 seconds. To re-enable it if 10 seconds have passed, click the Wii Remote icon in the menu bar and select Pair Device.
+8. Press the small red "sync" button on your Nintendo device. To pair multiple devices, select Pair Device again for each.
+9. [Check the wiki on GitHub](https://github.com/WiiController/WiiController/wiki) for further usage instructions and support articles.
