@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>IOKitPersonalities</key>
@@ -26,24 +26,20 @@
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 			<key>CFBundleIdentifierKernel</key>
 			<string>com.apple.kpi.iokit</string>
-			<key>IOUserServerName</key>
+			<key>IOClass</key>
+			<string>IOUserService</string>
+			<key>IOMatchCategory</key>
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 			<key>IOProviderClass</key>
 			<string>IOUserResources</string>
-			<key>IOClass</key>
-			<string>IOUserService</string>
-			<key>IOUserClass</key>
-			<string>ca_igregory_WiiController</string>
-			<key>IOMatchCategory</key>
-			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 			<key>IOResourceMatch</key>
 			<string>IOKit</string>
+			<key>IOUserClass</key>
+			<string>ca_igregory_WiiController</string>
+			<key>IOUserServerName</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 			<key>UserClientProperties</key>
 			<dict>
-				<key>IOClass</key>
-				<string>IOUserUserClient</string>
-				<key>IOUserClass</key>
-				<string>ca_igregory_WiiController_UserClient</string>
 				<key>DeviceProperties</key>
 				<dict>
 					<key>IOClass</key>
@@ -51,6 +47,10 @@
 					<key>IOUserClass</key>
 					<string>ca_igregory_WiiController_Device</string>
 				</dict>
+				<key>IOClass</key>
+				<string>IOUserUserClient</string>
+				<key>IOUserClass</key>
+				<string>ca_igregory_WiiController_UserClient</string>
 			</dict>
 		</dict>
 	</dict>
