@@ -12,24 +12,24 @@
 
 - (void)postButtonPressedNotification:(WiimoteButtonType)button
 {
-    [[self delegate] wiimote:[self owner] buttonPressed:button];
+    [self.delegate wiimote:self.owner buttonPressed:button];
 
-    if([self isStateNotificationsEnabled])
+    if ([self isStateNotificationsEnabled])
     {
         [self postNotification:WiimoteButtonPresedNotification
-                         param:[NSNumber numberWithInteger:button]
+                         param:@(button)
                            key:WiimoteButtonKey];
     }
 }
 
 - (void)postButtonReleasedNotification:(WiimoteButtonType)button
 {
-    [[self delegate] wiimote:[self owner] buttonReleased:button];
+    [self.delegate wiimote:self.owner buttonReleased:button];
 
-    if([self isStateNotificationsEnabled])
+    if ([self isStateNotificationsEnabled])
     {
         [self postNotification:WiimoteButtonReleasedNotification
-                         param:[NSNumber numberWithInteger:button]
+                         param:@(button)
                            key:WiimoteButtonKey];
     }
 }

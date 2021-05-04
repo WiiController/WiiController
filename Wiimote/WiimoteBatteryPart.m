@@ -16,12 +16,12 @@
     [WiimotePart registerPartClass:[WiimoteBatteryPart class]];
 }
 
-- (id)initWithOwner:(Wiimote*)owner
-    eventDispatcher:(WiimoteEventDispatcher*)dispatcher
-          ioManager:(WiimoteIOManager*)ioManager
+- (id)initWithOwner:(Wiimote *)owner
+    eventDispatcher:(WiimoteEventDispatcher *)dispatcher
+          ioManager:(WiimoteIOManager *)ioManager
 {
     self = [super initWithOwner:owner eventDispatcher:dispatcher ioManager:ioManager];
-    if(self == nil)
+    if (self == nil)
         return nil;
 
     _batteryLevel = -1.0;
@@ -30,28 +30,26 @@
     return self;
 }
 
-- (void)handleReport:(WiimoteDeviceReport*)report
+- (void)handleReport:(WiimoteDeviceReport *)report
 {
-    if([report type]    != WiimoteDeviceReportTypeState ||
-       [report length]  < sizeof(WiimoteDeviceStateReport))
+    if ([report type] != WiimoteDeviceReportTypeState ||
+        [report length] < sizeof(WiimoteDeviceStateReport))
     {
         return;
     }
 
-    const WiimoteDeviceStateReport *state =
-                (const WiimoteDeviceStateReport*)[report data];
+    const WiimoteDeviceStateReport *state = (const WiimoteDeviceStateReport *)[report data];
 
-    CGFloat batteryLevel        = (((CGFloat)state->batteryLevel) / ((CGFloat)WiimoteDeviceMaxBatteryLevel)) * 100.0f;
-    BOOL    isBatteryLevelLow   = ((state->flagsAndLEDState & WiimoteDeviceStateReportFlagBatteryIsLow) != 0);
+    CGFloat batteryLevel = (((CGFloat)state->batteryLevel) / ((CGFloat)WiimoteDeviceMaxBatteryLevel)) * 100.0f;
+    BOOL isBatteryLevelLow = ((state->flagsAndLEDState & WiimoteDeviceStateReportFlagBatteryIsLow) != 0);
 
-    if(batteryLevel < 0.0f)
+    if (batteryLevel < 0.0f)
         batteryLevel = 0.0f;
 
-    if(batteryLevel > 100.0f)
+    if (batteryLevel > 100.0f)
         batteryLevel = 100.0f;
 
-    if(batteryLevel         != _batteryLevel ||
-       isBatteryLevelLow    != _batteryLevelLow)
+    if (batteryLevel != _batteryLevel || isBatteryLevelLow != _batteryLevelLow)
     {
         _batteryLevel = batteryLevel;
         _batteryLevelLow = isBatteryLevelLow;

@@ -12,26 +12,25 @@
 + (void)load
 {
     [WiimoteEventSystem
-            registerNotification:WiimoteNunchuckButtonPressedNotification
-                        selector:@selector(wiimoteNunchuckButtonPressedNotification:)];
+        registerNotification:WiimoteNunchuckButtonPressedNotification
+                    selector:@selector(wiimoteNunchuckButtonPressedNotification:)];
 
     [WiimoteEventSystem
-            registerNotification:WiimoteNunchuckButtonReleasedNotification
-                        selector:@selector(wiimoteNunchuckButtonReleasedNotification:)];
+        registerNotification:WiimoteNunchuckButtonReleasedNotification
+                    selector:@selector(wiimoteNunchuckButtonReleasedNotification:)];
 
     [WiimoteEventSystem
-            registerNotification:WiimoteNunchuckStickPositionChangedNotification
-                        selector:@selector(wiimoteNunchuckStickPositionChangedNotification:)];
+        registerNotification:WiimoteNunchuckStickPositionChangedNotification
+                    selector:@selector(wiimoteNunchuckStickPositionChangedNotification:)];
 
     [WiimoteEventSystem
-            registerNotification:WiimoteNunchuckAccelerometerAnglesChangedNotification
-                        selector:@selector(wiimoteNunchuckAccelerometerAnglesChangedNotification:)];
+        registerNotification:WiimoteNunchuckAccelerometerAnglesChangedNotification
+                    selector:@selector(wiimoteNunchuckAccelerometerAnglesChangedNotification:)];
 }
 
-- (NSString*)pathForNunchuckButton:(NSDictionary*)userInfo
+- (NSString *)pathForNunchuckButton:(NSDictionary *)userInfo
 {
-    static NSString *result[] =
-    {
+    static NSString *result[] = {
         @"Button.C",
         @"Button.Z"
     };
@@ -41,21 +40,21 @@
     return result[type];
 }
 
-- (void)wiimoteNunchuckButtonPressedNotification:(NSNotification*)notification
+- (void)wiimoteNunchuckButtonPressedNotification:(NSNotification *)notification
 {
     [self postEventForWiimoteExtension:[notification object]
                                   path:[self pathForNunchuckButton:[notification userInfo]]
                                  value:WIIMOTE_EVENT_VALUE_PRESS];
 }
 
-- (void)wiimoteNunchuckButtonReleasedNotification:(NSNotification*)notification
+- (void)wiimoteNunchuckButtonReleasedNotification:(NSNotification *)notification
 {
     [self postEventForWiimoteExtension:[notification object]
                                   path:[self pathForNunchuckButton:[notification userInfo]]
                                  value:WIIMOTE_EVENT_VALUE_RELEASE];
 }
 
-- (void)wiimoteNunchuckStickPositionChangedNotification:(NSNotification*)notification
+- (void)wiimoteNunchuckStickPositionChangedNotification:(NSNotification *)notification
 {
     NSPoint position = [[[notification userInfo] objectForKey:WiimoteNunchuckStickPositionKey] pointValue];
 
@@ -68,13 +67,13 @@
                                  value:position.y];
 }
 
-- (void)wiimoteNunchuckAccelerometerAnglesChangedNotification:(NSNotification*)notification
+- (void)wiimoteNunchuckAccelerometerAnglesChangedNotification:(NSNotification *)notification
 {
     CGFloat pitch = [[[notification userInfo] objectForKey:WiimoteNunchuckAccelerometerPitchKey] doubleValue];
-    CGFloat roll  = [[[notification userInfo] objectForKey:WiimoteNunchuckAccelerometerRollKey] doubleValue];
+    CGFloat roll = [[[notification userInfo] objectForKey:WiimoteNunchuckAccelerometerRollKey] doubleValue];
 
     [self postEventForWiimoteExtension:[notification object] path:@"Accelerometer.Pitch" value:pitch];
-    [self postEventForWiimoteExtension:[notification object] path:@"Accelerometer.Roll"  value:roll];
+    [self postEventForWiimoteExtension:[notification object] path:@"Accelerometer.Roll" value:roll];
 }
 
 @end

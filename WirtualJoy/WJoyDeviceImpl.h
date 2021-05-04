@@ -11,26 +11,26 @@
 
 typedef enum
 {
-    WJoyDeviceMethodSelectorEnable                      = 0,
-    WJoyDeviceMethodSelectorDisable                     = 1,
-    WJoyDeviceMethodSelectorUpdateState                 = 2,
-    WJoyDeviceMethodSelectorSetDeviceProductString      = 3,
+    WJoyDeviceMethodSelectorEnable = 0,
+    WJoyDeviceMethodSelectorDisable = 1,
+    WJoyDeviceMethodSelectorUpdateState = 2,
+    WJoyDeviceMethodSelectorSetDeviceProductString = 3,
     WJoyDeviceMethodSelectorSetDeviceSerialNumberString = 4,
     WJoyDeviceMethodSelectorSetDeviceVendorAndProductID = 5
 } WJoyDeviceMethodSelector;
 
 typedef enum
 {
-	FOOHID_CREATE	= 0,
-	FOOHID_DESTROY	= 1,
-	FOOHID_SEND		= 2,
-	FOOHID_LIST		= 3
+    FOOHID_CREATE = 0,
+    FOOHID_DESTROY = 1,
+    FOOHID_SEND = 2,
+    FOOHID_LIST = 3
 } FOOHIDMethodSelector;
 
 @interface WJoyDeviceImpl : NSObject
 {
-    @private
-        io_connect_t _connection;
+@private
+    io_connect_t _connection;
 }
 
 + (BOOL)prepare;

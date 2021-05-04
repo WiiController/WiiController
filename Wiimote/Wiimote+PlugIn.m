@@ -20,7 +20,7 @@
 
 - (void)deviceConfigurationChanged
 {
-	[_device requestReportType:[_partSet bestReportType]];
+    [_device requestReportType:[_partSet bestReportType]];
 }
 
 - (WiimotePart*)partWithClass:(Class)cls

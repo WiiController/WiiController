@@ -13,9 +13,9 @@
 - (void)postUDrawPenPressed:(WiimoteUDrawExtension*)uDraw;
 - (void)postUDrawPenReleased:(WiimoteUDrawExtension*)uDraw;
 
--   (void)postUDraw:(WiimoteUDrawExtension*)uDraw
- penPositionChanged:(NSPoint)position
-           pressure:(CGFloat)pressure;
+- (void)postUDraw:(WiimoteUDrawExtension*)uDraw
+    penPositionChanged:(NSPoint)position
+              pressure:(CGFloat)pressure;
 
 - (void)postUDrawPenButtonPressed:(WiimoteUDrawExtension*)uDraw;
 - (void)postUDrawPenButtonReleased:(WiimoteUDrawExtension*)uDraw;

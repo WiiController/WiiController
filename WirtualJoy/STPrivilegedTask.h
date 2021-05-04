@@ -36,19 +36,19 @@ extern const OSStatus errAuthorizationFnNoLongerExists;
 
 @interface STPrivilegedTask : NSObject
 
-@property (copy) NSArray *arguments;
-@property (copy) NSString *currentDirectoryPath;
-@property (copy) NSString *launchPath;
+@property(copy) NSArray *arguments;
+@property(copy) NSString *currentDirectoryPath;
+@property(copy) NSString *launchPath;
 
-@property (readonly) NSFileHandle *outputFileHandle;
-@property (readonly) BOOL isRunning;
-@property (readonly) pid_t processIdentifier;
-@property (readonly) int terminationStatus;
+@property(readonly) NSFileHandle *outputFileHandle;
+@property(readonly) BOOL isRunning;
+@property(readonly) pid_t processIdentifier;
+@property(readonly) int terminationStatus;
 
-@property (copy) void (^terminationHandler)(STPrivilegedTask *);
+@property(copy) void (^terminationHandler)(STPrivilegedTask *);
 
 + (BOOL)authorizationFunctionAvailable;
-    
+
 - (instancetype)initWithLaunchPath:(NSString *)path;
 - (instancetype)initWithLaunchPath:(NSString *)path arguments:(NSArray *)args;
 - (instancetype)initWithLaunchPath:(NSString *)path arguments:(NSArray *)args currentDirectory:(NSString *)cwd;
@@ -62,4 +62,3 @@ extern const OSStatus errAuthorizationFnNoLongerExists;
 - (void)waitUntilExit;
 
 @end
-

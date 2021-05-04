@@ -493,11 +493,11 @@
     [style setAlignment:NSTextAlignmentLeft];
     [style setLineBreakMode:NSLineBreakByTruncatingTail];
 
-    return [NSDictionary dictionaryWithObjectsAndKeys:
-                            [NSColor whiteColor],                   NSForegroundColorAttributeName,
-                            [NSFont boldSystemFontOfSize:13.0f],    NSFontAttributeName,
-                            style,                                  NSParagraphStyleAttributeName,
-                            nil];
+    return @{
+        NSForegroundColorAttributeName: [NSColor whiteColor],
+        NSFontAttributeName: [NSFont boldSystemFontOfSize:13.0f],
+        NSParagraphStyleAttributeName: style
+    };
 }
 
 + (NSDictionary*)textAttributes
@@ -507,11 +507,11 @@
     [style setAlignment:NSTextAlignmentLeft];
     [style setLineBreakMode:NSLineBreakByWordWrapping];
 
-    return [NSDictionary dictionaryWithObjectsAndKeys:
-                            [NSColor whiteColor],                   NSForegroundColorAttributeName,
-                            [NSFont menuFontOfSize:12.0f],          NSFontAttributeName,
-                            style,                                  NSParagraphStyleAttributeName,
-                            nil];
+    return @{
+        NSForegroundColorAttributeName: [NSColor whiteColor],
+        NSFontAttributeName: [NSFont menuFontOfSize:12.0f],
+        NSParagraphStyleAttributeName: style
+    };
 }
 
 + (NSSize)titleSize:(NSString*)title

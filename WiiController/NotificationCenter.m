@@ -10,7 +10,8 @@
 
 #import "NotificationCenter.h"
 
-@implementation NotificationCenter {
+@implementation NotificationCenter
+{
     BOOL _discoveredDevice;
 }
 
@@ -23,55 +24,55 @@
     });
 }
 
-- (BOOL)userNotificationCenter:(UserNotificationCenter*)center
-     shouldDeliverNotification:(UserNotification*)notification
+- (BOOL)userNotificationCenter:(UserNotificationCenter *)center
+     shouldDeliverNotification:(UserNotification *)notification
 {
     return YES;
 }
 
-- (void)userNotificationCenter:(UserNotificationCenter*)center
-           notificationClicked:(UserNotification*)notification
+- (void)userNotificationCenter:(UserNotificationCenter *)center
+           notificationClicked:(UserNotification *)notification
 {
     NSString *url = [[notification userInfo] objectForKey:@"URL"];
-    if(url != nil)
+    if (url != nil)
         [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url]];
 }
 
 - (id)initInternal
 {
     self = [super init];
-    if(self == nil)
+    if (self == nil)
         return nil;
 
     [[NSNotificationCenter defaultCenter]
-                            addObserver:self
-                               selector:@selector(onDiscoveryBegin)
-                                   name:WiimoteBeginDiscoveryNotification
-                                 object:nil];
+        addObserver:self
+           selector:@selector(onDiscoveryBegin)
+               name:WiimoteBeginDiscoveryNotification
+             object:nil];
 
     [[NSNotificationCenter defaultCenter]
-                            addObserver:self
-                               selector:@selector(onDiscoveryEnd)
-                                   name:WiimoteEndDiscoveryNotification
-                                 object:nil];
+        addObserver:self
+           selector:@selector(onDiscoveryEnd)
+               name:WiimoteEndDiscoveryNotification
+             object:nil];
 
     [[NSNotificationCenter defaultCenter]
-                            addObserver:self
-                               selector:@selector(onDeviceConnected:)
-                                   name:WiimoteConnectedNotification
-                                 object:nil];
+        addObserver:self
+           selector:@selector(onDeviceConnected:)
+               name:WiimoteConnectedNotification
+             object:nil];
 
     [[NSNotificationCenter defaultCenter]
-                            addObserver:self
-                               selector:@selector(onDeviceBatteryStateChanged:)
-                                   name:WiimoteBatteryLevelUpdatedNotification
-                                 object:nil];
+        addObserver:self
+           selector:@selector(onDeviceBatteryStateChanged:)
+               name:WiimoteBatteryLevelUpdatedNotification
+             object:nil];
 
     [[NSNotificationCenter defaultCenter]
-                            addObserver:self
-                               selector:@selector(onDeviceDisconnected:)
-                                   name:WiimoteDisconnectedNotification
-                                 object:nil];
+        addObserver:self
+           selector:@selector(onDeviceDisconnected:)
+               name:WiimoteDisconnectedNotification
+             object:nil];
 
     [UserNotificationCenter setDelegate:self];
 
@@ -116,22 +117,21 @@
                                          text:[NSString stringWithFormat:@"Connected to %@ / %@", [device marketingName], [device addressString]]]];
 }
 
-- (void)onDeviceBatteryStateChanged:(NSNotification*)notification
+- (void)onDeviceBatteryStateChanged:(NSNotification *)notification
 {
     Wiimote *device = [notification object];
 
-    if([device userInfo] != nil ||
-      ![device isBatteryLevelLow])
+    if ([device userInfo] != nil || ![device isBatteryLevelLow])
     {
         return;
     }
 
-    [device setUserInfo:[NSDictionary dictionary]];
+    [device setUserInfo:@{}];
 
     [UserNotificationCenter
         deliver:[UserNotification
                     userNotificationWithTitle:@"Low Battery"
-                                         text:[NSString stringWithFormat: @"%@ has %@ battery remaining.", [device marketingName], [device batteryLevelDescription]]]];
+                                         text:[NSString stringWithFormat:@"%@ has %@ battery remaining.", [device marketingName], [device batteryLevelDescription]]]];
 }
 
 - (void)onDeviceDisconnected:(NSNotification *)notification
@@ -140,7 +140,7 @@
     [UserNotificationCenter
         deliver:[UserNotification
                     userNotificationWithTitle:@"Device Disconnected"
-                                         text:[NSString stringWithFormat: @"%@ disconnected.", [device marketingName]]]];
+                                         text:[NSString stringWithFormat:@"%@ disconnected.", [device marketingName]]]];
 }
 
 @end

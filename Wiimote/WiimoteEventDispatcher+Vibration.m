@@ -13,12 +13,12 @@
 
 - (void)postVibrationStateChangedNotification:(BOOL)state
 {
-    [[self delegate] wiimote:[self owner] vibrationStateChanged:state];
+    [self.delegate wiimote:self.owner vibrationStateChanged:state];
 
-    if([self isStateNotificationsEnabled])
+    if ([self isStateNotificationsEnabled])
     {
         [self postNotification:WiimoteVibrationStateChangedNotification
-                         param:[NSNumber numberWithBool:state]
+                         param:@(state)
                            key:WiimoteVibrationStateKey];
     }
 }

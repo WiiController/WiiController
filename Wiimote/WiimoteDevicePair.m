@@ -12,99 +12,86 @@
 
 #import "WiimoteLog.h"
 
-@interface WiimoteDevicePair (PrivatePart)
-
-- (void)runWithDevice:(IOBluetoothDevice*)device;
+@interface WiimoteDevicePairDelegate : NSObject <IOBluetoothDevicePairDelegate>
 
 @end
 
-@implementation WiimoteDevicePair
-
-+ (void)pairWithDevice:(IOBluetoothDevice*)device
+@implementation WiimoteDevicePairDelegate
 {
-	WiimoteDevicePair *pair = [[WiimoteDevicePair alloc] init];
-
-	[pair runWithDevice:device];
+    BOOL _isFirstAttempt;
 }
 
-- (id)init
+void wiimotePairWithDevice(IOBluetoothDevice *device)
 {
-	self = [super init];
-
-	if(self == nil)
-		return nil;
-
-	_isFirstAttempt = YES;
-
-	return self;
+    [[WiimoteDevicePairDelegate new] attemptPairWithDevice:device];
 }
 
-@end
-
-@implementation WiimoteDevicePair (PrivatePart)
-
-- (void)runWithDevice:(IOBluetoothDevice*)device
+- (void)attemptPairWithDevice:(IOBluetoothDevice *)device
 {
-	__auto_type pair = [IOBluetoothDevicePair pairWithDevice:device];
-	[pair setDelegate:self];
+    __auto_type pairingAttempt = [IOBluetoothDevicePair pairWithDevice:device];
+    pairingAttempt.delegate = self;
 
-	if([pair start] != kIOReturnSuccess)
+    if ([pairingAttempt start] != kIOReturnSuccess)
     {
         W_ERROR(@"[IOBluetoothDevicePair start] failed");
     }
 }
 
-- (NSData*)makePINCodeForDevice:(IOBluetoothDevice*)device
+- (instancetype)init
 {
-	NSString	*address		= nil;
-	NSArray		*components		= nil;
-	uint8_t		 bytes[6]		= { 0 };
-	unsigned int value			= 0;
+    self = [super init];
+    if (!self) return nil;
 
-	if(_isFirstAttempt)
-    {
-        address = [[IOBluetoothHostController defaultController] addressAsString];
-    }
+    _isFirstAttempt = YES;
+
+    return self;
+}
+
+- (NSData *)makePINCodeForDevice:(IOBluetoothDevice *)device
+{
+    NSString *address;
+    if (_isFirstAttempt)
+        address = [IOBluetoothHostController defaultController].addressAsString;
     else
-		address = [device addressString];
+        address = device.addressString;
 
-	components = [address componentsSeparatedByString:@"-"];
-	if([components count] != 6)
-		return nil;
+    NSArray *components = [address componentsSeparatedByString:@"-"];
+    if (components.count != 6) return nil;
 
-	for(int i = 0; i < 6; i++)
-	{
-		NSScanner *scanner = [[NSScanner alloc] initWithString:[components objectAtIndex:i]];
-		[scanner scanHexInt:&value];
-		bytes[5 - i] = (uint8_t)value;
-	}
+    uint8_t bytes[6] = { 0 };
+    for (int i = 0; i < 6; i++)
+    {
+        NSScanner *scanner = [NSScanner scannerWithString:components[i]];
+        unsigned int value = 0;
+        [scanner scanHexInt:&value];
+        bytes[5 - i] = (uint8_t)value;
+    }
 
-	return [NSData dataWithBytes:bytes length:sizeof(bytes)];
+    return [NSData dataWithBytes:bytes length:sizeof(bytes)];
 }
 
 - (void)devicePairingPINCodeRequest:(IOBluetoothDevicePair *)sender
 {
-	BluetoothPINCode	 PIN	= { 0 };
-	NSData				*data	= [self makePINCodeForDevice:[sender device]];
-
-	[data getBytes:PIN.data length:sizeof PIN];
-	[sender replyPINCode:[data length] PINCode:&PIN];
+    NSData *data = [self makePINCodeForDevice:sender.device];
+    BluetoothPINCode PIN = { 0 };
+    [data getBytes:PIN.data length:sizeof PIN];
+    [sender replyPINCode:data.length PINCode:&PIN];
 }
 
 - (void)devicePairingFinished:(IOBluetoothDevicePair *)sender error:(IOReturn)error
 {
-	if(error != kIOReturnSuccess)
-	{
-		if(_isFirstAttempt)
-		{
-			_isFirstAttempt = NO;
-			[self runWithDevice:[sender device]];
-			return;
-		}
-
-        W_ERROR_F(@"failed with error: %i", error);
-	}
-
+    if (error != kIOReturnSuccess)
+    {
+        if (_isFirstAttempt)
+        {
+            _isFirstAttempt = NO;
+            [self attemptPairWithDevice:sender.device];
+        }
+        else
+        {
+            W_ERROR_F(@"failed with error: %i", error);
+        }
+    }
 }
 
 @end

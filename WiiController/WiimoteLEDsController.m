@@ -16,8 +16,8 @@
 
 - (id)initInternal;
 
-- (void)onDeviceConnected:(NSNotification*)notification;
-- (void)onDeviceDisconnected:(NSNotification*)notification;
+- (void)onDeviceConnected:(NSNotification *)notification;
+- (void)onDeviceDisconnected:(NSNotification *)notification;
 
 @end
 
@@ -38,11 +38,11 @@
 
 + (void)recountConnectedDevices
 {
-    NSArray     *connectedDevices = [Wiimote connectedDevices];
-    NSUInteger   countConnected   = [connectedDevices count];
-    NSUInteger   counter          = 0;
+    NSArray *connectedDevices = [Wiimote connectedDevices];
+    NSUInteger countConnected = [connectedDevices count];
+    NSUInteger counter = 0;
 
-    for(NSUInteger i = 0; i < countConnected; i++)
+    for (NSUInteger i = 0; i < countConnected; i++)
     {
         Wiimote *device = [connectedDevices objectAtIndex:i];
 
@@ -54,20 +54,20 @@
 - (id)initInternal
 {
     self = [super init];
-    if(self == nil)
+    if (self == nil)
         return nil;
 
     [[NSNotificationCenter defaultCenter]
-                            addObserver:self
-                               selector:@selector(onDeviceConnected:)
-                                   name:WiimoteConnectedNotification
-                                 object:nil];
+        addObserver:self
+           selector:@selector(onDeviceConnected:)
+               name:WiimoteConnectedNotification
+             object:nil];
 
     [[NSNotificationCenter defaultCenter]
-                            addObserver:self
-                               selector:@selector(onDeviceDisconnected:)
-                                   name:WiimoteDisconnectedNotification
-                                 object:nil];
+        addObserver:self
+           selector:@selector(onDeviceDisconnected:)
+               name:WiimoteDisconnectedNotification
+             object:nil];
 
     return self;
 }
@@ -77,13 +77,13 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)onDeviceConnected:(NSNotification*)notification
+- (void)onDeviceConnected:(NSNotification *)notification
 {
     [WiimoteLEDsController recountConnectedDevices];
     [[notification object] playConnectEffect];
 }
 
-- (void)onDeviceDisconnected:(NSNotification*)notification
+- (void)onDeviceDisconnected:(NSNotification *)notification
 {
     [WiimoteLEDsController recountConnectedDevices];
 }

@@ -10,7 +10,7 @@
 
 @interface WiimoteBatteryPart : WiimotePart
 
-@property(nonatomic,readonly) CGFloat batteryLevel;
-@property(nonatomic,readonly,getter=isBatteryLevelLow) BOOL batteryLevelLow;
+@property(nonatomic, readonly) CGFloat batteryLevel;
+@property(nonatomic, readonly, getter=isBatteryLevelLow) BOOL batteryLevelLow;
 
 @end

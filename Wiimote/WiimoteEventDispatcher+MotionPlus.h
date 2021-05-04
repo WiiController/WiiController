@@ -12,12 +12,12 @@
 @interface WiimoteEventDispatcher (MotionPlus)
 
 - (void)postMotionPlus:(WiimoteMotionPlusExtension*)motionPlus
-	extensionConnected:(WiimoteExtension*)extension;
+    extensionConnected:(WiimoteExtension*)extension;
 
 - (void)postMotionPlus:(WiimoteMotionPlusExtension*)motionPlus
- extensionDisconnected:(WiimoteExtension*)extension;
+    extensionDisconnected:(WiimoteExtension*)extension;
 
 - (void)postMotionPlus:(WiimoteMotionPlusExtension*)motionPlus
-				report:(const WiimoteMotionPlusReport*)report;
+                report:(const WiimoteMotionPlusReport*)report;
 
 @end

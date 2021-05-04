@@ -8,75 +8,54 @@
 
 #import "WiimoteProtocol.h"
 #import "WiimoteDeviceReport.h"
+#import "WiimoteDeviceTransport.h"
 
 @class W_HIDDevice;
 @class IOBluetoothDevice;
 
 @class WiimoteDevice;
-@class WiimoteDeviceReadMemQueue;
+@class WiimoteDeviceReadQueue;
 
-@class WiimoteDeviceTransport;
+@protocol WiimoteDeviceDelegate <NSObject>
 
-@interface NSObject (WiimoteDeviceDelegate)
-
-- (void)wiimoteDevice:(WiimoteDevice*)device handleReport:(WiimoteDeviceReport*)report;
-- (void)wiimoteDeviceDisconnected:(WiimoteDevice*)device;
+- (void)wiimoteDevice:(WiimoteDevice *)device handleReport:(WiimoteDeviceReport *)report;
+- (void)wiimoteDeviceDisconnected:(WiimoteDevice *)device;
 
 @end
 
 @interface WiimoteDevice : NSObject
-{
-	@private
-		BOOL						 _isConnected;
 
-		WiimoteDeviceTransport      *_transport;
+- (instancetype)initWithHIDDevice:(W_HIDDevice *)device;
+- (instancetype)initWithBluetoothDevice:(IOBluetoothDevice *)device;
 
-        WiimoteDeviceReport			*_report;
-		WiimoteDeviceReadMemQueue	*_readMemQueue;
-
-        BOOL						 _isVibrationEnabled;
-        uint8_t                      _lEDsState;
-
-		id							 _delegate;
-}
-
-- (id)initWithHIDDevice:(W_HIDDevice*)device;
-- (id)initWithBluetoothDevice:(IOBluetoothDevice*)device;
-
-- (BOOL)isConnected;
+@property(nonatomic, readonly) id<WiimoteDeviceTransport> transport;
 
 - (BOOL)connect;
 - (void)disconnect;
 
-- (NSString*)name;
-- (NSData*)address;
-- (NSString*)addressString;
-
-- (id)lowLevelDevice;
-
 - (BOOL)postCommand:(WiimoteDeviceCommandType)command
-               data:(const uint8_t*)data
+               data:(const uint8_t *)data
              length:(NSUInteger)length;
 
 - (BOOL)writeMemory:(NSUInteger)address
-               data:(const uint8_t*)data
+               data:(const uint8_t *)data
              length:(NSUInteger)length;
 
+typedef void (^WiimoteDeviceReadCallback)(NSData *);
+
 - (BOOL)readMemory:(NSRange)memoryRange
-            target:(id)target
-            action:(SEL)action;
+              then:(WiimoteDeviceReadCallback)callback;
 
 - (BOOL)requestStateReport;
 - (BOOL)requestReportType:(WiimoteDeviceReportType)type;
 
-- (BOOL)isVibrationEnabled;
+@property(nonatomic, readonly) BOOL isVibrationEnabled;
 - (BOOL)setVibrationEnabled:(BOOL)enabled;
 
 // WiimoteDeviceSetLEDStateCommandFlag mask
-- (uint8_t)LEDsState;
+@property(nonatomic, readonly) uint8_t LEDsState;
 - (BOOL)setLEDsState:(uint8_t)state;
 
-- (id)delegate;
-- (void)setDelegate:(id)delegate;
+@property(nonatomic, weak) id<WiimoteDeviceDelegate> delegate;
 
 @end

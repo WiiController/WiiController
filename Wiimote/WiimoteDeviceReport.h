@@ -13,10 +13,10 @@
 
 @interface WiimoteDeviceReport : NSObject
 
-@property(nonatomic,readonly) NSUInteger type; // WiimoteDeviceReportType
+@property(nonatomic, readonly) NSUInteger type; // WiimoteDeviceReportType
 
-@property(nonatomic,readonly) uint8_t const* data;
-@property(nonatomic,readonly) NSUInteger length;
+@property(nonatomic, readonly) uint8_t const *data;
+@property(nonatomic, readonly) NSUInteger length;
 
 @property(nonatomic) Wiimote *wiimote;
 @property(nonatomic) WiimoteDevice *device;

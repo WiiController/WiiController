@@ -13,17 +13,17 @@ FOUNDATION_EXPORT NSString *WiimoteEventKey;
 
 @interface NSObject (WiimoteEventSystemObserver)
 
-- (void)wiimoteEvent:(WiimoteEvent*)event;
+- (void)wiimoteEvent:(WiimoteEvent *)event;
 
 @end
 
 @interface WiimoteEventSystem : NSObject
 {
-    @private
-        NSMutableSet *_observers;
+@private
+    NSMutableSet *_observers;
 }
 
-+ (WiimoteEventSystem*)defaultEventSystem;
++ (WiimoteEventSystem *)defaultEventSystem;
 
 - (void)addObserver:(id)observer;
 - (void)removeObserver:(id)observer;

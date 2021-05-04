@@ -9,55 +9,53 @@
 
 @implementation WiimoteEventDispatcher (UProController)
 
-- (void)postUProController:(WiimoteUProControllerExtension*)uPro
-			 buttonPressed:(WiimoteUProControllerButtonType)button
+- (void)postUProController:(WiimoteUProControllerExtension *)uPro
+             buttonPressed:(WiimoteUProControllerButtonType)button
 {
-	[[self delegate] wiimote:[self owner]
-			  uProController:uPro
-               buttonPressed:button];
+    [self.delegate wiimote:self.owner
+            uProController:uPro
+             buttonPressed:button];
 
-    if([self isStateNotificationsEnabled])
+    if ([self isStateNotificationsEnabled])
     {
         [self postNotification:WiimoteUProControllerButtonPressedNotification
-                         param:[NSNumber numberWithInteger:button]
+                         param:@(button)
                            key:WiimoteUProControllerButtonKey
                         sender:uPro];
     }
 }
 
-- (void)postUProController:(WiimoteUProControllerExtension*)uPro
-			buttonReleased:(WiimoteUProControllerButtonType)button
+- (void)postUProController:(WiimoteUProControllerExtension *)uPro
+            buttonReleased:(WiimoteUProControllerButtonType)button
 {
-	[[self delegate] wiimote:[self owner]
-			  uProController:uPro
-			  buttonReleased:button];
+    [self.delegate wiimote:self.owner
+            uProController:uPro
+            buttonReleased:button];
 
-    if([self isStateNotificationsEnabled])
+    if ([self isStateNotificationsEnabled])
     {
         [self postNotification:WiimoteUProControllerButtonReleasedNotification
-                         param:[NSNumber numberWithInteger:button]
+                         param:@(button)
                            key:WiimoteUProControllerButtonKey
                         sender:uPro];
     }
 }
 
-- (void)postUProController:(WiimoteUProControllerExtension*)uPro
-					 stick:(WiimoteUProControllerStickType)stick
-		   positionChanged:(NSPoint)position
+- (void)postUProController:(WiimoteUProControllerExtension *)uPro
+                     stick:(WiimoteUProControllerStickType)stick
+           positionChanged:(NSPoint)position
 {
-	[[self delegate] wiimote:[self owner]
-			  uProController:uPro
-                       stick:stick
-             positionChanged:position];
+    [self.delegate wiimote:self.owner
+            uProController:uPro
+                     stick:stick
+           positionChanged:position];
 
-    if([self isStateNotificationsEnabled])
+    if ([self isStateNotificationsEnabled])
     {
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                    [NSValue valueWithPoint:position],
-                                                        WiimoteUProControllerStickPositionKey,
-                                                    [NSNumber numberWithInteger:stick],
-                                                        WiimoteUProControllerStickKey,
-                                                    nil];
+        NSDictionary *userInfo = @{
+            WiimoteUProControllerStickPositionKey : @(position),
+            WiimoteUProControllerStickKey : @(stick)
+        };
 
         [self postNotification:WiimoteUProControllerStickPositionChangedNotification
                         params:userInfo

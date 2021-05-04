@@ -12,17 +12,17 @@
 
 @interface WiimoteEventDispatcher : NSObject
 
-@property(nonatomic,readonly) Wiimote *owner;
+@property(nonatomic, readonly) Wiimote *owner;
 
-@property(nonatomic,readonly,getter=isStateNotificationsEnabled) BOOL stateNotificationsEnabled;
+@property(nonatomic, readonly, getter=isStateNotificationsEnabled) BOOL stateNotificationsEnabled;
 
-- (void)postNotification:(NSString*)notification;
-- (void)postNotification:(NSString*)notification sender:(id)sender;
-- (void)postNotification:(NSString*)notification param:(id)param key:(NSString*)key;
-- (void)postNotification:(NSString*)notification param:(id)param key:(NSString*)key sender:(id)sender;
-- (void)postNotification:(NSString*)notification params:(NSDictionary*)params;
-- (void)postNotification:(NSString*)notification params:(NSDictionary*)params sender:(id)sender;
+- (void)postNotification:(NSString *)notification;
+- (void)postNotification:(NSString *)notification sender:(id)sender;
+- (void)postNotification:(NSString *)notification param:(id)param key:(NSString *)key;
+- (void)postNotification:(NSString *)notification param:(id)param key:(NSString *)key sender:(id)sender;
+- (void)postNotification:(NSString *)notification params:(NSDictionary *)params;
+- (void)postNotification:(NSString *)notification params:(NSDictionary *)params sender:(id)sender;
 
-@property(nonatomic,readonly) id delegate;
+@property(nonatomic, weak, readonly) id delegate;
 
 @end

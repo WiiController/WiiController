@@ -8,42 +8,38 @@
 
 #import <Foundation/Foundation.h>
 
-@class WiimoteDeviceTransport;
+@protocol WiimoteDeviceTransport;
 @class W_HIDDevice;
 @class IOBluetoothDevice;
 
-@interface NSObject (WiimoteDeviceTransportDelegate)
+@protocol WiimoteDeviceTransportDelegate <NSObject>
 
-- (void)wiimoteDeviceTransport:(WiimoteDeviceTransport*)transport
-            reportDataReceived:(const uint8_t*)bytes
+- (void)wiimoteDeviceTransport:(id<WiimoteDeviceTransport>)transport
+            reportDataReceived:(const uint8_t *)bytes
                         length:(NSUInteger)length;
 
-- (void)wiimoteDeviceTransportDisconnected:(WiimoteDeviceTransport*)transport;
+- (void)wiimoteDeviceTransportDisconnected:(id<WiimoteDeviceTransport>)transport;
 
 @end
 
-@interface WiimoteDeviceTransport : NSObject
-{
-    @private
-        id _delegate;
-}
+@protocol WiimoteDeviceTransport <NSObject>
 
-+ (WiimoteDeviceTransport*)withHIDDevice:(W_HIDDevice*)device;
-+ (WiimoteDeviceTransport*)withBluetoothDevice:(IOBluetoothDevice*)device;
+@property(nonatomic, copy, readonly) NSString *name;
+@property(nonatomic, copy, readonly) NSData *address;
+@property(nonatomic, copy, readonly) NSString *addressString;
 
-- (NSString*)name;
-- (NSData*)address;
-- (NSString*)addressString;
+@property(nonatomic, readonly) id lowLevelDevice;
 
-- (id)lowLevelDevice;
+@property(nonatomic, readonly) BOOL isOpen;
 
-- (BOOL)isOpen;
 - (BOOL)open;
 - (void)close;
 
-- (BOOL)postBytes:(const uint8_t*)bytes length:(NSUInteger)length;
+- (BOOL)postBytes:(const uint8_t *)bytes length:(NSUInteger)length;
 
-- (id)delegate;
-- (void)setDelegate:(id)delegate;
+@property(nonatomic, weak) id<WiimoteDeviceTransportDelegate> delegate;
 
 @end
+
+id<WiimoteDeviceTransport> wiimoteDeviceTransportWithHIDDevice(W_HIDDevice *device);
+id<WiimoteDeviceTransport> wiimoteDeviceTransportWithBluetoothDevice(IOBluetoothDevice *device);

@@ -11,17 +11,19 @@
 #import <sys/stat.h>
 #import <IOKit/kext/KextManager.h>
 
-typedef enum {
+typedef enum
+{
     WorkModeRepairRights,
     WorkModeLoadDriver,
     WorkModeUnloadDriver,
     WorkModeError
 } WorkMode;
 
-#define KEXTLoadCommand     "/sbin/kextload"
-#define KEXTUnloadCommand   "/sbin/kextunload"
+#define KEXTLoadCommand "/sbin/kextload"
+#define KEXTUnloadCommand "/sbin/kextunload"
 
-static int repairRights(const char *path) {
+static int repairRights(const char *path)
+{
     if (seteuid(0) != 0)
         return EXIT_FAILURE;
 
@@ -34,7 +36,8 @@ static int repairRights(const char *path) {
     return EXIT_SUCCESS;
 }
 
-static int doCommandWithPath(const char *cmd, const char *path) {
+static int doCommandWithPath(const char *cmd, const char *path)
+{
     NSString *command = [NSString stringWithFormat:@"%@ \"%@\"",
                                                    [NSString stringWithUTF8String:cmd],
                                                    [NSString stringWithUTF8String:path]];
@@ -42,11 +45,13 @@ static int doCommandWithPath(const char *cmd, const char *path) {
     return system([command UTF8String]);
 }
 
-static BOOL repairDriverRights(const char *path) {
+static BOOL repairDriverRights(const char *path)
+{
     return doCommandWithPath("chown -R root:wheel", path) == EXIT_SUCCESS;
 }
 
-static int loadDriver(const char *path) {
+static int loadDriver(const char *path)
+{
     if (seteuid(0) != 0 || setuid(0) != 0)
         return EXIT_FAILURE;
 
@@ -55,17 +60,18 @@ static int loadDriver(const char *path) {
 
     OSReturn result = KextManagerLoadKextWithURL(
         (__bridge CFURLRef)[NSURL fileURLWithPath:[NSString stringWithUTF8String:path]],
-        NULL
-    );
+        NULL);
 
-    if (result == kOSReturnSuccess) {
+    if (result == kOSReturnSuccess)
+    {
         return EXIT_SUCCESS;
     }
 
     return EXIT_FAILURE;
 }
 
-static int unloadDriver(const char *path) {
+static int unloadDriver(const char *path)
+{
     if (seteuid(0) != 0 || setuid(0) != 0)
         return EXIT_FAILURE;
 
@@ -75,25 +81,29 @@ static int unloadDriver(const char *path) {
     return doCommandWithPath(KEXTUnloadCommand, path);
 }
 
-static WorkMode parseCommandLine(int argC, char *argV[]) {
+static WorkMode parseCommandLine(int argC, char *argV[])
+{
     if (argC != 2 && argC != 3)
         return WorkModeError;
 
-    if (strcmp([WJoyToolRepairRightsCommand UTF8String], argV[1]) == 0) {
+    if (strcmp([WJoyToolRepairRightsCommand UTF8String], argV[1]) == 0)
+    {
         if (argC == 3)
             return WorkModeError;
 
         return WorkModeRepairRights;
     }
 
-    if (strcmp([WJoyToolLoadDriverCommand UTF8String], argV[1]) == 0) {
+    if (strcmp([WJoyToolLoadDriverCommand UTF8String], argV[1]) == 0)
+    {
         if (argC == 2)
             return WorkModeError;
 
         return WorkModeLoadDriver;
     }
 
-    if (strcmp([WJoyToolUnloadDriverCommand UTF8String], argV[1]) == 0) {
+    if (strcmp([WJoyToolUnloadDriverCommand UTF8String], argV[1]) == 0)
+    {
         if (argC == 2)
             return WorkModeError;
 
@@ -103,26 +113,29 @@ static WorkMode parseCommandLine(int argC, char *argV[]) {
     return WorkModeError;
 }
 
-int main(int argC, char *argV[]) {
-    @autoreleasepool {
+int main(int argC, char *argV[])
+{
+    @autoreleasepool
+    {
         WorkMode mode = parseCommandLine(argC, argV);
         int result = EXIT_FAILURE;
 
-        switch (mode) {
-            case WorkModeRepairRights:
-                result = repairRights(argV[0]);
-                break;
+        switch (mode)
+        {
+        case WorkModeRepairRights:
+            result = repairRights(argV[0]);
+            break;
 
-            case WorkModeLoadDriver:
-                result = loadDriver(argV[2]);
-                break;
+        case WorkModeLoadDriver:
+            result = loadDriver(argV[2]);
+            break;
 
-            case WorkModeUnloadDriver:
-                result = unloadDriver(argV[2]);
-                break;
+        case WorkModeUnloadDriver:
+            result = unloadDriver(argV[2]);
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
 
         return result;

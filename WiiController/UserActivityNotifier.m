@@ -10,11 +10,12 @@
 
 #import <IOKit/pwr_mgt/IOPMLib.h>
 
-@implementation UserActivityNotifier {
+@implementation UserActivityNotifier
+{
     IOPMAssertionID _pmAssertionID;
 }
 
-+ (UserActivityNotifier*)sharedNotifier
++ (UserActivityNotifier *)sharedNotifier
 {
     static UserActivityNotifier *result = nil;
     static dispatch_once_t once;
@@ -27,19 +28,18 @@
 - (id)init
 {
     self = [super init];
-    if(self == nil)
+    if (self == nil)
         return nil;
 
     _lastNotifyTime = [[NSDate alloc] init];
     return self;
 }
 
-
 - (void)notify
 {
     NSDate *now = [NSDate date];
 
-    if([now timeIntervalSinceDate:_lastNotifyTime] >= 5.0)
+    if ([now timeIntervalSinceDate:_lastNotifyTime] >= 5.0)
     {
         IOPMAssertionDeclareUserActivity(kIOPMAssertionTypePreventUserIdleDisplaySleep, kIOPMUserActiveLocal, &_pmAssertionID);
 

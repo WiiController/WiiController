@@ -10,26 +10,26 @@
 
 @class WJoyDeviceImpl;
 
-FOUNDATION_EXTERN NSString *WJoyDeviceVendorIDKey;           // NSNumber (NSUInteger as uint32_t)
-FOUNDATION_EXTERN NSString *WJoyDeviceProductIDKey;          // NSNumber (NSUInteger as uint32_t)
-FOUNDATION_EXTERN NSString *WJoyDeviceProductStringKey;      // NSString
+FOUNDATION_EXTERN NSString *WJoyDeviceVendorIDKey; // NSNumber (NSUInteger as uint32_t)
+FOUNDATION_EXTERN NSString *WJoyDeviceProductIDKey; // NSNumber (NSUInteger as uint32_t)
+FOUNDATION_EXTERN NSString *WJoyDeviceProductStringKey; // NSString
 FOUNDATION_EXTERN NSString *WJoyDeviceSerialNumberStringKey; // NSString
 
 @interface WJoyDevice : NSObject
 {
-    @private
-        WJoyDeviceImpl *_impl;
-        NSDictionary   *_properties;
+@private
+    WJoyDeviceImpl *_impl;
+    NSDictionary *_properties;
 }
 
 + (BOOL)prepare;
 
-- (id)initWithHIDDescriptor:(NSData*)HIDDescriptor;
-- (id)initWithHIDDescriptor:(NSData*)HIDDescriptor productString:(NSString*)productString;
-- (id)initWithHIDDescriptor:(NSData*)HIDDescriptor properties:(NSDictionary*)properties;
+- (id)initWithHIDDescriptor:(NSData *)HIDDescriptor;
+- (id)initWithHIDDescriptor:(NSData *)HIDDescriptor productString:(NSString *)productString;
+- (id)initWithHIDDescriptor:(NSData *)HIDDescriptor properties:(NSDictionary *)properties;
 
-- (NSDictionary*)properties;
+- (NSDictionary *)properties;
 
-- (BOOL)updateHIDState:(NSData*)HIDState;
+- (BOOL)updateHIDState:(NSData *)HIDState;
 
 @end

@@ -12,6 +12,6 @@
 
 @interface WiimoteAccelerometerPart : WiimotePart
 
-@property(nonatomic,readonly) WiimoteAccelerometer *accelerometer;
+@property(nonatomic, readonly) WiimoteAccelerometer *accelerometer;
 
 @end

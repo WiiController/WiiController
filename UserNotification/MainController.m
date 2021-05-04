@@ -109,10 +109,10 @@ typedef enum
 
     [UserNotificationCenter setSoundEnabled:[soundEnabledCheck state] == NSOnState];
     [center setCustomSettings:
-        [NSDictionary dictionaryWithObjectsAndKeys:
-            [NSNumber numberWithDouble:[durationSlider doubleValue]],   UserNotificationCenterTimeoutKey,
-            [NSNumber numberWithInt:[cornerView screenCorner]],         UserNotificationCenterScreenCornerKey,
-            nil]];
+        @{
+            UserNotificationCenterTimeoutKey: @(durationSlider.doubleValue),
+            UserNotificationCenterScreenCornerKey: @([cornerView screenCorner])
+        }];
 
     [center deliver:notification];
 

@@ -14,11 +14,11 @@
 @interface WiimoteExtension : NSObject
 {
     Wiimote *_owner;
-    WiimoteEventDispatcher  *_eventDispatcher;
+    WiimoteEventDispatcher *_eventDispatcher;
 }
 
-@property(nonatomic,readonly) Wiimote *owner;
+@property(nonatomic, readonly) Wiimote *owner;
 
-@property(nonatomic,readonly) NSString *name;
+@property(nonatomic, readonly) NSString *name;
 
 @end

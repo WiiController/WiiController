@@ -160,11 +160,11 @@
     [_currentAnimation stopAnimation];
 
     _currentAnimation = [[NSViewAnimation alloc] initWithViewAnimations:
-                            [NSArray arrayWithObject:
-                                [NSDictionary dictionaryWithObjectsAndKeys:
-                                    self,                           NSViewAnimationTargetKey,
-                                    NSViewAnimationFadeInEffect,    NSViewAnimationEffectKey,
-                                    nil]]];
+                            @[
+                                @{
+                                    NSViewAnimationTargetKey: self,
+                                    NSViewAnimationEffectKey: NSViewAnimationFadeInEffect,
+                                    }]];
 
     [_currentAnimation setDuration:0.25];
     [_currentAnimation setCurrentProgress:[self alphaValue]];
@@ -177,11 +177,11 @@
     [_currentAnimation stopAnimation];
 
     _currentAnimation = [[NSViewAnimation alloc] initWithViewAnimations:
-                            [NSArray arrayWithObject:
-                                [NSDictionary dictionaryWithObjectsAndKeys:
-                                    self,                           NSViewAnimationTargetKey,
-                                    NSViewAnimationFadeOutEffect,   NSViewAnimationEffectKey,
-                                    nil]]];
+                            @[
+                                @{
+                                    NSViewAnimationTargetKey: self,
+                                    NSViewAnimationEffectKey: NSViewAnimationFadeOutEffect,
+                                    }]];
 
     [_currentAnimation setDuration:0.25];
     [_currentAnimation setDelegate:(id)self];

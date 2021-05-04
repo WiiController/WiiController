@@ -20,21 +20,16 @@
 #import "WiimoteAccelerometerPart.h"
 #import "WiimoteExtensionPart.h"
 
-NSString *WiimoteBeginDiscoveryNotification                     = @"WiimoteBeginDiscoveryNotification";
-NSString *WiimoteEndDiscoveryNotification                       = @"WiimoteEndDiscoveryNotification";
+NSString *WiimoteBeginDiscoveryNotification = @"WiimoteBeginDiscoveryNotification";
+NSString *WiimoteEndDiscoveryNotification = @"WiimoteEndDiscoveryNotification";
 
 NSString *WiimoteUseOneButtonClickConnectionChangedNotification = @"WiimoteUseOneButtonClickConnectionChangedNotification";
 
-NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOneButtonClickConnectionKey";
+NSString *WiimoteUseOneButtonClickConnectionKey = @"WiimoteUseOneButtonClickConnectionKey";
 
 @implementation Wiimote
 
-+ (BOOL)isBluetoothEnabled
-{
-    return [WiimoteInquiry isBluetoothEnabled];
-}
-
-+ (NSArray*)supportedModelNames
++ (NSArray *)supportedModelNames
 {
     return [WiimoteInquiry supportedModelNames];
 }
@@ -46,17 +41,17 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
 
 + (void)setUseOneButtonClickConnection:(BOOL)useOneButtonClickConnection
 {
-    if([Wiimote isUseOneButtonClickConnection] == useOneButtonClickConnection)
+    if ([Wiimote isUseOneButtonClickConnection] == useOneButtonClickConnection)
         return;
 
-    NSDictionary *userInfo = @{WiimoteUseOneButtonClickConnectionKey: @(useOneButtonClickConnection)};
+    NSDictionary *userInfo = @{ WiimoteUseOneButtonClickConnectionKey : @(useOneButtonClickConnection) };
 
     [[WiimoteInquiry sharedInquiry] setUseOneButtonClickConnection:useOneButtonClickConnection];
 
     [[NSNotificationCenter defaultCenter]
-                            postNotificationName:WiimoteUseOneButtonClickConnectionChangedNotification
-                                          object:nil
-                                        userInfo:userInfo];
+        postNotificationName:WiimoteUseOneButtonClickConnectionChangedNotification
+                      object:nil
+                    userInfo:userInfo];
 }
 
 + (BOOL)isDiscovering
@@ -66,16 +61,16 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
 
 + (BOOL)beginDiscovery
 {
-    if(![[WiimoteInquiry sharedInquiry]
-                                startWithTarget:self
-                                   didEndAction:@selector(discoveryFinished)])
+    if (![[WiimoteInquiry sharedInquiry]
+            startWithTarget:self
+               didEndAction:@selector(discoveryFinished)])
     {
         return NO;
     }
 
     [[NSNotificationCenter defaultCenter]
-                            postNotificationName:WiimoteBeginDiscoveryNotification
-                                          object:self];
+        postNotificationName:WiimoteBeginDiscoveryNotification
+                      object:self];
 
     return YES;
 }
@@ -83,18 +78,18 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
 + (void)discoveryFinished
 {
     [[NSNotificationCenter defaultCenter]
-                            postNotificationName:WiimoteEndDiscoveryNotification
-                                          object:self];
+        postNotificationName:WiimoteEndDiscoveryNotification
+                      object:self];
 }
 
-+ (NSArray*)connectedDevices
++ (NSArray *)connectedDevices
 {
     return [Wiimote connectedWiimotes];
 }
 
 - (BOOL)isConnected
 {
-    return [_device isConnected];
+    return _device.transport.isOpen;
 }
 
 - (void)disconnect
@@ -104,7 +99,7 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
 
 - (BOOL)isWiiUProController
 {
-	return [_modelName isEqualToString:WiimoteDeviceNameUPro];
+    return [_modelName isEqualToString:WiimoteDeviceNameUPro];
 }
 
 - (BOOL)isBalanceBoard
@@ -112,17 +107,17 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
     return [_modelName isEqualToString:WiimoteDeviceNameBalanceBoard];
 }
 
-- (NSData*)address
+- (NSData *)address
 {
-    return [_device address];
+    return _device.transport.address;
 }
 
-- (NSString*)addressString
+- (NSString *)addressString
 {
-    return [_device addressString];
+    return _device.transport.addressString;
 }
 
-- (NSString*)modelName
+- (NSString *)modelName
 {
     return _modelName;
 }
@@ -130,11 +125,12 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
 - (NSString *)marketingName
 {
     return @{
-        WiimoteDeviceName: @"Wii Remote",
-        WiimoteDeviceNameTR: @"Wii Remote Plus",
-        WiimoteDeviceNameUPro: @"Wii U Pro Controller",
-        WiimoteDeviceNameBalanceBoard: @"Wii Balance Board"
-    }[_modelName] ?: _modelName;
+        WiimoteDeviceName : @"Wii Remote",
+        WiimoteDeviceNameTR : @"Wii Remote Plus",
+        WiimoteDeviceNameUPro : @"Wii U Pro Controller",
+        WiimoteDeviceNameBalanceBoard : @"Wii Balance Board"
+    }[_modelName]
+        ?: _modelName;
 }
 
 - (void)playConnectEffect
@@ -174,12 +170,11 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
     return [_batteryPart batteryLevel];
 }
 
-- (NSString*)batteryLevelDescription
+- (NSString *)batteryLevelDescription
 {
     __auto_type batteryLevel = [self batteryLevel];
-    return batteryLevel >= 0.0 ?
-        [NSString stringWithFormat:@"%.0lf%%", batteryLevel]
-        : @"–";
+    return batteryLevel >= 0.0 ? [NSString stringWithFormat:@"%.0lf%%", batteryLevel]
+                               : @"–";
 }
 
 - (BOOL)isBatteryLevelLow
@@ -197,17 +192,17 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
     [_iRPart setEnabled:enabled];
 }
 
-- (WiimoteIRPoint*)irPoint:(NSUInteger)index
+- (WiimoteIRPoint *)irPoint:(NSUInteger)index
 {
     return [_iRPart point:index];
 }
 
-- (WiimoteAccelerometer*)accelerometer
+- (WiimoteAccelerometer *)accelerometer
 {
     return [_accelerometerPart accelerometer];
 }
 
-- (WiimoteExtension*)connectedExtension
+- (WiimoteExtension *)connectedExtension
 {
     return [_extensionPart connectedExtension];
 }
@@ -219,7 +214,7 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
 
 - (void)reconnectExtension
 {
-	[_extensionPart reconnectExtension];
+    [_extensionPart reconnectExtension];
 }
 
 - (void)disconnectExtension
@@ -242,14 +237,14 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
     [[_partSet eventDispatcher] setStateNotificationsEnabled:enabled];
 }
 
-- (NSDictionary*)userInfo
+- (NSDictionary *)userInfo
 {
     return _userInfo;
 }
 
-- (void)setUserInfo:(NSDictionary*)userInfo
+- (void)setUserInfo:(NSDictionary *)userInfo
 {
-    if(_userInfo == userInfo)
+    if (_userInfo == userInfo)
         return;
 
     _userInfo = userInfo;

@@ -13,7 +13,7 @@
 - (id)init
 {
     self = [super init];
-    if(self == nil)
+    if (self == nil)
         return nil;
 
     _authRef = NULL;
@@ -33,33 +33,32 @@
 
 - (BOOL)obtain
 {
-    if([self isObtained])
+    if ([self isObtained])
         return YES;
 
-	AuthorizationItem   right       = { "com.alxn1.wjoy.adminRights", 0, NULL, 0 };
-	AuthorizationRights rightSet    = { 1, &right };
+    AuthorizationItem right = { "com.alxn1.wjoy.adminRights", 0, NULL, 0 };
+    AuthorizationRights rightSet = { 1, &right };
 
-    if(AuthorizationCreate(
-                         NULL,
-                         kAuthorizationEmptyEnvironment,
-                         kAuthorizationFlagDefaults,
-                        &_authRef) != noErr)
+    if (AuthorizationCreate(
+            NULL,
+            kAuthorizationEmptyEnvironment,
+            kAuthorizationFlagDefaults,
+            &_authRef)
+        != noErr)
     {
         _authRef = NULL;
         return NO;
     }
 
-	AuthorizationFlags flags = kAuthorizationFlagDefaults |
-                               kAuthorizationFlagExtendRights |
-                               kAuthorizationFlagInteractionAllowed |
-                               kAuthorizationFlagPreAuthorize;
+    AuthorizationFlags flags = kAuthorizationFlagDefaults | kAuthorizationFlagExtendRights | kAuthorizationFlagInteractionAllowed | kAuthorizationFlagPreAuthorize;
 
-	if(AuthorizationCopyRights(
-                         _authRef,
-                        &rightSet, 
-                         kAuthorizationEmptyEnvironment,
-                         flags,
-                         NULL) != noErr)
+    if (AuthorizationCopyRights(
+            _authRef,
+            &rightSet,
+            kAuthorizationEmptyEnvironment,
+            flags,
+            NULL)
+        != noErr)
     {
         [self discard];
         return NO;
@@ -70,7 +69,7 @@
 
 - (void)discard
 {
-    if(![self isObtained])
+    if (![self isObtained])
         return;
 
     AuthorizationFree(_authRef, kAuthorizationFlagDestroyRights);

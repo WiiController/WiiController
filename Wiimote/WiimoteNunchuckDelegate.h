@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-#define WiimoteNunchuckButtonCount    2
-#define WiimoteNunchuckStickCount     1
+#define WiimoteNunchuckButtonCount 2
+#define WiimoteNunchuckStickCount 1
 
 typedef enum : NSInteger
 {
-	WiimoteNunchuckButtonTypeC      = 0,
-	WiimoteNunchuckButtonTypeZ      = 1
+    WiimoteNunchuckButtonTypeC = 0,
+    WiimoteNunchuckButtonTypeZ = 1
 } WiimoteNunchuckButtonType;
 
 FOUNDATION_EXPORT NSString *WiimoteNunchuckButtonPressedNotification;
@@ -37,24 +37,24 @@ FOUNDATION_EXPORT NSString *WiimoteNunchuckAccelerometerRollKey;
 @class WiimoteExtension;
 @class WiimoteAccelerometer;
 
-@protocol WiimoteNunchuckProtocol
+@protocol WiimoteNunchuckProtocol <NSObject>
 
 - (NSPoint)stickPosition;
 - (BOOL)isButtonPressed:(WiimoteNunchuckButtonType)button;
 
-- (WiimoteAccelerometer*)accelerometer;
+@property(nonatomic, readonly) WiimoteAccelerometer *accelerometer;
 
 @end
 
 typedef WiimoteExtension<WiimoteNunchuckProtocol> WiimoteNunchuckExtension;
 
-@interface NSObject (WiimoteNunchuckDelegate)
+@protocol WiimoteNunchuckDelegate <NSObject>
 
-- (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck buttonPressed:(WiimoteNunchuckButtonType)button;
-- (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck buttonReleased:(WiimoteNunchuckButtonType)button;
-- (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck stickPositionChanged:(NSPoint)position;
-- (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerEnabledStateChanged:(BOOL)enabled;
-- (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerChangedGravityX:(CGFloat)x y:(CGFloat)y z:(CGFloat)z;
-- (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerChangedPitch:(CGFloat)pitch roll:(CGFloat)roll;
+- (void)wiimote:(Wiimote *)wiimote nunchuck:(WiimoteNunchuckExtension *)nunchuck buttonPressed:(WiimoteNunchuckButtonType)button;
+- (void)wiimote:(Wiimote *)wiimote nunchuck:(WiimoteNunchuckExtension *)nunchuck buttonReleased:(WiimoteNunchuckButtonType)button;
+- (void)wiimote:(Wiimote *)wiimote nunchuck:(WiimoteNunchuckExtension *)nunchuck stickPositionChanged:(NSPoint)position;
+- (void)wiimote:(Wiimote *)wiimote nunchuck:(WiimoteNunchuckExtension *)nunchuck accelerometerEnabledStateChanged:(BOOL)enabled;
+- (void)wiimote:(Wiimote *)wiimote nunchuck:(WiimoteNunchuckExtension *)nunchuck accelerometerChangedGravityX:(CGFloat)x y:(CGFloat)y z:(CGFloat)z;
+- (void)wiimote:(Wiimote *)wiimote nunchuck:(WiimoteNunchuckExtension *)nunchuck accelerometerChangedPitch:(CGFloat)pitch roll:(CGFloat)roll;
 
 @end

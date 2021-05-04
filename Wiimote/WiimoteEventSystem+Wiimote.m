@@ -12,38 +12,37 @@
 + (void)load
 {
     [WiimoteEventSystem
-            registerNotification:WiimoteConnectedNotification
-                        selector:@selector(wiimoteConnectedNotification:)];
+        registerNotification:WiimoteConnectedNotification
+                    selector:@selector(wiimoteConnectedNotification:)];
 
     [WiimoteEventSystem
-            registerNotification:WiimoteExtensionConnectedNotification
-                        selector:@selector(wiimoteExtensionConnectedNotification:)];
+        registerNotification:WiimoteExtensionConnectedNotification
+                    selector:@selector(wiimoteExtensionConnectedNotification:)];
 
     [WiimoteEventSystem
-            registerNotification:WiimoteExtensionDisconnectedNotification
-                        selector:@selector(wiimoteExtensionDisconnectedNotification:)];
+        registerNotification:WiimoteExtensionDisconnectedNotification
+                    selector:@selector(wiimoteExtensionDisconnectedNotification:)];
 
     [WiimoteEventSystem
-            registerNotification:WiimoteDisconnectedNotification
-                        selector:@selector(wiimoteDisconnectedNotification:)];
+        registerNotification:WiimoteDisconnectedNotification
+                    selector:@selector(wiimoteDisconnectedNotification:)];
 
     [WiimoteEventSystem
-            registerNotification:WiimoteButtonPresedNotification
-                        selector:@selector(wiimoteButtonPressedNotification:)];
+        registerNotification:WiimoteButtonPresedNotification
+                    selector:@selector(wiimoteButtonPressedNotification:)];
 
     [WiimoteEventSystem
-            registerNotification:WiimoteButtonReleasedNotification
-                        selector:@selector(wiimoteButtonReleasedNotification:)];
+        registerNotification:WiimoteButtonReleasedNotification
+                    selector:@selector(wiimoteButtonReleasedNotification:)];
 
     [WiimoteEventSystem
-            registerNotification:WiimoteAccelerometerAnglesChangedNotification
-                        selector:@selector(wiimoteAccelerometerAnglesChangedNotification:)];
+        registerNotification:WiimoteAccelerometerAnglesChangedNotification
+                    selector:@selector(wiimoteAccelerometerAnglesChangedNotification:)];
 }
 
-- (NSString*)pathForWiimoteButton:(NSDictionary*)userInfo
+- (NSString *)pathForWiimoteButton:(NSDictionary *)userInfo
 {
-    static NSString *result[] =
-    {
+    static NSString *result[] = {
         @"Button.Left",
         @"Button.Right",
         @"Button.Up",
@@ -62,14 +61,14 @@
     return result[type];
 }
 
-- (void)wiimoteConnectedNotification:(NSNotification*)notification
+- (void)wiimoteConnectedNotification:(NSNotification *)notification
 {
     [self postEventForWiimote:[notification object]
                          path:@"Connect"
                         value:WIIMOTE_EVENT_VALUE_CONNECT];
 }
 
-- (void)wiimoteExtensionConnectedNotification:(NSNotification*)notification
+- (void)wiimoteExtensionConnectedNotification:(NSNotification *)notification
 {
     WiimoteExtension *extension = [[notification userInfo] objectForKey:WiimoteExtensionKey];
 
@@ -78,7 +77,7 @@
                                  value:WIIMOTE_EVENT_VALUE_CONNECT];
 }
 
-- (void)wiimoteExtensionDisconnectedNotification:(NSNotification*)notification
+- (void)wiimoteExtensionDisconnectedNotification:(NSNotification *)notification
 {
     WiimoteExtension *extension = [[notification userInfo] objectForKey:WiimoteExtensionKey];
 
@@ -87,31 +86,31 @@
                                  value:WIIMOTE_EVENT_VALUE_DISCONNECT];
 }
 
-- (void)wiimoteDisconnectedNotification:(NSNotification*)notification
+- (void)wiimoteDisconnectedNotification:(NSNotification *)notification
 {
     [self postEventForWiimote:[notification object]
                          path:@"Disconnect"
                         value:WIIMOTE_EVENT_VALUE_DISCONNECT];
 }
 
-- (void)wiimoteButtonPressedNotification:(NSNotification*)notification
+- (void)wiimoteButtonPressedNotification:(NSNotification *)notification
 {
     [self postEventForWiimote:[notification object]
                          path:[self pathForWiimoteButton:[notification userInfo]]
                         value:WIIMOTE_EVENT_VALUE_PRESS];
 }
 
-- (void)wiimoteButtonReleasedNotification:(NSNotification*)notification
+- (void)wiimoteButtonReleasedNotification:(NSNotification *)notification
 {
     [self postEventForWiimote:[notification object]
                          path:[self pathForWiimoteButton:[notification userInfo]]
                         value:WIIMOTE_EVENT_VALUE_RELEASE];
 }
 
-- (void)wiimoteAccelerometerAnglesChangedNotification:(NSNotification*)notification
+- (void)wiimoteAccelerometerAnglesChangedNotification:(NSNotification *)notification
 {
     CGFloat pitch = [[[notification userInfo] objectForKey:WiimoteAccelerometerPitchKey] doubleValue];
-    CGFloat roll  = [[[notification userInfo] objectForKey:WiimoteAccelerometerRollKey] doubleValue];
+    CGFloat roll = [[[notification userInfo] objectForKey:WiimoteAccelerometerRollKey] doubleValue];
 
     [self postEventForWiimote:[notification object] path:@"Accelerometer.Pitch" value:pitch];
     [self postEventForWiimote:[notification object] path:@"Accelerometer.Roll" value:roll];

@@ -5,9 +5,6 @@
       location = "group:Wiimote/Wiimote.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:ObjCDebug/ObjCDebug.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:VHID/VHID.xcodeproj">
    </FileRef>
    <FileRef
@@ -17,9 +14,6 @@
       location = "group:WirtualJoy/WirtualJoy.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:LocalizationUtils/LocalizationUtils.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:WiiController/WiiController.xcodeproj">
    </FileRef>
    <FileRef
@@ -27,8 +21,5 @@
    </FileRef>
    <FileRef
       location = "group:UserNotification/UserNotification.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:DMGEULA/DMGEULA.xcodeproj">
    </FileRef>
 </Workspace>

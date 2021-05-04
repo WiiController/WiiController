@@ -16,29 +16,29 @@
 @protocol W_HIDDeviceDelegate <NSObject>
 
 @optional
-- (void)HIDDevice:(W_HIDDevice*)device reportDataReceived:(const uint8_t*)bytes length:(NSUInteger)length;
-- (void)HIDDeviceDisconnected:(W_HIDDevice*)device;
+- (void)HIDDevice:(W_HIDDevice *)device reportDataReceived:(const uint8_t *)bytes length:(NSUInteger)length;
+- (void)HIDDeviceDisconnected:(W_HIDDevice *)device;
 
 @end
 
 @interface W_HIDDevice : NSObject
 
-@property(nonatomic,readonly) HIDManager *owner;
+@property(nonatomic, readonly) HIDManager *owner;
 
-@property(nonatomic,readonly) BOOL isValid;
+@property(nonatomic, readonly) BOOL isValid;
 - (void)invalidate;
 
 // only kIOHIDOptionsTypeNone or kIOHIDOptionsTypeSeizeDevice
-@property(nonatomic,readonly) IOOptionBits options;
+@property(nonatomic, readonly) IOOptionBits options;
 - (BOOL)setOptions:(IOOptionBits)options;
 
-@property(nonatomic,readonly) NSDictionary *properties;
+@property(nonatomic, readonly) NSDictionary *properties;
 
-- (BOOL)postBytes:(const uint8_t*)bytes length:(NSUInteger)length;
+- (BOOL)postBytes:(const uint8_t *)bytes length:(NSUInteger)length;
 
-@property(nonatomic) id <W_HIDDeviceDelegate> delegate;
+@property(nonatomic, weak) id<W_HIDDeviceDelegate> delegate;
 
-@property(nonatomic,readonly) NSString *name;
-@property(nonatomic,readonly) NSString *address;
+@property(nonatomic, readonly) NSString *name;
+@property(nonatomic, readonly) NSString *address;
 
 @end

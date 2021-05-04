@@ -15,27 +15,32 @@
 
 #define WJoyDeviceDriverName @"wjoy.kext"
 
-static NSBundle* wirtualJoyBundle(void) {
+static NSBundle *wirtualJoyBundle(void)
+{
     return [NSBundle bundleForClass:[WJoyTool class]];
 }
 
-static NSString* toolPath(void) {
+static NSString *toolPath(void)
+{
     return [[wirtualJoyBundle() resourcePath] stringByAppendingPathComponent:WJoyToolName];
 }
 
-static NSString* driverPath(void) {
+static NSString *driverPath(void)
+{
     return [[wirtualJoyBundle() resourcePath] stringByAppendingPathComponent:WJoyDeviceDriverName];
 }
 
 /// Attempts to run WJoyTool as root, given @c arguments.
 /// Prompts the user for admin permission first.
-static BOOL runToolWithArguments(NSArray<NSString*> *arguments) {
+static BOOL runToolWithArguments(NSArray<NSString *> *arguments)
+{
     STPrivilegedTask *task = [[STPrivilegedTask alloc] init];
 
     [task setLaunchPath:toolPath()];
     [task setArguments:arguments];
     OSStatus err = [task launch];
-    if (err != errAuthorizationSuccess) {
+    if (err != errAuthorizationSuccess)
+    {
         return NO;
     }
 
@@ -46,21 +51,24 @@ static BOOL runToolWithArguments(NSArray<NSString*> *arguments) {
     return result;
 }
 
-static BOOL actuallyRunLoadOrUnloadToolCommand(NSString *command) {
-    return runToolWithArguments(@[command, driverPath()]);
+static BOOL actuallyRunLoadOrUnloadToolCommand(NSString *command)
+{
+    return runToolWithArguments(@[ command, driverPath() ]);
 }
 
 /// Attempts to run the tool's self-repair action (`WJoyToolRepairRightsCommand`).
-static BOOL runSelfRepairToolCommand(void) {
-    return runToolWithArguments(@[WJoyToolRepairRightsCommand]);
+static BOOL runSelfRepairToolCommand(void)
+{
+    return runToolWithArguments(@[ WJoyToolRepairRightsCommand ]);
 }
 
 /// Attempts to run load or unload @c command.
-static BOOL runLoadOrUnloadToolCommand(NSString *command) {
-    if(actuallyRunLoadOrUnloadToolCommand(command))
+static BOOL runLoadOrUnloadToolCommand(NSString *command)
+{
+    if (actuallyRunLoadOrUnloadToolCommand(command))
         return YES;
 
-    if(!runSelfRepairToolCommand())
+    if (!runSelfRepairToolCommand())
         return NO;
 
     return actuallyRunLoadOrUnloadToolCommand(command);
@@ -77,7 +85,7 @@ static BOOL runLoadOrUnloadToolCommand(NSString *command) {
 {
     // This was patched out a long time ago, for macOS 10.8.
     // I don't know exactly why.
-	return YES;
+    return YES;
 }
 
 @end

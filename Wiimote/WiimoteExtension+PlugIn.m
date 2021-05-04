@@ -24,11 +24,11 @@
 {
     static NSUInteger result = 0;
 
-    if(result == 0)
+    if (result == 0)
     {
         result = [WiimoteExtension
-                        nextFreedomMeritInClass:
-                                WiimoteExtensionMeritClassUnknown];
+            nextFreedomMeritInClass:
+                WiimoteExtensionMeritClassUnknown];
     }
 
     return result;
@@ -39,36 +39,36 @@
     return 0;
 }
 
-+ (void)probe:(WiimoteIOManager*)ioManager
++ (void)probe:(WiimoteIOManager *)ioManager
        target:(id)target
        action:(SEL)action
 {
     [WiimoteExtension probeFinished:NO target:target action:action];
 }
 
-- (id)initWithOwner:(Wiimote*)owner
-    eventDispatcher:(WiimoteEventDispatcher*)dispatcher
+- (id)initWithOwner:(Wiimote *)owner
+    eventDispatcher:(WiimoteEventDispatcher *)dispatcher
 {
     self = [super init];
-    if(self == nil)
+    if (self == nil)
         return nil;
 
-    _owner             = owner;
-    _eventDispatcher   = dispatcher;
+    _owner = owner;
+    _eventDispatcher = dispatcher;
 
     return self;
 }
 
-- (WiimoteEventDispatcher*)eventDispatcher
+- (WiimoteEventDispatcher *)eventDispatcher
 {
     return _eventDispatcher;
 }
 
-- (void)calibrate:(WiimoteIOManager*)ioManager
+- (void)calibrate:(WiimoteIOManager *)ioManager
 {
 }
 
-- (void)handleReport:(const uint8_t*)extensionData length:(NSUInteger)length
+- (void)handleReport:(const uint8_t *)extensionData length:(NSUInteger)length
 {
 }
 
@@ -80,22 +80,16 @@
 
 @implementation WiimoteExtension (CalibrationUtils)
 
-- (void)ioManagerCalibrationDataReaded:(NSData*)data
-{
-    if(data != nil)
-    {
-        [self handleCalibrationData:(const uint8_t*)[data bytes]
-                             length:[data length]];
-    }
-}
-
-- (BOOL)beginReadCalibrationData:(WiimoteIOManager*)ioManager
+- (BOOL)beginReadCalibrationData:(WiimoteIOManager *)ioManager
                      memoryRange:(NSRange)memoryRange
 {
 
-    if(![ioManager readMemory:memoryRange
-                       target:self
-                       action:@selector(ioManagerCalibrationDataReaded:)])
+    BOOL success = [ioManager readMemory:memoryRange then:^(NSData *data) {
+        if (!data) return;
+        [self handleCalibrationData:(const uint8_t *)data.bytes length:data.length];
+    }];
+
+    if (!success)
     {
         W_ERROR(@"[WiimoteIOManager readMemory: target: action:] failed");
 
@@ -105,7 +99,7 @@
     return YES;
 }
 
-- (void)handleCalibrationData:(const uint8_t*)data length:(NSUInteger)length
+- (void)handleCalibrationData:(const uint8_t *)data length:(NSUInteger)length
 {
 }
 
@@ -116,32 +110,31 @@
 + (NSUInteger)nextFreedomMeritInClass:(WiimoteExtensionMeritClass)meritClass
 {
     static NSMutableDictionary *counterDict = nil;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        counterDict = [NSMutableDictionary dictionaryWithCapacity:5];
+    });
 
-    if(counterDict == nil)
-        counterDict = [[NSMutableDictionary alloc] initWithCapacity:5];
+    NSNumber *key = @(meritClass);
+    NSNumber *merit = counterDict[key];
 
-    NSNumber *key   = [NSNumber numberWithInteger:meritClass];
-    NSNumber *merit = [counterDict objectForKey:key];
-
-    if(merit == nil)
-        merit = [NSNumber numberWithInteger:meritClass + 1];
+    if (merit) merit = @(merit.integerValue + 1);
     else
-        merit = [NSNumber numberWithInteger:[merit integerValue] + 1];
+        merit = @(meritClass + 1);
 
-    [counterDict setObject:merit forKey:key];
+    counterDict[key] = merit;
 
-    return [merit integerValue];
+    return merit.integerValue;
 }
 
 + (void)probeFinished:(BOOL)result
                target:(id)target
                action:(SEL)action
 {
-    if(target == nil || action == nil)
-        return;
+    if (!target || !action) return;
 
     [target performSelector:action
-                 withObject:[NSNumber numberWithBool:result]
+                 withObject:@(result)
                  afterDelay:0.0];
 }
 
@@ -149,7 +142,7 @@
 
 @implementation WiimoteExtension (SubExtension)
 
-- (void)setSubExtension:(WiimoteExtension*)extension
+- (void)setSubExtension:(WiimoteExtension *)extension
 {
 }
 
@@ -167,7 +160,7 @@
     return WiimoteDeviceMotionPlusModeOther;
 }
 
-- (void)handleMotionPlusReport:(const uint8_t*)extensionData
+- (void)handleMotionPlusReport:(const uint8_t *)extensionData
                         length:(NSUInteger)length
 {
 }

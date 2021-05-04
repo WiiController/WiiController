@@ -9,7 +9,7 @@
 #import "WiimoteLog.h"
 
 #ifndef WIIMOTE_USE_STDOUT_LOG
-    #import <OCLog/OCLog.h>
+#import <OCLog/OCLog.h>
 #endif
 
 @implementation WiimoteLog
@@ -17,29 +17,29 @@
     WiimoteLogLevel _level;
 }
 
-+ (NSString*)levelAsString:(WiimoteLogLevel)level
++ (NSString *)levelAsString:(WiimoteLogLevel)level
 {
     NSString *result = @"UNKNOWN";
 
-    switch(level)
+    switch (level)
     {
-        case WiimoteLogLevelError:
-            result = @"ERROR";
-            break;
+    case WiimoteLogLevelError:
+        result = @"ERROR";
+        break;
 
-        case WiimoteLogLevelWarning:
-            result = @"WARNING";
-            break;
+    case WiimoteLogLevelWarning:
+        result = @"WARNING";
+        break;
 
-        case WiimoteLogLevelDebug:
-            result = @"DEBUG";
-            break;
+    case WiimoteLogLevelDebug:
+        result = @"DEBUG";
+        break;
     }
 
     return result;
 }
 
-+ (WiimoteLog*)sharedLog
++ (WiimoteLog *)sharedLog
 {
     static WiimoteLog *result = nil;
     static dispatch_once_t once;
@@ -53,7 +53,7 @@
 {
     self = [super init];
 
-    if(self == nil)
+    if (self == nil)
         return nil;
 
     _level = WiimoteLogLevelError;
@@ -67,17 +67,18 @@
 {
     OCLogLevel result = OCLogLevelDebug;
 
-    switch(level) {
-        case WiimoteLogLevelWarning:
-            result = OCLogLevelWarning;
-            break;
+    switch (level)
+    {
+    case WiimoteLogLevelWarning:
+        result = OCLogLevelWarning;
+        break;
 
-        case WiimoteLogLevelError:
-            result = OCLogLevelError;
-            break;
+    case WiimoteLogLevelError:
+        result = OCLogLevelError;
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return result;
@@ -87,17 +88,18 @@
 {
     WiimoteLogLevel result = WiimoteLogLevelDebug;
 
-    switch(level) {
-        case OCLogLevelWarning:
-            result = WiimoteLogLevelWarning;
-            break;
+    switch (level)
+    {
+    case OCLogLevelWarning:
+        result = WiimoteLogLevelWarning;
+        break;
 
-        case OCLogLevelError:
-            result = WiimoteLogLevelError;
-            break;
+    case OCLogLevelError:
+        result = WiimoteLogLevelError;
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return result;
@@ -124,27 +126,25 @@
 }
 
 - (void)level:(WiimoteLogLevel)level
-   sourceFile:(const char*)sourceFile
-         line:(NSUInteger)line
- functionName:(const char*)functionName
-      message:(NSString*)message
+      sourceFile:(const char *)sourceFile
+            line:(NSUInteger)line
+    functionName:(const char *)functionName
+         message:(NSString *)message
 {
 #ifndef WIIMOTE_USE_STDOUT_LOG
 
     [[OCLog sharedLog]
-                    level:[self ocLogLevel:level]
-               sourceFile:sourceFile
-                     line:line
-             functionName:functionName
-                  message:message];
+               level:[self ocLogLevel:level]
+          sourceFile:sourceFile
+                line:line
+        functionName:functionName
+             message:message];
 
 #else /* WIIMOTE_USE_STDOUT_LOG */
 
-    NSLog(@"%@: %s (%llu) [%s]: %@",
-        [WiimoteLog levelAsString:level], sourceFile, (unsigned long long)line, functionName, message);
+    NSLog(@"%@: %s (%llu) [%s]: %@", [WiimoteLog levelAsString:level], sourceFile, (unsigned long long)line, functionName, message);
 
 #endif /* WIIMOTE_USE_STDOUT_LOG */
 }
 
 @end
-

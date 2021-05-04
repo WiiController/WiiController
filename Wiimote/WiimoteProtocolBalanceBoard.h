@@ -7,7 +7,7 @@
 //
 
 #define WiimoteBalanceBoardCalibrationDataAddress 0x04A40024
-#define WiimoteBalanceBoardCalibrationDataSize    24
+#define WiimoteBalanceBoardCalibrationDataSize 24
 
 typedef struct
 {

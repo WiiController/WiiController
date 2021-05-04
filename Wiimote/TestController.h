@@ -10,16 +10,16 @@
 
 #import <OCLog/OCLog.h>
 
-@interface TestController : NSObject< OCLogHandler >
+@interface TestController : NSObject <OCLogHandler>
 {
-    @private
-        IBOutlet NSTextView     *_log;
-        IBOutlet NSButton       *_discoveryButton;
-        IBOutlet NSTextField    *_connectedTextField;
-        IBOutlet NSButton       *_debugCheckBox;
+@private
+    IBOutlet NSTextView *_log;
+    IBOutlet NSButton *_discoveryButton;
+    IBOutlet NSTextField *_connectedTextField;
+    IBOutlet NSButton *_debugCheckBox;
 
-        NSUInteger               _connectedWiimotes;
-        BOOL                     _isDiscovering;
+    NSUInteger _connectedWiimotes;
+    BOOL _isDiscovering;
 }
 
 - (IBAction)toggleUseOneButtonClickConnection:(id)sender;

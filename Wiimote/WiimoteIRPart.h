@@ -12,7 +12,7 @@
 
 @interface WiimoteIRPart : WiimotePart
 
-@property(nonatomic,getter=isEnabled) BOOL enabled;
+@property(nonatomic, getter=isEnabled) BOOL enabled;
 
 - (WiimoteIRPoint*)point:(NSUInteger)index;
 

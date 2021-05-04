@@ -14,17 +14,18 @@
 @interface WiimoteIOManager : NSObject
 
 - (BOOL)postCommand:(WiimoteDeviceCommandType)command
-			   data:(const uint8_t*)data
+               data:(const uint8_t *)data
              length:(NSUInteger)length;
 
 - (BOOL)writeMemory:(NSUInteger)address
-			   data:(const uint8_t*)data
+               data:(const uint8_t *)data
              length:(NSUInteger)length;
 
-- (BOOL)readMemory:(NSRange)memoryRange
-			target:(id)target
-			action:(SEL)action;
+typedef void (^WiimoteIOManagerReadMemoryCallback)(NSData *);
 
-@property(nonatomic,readonly) Wiimote *owner;
+- (BOOL)readMemory:(NSRange)memoryRange
+              then:(WiimoteIOManagerReadMemoryCallback)callback;
+
+@property(nonatomic, readonly) Wiimote *owner;
 
 @end

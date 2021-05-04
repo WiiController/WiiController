@@ -19,7 +19,7 @@ FOUNDATION_EXPORT NSString *WiimoteUDrawPenPressureKey;
 @class Wiimote;
 @class WiimoteExtension;
 
-@protocol WiimoteUDrawProtocol
+@protocol WiimoteUDrawProtocol <NSObject>
 
 - (BOOL)isPenPressed;
 - (NSPoint)penPosition;
@@ -32,21 +32,21 @@ typedef WiimoteExtension<WiimoteUDrawProtocol> WiimoteUDrawExtension;
 
 @interface NSObject (WiimoteUDrawDelegate)
 
-- (void)        wiimote:(Wiimote*)wiimote
-        uDrawPenPressed:(WiimoteUDrawExtension*)uDraw;
+- (void)wiimote:(Wiimote *)wiimote
+    uDrawPenPressed:(WiimoteUDrawExtension *)uDraw;
 
-- (void)        wiimote:(Wiimote*)wiimote
-       uDrawPenReleased:(WiimoteUDrawExtension*)uDraw;
+- (void)wiimote:(Wiimote *)wiimote
+    uDrawPenReleased:(WiimoteUDrawExtension *)uDraw;
 
-- (void)        wiimote:(Wiimote*)wiimote
-                  uDraw:(WiimoteUDrawExtension*)uDraw
-     penPositionChanged:(NSPoint)position
-               pressure:(CGFloat)pressure;
+- (void)wiimote:(Wiimote *)wiimote
+                 uDraw:(WiimoteUDrawExtension *)uDraw
+    penPositionChanged:(NSPoint)position
+              pressure:(CGFloat)pressure;
 
-- (void)        wiimote:(Wiimote*)wiimote
-  uDrawPenButtonPressed:(WiimoteUDrawExtension*)uDraw;
+- (void)wiimote:(Wiimote *)wiimote
+    uDrawPenButtonPressed:(WiimoteUDrawExtension *)uDraw;
 
-- (void)        wiimote:(Wiimote*)wiimote
- uDrawPenButtonReleased:(WiimoteUDrawExtension*)uDraw;
+- (void)wiimote:(Wiimote *)wiimote
+    uDrawPenButtonReleased:(WiimoteUDrawExtension *)uDraw;
 
 @end

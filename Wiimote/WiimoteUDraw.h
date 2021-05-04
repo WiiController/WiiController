@@ -8,14 +8,14 @@
 #import "WiimoteGenericExtension.h"
 #import "WiimoteEventDispatcher+UDraw.h"
 
-@interface WiimoteUDraw : WiimoteGenericExtension<
-                                            WiimoteUDrawProtocol>
+@interface WiimoteUDraw : WiimoteGenericExtension <
+                              WiimoteUDrawProtocol>
 {
-    @private
-        BOOL    _isPenPressed;
-        NSPoint _penPosition;
-        CGFloat _penPressure;
-        BOOL    _isPenButtonPressed;
+@private
+    BOOL _isPenPressed;
+    NSPoint _penPosition;
+    CGFloat _penPressure;
+    BOOL _isPenButtonPressed;
 }
 
 @end

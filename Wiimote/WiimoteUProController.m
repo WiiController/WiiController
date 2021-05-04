@@ -20,16 +20,16 @@
     [WiimoteExtension registerExtensionClass:[WiimoteUProController class]];
 }
 
-+ (NSData*)extensionSignature;
++ (NSData *)extensionSignature;
 {
-    static const uint8_t	 signature[]  = { 0x00, 0x00, 0xA4, 0x20, 0x01, 0x20 };
-    static NSData			*result       = nil;
+    static const uint8_t signature[] = { 0x00, 0x00, 0xA4, 0x20, 0x01, 0x20 };
+    static NSData *result = nil;
 
-    if(result == nil)
+    if (result == nil)
     {
-		result = [[NSData alloc]
-							initWithBytes:signature
-								   length:sizeof(signature)];
+        result = [[NSData alloc]
+            initWithBytes:signature
+                   length:sizeof(signature)];
     }
 
     return result;
@@ -42,39 +42,39 @@
 
 + (NSUInteger)minReportDataSize
 {
-	return sizeof(WiimoteDeviceUProControllerReport);
+    return sizeof(WiimoteDeviceUProControllerReport);
 }
 
-- (id)initWithOwner:(Wiimote*)owner
-    eventDispatcher:(WiimoteEventDispatcher*)dispatcher
+- (id)initWithOwner:(Wiimote *)owner
+    eventDispatcher:(WiimoteEventDispatcher *)dispatcher
 {
     self = [super initWithOwner:owner eventDispatcher:dispatcher];
-    if(self == nil)
+    if (self == nil)
         return nil;
 
-	[self reset];
+    [self reset];
     return self;
 }
 
-- (NSString*)name
+- (NSString *)name
 {
     return @"Wii U Pro Controller";
 }
 
 - (NSPoint)stickPosition:(WiimoteUProControllerStickType)stick
 {
-	return _stickPositions[stick];
+    return _stickPositions[stick];
 }
 
 - (BOOL)isButtonPressed:(WiimoteUProControllerButtonType)button
 {
-	return _buttonState[button];
+    return _buttonState[button];
 }
 
 - (NSPoint)normalizeStick:(WiimoteUProControllerStickType)stick position:(NSPoint)position
 {
-	// TODO: Implement normalization (if needed)
-	// it seems like the WiiUPro sticks range between -0.6 and 0.6 with the current adjustments being applied in the handleReport method
+    // TODO: Implement normalization (if needed)
+    // it seems like the WiiUPro sticks range between -0.6 and 0.6 with the current adjustments being applied in the handleReport method
     return position;
 }
 
@@ -82,35 +82,35 @@
 {
     newPosition = [self normalizeStick:stick position:newPosition];
 
-    if(WiimoteDeviceIsPointEqual(_stickPositions[stick], newPosition))
+    if (WiimoteDeviceIsPointEqual(_stickPositions[stick], newPosition))
         return;
 
     _stickPositions[stick] = newPosition;
 
     [[self eventDispatcher]
-                postUProController:self
-							 stick:stick
-				   positionChanged:newPosition];
+        postUProController:self
+                     stick:stick
+           positionChanged:newPosition];
 }
 
 - (void)setButton:(WiimoteUProControllerButtonType)button pressed:(BOOL)pressed
 {
-    if(_buttonState[button] == pressed)
+    if (_buttonState[button] == pressed)
         return;
 
     _buttonState[button] = pressed;
 
-    if(pressed)
+    if (pressed)
     {
         [[self eventDispatcher]
-                    postUProController:self
-						 buttonPressed:button];
+            postUProController:self
+                 buttonPressed:button];
     }
     else
     {
         [[self eventDispatcher]
-                    postUProController:self
-						buttonReleased:button];
+            postUProController:self
+                buttonReleased:button];
     }
 }
 
@@ -118,56 +118,55 @@
 {
     static const struct
     {
-        WiimoteUProControllerButtonType				type;
-        WiimoteDeviceUProControllerReportButtonMask	mask;
+        WiimoteUProControllerButtonType type;
+        WiimoteDeviceUProControllerReportButtonMask mask;
     } buttonMasks[] = {
-        { WiimoteUProControllerButtonTypeA,		WiimoteDeviceUProControllerReportButtonMaskA		},
-        { WiimoteUProControllerButtonTypeB,		WiimoteDeviceUProControllerReportButtonMaskB		},
-        { WiimoteUProControllerButtonTypeX,		WiimoteDeviceUProControllerReportButtonMaskX		},
-        { WiimoteUProControllerButtonTypeY,		WiimoteDeviceUProControllerReportButtonMaskY		},
-        { WiimoteUProControllerButtonTypeUp,    WiimoteDeviceUProControllerReportButtonMaskUp		},
-        { WiimoteUProControllerButtonTypeDown,	WiimoteDeviceUProControllerReportButtonMaskDown		},
-        { WiimoteUProControllerButtonTypeLeft,	WiimoteDeviceUProControllerReportButtonMaskLeft		},
-        { WiimoteUProControllerButtonTypeRight,	WiimoteDeviceUProControllerReportButtonMaskRight	},
-        { WiimoteUProControllerButtonTypeL,		WiimoteDeviceUProControllerReportButtonMaskL		},
-        { WiimoteUProControllerButtonTypeR,		WiimoteDeviceUProControllerReportButtonMaskR		},
-        { WiimoteUProControllerButtonTypeZL,	WiimoteDeviceUProControllerReportButtonMaskZL		},
-        { WiimoteUProControllerButtonTypeZR,	WiimoteDeviceUProControllerReportButtonMaskZR		}
+        { WiimoteUProControllerButtonTypeA, WiimoteDeviceUProControllerReportButtonMaskA },
+        { WiimoteUProControllerButtonTypeB, WiimoteDeviceUProControllerReportButtonMaskB },
+        { WiimoteUProControllerButtonTypeX, WiimoteDeviceUProControllerReportButtonMaskX },
+        { WiimoteUProControllerButtonTypeY, WiimoteDeviceUProControllerReportButtonMaskY },
+        { WiimoteUProControllerButtonTypeUp, WiimoteDeviceUProControllerReportButtonMaskUp },
+        { WiimoteUProControllerButtonTypeDown, WiimoteDeviceUProControllerReportButtonMaskDown },
+        { WiimoteUProControllerButtonTypeLeft, WiimoteDeviceUProControllerReportButtonMaskLeft },
+        { WiimoteUProControllerButtonTypeRight, WiimoteDeviceUProControllerReportButtonMaskRight },
+        { WiimoteUProControllerButtonTypeL, WiimoteDeviceUProControllerReportButtonMaskL },
+        { WiimoteUProControllerButtonTypeR, WiimoteDeviceUProControllerReportButtonMaskR },
+        { WiimoteUProControllerButtonTypeZL, WiimoteDeviceUProControllerReportButtonMaskZL },
+        { WiimoteUProControllerButtonTypeZR, WiimoteDeviceUProControllerReportButtonMaskZR }
     };
 
-    for(NSUInteger i = 0; i < WiimoteUProControllerButtonCount - 2; i++)
+    for (NSUInteger i = 0; i < WiimoteUProControllerButtonCount - 2; i++)
         [self setButton:buttonMasks[i].type pressed:((state & buttonMasks[i].mask) == 0)];
 }
 
 - (void)handleAdditionalState:(uint8_t)state
 {
-	[self setButton:WiimoteUProControllerButtonTypeStickL
-			pressed:((state & WiimoteDeviceUProControllerReportButtonMaskStrickL) == 0)];
+    [self setButton:WiimoteUProControllerButtonTypeStickL
+            pressed:((state & WiimoteDeviceUProControllerReportButtonMaskStrickL) == 0)];
 
-	[self setButton:WiimoteUProControllerButtonTypeStickR
-			pressed:((state & WiimoteDeviceUProControllerReportButtonMaskStrickR) == 0)];
+    [self setButton:WiimoteUProControllerButtonTypeStickR
+            pressed:((state & WiimoteDeviceUProControllerReportButtonMaskStrickR) == 0)];
 }
 
-- (void)handleReport:(const uint8_t*)extensionData length:(NSUInteger)length
+- (void)handleReport:(const uint8_t *)extensionData length:(NSUInteger)length
 {
-	if(length < sizeof(WiimoteDeviceUProControllerReport))
+    if (length < sizeof(WiimoteDeviceUProControllerReport))
         return;
 
-	const WiimoteDeviceUProControllerReport *report =
-				(const WiimoteDeviceUProControllerReport*)extensionData;
+    const WiimoteDeviceUProControllerReport *report = (const WiimoteDeviceUProControllerReport *)extensionData;
 
-	[self setStick:WiimoteUProControllerStickTypeLeft
-		  position:NSMakePoint(
-						(((CGFloat)(report->leftStrickX & 0x0FFF)) / 2048.0) - 1.0f,
-						(((CGFloat)(report->leftStrickY & 0x0FFF)) / 2048.0) - 1.0f)];
+    [self setStick:WiimoteUProControllerStickTypeLeft
+          position:NSMakePoint(
+                       (((CGFloat)(report->leftStrickX & 0x0FFF)) / 2048.0) - 1.0f,
+                       (((CGFloat)(report->leftStrickY & 0x0FFF)) / 2048.0) - 1.0f)];
 
-	[self setStick:WiimoteUProControllerStickTypeRight
-		  position:NSMakePoint(
-						(((CGFloat)(report->rightStrickX & 0x0FFF)) / 2048.0) - 1.0f,
-						(((CGFloat)(report->rightStrickY & 0x0FFF)) / 2048.0) - 1.0f)];
+    [self setStick:WiimoteUProControllerStickTypeRight
+          position:NSMakePoint(
+                       (((CGFloat)(report->rightStrickX & 0x0FFF)) / 2048.0) - 1.0f,
+                       (((CGFloat)(report->rightStrickY & 0x0FFF)) / 2048.0) - 1.0f)];
 
-	[self handleButtonState:report->buttonState];
-	[self handleAdditionalState:report->additionalButtonState];
+    [self handleButtonState:report->buttonState];
+    [self handleAdditionalState:report->additionalButtonState];
 }
 
 @end
@@ -176,10 +175,10 @@
 
 - (void)reset
 {
-	for(NSUInteger i = 0; i < WiimoteUProControllerButtonCount; i++)
+    for (NSUInteger i = 0; i < WiimoteUProControllerButtonCount; i++)
         _buttonState[i] = NO;
 
-    for(NSUInteger i = 0; i < WiimoteUProControllerStickCount; i++)
+    for (NSUInteger i = 0; i < WiimoteUProControllerStickCount; i++)
         _stickPositions[i] = NSZeroPoint;
 }
 

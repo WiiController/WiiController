@@ -14,78 +14,76 @@
 
 #import "WiimoteProtocol.h"
 
-@interface WiimoteHIDDeviceTransport : WiimoteDeviceTransport <W_HIDDeviceDelegate>
+@interface WiimoteHIDDeviceTransport : NSObject <WiimoteDeviceTransport, W_HIDDeviceDelegate>
 {
-    @private
-        W_HIDDevice *_device;
+    W_HIDDevice *_device;
 }
 
-- (id)initWithHIDDevice:(W_HIDDevice*)device;
+- (id)initWithHIDDevice:(W_HIDDevice *)device;
 
 @end
 
-@interface WiimoteBluetoothDeviceTransport : WiimoteDeviceTransport
+@interface WiimoteBluetoothDeviceTransport : NSObject <WiimoteDeviceTransport>
 {
-    @private
-        IOBluetoothDevice       *_device;
-		IOBluetoothL2CAPChannel *_dataChannel;
-        IOBluetoothL2CAPChannel *_controlChannel;
+    IOBluetoothDevice *_device;
+    IOBluetoothL2CAPChannel *_dataChannel;
+    IOBluetoothL2CAPChannel *_controlChannel;
 
-        BOOL                     _isOpen;
+    BOOL _isOpen;
 }
 
-- (id)initWithBluetoothDevice:(IOBluetoothDevice*)device;
+- (id)initWithBluetoothDevice:(IOBluetoothDevice *)device;
 
 @end
 
 @implementation WiimoteHIDDeviceTransport
 
-- (id)initWithHIDDevice:(W_HIDDevice*)device
+@synthesize delegate;
+
+- (id)initWithHIDDevice:(W_HIDDevice *)device
 {
     self = [super init];
 
-    if(self == nil)
+    if (self == nil)
         return nil;
 
-    if(device == nil)
+    if (device == nil)
     {
         return nil;
     }
 
     _device = device;
-    [_device setDelegate:self];
 
     return self;
 }
 
-
-- (NSString*)name
+- (NSString *)name
 {
     return [_device name];
 }
 
-- (NSData*)address
+- (NSData *)address
 {
-	NSString	*address		= [self addressString];
-	NSArray		*components		= nil;
-	uint8_t		 bytes[6]		= { 0 };
-	unsigned int value			= 0;
+    NSString *address = [self addressString];
+    NSArray *components = nil;
+    uint8_t bytes[6] = { 0 };
+    unsigned int value = 0;
 
-	components = [address componentsSeparatedByString:@"-"];
-	if([components count] != sizeof(bytes))
-		return nil;
+    components = [address componentsSeparatedByString:@"-"];
+    if ([components count] != sizeof(bytes))
+        return nil;
 
-	for(int i = 0; i < sizeof(bytes); i++)
-	{
-		NSScanner *scanner = [[NSScanner alloc] initWithString:[components objectAtIndex:i]];
-		[scanner scanHexInt:&value];
-		bytes[i] = (uint8_t)value;
-	}
+    for (int i = 0; i < sizeof(bytes); i++)
+    {
+        NSScanner *scanner = [[NSScanner alloc] initWithString:[components objectAtIndex:i]];
+        [scanner scanHexInt:&value];
+        bytes[i] = (uint8_t)value;
+    }
 
-	return [NSData dataWithBytes:bytes length:sizeof(bytes)];
+    return [NSData dataWithBytes:bytes length:sizeof(bytes)];
 }
 
-- (NSString*)addressString
+- (NSString *)addressString
 {
     return [_device address];
 }
@@ -107,7 +105,7 @@
 
 - (void)close
 {
-    if([self isOpen])
+    if ([self isOpen])
     {
         BluetoothDeviceAddress address = { 0 };
 
@@ -117,17 +115,17 @@
     }
 }
 
-- (BOOL)postBytes:(const uint8_t*)bytes length:(NSUInteger)length
+- (BOOL)postBytes:(const uint8_t *)bytes length:(NSUInteger)length
 {
     return [_device postBytes:bytes length:length];
 }
 
-- (void)HIDDevice:(W_HIDDevice*)device reportDataReceived:(const uint8_t*)bytes length:(NSUInteger)length
+- (void)HIDDevice:(W_HIDDevice *)device reportDataReceived:(const uint8_t *)bytes length:(NSUInteger)length
 {
     [[self delegate] wiimoteDeviceTransport:self reportDataReceived:bytes length:length];
 }
 
-- (void)HIDDeviceDisconnected:(W_HIDDevice*)device
+- (void)HIDDeviceDisconnected:(W_HIDDevice *)device
 {
     [[self delegate] wiimoteDeviceTransportDisconnected:self];
 }
@@ -136,22 +134,24 @@
 
 @implementation WiimoteBluetoothDeviceTransport
 
-- (id)initWithBluetoothDevice:(IOBluetoothDevice*)device
+@synthesize delegate;
+
+- (id)initWithBluetoothDevice:(IOBluetoothDevice *)device
 {
     self = [super init];
 
-    if(self == nil)
+    if (self == nil)
         return nil;
 
-    if(device == nil)
+    if (device == nil)
     {
         return nil;
     }
 
-    _device            = device;
-	_dataChannel       = nil;
-	_controlChannel    = nil;
-    _isOpen            = NO;
+    _device = device;
+    _dataChannel = nil;
+    _controlChannel = nil;
+    _isOpen = NO;
 
     return self;
 }
@@ -161,36 +161,37 @@
     [self close];
 }
 
-- (IOBluetoothL2CAPChannel*)openChannel:(BluetoothL2CAPPSM)channelID
+- (IOBluetoothL2CAPChannel *)openChannel:(BluetoothL2CAPPSM)channelID
 {
-	IOBluetoothL2CAPChannel *result = nil;
+    IOBluetoothL2CAPChannel *result = nil;
 
-	if([_device openL2CAPChannelSync:&result
+    if ([_device openL2CAPChannelSync:&result
                               withPSM:channelID
-                             delegate:self] != kIOReturnSuccess)
+                             delegate:self]
+        != kIOReturnSuccess)
     {
-		return nil;
+        return nil;
     }
 
-	return result;
+    return result;
 }
 
-- (NSString*)name
+- (NSString *)name
 {
     return [_device name];
 }
 
-- (NSData*)address
+- (NSData *)address
 {
     const BluetoothDeviceAddress *address = [_device getAddress];
-    if(address == NULL)
+    if (address == NULL)
         return nil;
 
     return [NSData dataWithBytes:address->data
                           length:sizeof(address->data)];
 }
 
-- (NSString*)addressString
+- (NSString *)addressString
 {
     return [_device addressString];
 }
@@ -207,136 +208,81 @@
 
 - (BOOL)open
 {
-    if([self isOpen])
-		return YES;
+    if ([self isOpen])
+        return YES;
 
-	_isOpen            = YES;
-	_controlChannel	= [self openChannel:kBluetoothL2CAPPSMHIDControl];
-	_dataChannel		= [self openChannel:kBluetoothL2CAPPSMHIDInterrupt];
+    _isOpen = YES;
+    _controlChannel = [self openChannel:kBluetoothL2CAPPSMHIDControl];
+    _dataChannel = [self openChannel:kBluetoothL2CAPPSMHIDInterrupt];
 
-	if(_controlChannel == nil || _dataChannel    == nil)
+    if (_controlChannel == nil || _dataChannel == nil)
     {
-		[self close];
+        [self close];
         return NO;
     }
 
-	return YES;
+    return YES;
 }
 
 - (void)close
 {
-    if(![self isOpen])
+    if (![self isOpen])
         return;
 
     [_controlChannel setDelegate:nil];
-	[_dataChannel setDelegate:nil];
+    [_dataChannel setDelegate:nil];
 
-	[_controlChannel closeChannel];
-	[_dataChannel closeChannel];
-	[_device closeConnection];
+    [_controlChannel closeChannel];
+    [_dataChannel closeChannel];
+    [_device closeConnection];
 
-	_isOpen = NO;
+    _isOpen = NO;
 
-	[[self delegate] wiimoteDeviceTransportDisconnected:self];
+    [[self delegate] wiimoteDeviceTransportDisconnected:self];
 }
 
-- (BOOL)postBytes:(const uint8_t*)bytes length:(NSUInteger)length
+- (BOOL)postBytes:(const uint8_t *)bytes length:(NSUInteger)length
 {
-    if(![self isOpen] || bytes == NULL)
-		return NO;
+    if (![self isOpen] || bytes == NULL)
+        return NO;
 
-    if(length == 0)
-		return YES;
+    if (length == 0)
+        return YES;
 
     uint8_t buffer[length + 1];
 
     buffer[0] = 0xA2; // 0xA2 - HID output report
     memcpy(buffer + 1, bytes, length);
 
-    return ([_dataChannel
-                    writeSync:buffer
-                       length:sizeof(buffer)] == kIOReturnSuccess);
+    return ([_dataChannel writeSync:buffer length:sizeof(buffer)] == kIOReturnSuccess);
 }
 
-- (void)l2capChannelData:(IOBluetoothL2CAPChannel*)l2capChannel
-                    data:(void*)dataPointer
+- (void)l2capChannelData:(IOBluetoothL2CAPChannel *)l2capChannel
+                    data:(void *)dataPointer
                   length:(size_t)dataLength
 {
-    const uint8_t *data     = (const uint8_t*)dataPointer;
-    size_t         length   = dataLength;
+    const uint8_t *data = (const uint8_t *)dataPointer;
+    size_t length = dataLength;
 
-    if(length < 2)
+    if (length < 2)
         return;
 
     [[self delegate] wiimoteDeviceTransport:self reportDataReceived:data + 1 length:length - 1];
 }
 
-- (void)l2capChannelClosed:(IOBluetoothL2CAPChannel*)l2capChannel
+- (void)l2capChannelClosed:(IOBluetoothL2CAPChannel *)l2capChannel
 {
     [self close];
 }
 
 @end
 
-@implementation WiimoteDeviceTransport
-
-+ (WiimoteDeviceTransport*)withHIDDevice:(W_HIDDevice*)device
+id<WiimoteDeviceTransport> wiimoteDeviceTransportWithHIDDevice(W_HIDDevice *device)
 {
     return [[WiimoteHIDDeviceTransport alloc] initWithHIDDevice:device];
 }
 
-+ (WiimoteDeviceTransport*)withBluetoothDevice:(IOBluetoothDevice*)device
+id<WiimoteDeviceTransport> wiimoteDeviceTransportWithBluetoothDevice(IOBluetoothDevice *device)
 {
     return [[WiimoteBluetoothDeviceTransport alloc] initWithBluetoothDevice:device];
 }
-
-- (NSString*)name
-{
-    return nil;
-}
-
-- (NSData*)address
-{
-    return nil;
-}
-
-- (NSString*)addressString
-{
-    return nil;
-}
-
-- (id)lowLevelDevice
-{
-    return nil;
-}
-
-- (BOOL)isOpen
-{
-    return NO;
-}
-
-- (BOOL)open
-{
-    return NO;
-}
-
-- (void)close
-{
-}
-
-- (BOOL)postBytes:(const uint8_t*)bytes length:(NSUInteger)length
-{
-    return NO;
-}
-
-- (id)delegate
-{
-    return _delegate;
-}
-
-- (void)setDelegate:(id)delegate
-{
-    _delegate = delegate;
-}
-
-@end

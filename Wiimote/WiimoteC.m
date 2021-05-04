@@ -15,11 +15,11 @@ NSString *WiimoteIDKey = @"WiimoteIDKey";
 
 @interface WiimoteThread : NSObject
 {
-    @private
-        NSThread *_thread;
+@private
+    NSThread *_thread;
 }
 
-+ (WiimoteThread*)thread;
++ (WiimoteThread *)thread;
 
 - (void)invoke:(void (^)(void))block;
 
@@ -29,7 +29,7 @@ NSString *WiimoteIDKey = @"WiimoteIDKey";
 
 @implementation WiimoteThread
 
-+ (WiimoteThread*)thread
++ (WiimoteThread *)thread
 {
     static WiimoteThread *result = nil;
     static dispatch_once_t once;
@@ -42,13 +42,13 @@ NSString *WiimoteIDKey = @"WiimoteIDKey";
 - (id)init
 {
     self = [super init];
-    if(self == nil)
+    if (self == nil)
         return nil;
 
     _thread = [[NSThread alloc]
-                            initWithTarget:self
-                                  selector:@selector(thread)
-                                    object:nil];
+        initWithTarget:self
+              selector:@selector(thread)
+                object:nil];
 
     [_thread start];
 
@@ -82,14 +82,14 @@ NSString *WiimoteIDKey = @"WiimoteIDKey";
                  onThread:_thread
                withObject:block
             waitUntilDone:YES
-                    modes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
+                    modes:@[ NSRunLoopCommonModes ]];
 
     [pool release];
 }
 
 - (void)shutdown
 {
-    if(_thread == nil)
+    if (_thread == nil)
         return;
 
     [self invoke:^{ CFRunLoopStop([[NSRunLoop currentRunLoop] getCFRunLoop]); }];
@@ -106,9 +106,9 @@ NSString *WiimoteIDKey = @"WiimoteIDKey";
 static Wiimote *wiimote_at_index(int index)
 {
     Wiimote *result = nil;
-    NSArray *all    = [Wiimote connectedDevices];
+    NSArray *all = [Wiimote connectedDevices];
 
-    if(index >= 0 && index < [all count])
+    if (index >= 0 && index < [all count])
         result = [all objectAtIndex:index];
 
     return result;
@@ -118,8 +118,8 @@ static WiimoteNunchuckExtension *nunchuck_at_index(int index)
 {
     WiimoteExtension *e = [wiimote_at_index(index) connectedExtension];
 
-    if([[e name] isEqualToString:@"Nunchuck"])
-        return (WiimoteNunchuckExtension*)e;
+    if ([[e name] isEqualToString:@"Nunchuck"])
+        return (WiimoteNunchuckExtension *)e;
 
     return nil;
 }
@@ -128,8 +128,8 @@ static WiimoteClassicControllerExtension *ccontroller_at_index(int index)
 {
     WiimoteExtension *e = [wiimote_at_index(index) connectedExtension];
 
-    if([[e name] isEqualToString:@"Classic Controller"])
-        return (WiimoteClassicControllerExtension*)e;
+    if ([[e name] isEqualToString:@"Classic Controller"])
+        return (WiimoteClassicControllerExtension *)e;
 
     return nil;
 }
@@ -138,8 +138,8 @@ static WiimoteUProControllerExtension *upro_at_index(int index)
 {
     WiimoteExtension *e = [wiimote_at_index(index) connectedExtension];
 
-    if([[e name] isEqualToString:@"Wii U Pro Controller"])
-        return (WiimoteUProControllerExtension*)e;
+    if ([[e name] isEqualToString:@"Wii U Pro Controller"])
+        return (WiimoteUProControllerExtension *)e;
 
     return nil;
 }
@@ -148,8 +148,8 @@ static WiimoteBalanceBoardExtension *bboard_at_index(int index)
 {
     WiimoteExtension *e = [wiimote_at_index(index) connectedExtension];
 
-    if([[e name] isEqualToString:@"Balance Board"])
-        return (WiimoteBalanceBoardExtension*)e;
+    if ([[e name] isEqualToString:@"Balance Board"])
+        return (WiimoteBalanceBoardExtension *)e;
 
     return nil;
 }
@@ -158,8 +158,8 @@ static WiimoteUDrawExtension *udraw_at_index(int index)
 {
     WiimoteExtension *e = [wiimote_at_index(index) connectedExtension];
 
-    if([[e name] isEqualToString:@"uDraw"])
-        return (WiimoteUDrawExtension*)e;
+    if ([[e name] isEqualToString:@"uDraw"])
+        return (WiimoteUDrawExtension *)e;
 
     return nil;
 }
@@ -172,9 +172,9 @@ static int wiimote_get_id(Wiimote *wiimote)
 static void wiimote_set_id(Wiimote *wiimote, int wid)
 {
     [wiimote setUserInfo:
-                [NSMutableDictionary
-                            dictionaryWithObject:[NSNumber numberWithInt:wid]
-                                          forKey:WiimoteIDKey]];
+                 [NSMutableDictionary
+                     dictionaryWithObject:@(wid)
+                                   forKey:WiimoteIDKey]];
 }
 
 //------------------------------------------------------------------------------
@@ -189,12 +189,11 @@ int wmc_initialize(void)
 
 int wmc_shutdown(void)
 {
-    [[WiimoteThread thread] invoke:^
-    {
-        NSArray     *connectedDevices   = [[[Wiimote connectedDevices] copy] autorelease];
-        NSUInteger   count              = [connectedDevices count];
+    [[WiimoteThread thread] invoke:^{
+        NSArray *connectedDevices = [[[Wiimote connectedDevices] copy] autorelease];
+        NSUInteger count = [connectedDevices count];
 
-        for(NSUInteger i = 0; i < count; i++)
+        for (NSUInteger i = 0; i < count; i++)
             [[connectedDevices objectAtIndex:i] disconnect];
     }];
 
@@ -206,8 +205,7 @@ int wmc_get_log_level(void)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [[WiimoteLog sharedLog] level];
     }];
 
@@ -218,8 +216,7 @@ int wmc_set_log_level(int level)
 {
     __block int result = YES;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         [[WiimoteLog sharedLog] setLevel:(WiimoteLogLevel)level];
     }];
 
@@ -234,9 +231,8 @@ int wmc_is_bluetooth_enabled(void)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
-        result = [Wiimote isBluetoothEnabled];
+    [[WiimoteThread thread] invoke:^{
+        result = wiimoteIsBluetoothEnabled();
     }];
 
     return result;
@@ -246,8 +242,7 @@ int wmc_is_discovering(void)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [Wiimote isDiscovering];
     }];
 
@@ -258,8 +253,7 @@ int wmc_begin_discovery(void)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [Wiimote beginDiscovery];
     }];
 
@@ -270,8 +264,7 @@ int wmc_is_one_button_click_connection_enabled(void)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [Wiimote isUseOneButtonClickConnection];
     }];
 
@@ -280,8 +273,7 @@ int wmc_is_one_button_click_connection_enabled(void)
 
 int wmc_set_one_button_click_connection_enabled(int enabled)
 {
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         [Wiimote setUseOneButtonClickConnection:enabled];
     }];
 
@@ -296,8 +288,7 @@ int wmc_get_count_connected(void)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = (int)[[Wiimote connectedDevices] count];
     }];
 
@@ -308,11 +299,10 @@ int wmc_disconnect(int index)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         Wiimote *w = wiimote_at_index(index);
 
-        if(w != nil)
+        if (w != nil)
         {
             [w disconnect];
             result = YES;
@@ -326,8 +316,7 @@ int wmc_w_get_id(int index)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = wiimote_get_id(wiimote_at_index(index));
     }];
 
@@ -338,11 +327,10 @@ int wmc_w_set_id(int index, int wid)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         Wiimote *w = wiimote_at_index(index);
 
-        if(w != nil)
+        if (w != nil)
         {
             wiimote_set_id(w, wid);
             result = YES;
@@ -356,14 +344,13 @@ int wmc_w_index_with_id(int wid)
 {
     __block int result = -1;
 
-    [[WiimoteThread thread] invoke:^
-    {
-        NSArray     *all    = [Wiimote connectedDevices];
-        NSUInteger   count  = [all count];
+    [[WiimoteThread thread] invoke:^{
+        NSArray *all = [Wiimote connectedDevices];
+        NSUInteger count = [all count];
 
-        for(NSUInteger i = 0; i < count; i++)
+        for (NSUInteger i = 0; i < count; i++)
         {
-            if(wiimote_get_id([all objectAtIndex:i]) == wid)
+            if (wiimote_get_id([all objectAtIndex:i]) == wid)
             {
                 result = (int)i;
                 break;
@@ -378,11 +365,10 @@ int wmc_w_play_connect_effect(int index)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         Wiimote *w = wiimote_at_index(index);
 
-        if(w != nil)
+        if (w != nil)
         {
             [w playConnectEffect];
             result = YES;
@@ -396,8 +382,7 @@ int wmc_w_get_led_mask(int index)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = (int)[wiimote_at_index(index) highlightedLEDMask];
     }];
 
@@ -408,11 +393,10 @@ int wmc_w_set_led_mask(int index, int mask)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         Wiimote *w = wiimote_at_index(index);
 
-        if(w != nil)
+        if (w != nil)
         {
             [w setHighlightedLEDMask:mask];
             result = YES;
@@ -426,8 +410,7 @@ int wmc_w_is_vibration_enabled(int index)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [wiimote_at_index(index) isVibrationEnabled];
     }];
 
@@ -438,11 +421,10 @@ int wmc_w_set_vibration_enabled(int index, int enabled)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         Wiimote *w = wiimote_at_index(index);
 
-        if(w != nil)
+        if (w != nil)
         {
             [w setVibrationEnabled:enabled];
             result = YES;
@@ -456,8 +438,7 @@ int wmc_w_is_button_pressed(int index, int button)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [wiimote_at_index(index) isButtonPressed:(WiimoteButtonType)button];
     }];
 
@@ -468,8 +449,7 @@ int wmc_w_is_battery_low(int index)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [wiimote_at_index(index) isBatteryLevelLow];
     }];
 
@@ -480,8 +460,7 @@ float wmc_w_get_battery_level(int index)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [wiimote_at_index(index) batteryLevel];
     }];
 
@@ -492,8 +471,7 @@ int wmc_w_is_ir_enabled(int index)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [wiimote_at_index(index) isIREnabled];
     }];
 
@@ -504,11 +482,10 @@ int wmc_w_set_ir_enabled(int index, int enabled)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         Wiimote *w = wiimote_at_index(index);
 
-        if(w != nil)
+        if (w != nil)
         {
             [w setIREnabled:enabled];
             result = YES;
@@ -522,8 +499,7 @@ int wmc_w_is_ir_point_out_of_view(int index, int point)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [[wiimote_at_index(index) irPoint:point] isOutOfView];
     }];
 
@@ -534,8 +510,7 @@ float wmc_w_get_ir_point_x(int index, int point)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [[wiimote_at_index(index) irPoint:point] position].x;
     }];
 
@@ -546,8 +521,7 @@ float wmc_w_get_ir_point_y(int index, int point)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [[wiimote_at_index(index) irPoint:point] position].y;
     }];
 
@@ -558,8 +532,7 @@ int wmc_w_is_accelerometer_enabled(int index)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [[wiimote_at_index(index) accelerometer] isEnabled];
     }];
 
@@ -570,11 +543,10 @@ int wmc_w_set_accelerometer_enabled(int index, int enabled)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         Wiimote *w = wiimote_at_index(index);
 
-        if(w != nil)
+        if (w != nil)
         {
             [[w accelerometer] setEnabled:enabled];
             result = YES;
@@ -588,8 +560,7 @@ float wmc_w_get_accelerometer_x(int index)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [[wiimote_at_index(index) accelerometer] gravityX];
     }];
 
@@ -600,8 +571,7 @@ float wmc_w_get_accelerometer_y(int index)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [[wiimote_at_index(index) accelerometer] gravityY];
     }];
 
@@ -612,8 +582,7 @@ float wmc_w_get_accelerometer_z(int index)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [[wiimote_at_index(index) accelerometer] gravityZ];
     }];
 
@@ -624,8 +593,7 @@ float wmc_w_get_accelerometer_pitch(int index)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [[wiimote_at_index(index) accelerometer] pitch];
     }];
 
@@ -636,8 +604,7 @@ float wmc_w_get_accelerometer_roll(int index)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [[wiimote_at_index(index) accelerometer] roll];
     }];
 
@@ -652,8 +619,7 @@ int wmc_w_is_nunchuck_connected(int index)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = (nunchuck_at_index(index) != nil);
     }];
 
@@ -664,8 +630,7 @@ int wmc_w_is_nunchuck_button_pressed(int index, int button)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [nunchuck_at_index(index) isButtonPressed:(WiimoteNunchuckButtonType)button];
     }];
 
@@ -676,8 +641,7 @@ float wmc_w_get_nunchuck_stick_x(int index)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [nunchuck_at_index(index) stickPosition].x;
     }];
 
@@ -688,8 +652,7 @@ float wmc_w_get_nunchuck_stick_y(int index)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [nunchuck_at_index(index) stickPosition].y;
     }];
 
@@ -700,8 +663,7 @@ int wmc_w_is_nunchuck_accelerometer_enabled(int index)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [[nunchuck_at_index(index) accelerometer] isEnabled];
     }];
 
@@ -712,11 +674,10 @@ int wmc_w_set_nunchuck_accelerometer_enabled(int index, int enabled)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         WiimoteNunchuckExtension *n = nunchuck_at_index(index);
 
-        if(n != nil)
+        if (n != nil)
         {
             [[n accelerometer] setEnabled:enabled];
             result = YES;
@@ -730,8 +691,7 @@ float wmc_w_get_nunchuck_accelerometer_x(int index)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [[nunchuck_at_index(index) accelerometer] gravityX];
     }];
 
@@ -742,8 +702,7 @@ float wmc_w_get_nunchuck_accelerometer_y(int index)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [[nunchuck_at_index(index) accelerometer] gravityY];
     }];
 
@@ -754,8 +713,7 @@ float wmc_w_get_nunchuck_accelerometer_z(int index)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [[nunchuck_at_index(index) accelerometer] gravityZ];
     }];
 
@@ -766,8 +724,7 @@ float wmc_w_get_nunchuck_accelerometer_pitch(int index)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [[nunchuck_at_index(index) accelerometer] pitch];
     }];
 
@@ -778,8 +735,7 @@ float wmc_w_get_nunchuck_accelerometer_roll(int index)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [[nunchuck_at_index(index) accelerometer] roll];
     }];
 
@@ -794,8 +750,7 @@ int wmc_w_is_ccontroller_connected(int index)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = (ccontroller_at_index(index) != nil);
     }];
 
@@ -806,8 +761,7 @@ int wmc_w_is_ccontroller_button_pressed(int index, int button)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [ccontroller_at_index(index) isButtonPressed:(WiimoteClassicControllerButtonType)button];
     }];
 
@@ -818,8 +772,7 @@ float wmc_w_get_ccontroller_stick_x(int index, int stick)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [ccontroller_at_index(index) stickPosition:(WiimoteClassicControllerStickType)stick].x;
     }];
 
@@ -830,8 +783,7 @@ float wmc_w_get_ccontroller_stick_y(int index, int stick)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [ccontroller_at_index(index) stickPosition:(WiimoteClassicControllerStickType)stick].y;
     }];
 
@@ -842,8 +794,7 @@ float wmc_w_get_ccontroller_shift(int index, int shift)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [ccontroller_at_index(index) analogShiftPosition:(WiimoteClassicControllerAnalogShiftType)shift];
     }];
 
@@ -858,8 +809,7 @@ int wmc_w_is_upro_connected(int index)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = (upro_at_index(index) != nil);
     }];
 
@@ -870,8 +820,7 @@ int wmc_w_is_upro_button_pressed(int index, int button)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [upro_at_index(index) isButtonPressed:(WiimoteUProControllerButtonType)button];
     }];
 
@@ -882,8 +831,7 @@ float wmc_w_get_upro_stick_x(int index, int stick)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [upro_at_index(index) stickPosition:(WiimoteUProControllerStickType)stick].x;
     }];
 
@@ -894,8 +842,7 @@ float wmc_w_get_upro_stick_y(int index, int stick)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [upro_at_index(index) stickPosition:(WiimoteUProControllerStickType)stick].y;
     }];
 
@@ -910,8 +857,7 @@ int wmc_w_is_bboard_connected(int index)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = (bboard_at_index(index) != nil);
     }];
 
@@ -922,15 +868,23 @@ float wmc_w_get_bboard_press(int index, int point)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         WiimoteBalanceBoardExtension *bboard = bboard_at_index(index);
 
-        switch(point) {
-            case wmc_bboard_point_left_top:     result = [bboard topLeftPress];     break;
-            case wmc_bboard_point_left_bottom:  result = [bboard bottomLeftPress];  break;
-            case wmc_bboard_point_right_top:    result = [bboard topRightPress];    break;
-            case wmc_bboard_point_right_bottom: result = [bboard bottomRightPress]; break;
+        switch (point)
+        {
+        case wmc_bboard_point_left_top:
+            result = [bboard topLeftPress];
+            break;
+        case wmc_bboard_point_left_bottom:
+            result = [bboard bottomLeftPress];
+            break;
+        case wmc_bboard_point_right_top:
+            result = [bboard topRightPress];
+            break;
+        case wmc_bboard_point_right_bottom:
+            result = [bboard bottomRightPress];
+            break;
         }
     }];
 
@@ -945,8 +899,7 @@ int wmc_w_is_udraw_connected(int index)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = (udraw_at_index(index) != nil);
     }];
 
@@ -957,8 +910,7 @@ int wmc_w_is_pen_pressed(int index)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [udraw_at_index(index) isPenPressed];
     }];
 
@@ -969,8 +921,7 @@ float wmc_w_get_pen_x(int index)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [udraw_at_index(index) penPosition].x;
     }];
 
@@ -981,8 +932,7 @@ float wmc_w_get_pen_y(int index)
 {
     __block float result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [udraw_at_index(index) penPosition].y;
     }];
 
@@ -993,8 +943,7 @@ int wmc_w_is_pen_button_pressed(int index)
 {
     __block int result = 0;
 
-    [[WiimoteThread thread] invoke:^
-    {
+    [[WiimoteThread thread] invoke:^{
         result = [udraw_at_index(index) isPenButtonPressed];
     }];
 

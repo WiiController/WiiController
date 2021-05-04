@@ -8,31 +8,31 @@
 
 #import <Foundation/Foundation.h>
 
-#define WiimoteUProControllerButtonCount			   14
-#define WiimoteUProControllerStickCount					2
+#define WiimoteUProControllerButtonCount 14
+#define WiimoteUProControllerStickCount 2
 
 typedef enum : NSInteger
 {
-	WiimoteUProControllerButtonTypeUp				=  0,
-    WiimoteUProControllerButtonTypeDown				=  1,
-    WiimoteUProControllerButtonTypeLeft				=  2,
-    WiimoteUProControllerButtonTypeRight			=  3,
-    WiimoteUProControllerButtonTypeA				=  4,
-    WiimoteUProControllerButtonTypeB				=  5,
-    WiimoteUProControllerButtonTypeX				=  6,
-    WiimoteUProControllerButtonTypeY				=  7,
-    WiimoteUProControllerButtonTypeL				=  8,
-    WiimoteUProControllerButtonTypeR				=  9,
-    WiimoteUProControllerButtonTypeZL				= 10,
-    WiimoteUProControllerButtonTypeZR				= 11,
-	WiimoteUProControllerButtonTypeStickL			= 12,
-	WiimoteUProControllerButtonTypeStickR			= 13
+    WiimoteUProControllerButtonTypeUp = 0,
+    WiimoteUProControllerButtonTypeDown = 1,
+    WiimoteUProControllerButtonTypeLeft = 2,
+    WiimoteUProControllerButtonTypeRight = 3,
+    WiimoteUProControllerButtonTypeA = 4,
+    WiimoteUProControllerButtonTypeB = 5,
+    WiimoteUProControllerButtonTypeX = 6,
+    WiimoteUProControllerButtonTypeY = 7,
+    WiimoteUProControllerButtonTypeL = 8,
+    WiimoteUProControllerButtonTypeR = 9,
+    WiimoteUProControllerButtonTypeZL = 10,
+    WiimoteUProControllerButtonTypeZR = 11,
+    WiimoteUProControllerButtonTypeStickL = 12,
+    WiimoteUProControllerButtonTypeStickR = 13
 } WiimoteUProControllerButtonType;
 
 typedef enum : NSInteger
 {
-    WiimoteUProControllerStickTypeLeft				=  0,
-    WiimoteUProControllerStickTypeRight				=  1
+    WiimoteUProControllerStickTypeLeft = 0,
+    WiimoteUProControllerStickTypeRight = 1
 } WiimoteUProControllerStickType;
 
 FOUNDATION_EXPORT NSString *WiimoteUProControllerButtonPressedNotification;
@@ -46,7 +46,7 @@ FOUNDATION_EXPORT NSString *WiimoteUProControllerStickPositionKey;
 @class Wiimote;
 @class WiimoteExtension;
 
-@protocol WiimoteUProControllerProtocol
+@protocol WiimoteUProControllerProtocol <NSObject>
 
 - (NSPoint)stickPosition:(WiimoteUProControllerStickType)stick;
 - (BOOL)isButtonPressed:(WiimoteUProControllerButtonType)button;
@@ -57,17 +57,17 @@ typedef WiimoteExtension<WiimoteUProControllerProtocol> WiimoteUProControllerExt
 
 @interface NSObject (WiimoteUProControllerDelegate)
 
-- (void)      wiimote:(Wiimote*)wiimote
-	   uProController:(WiimoteUProControllerExtension*)uPro
-        buttonPressed:(WiimoteUProControllerButtonType)button;
+- (void)wiimote:(Wiimote *)wiimote
+    uProController:(WiimoteUProControllerExtension *)uPro
+     buttonPressed:(WiimoteUProControllerButtonType)button;
 
-- (void)      wiimote:(Wiimote*)wiimote
-	   uProController:(WiimoteUProControllerExtension*)uPro
-       buttonReleased:(WiimoteUProControllerButtonType)button;
+- (void)wiimote:(Wiimote *)wiimote
+    uProController:(WiimoteUProControllerExtension *)uPro
+    buttonReleased:(WiimoteUProControllerButtonType)button;
 
-- (void)      wiimote:(Wiimote*)wiimote
-	   uProController:(WiimoteUProControllerExtension*)uPro
-                stick:(WiimoteUProControllerStickType)stick
-      positionChanged:(NSPoint)position;
+- (void)wiimote:(Wiimote *)wiimote
+     uProController:(WiimoteUProControllerExtension *)uPro
+              stick:(WiimoteUProControllerStickType)stick
+    positionChanged:(NSPoint)position;
 
 @end

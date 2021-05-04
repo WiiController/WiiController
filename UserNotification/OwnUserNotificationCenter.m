@@ -58,13 +58,13 @@
 
 - (NSDictionary*)customSettings
 {
-    NSNumber *timeout       = [NSNumber numberWithDouble:[[NotificationSystem sharedInstance] notificationTimeout]];
-    NSNumber *screenCorner  = [NSNumber numberWithInteger:[[NotificationSystem sharedInstance] screenCorner]];
+    NSNumber *timeout       = @([[NotificationSystem sharedInstance] notificationTimeout]);
+    NSNumber *screenCorner  = @([[NotificationSystem sharedInstance] screenCorner]);
 
-    return [NSDictionary dictionaryWithObjectsAndKeys:
-                                timeout,        UserNotificationCenterTimeoutKey,
-                                screenCorner,   UserNotificationCenterScreenCornerKey,
-                                nil];
+    return @{
+        UserNotificationCenterTimeoutKey: timeout,
+        UserNotificationCenterScreenCornerKey: screenCorner
+    };
 }
 
 - (void)setCustomSettings:(NSDictionary*)preferences

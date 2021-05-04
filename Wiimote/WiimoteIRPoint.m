@@ -18,13 +18,13 @@
 - (id)initWithOwner:(Wiimote*)owner index:(NSUInteger)index
 {
     self = [super init];
-    if(self == nil)
+    if (self == nil)
         return nil;
 
-    _owner         = owner;
-    _position      = NSZeroPoint;
-    _outOfView   = YES;
-    _index         = index;
+    _owner = owner;
+    _position = NSZeroPoint;
+    _outOfView = YES;
+    _index = index;
 
     return self;
 }

@@ -8,6 +8,7 @@
 
 #import "Wiimote.h"
 
+@protocol WiimoteDeviceDelegate;
 @class W_HIDDevice;
 @class IOBluetoothDevice;
 
@@ -16,6 +17,6 @@
 + (void)connectToHIDDevice:(W_HIDDevice*)device;
 + (void)connectToBluetoothDevice:(IOBluetoothDevice*)device;
 
-- (id)lowLevelDevice;
+@property(nonatomic, readonly) id lowLevelDevice;
 
 @end

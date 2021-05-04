@@ -16,13 +16,10 @@
 - (void)updateWindowState
 {
     [_discoveryButton setEnabled:
-                            (!_isDiscovering) &&
-                            (_connectedWiimotes == 0)];
+                          (!_isDiscovering) && (_connectedWiimotes == 0)];
 
     [_connectedTextField setStringValue:
-                            ((_connectedWiimotes == 0)?
-                                (@"No wii remote connected"):
-                                (@"Wii remote connected"))];
+                             ((_connectedWiimotes == 0) ? (@"No wii remote connected") : (@"Wii remote connected"))];
 }
 
 - (void)awakeFromNib
@@ -32,22 +29,22 @@
     [[WiimoteWatchdog sharedWatchdog] setEnabled:YES];
 
     [[NSNotificationCenter defaultCenter]
-                                    addObserver:self
-                                       selector:@selector(discoveryBegin)
-                                           name:WiimoteBeginDiscoveryNotification
-                                         object:nil];
+        addObserver:self
+           selector:@selector(discoveryBegin)
+               name:WiimoteBeginDiscoveryNotification
+             object:nil];
 
     [[NSNotificationCenter defaultCenter]
-                                    addObserver:self
-                                       selector:@selector(discoveryEnd)
-                                           name:WiimoteEndDiscoveryNotification
-                                         object:nil];
+        addObserver:self
+           selector:@selector(discoveryEnd)
+               name:WiimoteEndDiscoveryNotification
+             object:nil];
 
     [[WiimoteEventSystem defaultEventSystem] addObserver:self];
     [[WiimoteWatchdog sharedWatchdog] setEnabled:YES];
 
     [self updateWindowState];
-	[self discovery:self];
+    [self discovery:self];
 }
 
 - (IBAction)toggleUseOneButtonClickConnection:(id)sender
@@ -58,9 +55,7 @@
 - (IBAction)toggleDebugOutput:(id)sender
 {
     [[OCLog sharedLog] setLevel:
-                            (([_debugCheckBox state] == NSOnState)?
-                                (OCLogLevelDebug):
-                                (OCLogLevelError))];
+                           (([_debugCheckBox state] == NSOnState) ? (OCLogLevelDebug) : (OCLogLevelError))];
 }
 
 - (IBAction)discovery:(id)sender
@@ -75,20 +70,20 @@
 
 - (IBAction)detectMotionPlus:(id)sender
 {
-    for(Wiimote *wiimote in [Wiimote connectedDevices])
+    for (Wiimote *wiimote in [Wiimote connectedDevices])
         [wiimote detectMotionPlus];
 }
 
 - (IBAction)toggleVibration:(id)sender
 {
-    for(Wiimote *wiimote in [Wiimote connectedDevices])
+    for (Wiimote *wiimote in [Wiimote connectedDevices])
         [wiimote setVibrationEnabled:![wiimote isVibrationEnabled]];
 }
 
-- (void)log:(NSString*)logLine
+- (void)log:(NSString *)logLine
 {
     NSAttributedString *tmp = [[NSAttributedString alloc]
-                                    initWithString:[NSString stringWithFormat:@"%@\n", logLine]];
+        initWithString:[NSString stringWithFormat:@"%@\n", logLine]];
 
     [[_log textStorage] appendAttributedString:tmp];
     [tmp release];
@@ -120,40 +115,40 @@
     [self updateWindowState];
 }
 
-- (void)wiimoteEvent:(WiimoteEvent*)event
+- (void)wiimoteEvent:(WiimoteEvent *)event
 {
-    if([[event path] isEqualToString:@"Connect"])
+    if ([[event path] isEqualToString:@"Connect"])
     {
         [[event wiimote] setHighlightedLEDMask:WiimoteLEDFlagOne];
         [[event wiimote] playConnectEffect];
         [self wiimoteConnected];
     }
 
-    if([[event path] isEqualToString:@"Disconnect"])
+    if ([[event path] isEqualToString:@"Disconnect"])
         [self wiimoteDisconnected];
 
     [self log:
-        [NSString stringWithFormat:@"%@ (%@): %@: %lf",
-                                        [[event wiimote] modelName],
-                                        [[event wiimote] addressString],
-                                        [event path],
-                                        [event value]]];
+              [NSString stringWithFormat:@"%@ (%@): %@: %lf",
+                                         [[event wiimote] modelName],
+                                         [[event wiimote] addressString],
+                                         [event path],
+                                         [event value]]];
 }
 
-- (void)  log:(OCLog*)log
-        level:(OCLogLevel)level
-   sourceFile:(const char*)sourceFile
-         line:(NSUInteger)line
- functionName:(const char*)functionName
-      message:(NSString*)message
+- (void)log:(OCLog *)log
+           level:(OCLogLevel)level
+      sourceFile:(const char *)sourceFile
+            line:(NSUInteger)line
+    functionName:(const char *)functionName
+         message:(NSString *)message
 {
     [self log:
-        [NSString stringWithFormat:
+              [NSString stringWithFormat:
                             @"[%s (%llu)]:[%s]: %@",
-                                                sourceFile,
-                                                (unsigned long long)line,
-                                                functionName,
-                                                message]];
+                            sourceFile,
+                            (unsigned long long)line,
+                            functionName,
+                            message]];
 }
 
 @end

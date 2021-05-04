@@ -16,7 +16,7 @@
 
 + (void)registerExtensionClass:(Class)cls;
 
-@property(nonatomic,readonly) WiimoteExtension *connectedExtension;
+@property(nonatomic, readonly) WiimoteExtension *connectedExtension;
 
 - (void)detectMotionPlus;
 - (void)reconnectExtension;
