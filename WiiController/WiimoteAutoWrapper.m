@@ -176,8 +176,8 @@ static NSUInteger maxConnectedDevices = 0;
 			break;
 	}
 	
-    NSLog(@"\nMinLx: %f\tMinLy: %f\tMaxLx: %f\tMaxLy: %f", minL.x, minL.y, maxL.x, maxL.y);
-    NSLog(@"\nMinRx: %f\tMinRy: %f\tMaxRx: %f\tMaxRy: %f", minR.x, minR.y, maxR.x, maxR.y);
+//    NSLog(@"\nMinLx: %f\tMinLy: %f\tMaxLx: %f\tMaxLy: %f", minL.x, minL.y, maxL.x, maxL.y);
+//    NSLog(@"\nMinRx: %f\tMinRy: %f\tMaxRx: %f\tMaxRy: %f", minR.x, minR.y, maxR.x, maxR.y);
 	
 	[_hidState setPointer:stick position:position];
 }

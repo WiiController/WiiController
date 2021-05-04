@@ -8,12 +8,7 @@
 
 #import "NSSegmentedControl+Items.h"
 
-@implementation NSSegmentedControlItem : NSObject
-{
-    @private
-        NSSegmentedControl  *_owner;
-        NSUInteger           _index;
-}
+@implementation NSSegmentedControlItem
 
 - (id)initWithIndex:(NSUInteger)index owner:(NSSegmentedControl*)owner
 {

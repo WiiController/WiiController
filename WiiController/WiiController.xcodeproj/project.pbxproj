@@ -46,6 +46,7 @@
 		0AC903BC18BE3B12005A6254 /* UserActivityNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AC903BB18BE3B12005A6254 /* UserActivityNotifier.m */; };
 		3CA35A8D24B388DA00C882B6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3CA35A8C24B388DA00C882B6 /* Images.xcassets */; };
 		3CA35A9A24B3914D00C882B6 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3CA35A9924B3914D00C882B6 /* Credits.rtf */; };
+		3CDB429F263E17D300496F63 /* ca.igregory.WiiController.dext.dext in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 3C0913A4263D0D100002F886 /* ca.igregory.WiiController.dext.dext */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -219,6 +220,13 @@
 			remoteGlobalIDString = 0ABEEC7B18E34BA9001F03D3;
 			remoteInfo = wc_test;
 		};
+		3C0913A3263D0D100002F886 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A2206E415C2AF12004D168E /* WirtualJoy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3C3074CE263C76BD00661748;
+			remoteInfo = wiicontroller;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -235,6 +243,17 @@
 				0A22070315C2AF84004D168E /* UserNotification.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3CDB4281263DE37C00496F63 /* Embed System Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(SYSTEM_EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				3CDB429F263E17D300496F63 /* ca.igregory.WiiController.dext.dext in Embed System Extensions */,
+			);
+			name = "Embed System Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -272,6 +291,7 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		3C091396263D0D0F0002F886 /* WiiController.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WiiController.entitlements; sourceTree = "<group>"; };
 		3CA35A8C24B388DA00C882B6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = WiiController/Images.xcassets; sourceTree = "<group>"; };
 		3CA35A9924B3914D00C882B6 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* WiiController-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "WiiController-Info.plist"; sourceTree = "<group>"; };
@@ -372,6 +392,7 @@
 				0A2206EE15C2AF12004D168E /* WJoyTool */,
 				0A2206F015C2AF12004D168E /* WirtualJoy.framework */,
 				0A2206F215C2AF12004D168E /* Test.app */,
+				3C0913A4263D0D100002F886 /* ca.igregory.WiiController.dext.dext */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -449,6 +470,7 @@
 				8D1107310486CEB800E47090 /* WiiController-Info.plist */,
 				0A2206AD15C2AE84004D168E /* MainMenu.xib */,
 				3CA35A9924B3914D00C882B6 /* Credits.rtf */,
+				3C091396263D0D0F0002F886 /* WiiController.entitlements */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -473,6 +495,7 @@
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
 				0A22070D15C2AF8F004D168E /* Copy Frameworks */,
+				3CDB4281263DE37C00496F63 /* Embed System Extensions */,
 			);
 			buildRules = (
 			);
@@ -669,6 +692,13 @@
 			remoteRef = 0AB30838190156A600D30327 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		3C0913A4263D0D100002F886 /* ca.igregory.WiiController.dext.dext */ = {
+			isa = PBXReferenceProxy;
+			fileType = "wrapper.driver-extension";
+			path = ca.igregory.WiiController.dext.dext;
+			remoteRef = 3C0913A3263D0D100002F886 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -789,8 +819,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = WiiController.entitlements;
 				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = "";
@@ -822,8 +853,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = WiiController.entitlements;
 				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 12;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
@@ -848,7 +880,6 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = x86_64;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -888,7 +919,6 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = x86_64;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;

@@ -15,7 +15,7 @@
     self = [super init];
     if(self == nil)
         return nil;
-
+    
     _mouseState    = [[VHIDDevice alloc] initWithType:VHIDDeviceTypeMouse
                                           pointerCount:6
                                            buttonCount:2

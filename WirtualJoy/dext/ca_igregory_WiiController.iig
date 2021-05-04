@@ -1,0 +1,22 @@
+//
+//  Service.iig
+//  wiicontroller
+//
+//  Created by Ian Gregory on 30 Apr ’21.
+//
+
+#ifndef WiiControllerService_h
+#define WiiControllerService_h
+
+#include <Availability.h>
+#include <DriverKit/IOService.iig>
+
+class ca_igregory_WiiController : public IOService
+{
+public:
+    virtual kern_return_t Start(IOService *provider) override;
+    
+    virtual kern_return_t NewUserClient(uint32_t type, IOUserClient **userClient) override;
+};
+
+#endif /* WiiControllerService_h */

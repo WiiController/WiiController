@@ -66,6 +66,13 @@
 			remoteGlobalIDString = 0A46960615B593A2003AB8FD;
 			remoteInfo = WirtualJoy;
 		};
+		3CCE077D263E37C000E43B55 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A18413E15BE8D3300F223E4 /* WirtualJoy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3C3074CE263C76BD00661748;
+			remoteInfo = wiicontroller;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -219,6 +226,7 @@
 				0A18414D15BE8D3300F223E4 /* WJoyTool */,
 				0A18414F15BE8D3300F223E4 /* WirtualJoy.framework */,
 				0A18415115BE8D3300F223E4 /* Test.app */,
+				3CCE077E263E37C000E43B55 /* ca.igregory.WiiController.dext.dext */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -364,6 +372,13 @@
 			fileType = wrapper.application;
 			path = Test.app;
 			remoteRef = 0A18415015BE8D3300F223E4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3CCE077E263E37C000E43B55 /* ca.igregory.WiiController.dext.dext */ = {
+			isa = PBXReferenceProxy;
+			fileType = "wrapper.driver-extension";
+			path = ca.igregory.WiiController.dext.dext;
+			remoteRef = 3CCE077D263E37C000E43B55 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -532,7 +547,6 @@
 		1DEB91B208733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = x86_64;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -572,7 +586,6 @@
 		1DEB91B308733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = x86_64;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
