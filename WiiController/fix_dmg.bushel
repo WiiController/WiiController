@@ -1,0 +1,30 @@
+#!/usr/local/bin/bushelscript -l bushelscript_en
+
+use app Finder
+
+let dmg path be value of env var "DMG_PATH"
+tell Finder to tell disk "WiiController"
+	open
+	tell container window
+		set current view to icon view
+		set toolbar visible to false
+		set statusbar visible to false
+		set pathbar visible to false
+		set bounds to {120, 141, 612, 380}
+		tell «property ae4:icop»
+			set arrangement to «constant ae4:narr»
+			set shows item info to false
+			set icon size to 128
+			set text size to 12
+--			set background picture to (dmg path & "/.images/background.png")
+		end
+		tell item "WiiController.app"
+			set extension hidden to true
+			set position to {100, 80}
+		end
+		tell item "Applications"
+			set position to {380, 80}
+		end
+	end
+	close
+end

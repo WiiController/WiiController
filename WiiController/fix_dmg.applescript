@@ -7,7 +7,7 @@ tell application "Finder"
 			set current view to icon view
 			set toolbar visible to false
 			set statusbar visible to false
-			set the bounds to {120, 141, 612, 554}
+			set the bounds to {120, 141, 612, 380}
 		end tell
 		set opts to icon view options of container window
 		tell opts
@@ -18,8 +18,8 @@ tell application "Finder"
 		end tell
 		set background picture of opts to file ".images:background.png"
 		set extension hidden of item "WiiController.app" to true
-		set position of item "WiiController.app" to {56 + 64, 231 + 64}
-		set position of item "Applications" to {310 + 64, 231 + 64}
+		set position of item "WiiController.app" to {100, 80}
+		set position of item "Applications" to {380, 80}
 		close
 		open
 		update without registering applications
