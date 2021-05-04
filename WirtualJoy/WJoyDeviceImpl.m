@@ -16,14 +16,11 @@ static char const *driverKitDriverUserClass = "ca_igregory_WiiController";
 
 @interface WJoyDeviceImpl (PrivatePart)
 
-+ (void)registerAtExitCallback;
-
 + (io_service_t)findService;
 + (io_connect_t)createNewConnection;
 
 + (BOOL)isDriverLoaded;
 + (BOOL)loadDriver;
-+ (BOOL)unloadDriver;
 
 @end
 
@@ -39,11 +36,7 @@ static Class <DriverManager> driverManager() {
 
 + (BOOL)prepare
 {
-    if (![WJoyDeviceImpl loadDriver])
-        return NO;
-
-    [WJoyDeviceImpl registerAtExitCallback];
-    return YES;
+    return [WJoyDeviceImpl loadDriver];
 }
 
 - (id)init
@@ -134,22 +127,6 @@ static Class <DriverManager> driverManager() {
 
 @implementation WJoyDeviceImpl (PrivatePart)
 
-static void onApplicationExit(void)
-{
-    @autoreleasepool
-    {
-        [WJoyDeviceImpl unloadDriver];
-    }
-}
-
-+ (void)registerAtExitCallback
-{
-    static dispatch_once_t once;
-    dispatch_once(&once, ^{
-        atexit(onApplicationExit);
-    });
-}
-
 + (io_service_t)findService
 {
     io_service_t result = IO_OBJECT_NULL;
@@ -195,12 +172,6 @@ static void onApplicationExit(void)
 {
     if ([self isDriverLoaded]) return YES;
     return [driverManager() loadDriver];
-}
-
-+ (BOOL)unloadDriver
-{
-    if (![self isDriverLoaded]) return YES;
-    return [driverManager() unloadDriver];
 }
 
 @end

@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol DriverManager <NSObject>
 
 + (BOOL)loadDriver;
-+ (BOOL)unloadDriver;
 
 @end
 

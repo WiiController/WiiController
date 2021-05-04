@@ -81,11 +81,4 @@ static BOOL runLoadOrUnloadToolCommand(NSString *command)
     return runLoadOrUnloadToolCommand(WJoyToolLoadDriverCommand);
 }
 
-+ (BOOL)unloadDriver
-{
-    // This was patched out a long time ago, for macOS 10.8.
-    // I don't know exactly why.
-    return YES;
-}
-
 @end

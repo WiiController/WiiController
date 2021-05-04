@@ -79,13 +79,4 @@ DextManagerExtensionRequestDelegate *requestDelegate(void) {
     return requestDelegate().requestSucceeded;
 }
 
-+ (BOOL)unloadDriver {
-    __auto_type request = [OSSystemExtensionRequest deactivationRequestForExtension:driverExtensionIdentifier queue:requestQueue()];
-    request.delegate = requestDelegate();
-    [[OSSystemExtensionManager sharedManager] submitRequest:request];
-    
-    dispatch_semaphore_wait(requestDelegate().sema, DISPATCH_TIME_FOREVER);
-    return requestDelegate().requestSucceeded;
-}
-
 @end
