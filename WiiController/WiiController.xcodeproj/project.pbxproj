@@ -47,6 +47,8 @@
 		3CA35A9A24B3914D00C882B6 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3CA35A9924B3914D00C882B6 /* Credits.rtf */; };
 		3CA37EE42661D08600332294 /* ButtonConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA37EE32661D08600332294 /* ButtonConfiguration.m */; };
 		3CA37EF82661ECDB00332294 /* Device Profiles in Resources */ = {isa = PBXBuildFile; fileRef = 3CA37EF72661ECDB00332294 /* Device Profiles */; };
+		3CA37F172662A24C00332294 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CA37F152662A21900332294 /* Sparkle.framework */; };
+		3CA37F182662A24C00332294 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3CA37F152662A21900332294 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3CDB429F263E17D300496F63 /* ca.igregory.WiiController.dext.dext in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 3C0913A4263D0D100002F886 /* ca.igregory.WiiController.dext.dext */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -217,6 +219,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				0A95C85B18CE0ABF00C66818 /* OCLog.framework in Copy Frameworks */,
+				3CA37F182662A24C00332294 /* Sparkle.framework in Copy Frameworks */,
 				0A22070015C2AF76004D168E /* WirtualJoy.framework in Copy Frameworks */,
 				0A22070115C2AF7A004D168E /* VHID.framework in Copy Frameworks */,
 				0A22070215C2AF7E004D168E /* Wiimote.framework in Copy Frameworks */,
@@ -277,6 +280,8 @@
 		3CA37EE32661D08600332294 /* ButtonConfiguration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonConfiguration.m; sourceTree = "<group>"; };
 		3CA37EF12661D7F900332294 /* ProfileProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileProvider.h; sourceTree = "<group>"; };
 		3CA37EF72661ECDB00332294 /* Device Profiles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Device Profiles"; sourceTree = "<group>"; };
+		3CA37F1126629B8100332294 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		3CA37F152662A21900332294 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* WiiController-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "WiiController-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* WiiController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WiiController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -293,6 +298,7 @@
 				0A2206FD15C2AF59004D168E /* Wiimote.framework in Frameworks */,
 				0A2206FE15C2AF60004D168E /* UserNotification.framework in Frameworks */,
 				0A95C85A18CE0AAF00C66818 /* OCLog.framework in Frameworks */,
+				3CA37F172662A24C00332294 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,6 +419,7 @@
 		29B97314FDCFA39411CA2CEA /* WJoy */ = {
 			isa = PBXGroup;
 			children = (
+				3CA37F1126629B8100332294 /* Config.xcconfig */,
 				0A2206E415C2AF12004D168E /* WirtualJoy.xcodeproj */,
 				0A2206C415C2AF03004D168E /* VHID.xcodeproj */,
 				0A2206D715C2AF0C004D168E /* Wiimote.xcodeproj */,
@@ -455,6 +462,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3CA37F152662A21900332294 /* Sparkle.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
@@ -779,7 +787,6 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -792,7 +799,6 @@
 				INFOPLIST_FILE = "WiiController-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MARKETING_VERSION = 0.12.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.justcheesy.WiiController;
 				PRODUCT_NAME = WiiController;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -811,7 +817,6 @@
 				CODE_SIGN_ENTITLEMENTS = WiiController.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 13;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -823,7 +828,6 @@
 				INFOPLIST_FILE = "WiiController-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MARKETING_VERSION = 0.12.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.justcheesy.WiiController;
 				PRODUCT_NAME = WiiController;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -833,6 +837,7 @@
 		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CA37F1126629B8100332294 /* Config.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
@@ -872,6 +877,7 @@
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CA37F1126629B8100332294 /* Config.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;

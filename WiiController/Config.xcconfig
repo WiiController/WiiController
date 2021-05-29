@@ -1,0 +1,9 @@
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+MARKETING_VERSION = 0.13.0
+CURRENT_PROJECT_VERSION = 14
+
+// We love syntax hacks
+SLASH = /
+SPARKLE_FEED_URL = https:/$(SLASH)wiicontroller.github.io/WiiController/appcast.xml

@@ -12,10 +12,13 @@
 #import "NotificationCenter.h"
 #import "WiimoteLEDsController.h"
 
+#import <Sparkle/Sparkle.h>
+
 @implementation MainController
 
 - (void)awakeFromNib
 {
+    [SUUpdater sharedUpdater];
     [NotificationCenter start];
     [WiimoteLEDsController start];
     __auto_type statusBarItemController = [StatusBarItemController start];

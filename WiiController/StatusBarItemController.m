@@ -12,6 +12,8 @@
 #import "ButtonConfiguration.h"
 #import "ProfileProvider.h"
 
+#import <Sparkle/Sparkle.h>
+
 @interface StatusBarItemController () <NSMenuDelegate>
 
 @end
@@ -227,6 +229,10 @@
 
     item = [[NSMenuItem alloc] initWithTitle:@"About WiiController" action:@selector(showAboutPanel:) keyEquivalent:@""];
     item.target = self;
+    [_menu addItem:item];
+    
+    item = [[NSMenuItem alloc] initWithTitle:@"Check for Updates…" action:@selector(checkForUpdates:) keyEquivalent:@""];
+    item.target = [SUUpdater sharedUpdater];
     [_menu addItem:item];
 
     [_menu addItem:[NSMenuItem separatorItem]];
