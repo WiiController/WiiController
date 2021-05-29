@@ -28,7 +28,7 @@
 }
 
 static NSUInteger maxConnectedDevices = 0;
-static id <ProfileProvider> profileProvider;
+static id<ProfileProvider> profileProvider;
 
 + (NSUInteger)maxConnectedDevices
 {
@@ -71,7 +71,8 @@ static id <ProfileProvider> profileProvider;
              object:nil];
 }
 
-- (ButtonConfiguration *)profile {
+- (ButtonConfiguration *)profile
+{
     return [profileProvider profileForDevice:_device];
 }
 
@@ -190,8 +191,8 @@ static id <ProfileProvider> profileProvider;
         break;
     }
 
-//    NSLog(@"\nMinLx: %f\tMinLy: %f\tMaxLx: %f\tMaxLy: %f", minL.x, minL.y, maxL.x, maxL.y);
-//    NSLog(@"\nMinRx: %f\tMinRy: %f\tMaxRx: %f\tMaxRy: %f", minR.x, minR.y, maxR.x, maxR.y);
+    //    NSLog(@"\nMinLx: %f\tMinLy: %f\tMaxLx: %f\tMaxLy: %f", minL.x, minL.y, maxL.x, maxL.y);
+    //    NSLog(@"\nMinRx: %f\tMinRy: %f\tMaxRx: %f\tMaxRy: %f", minR.x, minR.y, maxR.x, maxR.y);
 
     [_hidState setPointer:[[self profile] axisNumberForExtensionName:uPro.name axisNumber:stick] position:position];
 }

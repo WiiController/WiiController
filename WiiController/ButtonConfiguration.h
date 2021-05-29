@@ -11,10 +11,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ButtonConfiguration : NSObject
 
-typedef NSDictionary<NSString*,NSDictionary<NSString*,NSDictionary<NSNumber*,NSNumber*>*>*>* ButtonConfigurationDictionary;
+typedef NSDictionary<NSString *, NSDictionary<NSString *, NSDictionary<NSNumber *, NSNumber *> *> *> *ButtonConfigurationDictionary;
 
-@property(nonatomic,copy) NSString *name;
-@property(nonatomic,copy) NSString *path;
+@property(nonatomic, copy) NSString *name;
+@property(nonatomic, copy) NSString *path;
 
 + (instancetype)configurationWithName:(NSString *)name path:(NSString *)path dictionary:(ButtonConfigurationDictionary)dictionary;
 

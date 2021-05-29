@@ -24,10 +24,14 @@ static char const *driverKitDriverUserClass = "ca_igregory_WiiController";
 
 @end
 
-static Class <DriverManager> driverManager() {
-    if (@available(macOS 10.15, *)) {
+static Class<DriverManager> driverManager()
+{
+    if (@available(macOS 10.15, *))
+    {
         return [DextManager self];
-    } else {
+    }
+    else
+    {
         return [WJoyTool self];
     }
 }
@@ -133,9 +137,9 @@ static Class <DriverManager> driverManager() {
 
     result = IOServiceGetMatchingService(
         kIOMasterPortDefault,
-        IOServiceMatching(WJoyDeviceDriverClass)
-    );
-    if (!result) {
+        IOServiceMatching(WJoyDeviceDriverClass));
+    if (!result)
+    {
         result = IOServiceGetMatchingService(
             kIOMasterPortDefault,
             IOServiceNameMatching(driverKitDriverUserClass));

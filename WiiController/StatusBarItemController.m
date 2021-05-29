@@ -21,10 +21,10 @@
     NSMenu *_menu;
     NSStatusItem *_item;
     ButtonConfiguration *_defaultDeviceProfile;
-    NSArray<ButtonConfiguration*> *_deviceProfiles;
-    NSArray<ButtonConfiguration*> *_appDeviceProfiles;
-    NSArray<ButtonConfiguration*> *_userDeviceProfiles;
-    NSMutableDictionary<NSString*,ButtonConfiguration*> *_deviceAddressToProfile;
+    NSArray<ButtonConfiguration *> *_deviceProfiles;
+    NSArray<ButtonConfiguration *> *_appDeviceProfiles;
+    NSArray<ButtonConfiguration *> *_userDeviceProfiles;
+    NSMutableDictionary<NSString *, ButtonConfiguration *> *_deviceAddressToProfile;
 }
 
 + (instancetype)start
@@ -42,7 +42,7 @@
     self = [super init];
     if (self == nil)
         return nil;
-    
+
     _deviceProfiles = _appDeviceProfiles = _userDeviceProfiles = @[];
     _deviceAddressToProfile = [NSMutableDictionary dictionary];
     [self fetchProfiles:nil];
@@ -134,11 +134,11 @@
 
         NSMenuItem *item = [[NSMenuItem alloc]
             initWithTitle:[NSString stringWithFormat:@"#%li %@ (%@ Battery) / %@",
-                i + 1,
-                [device marketingName],
-                [device batteryLevelDescription],
-                [device addressString]]
-            action:nil
+                                                     i + 1,
+                                                     [device marketingName],
+                                                     [device batteryLevelDescription],
+                                                     [device addressString]]
+                   action:nil
             keyEquivalent:@""];
         [_menu addItem:item];
         [item setIndentationLevel:1];
@@ -163,17 +163,18 @@
 
         NSMenuItem *profileItem = [[NSMenuItem alloc] initWithTitle:_defaultDeviceProfile.name action:@selector(setDeviceProfile:) keyEquivalent:@""];
         profileItem.target = self;
-        profileItem.representedObject = @{@"Device": device, @"Profile": _defaultDeviceProfile};
+        profileItem.representedObject = @{ @"Device" : device, @"Profile" : _defaultDeviceProfile };
         if ([_defaultDeviceProfile.path isEqualToString:currentProfile.path]) profileItem.state = NSControlStateValueOn;
         [profilesMenu addItem:profileItem];
 
         if (_appDeviceProfiles.count > 0) [profilesMenu addItem:[NSMenuItem separatorItem]];
 
         __auto_type sortedAppProfiles = [_appDeviceProfiles sortedArrayUsingSelector:@selector(name)];
-        for (ButtonConfiguration *profile in sortedAppProfiles) {
+        for (ButtonConfiguration *profile in sortedAppProfiles)
+        {
             NSMenuItem *profileItem = [[NSMenuItem alloc] initWithTitle:profile.name action:@selector(setDeviceProfile:) keyEquivalent:@""];
             profileItem.target = self;
-            profileItem.representedObject = @{@"Device": device, @"Profile": profile};
+            profileItem.representedObject = @{ @"Device" : device, @"Profile" : profile };
             if ([profile.path isEqualToString:currentProfile.path]) profileItem.state = NSControlStateValueOn;
             [profilesMenu addItem:profileItem];
         }
@@ -181,10 +182,11 @@
         if (_userDeviceProfiles.count > 0) [profilesMenu addItem:[NSMenuItem separatorItem]];
 
         __auto_type sortedUserProfiles = [_userDeviceProfiles sortedArrayUsingSelector:@selector(name)];
-        for (ButtonConfiguration *profile in sortedUserProfiles) {
+        for (ButtonConfiguration *profile in sortedUserProfiles)
+        {
             NSMenuItem *profileItem = [[NSMenuItem alloc] initWithTitle:profile.name action:@selector(setDeviceProfile:) keyEquivalent:@""];
             profileItem.target = self;
-            profileItem.representedObject = @{@"Device": device, @"Profile": profile};
+            profileItem.representedObject = @{ @"Device" : device, @"Profile" : profile };
             if ([profile.path isEqualToString:currentProfile.path]) profileItem.state = NSControlStateValueOn;
             [profilesMenu addItem:profileItem];
         }
@@ -196,20 +198,20 @@
     openProfilesFolderItem.target = self;
     openProfilesFolderItem.representedObject = @"User";
     [_menu addItem:openProfilesFolderItem];
-    
+
     NSMenu *openProfilesFolderSubmenu = [[NSMenu alloc] initWithTitle:@"Open Profiles Folder"];
     openProfilesFolderItem.submenu = openProfilesFolderSubmenu;
-    
+
     NSMenuItem *defaultProfilesFolderItem = [[NSMenuItem alloc] initWithTitle:@"Default Profiles" action:@selector(openProfilesFolder:) keyEquivalent:@""];
     defaultProfilesFolderItem.target = self;
     defaultProfilesFolderItem.representedObject = @"Default";
     [openProfilesFolderSubmenu addItem:defaultProfilesFolderItem];
-    
+
     NSMenuItem *userProfilesFolderItem = [[NSMenuItem alloc] initWithTitle:@"User Profiles" action:@selector(openProfilesFolder:) keyEquivalent:@""];
     userProfilesFolderItem.target = self;
     userProfilesFolderItem.representedObject = @"User";
     [openProfilesFolderSubmenu addItem:userProfilesFolderItem];
-    
+
     NSMenuItem *reloadProfilesItem = [[NSMenuItem alloc] initWithTitle:@"Reload Profiles" action:@selector(fetchProfiles:) keyEquivalent:@""];
     reloadProfilesItem.target = self;
     [_menu addItem:reloadProfilesItem];
@@ -234,57 +236,64 @@
     [_menu addItem:item];
 }
 
-static NSURL* appProfilesFolderURL()
+static NSURL *appProfilesFolderURL()
 {
     return [[[NSBundle mainBundle] resourceURL] URLByAppendingPathComponent:@"Device Profiles"];
 }
-static NSURL* userProfilesFolderURL()
+static NSURL *userProfilesFolderURL()
 {
     NSError *error;
     NSURL *appSupportURL = [[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
-    if (error) {
+    if (error)
+    {
         [[NSApplication sharedApplication] presentError:error];
         return nil;
     }
     __auto_type userProfilesURL = [[appSupportURL URLByAppendingPathComponent:@"WiiController"] URLByAppendingPathComponent:@"Device Profiles"];
     [[NSFileManager defaultManager] createDirectoryAtURL:userProfilesURL withIntermediateDirectories:YES attributes:nil error:&error];
-    if (error) {
+    if (error)
+    {
         [[NSApplication sharedApplication] presentError:error];
         return nil;
     }
     return userProfilesURL;
 }
 
-static NSEnumerator* profileDirectoryEnumerator(NSURL *directoryURL)
+static NSEnumerator *profileDirectoryEnumerator(NSURL *directoryURL)
 {
-    return [[NSFileManager defaultManager] enumeratorAtURL:directoryURL includingPropertiesForKeys:@[NSURLIsDirectoryKey] options:NSDirectoryEnumerationSkipsSubdirectoryDescendants|NSDirectoryEnumerationSkipsHiddenFiles errorHandler:^BOOL(NSURL *url, NSError *error) {
+    return [[NSFileManager defaultManager] enumeratorAtURL:directoryURL includingPropertiesForKeys:@[ NSURLIsDirectoryKey ] options:NSDirectoryEnumerationSkipsSubdirectoryDescendants | NSDirectoryEnumerationSkipsHiddenFiles errorHandler:^BOOL(NSURL *url, NSError *error) {
         [[NSApplication sharedApplication] presentError:error];
         return YES;
     }];
 }
-static ButtonConfiguration* loadProfile(NSURL *url)
+static ButtonConfiguration *loadProfile(NSURL *url)
 {
     __auto_type stream = [NSInputStream inputStreamWithURL:url];
     [stream open];
     NSError *error;
     NSDictionary *dictionary = [NSPropertyListSerialization propertyListWithStream:stream options:NSPropertyListMutableContainers format:nil error:&error];
     [stream close];
-    if (error) {
+    if (error)
+    {
         [[NSApplication sharedApplication] presentError:error];
         return nil;
     }
-    if (![dictionary isKindOfClass:[NSDictionary class]]) {
+    if (![dictionary isKindOfClass:[NSDictionary class]])
+    {
         return nil;
     }
     // Convert button number keys from NSStrings to NSNumbers.
-    for (NSString *extension in dictionary) {
+    for (NSString *extension in dictionary)
+    {
         NSMutableDictionary *extensionToInputTypeMappings = dictionary[extension];
         if (![extensionToInputTypeMappings isKindOfClass:[NSMutableDictionary class]]) continue;
-        for (NSString *inputType in extensionToInputTypeMappings) {
+        for (NSString *inputType in extensionToInputTypeMappings)
+        {
             NSDictionary *inputTypeToInputMappings = extensionToInputTypeMappings[inputType];
             if (![inputTypeToInputMappings isKindOfClass:[NSDictionary class]]) continue;
-            NSMutableDictionary<NSNumber*,NSNumber*> *numericInputMappings = [NSMutableDictionary dictionary];
-            for (NSString *input in inputTypeToInputMappings) {
+            NSMutableDictionary<NSNumber *, NSNumber *> *numericInputMappings = [NSMutableDictionary dictionary];
+            for (NSString *input in inputTypeToInputMappings)
+            {
                 NSScanner *scanner = [NSScanner scannerWithString:input];
                 int value;
                 if ([scanner scanInt:&value]) numericInputMappings[@(value)] = inputTypeToInputMappings[input];
@@ -294,7 +303,7 @@ static ButtonConfiguration* loadProfile(NSURL *url)
     }
     return [ButtonConfiguration configurationWithName:[[url URLByDeletingPathExtension] lastPathComponent] path:[[url absoluteURL] path] dictionary:dictionary];
 }
-static ButtonConfiguration* loadProfileIntoList(NSMutableArray<ButtonConfiguration*> *profiles, NSURL *url)
+static ButtonConfiguration *loadProfileIntoList(NSMutableArray<ButtonConfiguration *> *profiles, NSURL *url)
 {
     __auto_type profile = loadProfile(url);
     if (profile) [profiles addObject:profile];
@@ -306,14 +315,16 @@ static NSString *const defaultProfileFileName = @"Default.plist";
     _defaultDeviceProfile = loadProfile([appProfilesFolderURL() URLByAppendingPathComponent:defaultProfileFileName]);
 
     NSMutableArray *appProfiles = [NSMutableArray array];
-    for (NSURL *fileURL in profileDirectoryEnumerator(appProfilesFolderURL())) {
+    for (NSURL *fileURL in profileDirectoryEnumerator(appProfilesFolderURL()))
+    {
         if ([[fileURL lastPathComponent] isEqualToString:defaultProfileFileName]) continue;
         loadProfileIntoList(appProfiles, fileURL);
     }
     _appDeviceProfiles = appProfiles;
 
     NSMutableArray *userProfiles = [NSMutableArray array];
-    for (NSURL *fileURL in profileDirectoryEnumerator(userProfilesFolderURL())) {
+    for (NSURL *fileURL in profileDirectoryEnumerator(userProfilesFolderURL()))
+    {
         loadProfileIntoList(userProfiles, fileURL);
     }
     _userDeviceProfiles = userProfiles;
@@ -322,15 +333,19 @@ static NSString *const defaultProfileFileName = @"Default.plist";
 
     // Update all profiles in use, using default for any that no longer exist.
     __auto_type newDeviceAddressToProfile = [NSMutableDictionary dictionary];
-    for (NSString *deviceAddress in _deviceAddressToProfile) {
+    for (NSString *deviceAddress in _deviceAddressToProfile)
+    {
         __auto_type oldProfile = _deviceAddressToProfile[deviceAddress];
-        for (ButtonConfiguration *newProfile in _deviceProfiles) {
-            if ([newProfile.path isEqualToString:oldProfile.path]) {
+        for (ButtonConfiguration *newProfile in _deviceProfiles)
+        {
+            if ([newProfile.path isEqualToString:oldProfile.path])
+            {
                 newDeviceAddressToProfile[deviceAddress] = newProfile;
                 break;
             }
         }
-        if (!newDeviceAddressToProfile[deviceAddress]) {
+        if (!newDeviceAddressToProfile[deviceAddress])
+        {
             newDeviceAddressToProfile[deviceAddress] = _defaultDeviceProfile;
         }
     }
@@ -346,9 +361,7 @@ static NSString *const defaultProfileFileName = @"Default.plist";
 
 - (void)openProfilesFolder:(NSMenuItem *)sender
 {
-    NSURL *profilesFolderURL = ([sender.representedObject isEqual:@"Default"]) ?
-        appProfilesFolderURL() :
-        userProfilesFolderURL();
+    NSURL *profilesFolderURL = ([sender.representedObject isEqual:@"Default"]) ? appProfilesFolderURL() : userProfilesFolderURL();
     if (!profilesFolderURL) return;
 
     [[NSWorkspace sharedWorkspace] openURL:profilesFolderURL];
