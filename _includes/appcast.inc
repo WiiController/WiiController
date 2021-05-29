@@ -7,19 +7,19 @@
         {% for release in site.github.releases %}
             {% unless release.draft %}
                 {% unless release.prerelease and page.release_only %}
-                    <item>
-                        <title>{{ release.name | escape }}</title>
-                        <description>
-                          <![CDATA[
-                            {% include release-notes-style.html %}
-                            {{ release.body | markdownify }}
-                          ]]>
-                        </description>
-                        <pubDate>{{ release.published_at | date_to_rfc822 | escape }}</pubDate>
-                        {% assign asset = release.assets.first %}
-                        {% assign project_name = 'WiiController' %}
-                        {% assign asset_name_rest = asset.name | replace_first:project_name,'' %}
-                        {% if asset and asset_name_rest contains '.v' %}
+                    {% assign asset = release.assets.first %}
+                    {% assign project_name = 'WiiController' %}
+                    {% assign asset_name_rest = asset.name | replace_first:project_name,'' %}
+                    {% if asset and asset_name_rest contains '.v' %}
+                        <item>
+                            <title>{{ release.name | escape }}</title>
+                            <description>
+                              <![CDATA[
+                                {% include release-notes-style.html %}
+                                {{ release.body | markdownify }}
+                              ]]>
+                            </description>
+                            <pubDate>{{ release.published_at | date_to_rfc822 | escape }}</pubDate>
                             {% assign build_nums = asset_name_rest | replace_first:'.v','' | replace_first:'.b',',' | remove_first:'.dmg' | remove_first:'.zip' | split:',' %}
                             {% if build_nums.size == 2 %}
                                 {% assign version = build_nums[1] %}
@@ -33,8 +33,8 @@
                                 {% if short_version %}sparkle:shortVersionString="{{ release.tag_name | remove_first:'v' | escape }}"{% endif %}
                                 length="{{ asset.size | escape }}"
                                 type="application/octet-stream" />
-                        {% endif %}
-                    </item>
+                        </item>
+                    {% endif %}
                 {% endunless %}
             {% endunless %}
         {% endfor %}
