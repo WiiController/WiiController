@@ -16,6 +16,8 @@ NSString *WiimoteUDrawPenButtonReleasedNotification = @"WiimoteUDrawPenButtonRel
 NSString *WiimoteUDrawPenPositionKey = @"WiimoteUDrawPenPositionKey";
 NSString *WiimoteUDrawPenPressureKey = @"WiimoteUDrawPenPressureKey";
 
+NSString *WiimoteUDrawName = @"uDraw";
+
 @implementation NSObject (WiimoteUDrawDelegate)
 
 - (void)wiimote:(Wiimote *)wiimote

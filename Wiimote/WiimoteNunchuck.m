@@ -84,7 +84,7 @@
 
 - (NSString *)name
 {
-    return @"Nunchuk";
+    return WiimoteNunchuckName;
 }
 
 - (NSPoint)stickPosition

@@ -16,6 +16,8 @@ FOUNDATION_EXPORT NSString *WiimoteUDrawPenButtonReleasedNotification;
 FOUNDATION_EXPORT NSString *WiimoteUDrawPenPositionKey;
 FOUNDATION_EXPORT NSString *WiimoteUDrawPenPressureKey;
 
+FOUNDATION_EXPORT NSString *WiimoteUDrawName;
+
 @class Wiimote;
 @class WiimoteExtension;
 

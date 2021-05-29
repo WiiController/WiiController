@@ -43,6 +43,8 @@ FOUNDATION_EXPORT NSString *WiimoteUProControllerStickKey;
 FOUNDATION_EXPORT NSString *WiimoteUProControllerButtonKey;
 FOUNDATION_EXPORT NSString *WiimoteUProControllerStickPositionKey;
 
+FOUNDATION_EXPORT NSString *WiimoteUProControllerName;
+
 @class Wiimote;
 @class WiimoteExtension;
 

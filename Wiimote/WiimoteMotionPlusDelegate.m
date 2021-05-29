@@ -15,6 +15,8 @@ NSString *WiimoteMotionPlusReportNotification = @"WiimoteMotionPlusReportNotific
 NSString *WiimoteMotionPlusSubExtensionKey = @"WiimoteMotionPlusSubExtensionKey";
 NSString *WiimoteMotionPlusReportKey = @"WiimoteMotionPlusReportKey";
 
+NSString *WiimoteMotionPlusName = @"Motion Plus";
+
 @implementation NSObject (WiimoteMotionPlusDelegate)
 
 - (void)wiimote:(Wiimote *)wiimote

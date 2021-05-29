@@ -166,7 +166,7 @@
 
 - (NSString *)name
 {
-    return @"Motion Plus";
+    return WiimoteMotionPlusName;
 }
 
 - (void)disconnected

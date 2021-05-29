@@ -15,6 +15,8 @@ FOUNDATION_EXPORT NSString *WiimoteBalanceBoardTopRightPressKey;
 FOUNDATION_EXPORT NSString *WiimoteBalanceBoardBottomLeftPressKey;
 FOUNDATION_EXPORT NSString *WiimoteBalanceBoardBottomRightPressKey;
 
+FOUNDATION_EXPORT NSString *WiimoteBalanceBoardName;
+
 @class Wiimote;
 @class WiimoteExtension;
 

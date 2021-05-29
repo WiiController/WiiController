@@ -68,7 +68,7 @@
 
 - (NSString *)name
 {
-    return @"Classic Controller";
+    return WiimoteClassicControllerName;
 }
 
 - (NSPoint)stickPosition:(WiimoteClassicControllerStickType)stick

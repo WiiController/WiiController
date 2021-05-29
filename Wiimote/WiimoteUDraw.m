@@ -59,7 +59,7 @@
 
 - (NSString *)name
 {
-    return @"uDraw";
+    return WiimoteUDrawName;
 }
 
 - (BOOL)isPenPressed

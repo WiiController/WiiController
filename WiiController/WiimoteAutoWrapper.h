@@ -10,11 +10,14 @@
 #import <WirtualJoy/WJoyDevice.h>
 #import <VHID/VHIDDevice.h>
 
+#import "ProfileProvider.h"
+
 @interface WiimoteAutoWrapper : NSObject <VHIDDeviceDelegate>
 
 // 0 = infinite, default = infinite, if currently connected too many, disconnect last connected
 + (NSUInteger)maxConnectedDevices;
 + (void)setMaxConnectedDevices:(NSUInteger)count;
++ (void)setProfileProvider:(id <ProfileProvider>)provider;
 
 + (void)start;
 

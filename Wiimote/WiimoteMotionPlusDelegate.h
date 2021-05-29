@@ -15,6 +15,8 @@ FOUNDATION_EXPORT NSString *WiimoteMotionPlusReportNotification;
 FOUNDATION_EXPORT NSString *WiimoteMotionPlusSubExtensionKey;
 FOUNDATION_EXPORT NSString *WiimoteMotionPlusReportKey;
 
+FOUNDATION_EXPORT NSString *WiimoteMotionPlusName;
+
 typedef struct
 {
     uint16_t speed;

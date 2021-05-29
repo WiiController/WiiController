@@ -18,8 +18,9 @@
 {
     [NotificationCenter start];
     [WiimoteLEDsController start];
-    [StatusBarItemController start];
+    __auto_type statusBarItemController = [StatusBarItemController start];
     [WiimoteAutoWrapper setMaxConnectedDevices:4];
+    [WiimoteAutoWrapper setProfileProvider:statusBarItemController];
     [WiimoteAutoWrapper start];
 
     [Wiimote beginDiscovery];

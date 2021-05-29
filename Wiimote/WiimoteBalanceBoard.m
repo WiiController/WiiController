@@ -70,7 +70,7 @@
 
 - (NSString *)name
 {
-    return @"Balance Board";
+    return WiimoteBalanceBoardName;
 }
 
 - (double)topLeftPress

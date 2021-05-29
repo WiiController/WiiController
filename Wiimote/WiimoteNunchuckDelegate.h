@@ -33,6 +33,8 @@ FOUNDATION_EXPORT NSString *WiimoteNunchuckAccelerometerGravityZKey;
 FOUNDATION_EXPORT NSString *WiimoteNunchuckAccelerometerPitchKey;
 FOUNDATION_EXPORT NSString *WiimoteNunchuckAccelerometerRollKey;
 
+FOUNDATION_EXPORT NSString *WiimoteNunchuckName;
+
 @class Wiimote;
 @class WiimoteExtension;
 @class WiimoteAccelerometer;

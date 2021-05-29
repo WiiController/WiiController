@@ -8,8 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface StatusBarItemController : NSObject
+#import "ProfileProvider.h"
 
-+ (void)start;
+@interface StatusBarItemController : NSObject <ProfileProvider>
+
++ (instancetype)start;
 
 @end

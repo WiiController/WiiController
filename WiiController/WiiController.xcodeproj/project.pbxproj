@@ -45,6 +45,8 @@
 		0AC903BC18BE3B12005A6254 /* UserActivityNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AC903BB18BE3B12005A6254 /* UserActivityNotifier.m */; };
 		3CA35A8D24B388DA00C882B6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3CA35A8C24B388DA00C882B6 /* Images.xcassets */; };
 		3CA35A9A24B3914D00C882B6 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3CA35A9924B3914D00C882B6 /* Credits.rtf */; };
+		3CA37EE42661D08600332294 /* ButtonConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA37EE32661D08600332294 /* ButtonConfiguration.m */; };
+		3CA37EF82661ECDB00332294 /* Device Profiles in Resources */ = {isa = PBXBuildFile; fileRef = 3CA37EF72661ECDB00332294 /* Device Profiles */; };
 		3CDB429F263E17D300496F63 /* ca.igregory.WiiController.dext.dext in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 3C0913A4263D0D100002F886 /* ca.igregory.WiiController.dext.dext */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -271,6 +273,10 @@
 		3C091396263D0D0F0002F886 /* WiiController.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WiiController.entitlements; sourceTree = "<group>"; };
 		3CA35A8C24B388DA00C882B6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = WiiController/Images.xcassets; sourceTree = "<group>"; };
 		3CA35A9924B3914D00C882B6 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
+		3CA37EE22661D08600332294 /* ButtonConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonConfiguration.h; sourceTree = "<group>"; };
+		3CA37EE32661D08600332294 /* ButtonConfiguration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonConfiguration.m; sourceTree = "<group>"; };
+		3CA37EF12661D7F900332294 /* ProfileProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileProvider.h; sourceTree = "<group>"; };
+		3CA37EF72661ECDB00332294 /* Device Profiles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Device Profiles"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* WiiController-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "WiiController-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* WiiController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WiiController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -308,6 +314,9 @@
 				0A98995915C2C8AC00989D9D /* WiimoteLEDsController.m */,
 				0A10280A15C2BA85006715D7 /* MainController.h */,
 				0A10280B15C2BA85006715D7 /* MainController.m */,
+				3CA37EF12661D7F900332294 /* ProfileProvider.h */,
+				3CA37EE22661D08600332294 /* ButtonConfiguration.h */,
+				3CA37EE32661D08600332294 /* ButtonConfiguration.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -430,6 +439,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3CA37EF72661ECDB00332294 /* Device Profiles */,
 				3CA35A8C24B388DA00C882B6 /* Images.xcassets */,
 				0A2206A015C2AE51004D168E /* app.icns */,
 				0A10283615C2BE36006715D7 /* warning.icns */,
@@ -661,6 +671,7 @@
 				0A2206A315C2AE51004D168E /* wiimote.png in Resources */,
 				0A2206AE15C2AE84004D168E /* MainMenu.xib in Resources */,
 				0A10283715C2BE36006715D7 /* warning.icns in Resources */,
+				3CA37EF82661ECDB00332294 /* Device Profiles in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -692,6 +703,7 @@
 				0A22071015C2AFB8004D168E /* WiimoteAutoWrapper.m in Sources */,
 				0A1027F715C2B80A006715D7 /* StatusBarItemController.m in Sources */,
 				0A10280C15C2BA85006715D7 /* MainController.m in Sources */,
+				3CA37EE42661D08600332294 /* ButtonConfiguration.m in Sources */,
 				0AC903BC18BE3B12005A6254 /* UserActivityNotifier.m in Sources */,
 				0A98991C15C2C45A00989D9D /* NotificationCenter.m in Sources */,
 				0A98995A15C2C8AC00989D9D /* WiimoteLEDsController.m in Sources */,

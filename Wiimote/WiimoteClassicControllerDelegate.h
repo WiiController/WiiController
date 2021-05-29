@@ -54,6 +54,8 @@ FOUNDATION_EXPORT NSString *WiimoteClassicControllerAnalogShiftKey;
 FOUNDATION_EXPORT NSString *WiimoteClassicControllerStickPositionKey;
 FOUNDATION_EXPORT NSString *WiimoteClassicControllerAnalogShiftPositionKey;
 
+FOUNDATION_EXPORT NSString *WiimoteClassicControllerName;
+
 @class Wiimote;
 @class WiimoteExtension;
 

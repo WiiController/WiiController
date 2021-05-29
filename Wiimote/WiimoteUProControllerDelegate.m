@@ -16,6 +16,8 @@ NSString *WiimoteUProControllerStickKey = @"WiimoteUProControllerStickKey";
 NSString *WiimoteUProControllerButtonKey = @"WiimoteUProControllerButtonKey";
 NSString *WiimoteUProControllerStickPositionKey = @"WiimoteUProControllerStickPositionKey";
 
+NSString *WiimoteUProControllerName = @"Wii U Pro Controller";
+
 @implementation NSObject (WiimoteUProControllerDelegate)
 
 - (void)wiimote:(Wiimote *)wiimote

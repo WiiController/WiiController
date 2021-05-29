@@ -23,3 +23,5 @@ NSString *WiimoteNunchuckAccelerometerGravityYKey = @"WiimoteNunchuckAcceleromet
 NSString *WiimoteNunchuckAccelerometerGravityZKey = @"WiimoteNunchuckAccelerometerGravityZKey";
 NSString *WiimoteNunchuckAccelerometerPitchKey = @"WiimoteNunchuckAccelerometerPitchKey";
 NSString *WiimoteNunchuckAccelerometerRollKey = @"WiimoteNunchuckAccelerometerRollKey";
+
+NSString *WiimoteNunchuckName = @"Nunchuk";

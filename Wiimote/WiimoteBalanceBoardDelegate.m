@@ -15,6 +15,8 @@ NSString *WiimoteBalanceBoardTopRightPressKey = @"WiimoteBalanceBoardTopRightPre
 NSString *WiimoteBalanceBoardBottomLeftPressKey = @"WiimoteBalanceBoardBottomLeftPressKey";
 NSString *WiimoteBalanceBoardBottomRightPressKey = @"WiimoteBalanceBoardBottomRightPressKey";
 
+NSString *WiimoteBalanceBoardName = @"Balance Board";
+
 @implementation NSObject (WiimoteBalanceBoardDelegate)
 
 - (void)wiimote:(Wiimote *)wiimote

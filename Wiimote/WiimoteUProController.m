@@ -58,7 +58,7 @@
 
 - (NSString *)name
 {
-    return @"Wii U Pro Controller";
+    return WiimoteUProControllerName;
 }
 
 - (NSPoint)stickPosition:(WiimoteUProControllerStickType)stick
