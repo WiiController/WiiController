@@ -84,7 +84,7 @@
 
 - (NSString *)name
 {
-    return @"Nunchuck";
+    return @"Nunchuk";
 }
 
 - (NSPoint)stickPosition
