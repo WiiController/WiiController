@@ -87,6 +87,11 @@ NSString *WiimoteUseOneButtonClickConnectionKey = @"WiimoteUseOneButtonClickConn
     return [Wiimote connectedWiimotes];
 }
 
+- (void)dealloc
+{
+    [self setVibrationEnabled:NO];
+}
+
 - (BOOL)isConnected
 {
     return _device.transport.isOpen;
@@ -135,9 +140,10 @@ NSString *WiimoteUseOneButtonClickConnectionKey = @"WiimoteUseOneButtonClickConn
 
 - (void)playConnectEffect
 {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self setVibrationEnabled:NO];
+    });
     [self setVibrationEnabled:YES];
-    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.35]];
-    [self setVibrationEnabled:NO];
 }
 
 - (NSUInteger)highlightedLEDMask
