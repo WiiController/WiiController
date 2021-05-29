@@ -19,7 +19,7 @@ NSString *WiimoteClassicControllerAnalogShiftKey = @"WiimoteClassicControllerAna
 NSString *WiimoteClassicControllerStickPositionKey = @"WiimoteClassicControllerStickPositionKey";
 NSString *WiimoteClassicControllerAnalogShiftPositionKey = @"WiimoteClassicControllerAnalogShiftPositionKey";
 
-NSString *WiimoteClassicControllerName = @"WiimoteClassicControllerAnalogShiftPositionKey";
+NSString *WiimoteClassicControllerName = @"Classic Controller";
 
 @implementation NSObject (WiimoteClassicControllerDelegate)
 
