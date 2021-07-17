@@ -289,9 +289,11 @@ static ButtonConfiguration *loadProfile(NSURL *url)
         return nil;
     }
     // Convert button number keys from NSStrings to NSNumbers.
+    NSMutableDictionary *newDictionary = [NSMutableDictionary dictionary];
     for (NSString *extension in dictionary)
     {
         NSMutableDictionary *extensionToInputTypeMappings = dictionary[extension];
+        NSMutableDictionary *newExtensionToInputTypeMappings = [NSMutableDictionary dictionary];
         if (![extensionToInputTypeMappings isKindOfClass:[NSMutableDictionary class]]) continue;
         for (NSString *inputType in extensionToInputTypeMappings)
         {
@@ -304,10 +306,11 @@ static ButtonConfiguration *loadProfile(NSURL *url)
                 int value;
                 if ([scanner scanInt:&value]) numericInputMappings[@(value)] = inputTypeToInputMappings[input];
             }
-            extensionToInputTypeMappings[inputType] = numericInputMappings;
+            newExtensionToInputTypeMappings[inputType] = numericInputMappings;
         }
+        newDictionary[extension] = newExtensionToInputTypeMappings;
     }
-    return [ButtonConfiguration configurationWithName:[[url URLByDeletingPathExtension] lastPathComponent] path:[[url absoluteURL] path] dictionary:dictionary];
+    return [ButtonConfiguration configurationWithName:[[url URLByDeletingPathExtension] lastPathComponent] path:[[url absoluteURL] path] dictionary:newDictionary];
 }
 static ButtonConfiguration *loadProfileIntoList(NSMutableArray<ButtonConfiguration *> *profiles, NSURL *url)
 {
