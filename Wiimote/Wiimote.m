@@ -90,6 +90,7 @@ NSString *WiimoteUseOneButtonClickConnectionKey = @"WiimoteUseOneButtonClickConn
 - (void)dealloc
 {
     [self setVibrationEnabled:NO];
+    [_device disconnect];
 }
 
 - (BOOL)isConnected
