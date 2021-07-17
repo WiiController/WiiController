@@ -50,7 +50,7 @@ FOUNDATION_EXPORT NSString *WiimoteNunchuckName;
 
 typedef WiimoteExtension<WiimoteNunchuckProtocol> WiimoteNunchuckExtension;
 
-@protocol WiimoteNunchuckDelegate <NSObject>
+@interface NSObject (WiimoteNunchukDelegate)
 
 - (void)wiimote:(Wiimote *)wiimote nunchuck:(WiimoteNunchuckExtension *)nunchuck buttonPressed:(WiimoteNunchuckButtonType)button;
 - (void)wiimote:(Wiimote *)wiimote nunchuck:(WiimoteNunchuckExtension *)nunchuck buttonReleased:(WiimoteNunchuckButtonType)button;

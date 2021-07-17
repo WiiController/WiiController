@@ -203,6 +203,15 @@
 		0AF0E74118E183D300CB6662 /* WiimoteLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AF0E73F18E183D300CB6662 /* WiimoteLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0AF0E74318E183D300CB6662 /* WiimoteLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF0E74018E183D300CB6662 /* WiimoteLog.m */; };
 		0AF0E74418E183D300CB6662 /* WiimoteLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF0E74018E183D300CB6662 /* WiimoteLog.m */; };
+		3C6AC12D26A33C2C00717F34 /* WiimoteProtocolHeroGuitar.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C6AC12326A33C1A00717F34 /* WiimoteProtocolHeroGuitar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3C6AC12E26A33C2C00717F34 /* WiimoteHeroGuitar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6AC11E26A33C1A00717F34 /* WiimoteHeroGuitar.m */; };
+		3C6AC12F26A33C2C00717F34 /* WiimoteEventDispatcher+HeroGuitar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6AC12126A33C1A00717F34 /* WiimoteEventDispatcher+HeroGuitar.m */; };
+		3C6AC13326A33C2C00717F34 /* WiimoteEventSystem+HeroGuitar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6AC12026A33C1A00717F34 /* WiimoteEventSystem+HeroGuitar.m */; };
+		3C6AC13526A33C2D00717F34 /* WiimoteHeroGuitar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6AC11E26A33C1A00717F34 /* WiimoteHeroGuitar.m */; };
+		3C6AC13626A33C2D00717F34 /* WiimoteEventDispatcher+HeroGuitar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6AC12126A33C1A00717F34 /* WiimoteEventDispatcher+HeroGuitar.m */; };
+		3C6AC14026A3433E00717F34 /* WiimoteHeroGuitarDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6AC13E26A3433E00717F34 /* WiimoteHeroGuitarDelegate.m */; };
+		3C6AC14126A3433E00717F34 /* WiimoteHeroGuitarDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6AC13E26A3433E00717F34 /* WiimoteHeroGuitarDelegate.m */; };
+		3C6AC14226A3433E00717F34 /* WiimoteHeroGuitarDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C6AC13F26A3433E00717F34 /* WiimoteHeroGuitarDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CADAC9A263F18AC0084CA09 /* WiimoteBluetooth.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CADAC99263F18AC0084CA09 /* WiimoteBluetooth.m */; };
 		3CADAC9B263F18AC0084CA09 /* WiimoteBluetooth.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CADAC99263F18AC0084CA09 /* WiimoteBluetooth.m */; };
 		3CADACA9263F18C10084CA09 /* WiimoteBluetooth.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CADACA0263F18BA0084CA09 /* WiimoteBluetooth.h */; };
@@ -468,6 +477,15 @@
 		0AF0E73F18E183D300CB6662 /* WiimoteLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteLog.h; sourceTree = "<group>"; };
 		0AF0E74018E183D300CB6662 /* WiimoteLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteLog.m; sourceTree = "<group>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		3C6AC11E26A33C1A00717F34 /* WiimoteHeroGuitar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteHeroGuitar.m; sourceTree = "<group>"; };
+		3C6AC12026A33C1A00717F34 /* WiimoteEventSystem+HeroGuitar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WiimoteEventSystem+HeroGuitar.m"; sourceTree = "<group>"; };
+		3C6AC12126A33C1A00717F34 /* WiimoteEventDispatcher+HeroGuitar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WiimoteEventDispatcher+HeroGuitar.m"; sourceTree = "<group>"; };
+		3C6AC12226A33C1A00717F34 /* WiimoteEventSystem+HeroGuitar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WiimoteEventSystem+HeroGuitar.h"; sourceTree = "<group>"; };
+		3C6AC12326A33C1A00717F34 /* WiimoteProtocolHeroGuitar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteProtocolHeroGuitar.h; sourceTree = "<group>"; };
+		3C6AC12426A33C1A00717F34 /* WiimoteEventDispatcher+HeroGuitar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WiimoteEventDispatcher+HeroGuitar.h"; sourceTree = "<group>"; };
+		3C6AC12526A33C1A00717F34 /* WiimoteHeroGuitar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteHeroGuitar.h; sourceTree = "<group>"; };
+		3C6AC13E26A3433E00717F34 /* WiimoteHeroGuitarDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteHeroGuitarDelegate.m; sourceTree = "<group>"; };
+		3C6AC13F26A3433E00717F34 /* WiimoteHeroGuitarDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteHeroGuitarDelegate.h; sourceTree = "<group>"; };
 		3C95647B2495570000EAFA05 /* W_HIDDevice+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "W_HIDDevice+Private.h"; sourceTree = "<group>"; };
 		3C95647D249564FC00EAFA05 /* WiimoteDeviceReport+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WiimoteDeviceReport+Private.h"; sourceTree = "<group>"; };
 		3CADAC99263F18AC0084CA09 /* WiimoteBluetooth.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WiimoteBluetooth.m; sourceTree = "<group>"; };
@@ -773,6 +791,7 @@
 				0A48912115C7FD0F00207478 /* classic controller */,
 				0A51E15B176DE5F2004393FF /* wii u pro controller */,
 				0AB4B6AD19E95F55000C6D8B /* balance board */,
+				3C6AC13B26A33C5200717F34 /* guitar hero guitar */,
 				0AB4B6CA19E9752A000C6D8B /* u draw */,
 				0A8A2D8B1602254B00940B66 /* motion plus */,
 				0A6901C115C90E9C000D988D /* unknown */,
@@ -882,6 +901,8 @@
 				0A95C82D18CDE6C200C66818 /* WiimoteEventSystem+UProController.m */,
 				0AB4B6C519E961E4000C6D8B /* WiimoteEventSystem+BalanceBoard.h */,
 				0AB4B6C319E961C9000C6D8B /* WiimoteEventSystem+BalanceBoard.m */,
+				3C6AC12226A33C1A00717F34 /* WiimoteEventSystem+HeroGuitar.h */,
+				3C6AC12026A33C1A00717F34 /* WiimoteEventSystem+HeroGuitar.m */,
 				0AB4B6E219E998C9000C6D8B /* WiimoteEventSystem+UDraw.h */,
 				0AB4B6E319E998C9000C6D8B /* WiimoteEventSystem+UDraw.m */,
 			);
@@ -909,6 +930,7 @@
 				0A5C588815CFF75A00940D89 /* WiimoteProtocolClassicController.h */,
 				0A51E16A176DEF26004393FF /* WiimoteProtocolUProController.h */,
 				0AB4B6C219E96054000C6D8B /* WiimoteProtocolBalanceBoard.h */,
+				3C6AC12326A33C1A00717F34 /* WiimoteProtocolHeroGuitar.h */,
 				0AB4B6C819E97456000C6D8B /* WiimoteProtocolUDraw.h */,
 				0A6E74501600E1580054BD4A /* WiimoteProtocolMotionPlus.h */,
 				0A5C587415CFF69000940D89 /* WiimoteProtocolUtils.h */,
@@ -1093,6 +1115,27 @@
 			name = test;
 			sourceTree = "<group>";
 		};
+		3C6AC13B26A33C5200717F34 /* guitar hero guitar */ = {
+			isa = PBXGroup;
+			children = (
+				3C6AC13C26A33C7000717F34 /* internal */,
+				3C6AC13F26A3433E00717F34 /* WiimoteHeroGuitarDelegate.h */,
+				3C6AC13E26A3433E00717F34 /* WiimoteHeroGuitarDelegate.m */,
+			);
+			name = "guitar hero guitar";
+			sourceTree = "<group>";
+		};
+		3C6AC13C26A33C7000717F34 /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				3C6AC12426A33C1A00717F34 /* WiimoteEventDispatcher+HeroGuitar.h */,
+				3C6AC12126A33C1A00717F34 /* WiimoteEventDispatcher+HeroGuitar.m */,
+				3C6AC12526A33C1A00717F34 /* WiimoteHeroGuitar.h */,
+				3C6AC11E26A33C1A00717F34 /* WiimoteHeroGuitar.m */,
+			);
+			name = internal;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1149,6 +1192,7 @@
 				0A4890F915C7FA4500207478 /* WiimoteGenericExtension.h in Headers */,
 				0A48910515C7FA4500207478 /* WiimoteNunchuckDelegate.h in Headers */,
 				0A4890CF15C7FA4500207478 /* WiimoteClassicControllerDelegate.h in Headers */,
+				3C6AC14226A3433E00717F34 /* WiimoteHeroGuitarDelegate.h in Headers */,
 				0A51E167176DEA7D004393FF /* WiimoteUProControllerDelegate.h in Headers */,
 				0AB4B6B919E95F70000C6D8B /* WiimoteBalanceBoardDelegate.h in Headers */,
 				0AB4B6DA19E97648000C6D8B /* WiimoteUDrawDelegate.h in Headers */,
@@ -1157,6 +1201,7 @@
 				0A4890D115C7FA4500207478 /* WiimoteDelegate.h in Headers */,
 				0A48910E15C7FA4500207478 /* WiimoteWatchdog.h in Headers */,
 				0A4890C315C7FA4500207478 /* Wiimote.h in Headers */,
+				3C6AC12D26A33C2C00717F34 /* WiimoteProtocolHeroGuitar.h in Headers */,
 				0A66C87E15CC0C5000096DDA /* Wiimote+PlugIn.h in Headers */,
 				0A579028188AA6190066520E /* WiimoteEvent.h in Headers */,
 				0A57902C188AADC70066520E /* WiimoteEventSystem.h in Headers */,
@@ -1375,6 +1420,7 @@
 				0A7D7ED618E180C900E46316 /* WiimotePart.m in Sources */,
 				0A7D7ED718E180C900E46316 /* WiimoteExtensionProbeHandler.m in Sources */,
 				0A7D7ED818E180C900E46316 /* WiimoteExtension+PlugIn.m in Sources */,
+				3C6AC13626A33C2D00717F34 /* WiimoteEventDispatcher+HeroGuitar.m in Sources */,
 				0A7D7ED918E180C900E46316 /* WiimoteGenericExtension.m in Sources */,
 				0A7D7EDA18E180C900E46316 /* WiimoteAccelerometer+PlugIn.m in Sources */,
 				0A7D7EDB18E180C900E46316 /* Wiimote+PlugIn.m in Sources */,
@@ -1395,6 +1441,7 @@
 				0AB4B6B819E95F70000C6D8B /* WiimoteBalanceBoard.m in Sources */,
 				0A7D7EE718E180C900E46316 /* WiimoteVibrationPart.m in Sources */,
 				0A7D7EE818E180C900E46316 /* WiimoteEventDispatcher+Button.m in Sources */,
+				3C6AC13526A33C2D00717F34 /* WiimoteHeroGuitar.m in Sources */,
 				0A7D7EE918E180C900E46316 /* WiimoteButtonPart.m in Sources */,
 				0A7D7EEA18E180C900E46316 /* WiimoteEventDispatcher+Battery.m in Sources */,
 				0A7D7EEB18E180C900E46316 /* WiimoteBatteryPart.m in Sources */,
@@ -1423,6 +1470,7 @@
 				0A7D7F0118E180C900E46316 /* WiimoteMotionPlusDelegate.m in Sources */,
 				0A7D7F0218E180C900E46316 /* WiimoteUnknownExtension.m in Sources */,
 				0A7D7F0318E180C900E46316 /* WiimoteIRPoint.m in Sources */,
+				3C6AC14126A3433E00717F34 /* WiimoteHeroGuitarDelegate.m in Sources */,
 				0A7D7F0418E180C900E46316 /* WiimoteAccelerometer.m in Sources */,
 				0A7D7F0518E180C900E46316 /* WiimoteDelegate.m in Sources */,
 				0A7D7F0618E180C900E46316 /* WiimoteExtension.m in Sources */,
@@ -1453,6 +1501,7 @@
 				0A4890D015C7FA4500207478 /* WiimoteClassicControllerDelegate.m in Sources */,
 				0A95C82318CDE64800C66818 /* WiimoteEventSystem+Wiimote.m in Sources */,
 				3CADACBC263F28620084CA09 /* WiimoteDeviceReadBuffer.m in Sources */,
+				3C6AC13326A33C2C00717F34 /* WiimoteEventSystem+HeroGuitar.m in Sources */,
 				0A4890D215C7FA4500207478 /* WiimoteDelegate.m in Sources */,
 				0A4890D415C7FA4500207478 /* WiimoteDevice.m in Sources */,
 				0A4890DA15C7FA4500207478 /* WiimoteDeviceReport.m in Sources */,
@@ -1466,6 +1515,7 @@
 				0A4890E615C7FA4500207478 /* WiimoteEventDispatcher+Extension.m in Sources */,
 				0A4890E815C7FA4500207478 /* WiimoteEventDispatcher+LED.m in Sources */,
 				0A4890EA15C7FA4500207478 /* WiimoteEventDispatcher+Nunchuck.m in Sources */,
+				3C6AC14026A3433E00717F34 /* WiimoteHeroGuitarDelegate.m in Sources */,
 				0AF0E74318E183D300CB6662 /* WiimoteLog.m in Sources */,
 				0AB4B6E519E998C9000C6D8B /* WiimoteEventSystem+UDraw.m in Sources */,
 				0A4890EE15C7FA4500207478 /* WiimoteEventDispatcher+Vibration.m in Sources */,
@@ -1497,10 +1547,12 @@
 				0A66C82915CBF49A00096DDA /* WiimoteEventDispatcher+Accelerometer.m in Sources */,
 				0AB4B6D619E97619000C6D8B /* WiimoteEventDispatcher+UDraw.m in Sources */,
 				0A66C87F15CC0C5000096DDA /* Wiimote+PlugIn.m in Sources */,
+				3C6AC12E26A33C2C00717F34 /* WiimoteHeroGuitar.m in Sources */,
 				0A5C520815CF9E9600940D89 /* WiimoteAccelerometer.m in Sources */,
 				0A5C525815CFAFD700940D89 /* WiimoteAccelerometer+PlugIn.m in Sources */,
 				0A4AE22015D105C100408710 /* WiimoteIRPart.m in Sources */,
 				0A4AE2ED15D117EA00408710 /* WiimoteIRPoint.m in Sources */,
+				3C6AC12F26A33C2C00717F34 /* WiimoteEventDispatcher+HeroGuitar.m in Sources */,
 				0A6E74331600DA060054BD4A /* WiimoteMotionPlusDetector.m in Sources */,
 				0A8A2D901602257300940B66 /* WiimoteMotionPlus.m in Sources */,
 				0A8A2DB516022BFC00940B66 /* WiimoteMotionPlusDelegate.m in Sources */,
