@@ -2,8 +2,6 @@
 //  WiimoteEventSystem+HeroGuitar.m
 //  Wiimote
 //
-//  Created by Michael Kessler on 10/4/14.
-//
 
 #import "WiimoteEventSystem+HeroGuitar.h"
 
@@ -12,68 +10,74 @@
 + (void)load
 {
     [WiimoteEventSystem
-     registerNotification:WiimoteNunchuckButtonPressedNotification
-     selector:@selector(wiimoteNunchuckButtonPressedNotification:)];
+     registerNotification:WiimoteHeroGuitarButtonPressedNotification
+     selector:@selector(wiimoteHeroGuitarButtonPressedNotification:)];
     
     [WiimoteEventSystem
-     registerNotification:WiimoteNunchuckButtonReleasedNotification
-     selector:@selector(wiimoteNunchuckButtonReleasedNotification:)];
+     registerNotification:WiimoteHeroGuitarButtonReleasedNotification
+     selector:@selector(wiimoteHeroGuitarButtonReleasedNotification:)];
     
     [WiimoteEventSystem
-     registerNotification:WiimoteNunchuckStickPositionChangedNotification
-     selector:@selector(wiimoteNunchuckStickPositionChangedNotification:)];
+     registerNotification:WiimoteHeroGuitarStickPositionChangedNotification
+     selector:@selector(wiimoteHeroGuitarStickPositionChangedNotification:)];
     
     [WiimoteEventSystem
-     registerNotification:WiimoteNunchuckAccelerometerAnglesChangedNotification
-     selector:@selector(wiimoteNunchuckAccelerometerAnglesChangedNotification:)];
+     registerNotification:WiimoteHeroGuitarAnalogShiftPositionChangedNotification
+     selector:@selector(wiimoteHeroGuitarAnalogShiftPositionChangedNotification:)];
 }
 
-- (NSString *)pathForNunchuckButton:(NSDictionary *)userInfo
+- (NSString *)pathForHeroGuitarButton:(NSDictionary *)userInfo
 {
     static NSString *result[] = {
-        @"Button.C",
-        @"Button.Z"
+        @"Button.Green",
+        @"Button.Red",
+        @"Button.Yellow",
+        @"Button.Blue",
+        @"Button.Orange",
+        @"Button.Up",
+        @"Button.Down",
+        @"Button.Plus",
+        @"Button.Minus",
     };
     
-    WiimoteNunchuckButtonType type = [[userInfo objectForKey:WiimoteNunchuckButtonKey] integerValue];
+    WiimoteHeroGuitarButtonType type = [[userInfo objectForKey:WiimoteUProControllerButtonKey] integerValue];
     
     return result[type];
 }
 
-- (void)wiimoteNunchuckButtonPressedNotification:(NSNotification *)notification
+- (void)wiimoteHeroGuitarButtonPressedNotification:(NSNotification *)notification
 {
     [self postEventForWiimoteExtension:[notification object]
-                                  path:[self pathForNunchuckButton:[notification userInfo]]
+                                  path:[self pathForHeroGuitarButton:[notification userInfo]]
                                  value:WIIMOTE_EVENT_VALUE_PRESS];
 }
 
-- (void)wiimoteNunchuckButtonReleasedNotification:(NSNotification *)notification
+- (void)wiimoteHeroGuitarButtonReleasedNotification:(NSNotification *)notification
 {
     [self postEventForWiimoteExtension:[notification object]
-                                  path:[self pathForNunchuckButton:[notification userInfo]]
+                                  path:[self pathForHeroGuitarButton:[notification userInfo]]
                                  value:WIIMOTE_EVENT_VALUE_RELEASE];
 }
 
-- (void)wiimoteNunchuckStickPositionChangedNotification:(NSNotification *)notification
+- (void)wiimoteHeroGuitarStickPositionChangedNotification:(NSNotification *)notification
 {
-    NSPoint position = [[[notification userInfo] objectForKey:WiimoteNunchuckStickPositionKey] pointValue];
+    NSPoint position = [[[notification userInfo] objectForKey:WiimoteHeroGuitarStickPositionKey] pointValue];
     
     [self postEventForWiimoteExtension:[notification object]
                                   path:@"Stick.X"
                                  value:position.x];
-    
     [self postEventForWiimoteExtension:[notification object]
                                   path:@"Stick.Y"
                                  value:position.y];
 }
 
-- (void)wiimoteNunchuckAccelerometerAnglesChangedNotification:(NSNotification *)notification
+- (void)wiimoteHeroGuitarAnalogShiftPositionChangedNotification:(NSNotification *)notification
 {
-    CGFloat pitch = [[[notification userInfo] objectForKey:WiimoteNunchuckAccelerometerPitchKey] doubleValue];
-    CGFloat roll = [[[notification userInfo] objectForKey:WiimoteNunchuckAccelerometerRollKey] doubleValue];
+    CGFloat position = [[[notification userInfo] objectForKey:WiimoteHeroGuitarAnalogShiftPositionKey] doubleValue];
     
-    [self postEventForWiimoteExtension:[notification object] path:@"Accelerometer.Pitch" value:pitch];
-    [self postEventForWiimoteExtension:[notification object] path:@"Accelerometer.Roll" value:roll];
+    [self postEventForWiimoteExtension:[notification object]
+                                  path:@"Shift"
+                                 value:position];
 }
 
 @end
