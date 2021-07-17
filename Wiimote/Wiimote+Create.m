@@ -83,11 +83,6 @@
                          initWithBluetoothDevice:device]];
 }
 
-- (void)dealloc
-{
-    [_device disconnect];
-}
-
 + (void)connectToHIDDevice:(W_HIDDevice*)device
 {
     (void)[[Wiimote alloc] initWithHIDDevice:device];
