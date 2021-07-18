@@ -135,7 +135,7 @@
     
     [self setStickPosition:(NSPoint){report->stickX.pos / 2048.0 - 1.0f, report->stickY.pos / 2048.0 - 1.0f}];
     [self setAnalogShiftPosition:(report->whammyBar.value + 1.0f) * 0.5f];
-    [self handleButtonState:report->buttonState];
+    [self handleButtonState:CFSwapInt16BigToHost(report->buttonState)];
 }
 
 @end

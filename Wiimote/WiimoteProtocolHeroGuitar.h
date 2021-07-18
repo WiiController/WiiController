@@ -1,8 +1,6 @@
 //
-//  WiimoteProtocolUDraw.h
+//  WiimoteProtocolHeroGuitar.h
 //  Wiimote
-//
-//  Created by Michael Kessler on 10/4/14.
 //
 
 typedef enum
@@ -28,5 +26,6 @@ typedef struct
         int : 3;
         int value : 5;
     } touchBar, whammyBar;
+    /// Big-endian!
     uint16_t buttonState;
 } WiimoteDeviceHeroGuitarReport;
