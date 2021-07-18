@@ -24,7 +24,9 @@
     NSPoint _shiftsState;
     WJoyDevice *_wJoy;
     // For calibration of the analog sticks
-    NSPoint minL, maxL, minR, maxR;
+    NSPoint uProMinL, uProMaxL, uProMinR, uProMaxR;
+    NSPoint heroGuitarMinStick, heroGuitarMaxStick;
+    CGFloat heroGuitarMinShift, heroGuitarMaxShift;
 }
 
 static NSUInteger maxConnectedDevices = 0;
@@ -170,24 +172,24 @@ static id<ProfileProvider> profileProvider;
     switch (stick)
     {
     case WiimoteUProControllerStickTypeLeft:
-        minL.x = MIN(minL.x, position.x);
-        minL.y = MIN(minL.y, position.y);
+        uProMinL.x = MIN(uProMinL.x, position.x);
+        uProMinL.y = MIN(uProMinL.y, position.y);
 
-        maxL.x = MAX(maxL.x, position.x);
-        maxL.y = MAX(maxL.y, position.y);
+        uProMaxL.x = MAX(uProMaxL.x, position.x);
+        uProMaxL.y = MAX(uProMaxL.y, position.y);
 
-        position.x = (position.x - minL.x) / (maxL.x - minL.x) * 2 - 1;
-        position.y = (position.y - minL.y) / (maxL.y - minL.y) * 2 - 1;
+        position.x = (position.x - uProMinL.x) / (uProMaxL.x - uProMinL.x) * 2 - 1;
+        position.y = (position.y - uProMinL.y) / (uProMaxL.y - uProMinL.y) * 2 - 1;
         break;
     case WiimoteUProControllerStickTypeRight:
-        minR.x = MIN(minR.x, position.x);
-        minR.y = MIN(minR.y, position.y);
+        uProMinR.x = MIN(uProMinR.x, position.x);
+        uProMinR.y = MIN(uProMinR.y, position.y);
 
-        maxR.x = MAX(maxR.x, position.x);
-        maxR.y = MAX(maxR.y, position.y);
+        uProMaxR.x = MAX(uProMaxR.x, position.x);
+        uProMaxR.y = MAX(uProMaxR.y, position.y);
 
-        position.x = (position.x - minR.x) / (maxR.x - minR.x) * 2 - 1;
-        position.y = (position.y - minR.y) / (maxR.y - minR.y) * 2 - 1;
+        position.x = (position.x - uProMinR.x) / (uProMaxR.x - uProMinR.x) * 2 - 1;
+        position.y = (position.y - uProMinR.y) / (uProMaxR.y - uProMinR.y) * 2 - 1;
         break;
     }
 
@@ -195,6 +197,41 @@ static id<ProfileProvider> profileProvider;
     //    NSLog(@"\nMinRx: %f\tMinRy: %f\tMaxRx: %f\tMaxRy: %f", minR.x, minR.y, maxR.x, maxR.y);
 
     [_hidState setPointer:[[self profile] axisNumberForExtensionName:uPro.name axisNumber:stick] position:position];
+}
+
+- (void)wiimote:(Wiimote *)wiimote heroGuitar:(WiimoteHeroGuitarExtension *)heroGuitar buttonPressed:(WiimoteHeroGuitarButtonType)button
+{
+    [_hidState setButton:[[self profile] buttonNumberForExtensionName:heroGuitar.name buttonNumber:button] pressed:YES];
+}
+
+- (void)wiimote:(Wiimote *)wiimote heroGuitar:(WiimoteHeroGuitarExtension *)heroGuitar buttonReleased:(WiimoteHeroGuitarButtonType)button
+{
+    [_hidState setButton:[[self profile] buttonNumberForExtensionName:heroGuitar.name buttonNumber:button] pressed:NO];
+}
+
+- (void)wiimote:(Wiimote *)wiimote heroGuitar:(WiimoteHeroGuitarExtension *)heroGuitar stickPositionChanged:(NSPoint)position
+{
+    // Calibrate on the fly, like U Pro controller
+    heroGuitarMinStick.x = MIN(heroGuitarMinStick.x, position.x);
+    heroGuitarMinStick.y = MIN(heroGuitarMinStick.y, position.y);
+    
+    heroGuitarMaxStick.x = MAX(heroGuitarMaxStick.x, position.x);
+    heroGuitarMaxStick.y = MAX(heroGuitarMaxStick.y, position.y);
+    
+    position.x = (position.x - heroGuitarMinStick.x) / (heroGuitarMaxStick.x - heroGuitarMinStick.x) * 2 - 1;
+    position.y = (position.y - heroGuitarMinStick.y) / (heroGuitarMaxStick.y - heroGuitarMinStick.y) * 2 - 1;
+    
+    [_hidState setPointer:[[self profile] axisNumberForExtensionName:heroGuitar.name axisNumber:0] position:position];
+}
+
+- (void)wiimote:(Wiimote *)wiimote heroGuitar:(WiimoteHeroGuitarExtension *)heroGuitar analogShiftPositionChanged:(CGFloat)position
+{
+    // Calibrate on the fly, like U Pro controller
+    heroGuitarMinShift = MIN(heroGuitarMinShift, position);
+    heroGuitarMaxShift = MAX(heroGuitarMaxShift, position);
+    position = (position - heroGuitarMinShift) / (heroGuitarMaxShift - heroGuitarMinShift) * 2 - 1;
+    
+    [_hidState setPointer:[[self profile] axisNumberForExtensionName:heroGuitar.name axisNumber:1] position:(CGPoint){ 0, position }];
 }
 
 - (void)wiimote:(Wiimote *)wiimote extensionDisconnected:(WiimoteExtension *)extension

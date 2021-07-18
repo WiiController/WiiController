@@ -93,5 +93,38 @@
       <integer>24</integer>
     </dict>
   </dict>
+  <key>Guitar Hero Guitar</key>
+  <dict>
+    <key>Button</key>
+    <dict>
+      <!-- Green -->
+      <key>0</key>
+      <integer>11</integer>
+      <!-- Red -->
+      <key>1</key>
+      <integer>12</integer>
+      <!-- Yellow -->
+      <key>2</key>
+      <integer>13</integer>
+      <!-- Blue -->
+      <key>3</key>
+      <integer>14</integer>
+      <!-- Orange -->
+      <key>4</key>
+      <integer>15</integer>
+      <!-- Up -->
+      <key>5</key>
+      <integer>16</integer>
+      <!-- Down -->
+      <key>6</key>
+      <integer>17</integer>
+      <!-- Plus -->
+      <key>7</key>
+      <integer>18</integer>
+      <!-- Minus -->
+      <key>8</key>
+      <integer>19</integer>
+    </dict>
+  </dict>
 </dict>
 </plist>
