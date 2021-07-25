@@ -4,12 +4,18 @@
 WiiController is a macOS device driver application that allows you to use the following controllers as standard HID gamepads:
 
 - Wii Remote (original or Plus)
-  - Nunchuck
+  - Nunchuk
   - Classic Controller (original or Pro)
-  - Wii Motion Plus (unverified)
-  - UDraw Tablet (unverified)
+  - Guitar Hero 3 controller
 - Wii U Pro Controller
-- Wii Balance Board (unverified)
+
+The following controllers are at least partially implemented, but aren't currently usable:
+
+- Wii Balance Board
+- Wii Motion Plus
+- UDraw Tablet
+
+If you really want support for one of these, please open an issue.
 
 ## How does it work?
 
