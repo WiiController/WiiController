@@ -57,7 +57,7 @@ Finally, restart your computer.
 3. Install the app by dragging it to your Applications folder. This is **required** on macOS 10.15 or later.
 4. Turn on Bluetooth.
 5. Start WiiController by right-clicking it in Finder and selecting Open. (This technique allows you to run an unsigned app.)
-6. If it crashes or nothing appears to happen, then this is probably a known code signing issue. It's entirely my fault, but until I resolve it, you can fix the problem by running `codesign -fs - /Applications/WiiController.app` in Terminal (copy and paste the command, then press Return) and then relaunching WiiController. This issue doesn't seem to affect systems running macOS 10.15+, but if it does, please let me know by commenting in [issue #12](https://github.com/WiiController/WiiController/issues/12).
+6. If it crashes or nothing appears to happen, then this is probably a known code signing issue. It's entirely my fault, but until I resolve it, you can fix the problem by running `codesign -fs - /Applications/WiiController.app` in Terminal (copy and paste the command, then press Return) and then relaunching WiiController. (For details, see [issue #12](https://github.com/WiiController/WiiController/issues/12).)
 7. Enter your password if necessary, and approve the system extension when prompted.
 8. Pairing should begin automatically, but will expire after 10 seconds. To re-enable it if 10 seconds have passed, click the Wii Remote icon in the menu bar and select Pair Device.
 9. Press the small red "sync" button on your Nintendo device. To pair multiple devices, select Pair Device again for each.
