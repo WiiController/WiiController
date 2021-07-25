@@ -120,6 +120,7 @@
         { WiimoteHeroGuitarButtonTypeUp, WiimoteDeviceHeroGuitarReportButtonMaskUp },
         { WiimoteHeroGuitarButtonTypeDown, WiimoteDeviceHeroGuitarReportButtonMaskDown },
         { WiimoteHeroGuitarButtonTypePlus, WiimoteDeviceHeroGuitarReportButtonMaskPlus },
+        { WiimoteHeroGuitarButtonTypeMinus, WiimoteDeviceHeroGuitarReportButtonMaskMinus },
     };
     
     for (NSUInteger i = 0; i < sizeof buttonMasks / sizeof(buttonMasks[0]); i++)
