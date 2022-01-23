@@ -56,7 +56,11 @@
     if (self == nil)
         return nil;
 
+#if DEBUG
+    _level = WiimoteLogLevelDebug;
+#else
     _level = WiimoteLogLevelError;
+#endif
 
     return self;
 }

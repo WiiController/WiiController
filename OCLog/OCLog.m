@@ -27,7 +27,7 @@
  functionName:(const char*)functionName
       message:(NSString*)message
 {
-    NSLog(@"%@: %s (%llu) [%s]: %@",
+    NSLog(@"%@: %s (%llu) %s: %@",
         [OCLog levelAsString:level], sourceFile, (unsigned long long)line, functionName, message);
 }
 
@@ -79,7 +79,11 @@
         return nil;
 
     _handler   = [OCDefaultLogHandler defaultLogHandler];
-    _level     = OCLogLevelError;
+#if DEBUG
+    _level = OCLogLevelDebug;
+#else
+    _level = OCLogLevelError;
+#endif
 
     return self;
 }
