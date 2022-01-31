@@ -46,7 +46,7 @@ macOS 11 and below are not affected by this issue.
 
 ### Disable SIP
 
-As I cannot sign dexts or kexts, you must have [System Integrity Protection (SIP)](http://www.imore.com/el-capitan-system-integrity-protection-helps-keep-malware-away) disabled for the driver to load. To disable SIP, boot into [recovery mode](https://support.apple.com/en-ca/HT201314), select Terminal from Utilities in the menu bar, and run the following:
+As I cannot sign dexts or kexts, you must have [System Integrity Protection (SIP)](https://developer.apple.com/documentation/security/disabling_and_enabling_system_integrity_protection) disabled for the driver to load. To disable SIP, boot into [recovery mode](https://support.apple.com/en-us/HT201314), select Terminal from Utilities in the menu bar, and run the following:
 
 ```
 csrutil disable
