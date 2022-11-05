@@ -1,7 +1,7 @@
 # WiiController
 ## Use your Wii and Wii U controllers on macOS as standard gamepads
 
-**Note: [WiiController does not currently work on macOS 12. Projects like Dolphin are having similar issues.](https://github.com/WiiController/WiiController/issues/16#issuecomment-1019526888)**  
+**Note: [WiiController does not currently work on macOS 12 or later. Projects like Dolphin are having similar issues.](https://github.com/WiiController/WiiController/issues/16#issuecomment-1019526888)**  
 macOS 11 and below are not affected by this issue.
 
 WiiController is a macOS device driver application that allows you to use the following controllers as standard HID gamepads:
@@ -38,7 +38,7 @@ WiiController stands on the shoulders of alxn1's [WJoy](https://github.com/alxn1
 
 ### Requirements
 
-**Note: [WiiController does not currently work on macOS 12. Projects like Dolphin are having similar issues.](https://github.com/WiiController/WiiController/issues/16#issuecomment-1019526888)**  
+**Note: [WiiController does not currently work on macOS 12 or later. Projects like Dolphin are having similar issues.](https://github.com/WiiController/WiiController/issues/16#issuecomment-1019526888)**  
 macOS 11 and below are not affected by this issue.
 
 - WiiController should work on macOS 10.11 or later. It has been tested on 10.14.6, 10.15.7, and 11.2.3.
