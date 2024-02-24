@@ -285,7 +285,7 @@
     rect = [self bounds];
 
     [NSGraphicsContext saveGraphicsState];
-    CGContextSetShouldSmoothFonts([[NSGraphicsContext currentContext] graphicsPort], NO);
+    CGContextSetShouldSmoothFonts([[NSGraphicsContext currentContext] CGContext], NO);
 
     NSBezierPath *bgPath = [NSBezierPath bezierPathWithRoundedRect:rect xRadius:10.0f yRadius:10.0f];
     [[NSColor colorWithDeviceWhite:0.0f alpha:0.7f] setFill];
