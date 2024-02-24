@@ -220,14 +220,14 @@
 
     [_menu addItem:[NSMenuItem separatorItem]];
 
-    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@"Auto-connect to Paired Devices (Experimental)" action:@selector(toggleOneButtonClickConnection) keyEquivalent:@""];
-    item.target = self;
-    [item setState:([Wiimote isUseOneButtonClickConnection]) ? (NSOnState) : (NSOffState)];
-    [_menu addItem:item];
+//    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@"Auto-connect to Paired Devices (Experimental)" action:@selector(toggleOneButtonClickConnection) keyEquivalent:@""];
+//    item.target = self;
+//    [item setState:([Wiimote isUseOneButtonClickConnection]) ? (NSControlStateValueOn) : (NSControlStateValueOff)];
+//    [_menu addItem:item];
+//
+//    [_menu addItem:[NSMenuItem separatorItem]];
 
-    [_menu addItem:[NSMenuItem separatorItem]];
-
-    item = [[NSMenuItem alloc] initWithTitle:@"About WiiController" action:@selector(showAboutPanel:) keyEquivalent:@""];
+    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@"About WiiController" action:@selector(showAboutPanel:) keyEquivalent:@""];
     item.target = self;
     [_menu addItem:item];
     

@@ -51,7 +51,6 @@
         [self setMovable:NO];
 
     [self setOpaque:NO];
-    [self setOneShot:NO];
     [self setHasShadow:YES];
     [self setLevel:kCGMaximumWindowLevel];
     [self setAcceptsMouseMovedEvents:YES];
