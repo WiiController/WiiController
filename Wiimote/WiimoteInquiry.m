@@ -11,8 +11,8 @@
 #import "Wiimote+Create.h"
 
 #import <IOBluetooth/IOBluetooth.h>
-
 #import <HID/HIDManager.h>
+#import <mach/mach_error.h>
 
 #import "WiimoteLog.h"
 
@@ -127,6 +127,9 @@ NSString *WiimoteDeviceNameBalanceBoard = @"Nintendo RVL-WBC-01";
 
 - (void)setUseOneButtonClickConnection:(BOOL)useOneButtonClickConnection
 {
+    _useOneButtonClickConnection = YES;
+    return;
+
     if (_useOneButtonClickConnection == useOneButtonClickConnection)
         return;
 
@@ -161,7 +164,7 @@ NSString *WiimoteDeviceNameBalanceBoard = @"Nintendo RVL-WBC-01";
         return nil;
 
     _inquiry = nil;
-    _useOneButtonClickConnection = NO;
+    _useOneButtonClickConnection = YES;
 
     [[NSNotificationCenter defaultCenter]
         addObserver:self
@@ -260,27 +263,19 @@ NSString *WiimoteDeviceNameBalanceBoard = @"Nintendo RVL-WBC-01";
                           device:(IOBluetoothDevice *)device
 {
     if ([WiimoteInquiry isModelSupported:[device name]])
-        [_inquiry stop];
+    {
+        [self pairWithDevices:@[device]];
+    }
 }
 
 - (void)deviceInquiryComplete:(IOBluetoothDeviceInquiry *)sender
                         error:(IOReturn)error
                       aborted:(BOOL)aborted
 {
-    [_inquiry stop];
-    [_inquiry setDelegate:nil];
+    if (error != kIOReturnSuccess)
+        W_ERROR_F(@"inquiry failed: %s", mach_error_string(error));
 
-    if (error == kIOReturnSuccess)
-    {
-        if ([self isUseOneButtonClickConnection])
-            [self pairWithDevices:[_inquiry foundDevices]];
-        else
-            [self connectToDevices:[_inquiry foundDevices]];
-    }
-    else
-        W_ERROR(@"inquiry failed");
-
-    [self stop];
+    _inquiry = nil;
 
     if (_target != nil && _action != nil)
     {

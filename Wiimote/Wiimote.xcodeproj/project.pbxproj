@@ -486,6 +486,9 @@
 		3C6AC12526A33C1A00717F34 /* WiimoteHeroGuitar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteHeroGuitar.h; sourceTree = "<group>"; };
 		3C6AC13E26A3433E00717F34 /* WiimoteHeroGuitarDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteHeroGuitarDelegate.m; sourceTree = "<group>"; };
 		3C6AC13F26A3433E00717F34 /* WiimoteHeroGuitarDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteHeroGuitarDelegate.h; sourceTree = "<group>"; };
+		3C6FC99F2B8989C800E0257D /* IOBluetoothCoreBluetoothCoordinator+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOBluetoothCoreBluetoothCoordinator+Private.h"; sourceTree = "<group>"; };
+		3C6FC9A12B8989F000E0257D /* IOBluetoothDevice+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOBluetoothDevice+Private.h"; sourceTree = "<group>"; };
+		3C6FC9A22B8989FD00E0257D /* IOBluetoothDevicePair+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOBluetoothDevicePair+Private.h"; sourceTree = "<group>"; };
 		3C95647B2495570000EAFA05 /* W_HIDDevice+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "W_HIDDevice+Private.h"; sourceTree = "<group>"; };
 		3C95647D249564FC00EAFA05 /* WiimoteDeviceReport+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WiimoteDeviceReport+Private.h"; sourceTree = "<group>"; };
 		3CADAC99263F18AC0084CA09 /* WiimoteBluetooth.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WiimoteBluetooth.m; sourceTree = "<group>"; };
@@ -1023,6 +1026,9 @@
 			children = (
 				0A87DCBA1780B1AA00BB1BD8 /* WiimoteDevicePair.h */,
 				0A87DCBB1780B1AB00BB1BD8 /* WiimoteDevicePair.m */,
+				3C6FC99F2B8989C800E0257D /* IOBluetoothCoreBluetoothCoordinator+Private.h */,
+				3C6FC9A12B8989F000E0257D /* IOBluetoothDevice+Private.h */,
+				3C6FC9A22B8989FD00E0257D /* IOBluetoothDevicePair+Private.h */,
 			);
 			name = utils;
 			sourceTree = "<group>";
@@ -1974,7 +1980,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				SDKROOT = macosx;
 			};
 			name = Release;
